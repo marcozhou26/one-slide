@@ -109,8 +109,6 @@ python3 -m unittest discover -s tests -v
 - 作者与维护者：周俊东 Marco
 - 视频号和公众号：周俊东Marco
 - 微信：`zhou139223`（添加时请备注“OneSlide”）
-- 背景：来自南海公学（Nanhai Academy）
-- 网址：[https://nanhai.pro](https://nanhai.pro)
 
 ## 授权
 
