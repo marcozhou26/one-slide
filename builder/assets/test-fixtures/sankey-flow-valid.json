@@ -1,0 +1,336 @@
+{
+  "version": "1.0",
+  "module_id": "sankey-flow",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "1,200 名候选人最终仅 60 人留任，漏损集中在筛选与入职后流失"
+    },
+    {
+      "id": "S02",
+      "text": "来源渠道；1,200 人；社会招聘；校园招聘；筛选结果；通过率 67%；筛选通过；筛选损耗；入职去向；入职率 20%；完成入职；入职前损耗；筛选关闭；12 个月状态；留任率 25%；留任；入职后流失；未入职；已淘汰；已入职人群 12 个月流失 180 人；筛选通过后仍有 560 人未入职；两个漏点合计占总损耗 62%；先改善入职转化与 12 个月留任，预计每年新增留任 95 人；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "1,200 名候选人最终仅 60 人留任，漏损集中在筛选与入职后流失",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "sankey-flow",
+    "layers": [
+      {
+        "label": {
+          "text": "来源渠道；1,200 人",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "social",
+            "label": {
+              "text": "社会招聘",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 700,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "campus",
+            "label": {
+              "text": "校园招聘",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 500,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "筛选结果；通过率 67%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "pass",
+            "label": {
+              "text": "筛选通过",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 800,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "reject",
+            "label": {
+              "text": "筛选损耗",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 400,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "入职去向；入职率 20%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "hired",
+            "label": {
+              "text": "完成入职",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 240,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "preloss",
+            "label": {
+              "text": "入职前损耗",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 560,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "closed",
+            "label": {
+              "text": "筛选关闭",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 400,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "12 个月状态；留任率 25%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "retained",
+            "label": {
+              "text": "留任",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 60,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "turnover",
+            "label": {
+              "text": "入职后流失",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 180,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "not_hired",
+            "label": {
+              "text": "未入职",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 560,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "screened_out",
+            "label": {
+              "text": "已淘汰",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "value": 400,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      }
+    ],
+    "flows": [
+      {
+        "from": "social",
+        "to": "pass",
+        "value": 470,
+        "kind": "success",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "social",
+        "to": "reject",
+        "value": 230,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "campus",
+        "to": "pass",
+        "value": 330,
+        "kind": "success",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "campus",
+        "to": "reject",
+        "value": 170,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "pass",
+        "to": "hired",
+        "value": 240,
+        "kind": "success",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "pass",
+        "to": "preloss",
+        "value": 560,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "reject",
+        "to": "closed",
+        "value": 400,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "hired",
+        "to": "retained",
+        "value": 60,
+        "kind": "success",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "hired",
+        "to": "turnover",
+        "value": 180,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "preloss",
+        "to": "not_hired",
+        "value": 560,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "closed",
+        "to": "screened_out",
+        "value": 400,
+        "kind": "loss",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "已入职人群 12 个月流失 180 人",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "筛选通过后仍有 560 人未入职",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "两个漏点合计占总损耗 62%",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "先改善入职转化与 12 个月留任，预计每年新增留任 95 人",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

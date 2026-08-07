@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "product": "single-consulting-slide-producer",
+  "output_mode": "PROMPT_ONLY",
+  "generation_mode": "SYNTHETIC_AUGMENTATION",
+  "single_slide": true,
+  "synthetic_content": true,
+  "synthetic_data": true,
+  "status": "ready",
+  "builder_target": "single-consulting-slide-builder",
+  "entrypoints": {
+    "builder_prompt": "builder-prompt.md",
+    "builder_handoff": "builder-handoff.json",
+    "content_review": "../review/content-review.md"
+  },
+  "files": [
+    {
+      "path": "data/workload.csv",
+      "role": "display_data",
+      "format": "csv",
+      "sha256": "60ff11d4d8c4a1059444e00eea2341ea48d8622360afb1aabba317b28f0c4828",
+      "row_count": 4
+    }
+  ]
+}

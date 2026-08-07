@@ -1,0 +1,276 @@
+{
+  "version": "1.0",
+  "module_id": "hr-supply-demand-gap",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "三年后关键岗位需求 452 人，内部自然供给仅 284 人，缺口 168 人"
+    },
+    {
+      "id": "S02",
+      "text": "H1；H2；H3；H4；H5；H6；内部培养；12–18月；8万/人；转化不及预期；外部招聘；6–9月；12万/人；市场供给紧张；外包或 AI 替代；3–6月；6万/人；质量与采用风险；最终缺口 168 人，且从 H3 开始加速扩大；内部供给受流失与退休双重挤压；80 人内部培养是成本与风险最平衡的组合；用内部培养 80 人、外部招聘 60 人、外包或 AI 替代 28 人关闭缺口；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "三年后关键岗位需求 452 人，内部自然供给仅 284 人，缺口 168 人",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-supply-demand-gap",
+    "periods": [
+      {
+        "label": {
+          "text": "H1",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 330,
+        "demand_low": 310,
+        "demand_high": 352,
+        "opening": 300,
+        "attrition": 15,
+        "retirement": 3,
+        "promotion": 8,
+        "transfer": 2,
+        "supply": 292,
+        "gap": 38,
+        "external": 38,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "H2",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 350,
+        "demand_low": 330,
+        "demand_high": 372,
+        "opening": 292,
+        "attrition": 16,
+        "retirement": 4,
+        "promotion": 10,
+        "transfer": 4,
+        "supply": 286,
+        "gap": 64,
+        "external": 64,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "H3",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 380,
+        "demand_low": 360,
+        "demand_high": 402,
+        "opening": 286,
+        "attrition": 17,
+        "retirement": 5,
+        "promotion": 12,
+        "transfer": 5,
+        "supply": 281,
+        "gap": 99,
+        "external": 99,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "H4",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 410,
+        "demand_low": 390,
+        "demand_high": 432,
+        "opening": 281,
+        "attrition": 18,
+        "retirement": 6,
+        "promotion": 15,
+        "transfer": 7,
+        "supply": 279,
+        "gap": 131,
+        "external": 131,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "H5",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 445,
+        "demand_low": 425,
+        "demand_high": 467,
+        "opening": 279,
+        "attrition": 19,
+        "retirement": 7,
+        "promotion": 18,
+        "transfer": 9,
+        "supply": 280,
+        "gap": 165,
+        "external": 165,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "H6",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "demand": 452,
+        "demand_low": 432,
+        "demand_high": 474,
+        "opening": 280,
+        "attrition": 20,
+        "retirement": 8,
+        "promotion": 22,
+        "transfer": 10,
+        "supply": 284,
+        "gap": 168,
+        "external": 168,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "strategies": [
+      {
+        "label": {
+          "text": "内部培养",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "count": 80,
+        "cycle": {
+          "text": "12–18月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "cost": {
+          "text": "8万/人",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "risk": {
+          "text": "转化不及预期",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "外部招聘",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "count": 60,
+        "cycle": {
+          "text": "6–9月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "cost": {
+          "text": "12万/人",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "risk": {
+          "text": "市场供给紧张",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "外包或 AI 替代",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "count": 28,
+        "cycle": {
+          "text": "3–6月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "cost": {
+          "text": "6万/人",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "risk": {
+          "text": "质量与采用风险",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "最终缺口 168 人，且从 H3 开始加速扩大",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "内部供给受流失与退休双重挤压",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "80 人内部培养是成本与风险最平衡的组合",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "用内部培养 80 人、外部招聘 60 人、外包或 AI 替代 28 人关闭缺口",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

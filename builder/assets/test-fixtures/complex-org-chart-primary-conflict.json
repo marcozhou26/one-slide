@@ -1,0 +1,22 @@
+{
+  "version": "0.1",
+  "title": { "text": "双重上级冲突", "source_ids": ["S0"] },
+  "nodes": [
+    { "id": "parent-a", "label": "上级甲", "kind": "org_unit", "source_ids": ["S1"] },
+    { "id": "parent-b", "label": "上级乙", "kind": "org_unit", "source_ids": ["S2"] },
+    { "id": "target", "label": "目标岗位", "kind": "position", "source_ids": ["S3"] }
+  ],
+  "relationships": [
+    { "id": "rel-a", "source": "parent-a", "target": "target", "type": "primary_reporting", "source_ids": ["S4"] },
+    { "id": "rel-b", "source": "parent-b", "target": "target", "type": "primary_reporting", "source_ids": ["S5"] }
+  ],
+  "temporary_groups": [],
+  "source_anchors": [
+    { "id": "S0", "text": "双重上级冲突。" },
+    { "id": "S1", "text": "上级甲。" },
+    { "id": "S2", "text": "上级乙。" },
+    { "id": "S3", "text": "目标岗位。" },
+    { "id": "S4", "text": "目标岗位向上级甲汇报。" },
+    { "id": "S5", "text": "目标岗位也向上级乙汇报。" }
+  ]
+}

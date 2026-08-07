@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "module_id": "stage-process",
+  "audience_mode": "analysis",
+  "title": { "text": "三阶段推进可在十二个月内完成转型", "source_ids": ["S01"], "origin": "source" },
+  "source_anchors": [
+    { "id": "S01", "text": "三阶段推进可在十二个月内完成转型。" },
+    { "id": "S02", "text": "第一阶段诊断现状并形成问题清单，周期为一至三月。" },
+    { "id": "S03", "text": "完成诊断后进入第二阶段试点，验证核心流程并交付试点报告，周期为四至八月。" },
+    { "id": "S04", "text": "试点通过后进入第三阶段推广，完成制度固化和全员上线，周期为九至十二月。" },
+    { "id": "S05", "text": "全过程跟踪风险、资源和量化指标。" }
+  ],
+  "diagram": {
+    "type": "stage-process",
+    "steps": [
+      {
+        "id": "s1",
+        "text": "诊断",
+        "source_ids": ["S02"],
+        "action": { "text": "诊断现状", "source_ids": ["S02"] },
+        "activities": [{ "text": "形成问题清单", "source_ids": ["S02"] }],
+        "owner_period": { "text": "一至三月", "source_ids": ["S02"] }
+      },
+      {
+        "id": "s2",
+        "text": "试点",
+        "source_ids": ["S03"],
+        "action": { "text": "验证核心流程", "source_ids": ["S03"] },
+        "deliverable": { "text": "试点报告", "source_ids": ["S03"] },
+        "owner_period": { "text": "四至八月", "source_ids": ["S03"] }
+      },
+      {
+        "id": "s3",
+        "text": "推广",
+        "source_ids": ["S04"],
+        "action": { "text": "完成制度固化", "source_ids": ["S04"] },
+        "activities": [{ "text": "全员上线", "source_ids": ["S04"] }],
+        "owner_period": { "text": "九至十二月", "source_ids": ["S04"] }
+      }
+    ],
+    "transitions": [
+      { "from": "s1", "to": "s2", "source_ids": ["S03"] },
+      { "from": "s2", "to": "s3", "source_ids": ["S04"] }
+    ],
+    "bottom_strip": [
+      { "text": "跟踪风险", "source_ids": ["S05"] },
+      { "text": "资源", "source_ids": ["S05"] },
+      { "text": "量化指标", "source_ids": ["S05"] }
+    ]
+  }
+}

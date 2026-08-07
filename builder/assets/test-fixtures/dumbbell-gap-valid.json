@@ -1,0 +1,330 @@
+{
+  "version": "1.0",
+  "module_id": "dumbbell-gap",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "十项指标中三项差距达 16 个百分点以上，且均为客户敏感指标"
+    },
+    {
+      "id": "S02",
+      "text": "效率类；招聘周期；改善难度 ★★☆；审批链过长；质量类；关键岗位到岗率；改善难度 ★★★；人才池不足；体验类；员工净推荐值；反馈闭环慢；服务响应率；改善难度 ★☆☆；绩优人才留存；经理满意度；自动化覆盖率；数据准确率；培训完成率；预算偏差；招聘周期差距最大；前三项均直接影响客户体验；补齐前三项可显著提升整体指数；若补齐前三项，整体指数可从 68 提升至 82；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "十项指标中三项差距达 16 个百分点以上，且均为客户敏感指标",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "dumbbell-gap",
+    "metrics": [
+      {
+        "domain": {
+          "text": "效率类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "招聘周期",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 42,
+        "target": 25,
+        "direction": "lower",
+        "difficulty": {
+          "text": "改善难度 ★★☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "root_cause": {
+          "text": "审批链过长",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "质量类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "关键岗位到岗率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 61,
+        "target": 78,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★★★",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "root_cause": {
+          "text": "人才池不足",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "体验类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "员工净推荐值",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 48,
+        "target": 64,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★★☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "root_cause": {
+          "text": "反馈闭环慢",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "效率类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "服务响应率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 70,
+        "target": 84,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★☆☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "质量类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "绩优人才留存",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 72,
+        "target": 85,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★★★",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "体验类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "经理满意度",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 68,
+        "target": 80,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★★☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "效率类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "自动化覆盖率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 55,
+        "target": 66,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★★☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "质量类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "数据准确率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 86,
+        "target": 95,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★☆☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "体验类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "培训完成率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 82,
+        "target": 90,
+        "direction": "higher",
+        "difficulty": {
+          "text": "改善难度 ★☆☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "domain": {
+          "text": "效率类",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "label": {
+          "text": "预算偏差",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 9,
+        "target": 4,
+        "direction": "lower",
+        "difficulty": {
+          "text": "改善难度 ★★☆",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "招聘周期差距最大",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "前三项均直接影响客户体验",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "补齐前三项可显著提升整体指数",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "若补齐前三项，整体指数可从 68 提升至 82",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

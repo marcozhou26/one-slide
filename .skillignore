@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+.git/
+internal/
+producer/examples/*/internal/
+producer/examples/*/review/
+verify/
+qa_runs/
+qa/
+release/
+*.log
+*.tmp
+*.pdf
+*.png
+*.jpg
+*.jpeg

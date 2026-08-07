@@ -1,0 +1,364 @@
+{
+  "version": "1.0",
+  "module_id": "small-multiples",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "九条业务线中只有三条持续跑赢公司均值"
+    },
+    {
+      "id": "S02",
+      "text": "2022；2023；2024；2025；2026；业务 A；期末 90；CAGR +高；加大投入；业务 B；期末 84；CAGR +高；业务 C；期末 82；CAGR +低；维持；业务 D；期末 70；CAGR +低；退出或收缩；业务 E；期末 73；CAGR +高；业务 F；期末 76；CAGR +低；业务 G；期末 86；CAGR +高；业务 H；期末 77；CAGR +低；业务 I；期末 64；CAGR +低；三条业务线持续跑赢公司均值；三条业务线期末低于基准；高增长业务共同具备标准化能力；分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "九条业务线中只有三条持续跑赢公司均值",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "small-multiples",
+    "periods": [
+      {
+        "text": "2022",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "2023",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "2024",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "2025",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "2026",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "benchmark": [
+      70,
+      72,
+      74,
+      76,
+      78
+    ],
+    "benchmark_source_ids": [
+      "S02"
+    ],
+    "panels": [
+      {
+        "label": {
+          "text": "业务 A",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 90；CAGR +高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "加大投入",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          68,
+          72,
+          77,
+          83,
+          90
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 B",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 84；CAGR +高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "加大投入",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          65,
+          69,
+          74,
+          79,
+          84
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 C",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 82；CAGR +低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "维持",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          74,
+          75,
+          78,
+          80,
+          82
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 D",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 70；CAGR +低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "退出或收缩",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          76,
+          74,
+          73,
+          72,
+          70
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 E",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 73；CAGR +高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "维持",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          62,
+          64,
+          67,
+          70,
+          73
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 F",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 76；CAGR +低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "退出或收缩",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          80,
+          79,
+          78,
+          77,
+          76
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 G",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 86；CAGR +高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "加大投入",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          60,
+          66,
+          72,
+          79,
+          86
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 H",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 77；CAGR +低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "维持",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          73,
+          72,
+          74,
+          75,
+          77
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 I",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "summary": {
+          "text": "期末 64；CAGR +低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "classification": {
+          "text": "退出或收缩",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "values": [
+          69,
+          70,
+          68,
+          66,
+          64
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "三条业务线持续跑赢公司均值",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "三条业务线期末低于基准",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "高增长业务共同具备标准化能力",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

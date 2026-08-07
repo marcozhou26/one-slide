@@ -1,0 +1,13 @@
+{
+  "version":"1.0","module_id":"scenario-planning",
+  "source_anchors":[
+    {"id":"S01","text":"三种情景下都需先做的四件事，构成无悔举措"},{"id":"S02","text":"悲观情景；政策支持延后；需求减少；市场增速 -5%；客户预算 -12%；项目毛利 16%；新增项目减少；销售管道低于 70%；保现金并聚焦高确定性客户"},{"id":"S03","text":"基准情景；政策渐进落地；需求温和恢复；市场增速 +8%；客户预算 +5%；项目毛利 22%；需求稳步恢复；销售管道为目标 90%–110%；复制标准方案"},{"id":"S04","text":"乐观情景；政策激励加速；需求集中释放；市场增速 +20%；客户预算 +18%；项目毛利 28%；订单快速增长；销售管道超过 130%；提前锁定产能"},
+    {"id":"S05","text":"市场增速"},{"id":"S06","text":"客户预算"},{"id":"S07","text":"项目毛利"},{"id":"S08","text":"无悔举措：统一数据口径、标准化方案、储备关键人才、滚动监测领先指标"},{"id":"S09","text":"若销售管道低于 70% 或超过 130%，启动弹性资源方案"}
+  ],
+  "title":{"text":"三种情景下都需先做的四件事，构成无悔举措","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"scenario-planning","scenarios":[
+    {"label":{"text":"悲观情景","source_ids":["S02"]},"probability":25,"assumptions":{"text":"政策支持延后；需求减少","source_ids":["S02"]},"metrics":[{"id":"growth","label":{"text":"市场增速","source_ids":["S05"]},"value":{"text":"-5%","source_ids":["S02"]}},{"id":"budget","label":{"text":"客户预算","source_ids":["S06"]},"value":{"text":"-12%","source_ids":["S02"]}},{"id":"margin","label":{"text":"项目毛利","source_ids":["S07"]},"value":{"text":"16%","source_ids":["S02"]}}],"impact":{"text":"新增项目减少","source_ids":["S02"]},"indicator":{"text":"销售管道低于 70%","source_ids":["S02"]},"response":{"text":"保现金并聚焦高确定性客户","source_ids":["S02"]}},
+    {"label":{"text":"基准情景","source_ids":["S03"]},"probability":55,"assumptions":{"text":"政策渐进落地；需求温和恢复","source_ids":["S03"]},"metrics":[{"id":"growth","label":{"text":"市场增速","source_ids":["S05"]},"value":{"text":"+8%","source_ids":["S03"]}},{"id":"budget","label":{"text":"客户预算","source_ids":["S06"]},"value":{"text":"+5%","source_ids":["S03"]}},{"id":"margin","label":{"text":"项目毛利","source_ids":["S07"]},"value":{"text":"22%","source_ids":["S03"]}}],"impact":{"text":"需求稳步恢复","source_ids":["S03"]},"indicator":{"text":"销售管道为目标 90%–110%","source_ids":["S03"]},"response":{"text":"复制标准方案","source_ids":["S03"]}},
+    {"label":{"text":"乐观情景","source_ids":["S04"]},"probability":20,"assumptions":{"text":"政策激励加速；需求集中释放","source_ids":["S04"]},"metrics":[{"id":"growth","label":{"text":"市场增速","source_ids":["S05"]},"value":{"text":"+20%","source_ids":["S04"]}},{"id":"budget","label":{"text":"客户预算","source_ids":["S06"]},"value":{"text":"+18%","source_ids":["S04"]}},{"id":"margin","label":{"text":"项目毛利","source_ids":["S07"]},"value":{"text":"28%","source_ids":["S04"]}}],"impact":{"text":"订单快速增长","source_ids":["S04"]},"indicator":{"text":"销售管道超过 130%","source_ids":["S04"]},"response":{"text":"提前锁定产能","source_ids":["S04"]}}
+  ],"no_regret":{"text":"无悔举措：统一数据口径、标准化方案、储备关键人才、滚动监测领先指标","source_ids":["S08"]},"contingent":{"text":"若销售管道低于 70% 或超过 130%，启动弹性资源方案","source_ids":["S09"]}}
+}

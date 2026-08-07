@@ -1,0 +1,186 @@
+{
+  "version": "1.0",
+  "module_id": "region-map-table",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "70% 的人力成本集中在三个高成本区域，但产出贡献仅占 49%"
+    },
+    {
+      "id": "S02",
+      "text": "华东；华北；华南；华中；西部；东北；沿海高成本集群；中西部承接集群；华东、华北、华南成本占比合计 70%；三地人效指数均低于全国均值 100；中西部人效高且仍有承接空间；新增产能优先投向华中与西部，沿海三区实行结构性控编；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "70% 的人力成本集中在三个高成本区域，但产出贡献仅占 49%",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "region-map-table",
+    "regions": [
+      {
+        "id": "east",
+        "label": {
+          "text": "华东",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 72,
+        "headcount": 620,
+        "efficiency": 92,
+        "cost_share": 28,
+        "output_share": 20,
+        "x": 72,
+        "y": 50,
+        "focus": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "north",
+        "label": {
+          "text": "华北",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 65,
+        "headcount": 510,
+        "efficiency": 88,
+        "cost_share": 24,
+        "output_share": 17,
+        "x": 55,
+        "y": 28,
+        "focus": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "south",
+        "label": {
+          "text": "华南",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 58,
+        "headcount": 450,
+        "efficiency": 96,
+        "cost_share": 18,
+        "output_share": 12,
+        "x": 62,
+        "y": 72,
+        "focus": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "central",
+        "label": {
+          "text": "华中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 42,
+        "headcount": 260,
+        "efficiency": 112,
+        "cost_share": 11,
+        "output_share": 17,
+        "x": 48,
+        "y": 58,
+        "focus": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "west",
+        "label": {
+          "text": "西部",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 32,
+        "headcount": 180,
+        "efficiency": 118,
+        "cost_share": 9,
+        "output_share": 14,
+        "x": 28,
+        "y": 57,
+        "focus": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "northeast",
+        "label": {
+          "text": "东北",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "intensity": 28,
+        "headcount": 130,
+        "efficiency": 101,
+        "cost_share": 6,
+        "output_share": 8,
+        "x": 66,
+        "y": 18,
+        "focus": false,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "clusters": [
+      {
+        "text": "沿海高成本集群",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "中西部承接集群",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "华东、华北、华南成本占比合计 70%",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "三地人效指数均低于全国均值 100",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "中西部人效高且仍有承接空间",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "新增产能优先投向华中与西部，沿海三区实行结构性控编",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

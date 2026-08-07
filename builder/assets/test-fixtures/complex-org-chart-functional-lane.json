@@ -1,0 +1,49 @@
+{
+  "version": "0.1",
+  "title": {"text": "匿名服务企业组织架构", "source_ids": ["S00"]},
+  "nodes": [
+    {"id": "gm", "label": "总经理", "kind": "position", "source_ids": ["S01"]},
+    {"id": "product-center", "label": "产品中心", "kind": "org_unit", "source_ids": ["S02"]},
+    {"id": "sales-center", "label": "销售中心", "kind": "org_unit", "source_ids": ["S03"]},
+    {"id": "delivery-center", "label": "交付中心", "kind": "org_unit", "source_ids": ["S04"]},
+    {"id": "customer-center", "label": "客户中心", "kind": "org_unit", "source_ids": ["S05"]},
+    {"id": "support-center", "label": "职能中心", "kind": "org_unit", "source_ids": ["S06"]},
+    {"id": "product-dept", "label": "产品管理部", "kind": "org_unit", "source_ids": ["S07"]},
+    {"id": "regional-sales", "label": "区域销售部", "kind": "org_unit", "source_ids": ["S08"]},
+    {"id": "project-delivery", "label": "项目交付部", "kind": "org_unit", "source_ids": ["S09"]},
+    {"id": "customer-ops", "label": "客户运营部", "kind": "org_unit", "source_ids": ["S10"]},
+    {"id": "integrated-support", "label": "综合支持部", "kind": "org_unit", "source_ids": ["S11"]}
+  ],
+  "relationships": [
+    {"id": "r01", "source": "gm", "target": "product-center", "type": "primary_reporting", "source_ids": ["S02"]},
+    {"id": "r02", "source": "gm", "target": "sales-center", "type": "primary_reporting", "source_ids": ["S03"]},
+    {"id": "r03", "source": "gm", "target": "delivery-center", "type": "primary_reporting", "source_ids": ["S04"]},
+    {"id": "r04", "source": "gm", "target": "customer-center", "type": "primary_reporting", "source_ids": ["S05"]},
+    {"id": "r05", "source": "gm", "target": "support-center", "type": "primary_reporting", "source_ids": ["S06"]},
+    {"id": "r06", "source": "product-center", "target": "product-dept", "type": "primary_reporting", "source_ids": ["S07"]},
+    {"id": "r07", "source": "sales-center", "target": "regional-sales", "type": "primary_reporting", "source_ids": ["S08"]},
+    {"id": "r08", "source": "delivery-center", "target": "project-delivery", "type": "primary_reporting", "source_ids": ["S09"]},
+    {"id": "r09", "source": "customer-center", "target": "customer-ops", "type": "primary_reporting", "source_ids": ["S10"]},
+    {"id": "r10", "source": "support-center", "target": "integrated-support", "type": "primary_reporting", "source_ids": ["S11"]},
+    {"id": "f01", "source": "product-dept", "target": "project-delivery", "type": "functional_guidance", "source_ids": ["S12"]},
+    {"id": "f02", "source": "product-dept", "target": "customer-ops", "type": "functional_guidance", "source_ids": ["S13"]}
+  ],
+  "temporary_groups": [],
+  "layout_hints": [],
+  "source_anchors": [
+    {"id": "S00", "text": "匿名服务企业组织架构"},
+    {"id": "S01", "text": "总经理"},
+    {"id": "S02", "text": "产品中心及汇报关系"},
+    {"id": "S03", "text": "销售中心及汇报关系"},
+    {"id": "S04", "text": "交付中心及汇报关系"},
+    {"id": "S05", "text": "客户中心及汇报关系"},
+    {"id": "S06", "text": "职能中心及汇报关系"},
+    {"id": "S07", "text": "产品管理部及汇报关系"},
+    {"id": "S08", "text": "区域销售部及汇报关系"},
+    {"id": "S09", "text": "项目交付部及汇报关系"},
+    {"id": "S10", "text": "客户运营部及汇报关系"},
+    {"id": "S11", "text": "综合支持部及汇报关系"},
+    {"id": "S12", "text": "产品管理部指导项目交付部"},
+    {"id": "S13", "text": "产品管理部指导客户运营部"}
+  ]
+}

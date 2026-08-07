@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "source_id": "U01",
+      "type": "user_prompt",
+      "status": "read",
+      "anchor": "做一页说明基层管理者每天被审批和会议占用，数据你补一下，我只要提示词"
+    }
+  ]
+}

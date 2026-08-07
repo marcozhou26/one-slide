@@ -1,0 +1,325 @@
+{
+  "version": "1.0",
+  "module_id": "hr-age-gender-pyramid",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "36–45 岁段占比 41%，形成腰部堵塞与底部断层，未来三年 68 个岗位面临经验断代"
+    },
+    {
+      "id": "S02",
+      "text": "51 岁以上；12.8年；29.4万；6.0%；38%；46–50；11.2年；27.8万；7.8%；32%；41–45；9.4年；25.6万；6.5%；29%；36–40；7.1年；22.8万；8.2%；24%；31–35；4.8年；18.6万；11.5%；15%；26–30；2.6年；13.8万；18.2%；6%；18–25；0.9年；9.6万；25.0%；1%；腰部员工占比过高，晋升通道拥堵；30 岁以下占比偏低，后备力量不足；高龄关键岗位需提前完成知识转移；补充校招 60 人、内部提拔 36 人、完成 68 个关键岗位知识转移；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "36–45 岁段占比 41%，形成腰部堵塞与底部断层，未来三年 68 个岗位面临经验断代",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-age-gender-pyramid",
+    "bands": [
+      {
+        "label": {
+          "text": "51 岁以上",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 44,
+        "female": 26,
+        "healthy_male": 20,
+        "healthy_female": 18,
+        "tenure": {
+          "text": "12.8年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "29.4万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "6.0%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "38%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "46–50",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 60,
+        "female": 56,
+        "healthy_male": 34,
+        "healthy_female": 32,
+        "tenure": {
+          "text": "11.2年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "27.8万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "7.8%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "32%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "41–45",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 74,
+        "female": 80,
+        "healthy_male": 52,
+        "healthy_female": 50,
+        "tenure": {
+          "text": "9.4年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "25.6万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "6.5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "29%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "36–40",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 84,
+        "female": 90,
+        "healthy_male": 64,
+        "healthy_female": 62,
+        "tenure": {
+          "text": "7.1年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "22.8万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "8.2%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "24%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "31–35",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 76,
+        "female": 82,
+        "healthy_male": 76,
+        "healthy_female": 74,
+        "tenure": {
+          "text": "4.8年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "18.6万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "11.5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "15%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "26–30",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 42,
+        "female": 46,
+        "healthy_male": 88,
+        "healthy_female": 84,
+        "tenure": {
+          "text": "2.6年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "13.8万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "18.2%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "6%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "18–25",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "male": 18,
+        "female": 22,
+        "healthy_male": 96,
+        "healthy_female": 92,
+        "tenure": {
+          "text": "0.9年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "salary": {
+          "text": "9.6万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "turnover": {
+          "text": "25.0%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "manager_share": {
+          "text": "1%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "腰部员工占比过高，晋升通道拥堵",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "30 岁以下占比偏低，后备力量不足",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "高龄关键岗位需提前完成知识转移",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "补充校招 60 人、内部提拔 36 人、完成 68 个关键岗位知识转移",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

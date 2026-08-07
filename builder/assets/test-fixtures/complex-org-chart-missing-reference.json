@@ -1,0 +1,16 @@
+{
+  "version": "0.1",
+  "title": { "text": "关系引用缺失", "source_ids": ["S0"] },
+  "nodes": [
+    { "id": "parent", "label": "已有节点", "kind": "org_unit", "source_ids": ["S1"] }
+  ],
+  "relationships": [
+    { "id": "rel-missing", "source": "parent", "target": "missing-node", "type": "primary_reporting", "source_ids": ["S2"] }
+  ],
+  "temporary_groups": [],
+  "source_anchors": [
+    { "id": "S0", "text": "关系引用缺失。" },
+    { "id": "S1", "text": "已有节点。" },
+    { "id": "S2", "text": "关系指向一个不存在的节点。" }
+  ]
+}
