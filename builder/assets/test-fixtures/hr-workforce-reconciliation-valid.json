@@ -1,0 +1,346 @@
+{
+  "version": "1.0",
+  "module_id": "hr-workforce-reconciliation",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "全年净增 42 人，但招聘 218 人、离职 176 人，替换性招聘占比 81%"
+    },
+    {
+      "id": "S02",
+      "text": "1月；2月；3月；年终奖后；4月；5月；6月；7月；8月；9月；组织调整；10月；11月；业务淡季；12月；招聘总量的 81% 用于填补离职缺口；3 月、9 月和 11 月离职出现峰值；编制连续低于预算，增量被流失反复消耗；净增 42 人对应招聘投入 336 万，单位净增成本 8.0 万元/人；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "全年净增 42 人，但招聘 218 人、离职 176 人，替换性招聘占比 81%",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-workforce-reconciliation",
+    "months": [
+      {
+        "label": {
+          "text": "1月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1200,
+        "campus_hires": 3,
+        "social_hires": 9,
+        "referral_hires": 3,
+        "voluntary_exit": 9,
+        "involuntary_exit": 3,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1203,
+        "attrition_rate": 1,
+        "recruitment_rate": 82,
+        "budget": 1204,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "2月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1203,
+        "campus_hires": 3,
+        "social_hires": 9,
+        "referral_hires": 4,
+        "voluntary_exit": 11,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1206,
+        "attrition_rate": 1.1,
+        "recruitment_rate": 88,
+        "budget": 1208,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "3月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1206,
+        "campus_hires": 3,
+        "social_hires": 11,
+        "referral_hires": 4,
+        "voluntary_exit": 13,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1209,
+        "attrition_rate": 1.2,
+        "recruitment_rate": 91,
+        "budget": 1212,
+        "source_ids": [
+          "S02"
+        ],
+        "annotation": {
+          "text": "年终奖后",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "4月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1209,
+        "campus_hires": 3,
+        "social_hires": 10,
+        "referral_hires": 4,
+        "voluntary_exit": 11,
+        "involuntary_exit": 3,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1212,
+        "attrition_rate": 1.2,
+        "recruitment_rate": 86,
+        "budget": 1216,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "5月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1212,
+        "campus_hires": 3,
+        "social_hires": 12,
+        "referral_hires": 4,
+        "voluntary_exit": 14,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1215,
+        "attrition_rate": 1.3,
+        "recruitment_rate": 94,
+        "budget": 1220,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "6月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1215,
+        "campus_hires": 3,
+        "social_hires": 13,
+        "referral_hires": 4,
+        "voluntary_exit": 15,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1218,
+        "attrition_rate": 1.4,
+        "recruitment_rate": 96,
+        "budget": 1224,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "7月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1218,
+        "campus_hires": 3,
+        "social_hires": 10,
+        "referral_hires": 4,
+        "voluntary_exit": 10,
+        "involuntary_exit": 3,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1222,
+        "attrition_rate": 1.1,
+        "recruitment_rate": 90,
+        "budget": 1228,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "8月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1222,
+        "campus_hires": 3,
+        "social_hires": 11,
+        "referral_hires": 4,
+        "voluntary_exit": 12,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1226,
+        "attrition_rate": 1.1,
+        "recruitment_rate": 92,
+        "budget": 1232,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "9月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1226,
+        "campus_hires": 3,
+        "social_hires": 14,
+        "referral_hires": 4,
+        "voluntary_exit": 15,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1230,
+        "attrition_rate": 1.4,
+        "recruitment_rate": 98,
+        "budget": 1236,
+        "source_ids": [
+          "S02"
+        ],
+        "annotation": {
+          "text": "组织调整",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "10月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1230,
+        "campus_hires": 3,
+        "social_hires": 12,
+        "referral_hires": 4,
+        "voluntary_exit": 12,
+        "involuntary_exit": 3,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1234,
+        "attrition_rate": 1.2,
+        "recruitment_rate": 93,
+        "budget": 1240,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "11月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1234,
+        "campus_hires": 3,
+        "social_hires": 13,
+        "referral_hires": 4,
+        "voluntary_exit": 14,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1238,
+        "attrition_rate": 1.3,
+        "recruitment_rate": 95,
+        "budget": 1244,
+        "source_ids": [
+          "S02"
+        ],
+        "annotation": {
+          "text": "业务淡季",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "12月",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "opening": 1238,
+        "campus_hires": 3,
+        "social_hires": 11,
+        "referral_hires": 4,
+        "voluntary_exit": 12,
+        "involuntary_exit": 2,
+        "transfer_out": 2,
+        "transfer_in": 2,
+        "closing": 1242,
+        "attrition_rate": 1.1,
+        "recruitment_rate": 89,
+        "budget": 1248,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "招聘总量的 81% 用于填补离职缺口",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "3 月、9 月和 11 月离职出现峰值",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "编制连续低于预算，增量被流失反复消耗",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "净增 42 人对应招聘投入 336 万，单位净增成本 8.0 万元/人",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

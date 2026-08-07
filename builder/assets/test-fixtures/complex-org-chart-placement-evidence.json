@@ -1,0 +1,12 @@
+{
+  "version": "0.1",
+  "type": "placement_evidence",
+  "disclosure": "合成示例数据，非真实客户数据",
+  "placements": [
+    {"placement_key":"ceo_direct","label":"CEO直属","node_ids":["incubator-a"],"authorization_score":7.8,"cycle_months":5.4,"milestone_rate_pct":82,"governance_conditions":["独立编制和预算池","建立退出与毕业机制"]},
+    {"placement_key":"legal_entity","label":"独立法人","node_ids":["incubator-f"],"authorization_score":8.4,"cycle_months":6.1,"milestone_rate_pct":79,"governance_conditions":["法人边界与集团治理接口书面化"]},
+    {"placement_key":"division_attached","label":"事业部挂靠","node_ids":["incubator-b","incubator-c","incubator-d"],"authorization_score":3.1,"cycle_months":14.2,"milestone_rate_pct":41,"governance_conditions":["三个单元上提为CEO直属"]},
+    {"placement_key":"function_attached","label":"职能挂靠","node_ids":["incubator-e"],"authorization_score":2.4,"cycle_months":19,"milestone_rate_pct":28,"governance_conditions":["技术强耦合单元保留挂靠并设置资源防火墙"]}
+  ],
+  "shared_evidence": {"scope_label":"4个挂靠型单元汇总（事业部挂靠3个 + 职能挂靠1个）","node_ids":["incubator-b","incubator-c","incubator-d","incubator-e"],"talent_reassigned_events":23,"budget_withheld_pct":31}
+}

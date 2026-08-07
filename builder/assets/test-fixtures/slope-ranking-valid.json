@@ -1,0 +1,242 @@
+{
+  "version": "1.0",
+  "module_id": "slope-ranking",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "三年间前十榜单换位明显，上升者都完成了产品标准化"
+    },
+    {
+      "id": "S02",
+      "text": "2023 年；2026 年；业务 A；产品标准化推动增长；业务 B；业务 C；业务 D；业务 E；业务 F；业务 G；业务 H；业务 I；业务 J；业务 A 上升七个位次；前三名均完成产品标准化；原头部业务排名普遍回落；启示：复制产品标准化与渠道协同两项动作；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "三年间前十榜单换位明显，上升者都完成了产品标准化",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "slope-ranking",
+    "left_period": {
+      "text": "2023 年",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "right_period": {
+      "text": "2026 年",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "objects": [
+      {
+        "label": {
+          "text": "业务 A",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 8,
+        "right_rank": 1,
+        "left_value": 120,
+        "right_value": 150,
+        "priority": true,
+        "reason": {
+          "text": "产品标准化推动增长",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 B",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 6,
+        "right_rank": 2,
+        "left_value": 116,
+        "right_value": 147,
+        "priority": true,
+        "reason": {
+          "text": "产品标准化推动增长",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 C",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 9,
+        "right_rank": 3,
+        "left_value": 112,
+        "right_value": 144,
+        "priority": true,
+        "reason": {
+          "text": "产品标准化推动增长",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 D",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 1,
+        "right_rank": 4,
+        "left_value": 108,
+        "right_value": 141,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 E",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 2,
+        "right_rank": 5,
+        "left_value": 104,
+        "right_value": 138,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 F",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 3,
+        "right_rank": 6,
+        "left_value": 100,
+        "right_value": 135,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 G",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 4,
+        "right_rank": 7,
+        "left_value": 96,
+        "right_value": 132,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 H",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 5,
+        "right_rank": 8,
+        "left_value": 92,
+        "right_value": 129,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 I",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 7,
+        "right_rank": 9,
+        "left_value": 88,
+        "right_value": 126,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "业务 J",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "left_rank": 10,
+        "right_rank": 10,
+        "left_value": 84,
+        "right_value": 123,
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "业务 A 上升七个位次",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "前三名均完成产品标准化",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "原头部业务排名普遍回落",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "启示：复制产品标准化与渠道协同两项动作",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

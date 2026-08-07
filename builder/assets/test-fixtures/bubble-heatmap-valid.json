@@ -1,0 +1,18 @@
+{
+  "version":"1.0","module_id":"bubble-heatmap",
+  "source_anchors":[
+    {"id":"S01","text":"八项举措中三项落入高价值低难度区，应在 Q3 启动"},{"id":"S02","text":"实施难度"},{"id":"S03","text":"价值贡献"},{"id":"S04","text":"HR"},{"id":"S05","text":"数据"},{"id":"S06","text":"运营"},
+    {"id":"P1","text":"P1 智能问答 HR，价值 5 难度 1 风险 1 依赖 1 速度 5"},{"id":"P2","text":"P2 招聘筛选 HR，价值 5 难度 2 风险 2 依赖 2 速度 5"},{"id":"P3","text":"P3 主数据 数据，价值 4 难度 2 风险 2 依赖 2 速度 4"},{"id":"P4","text":"P4 数据湖 数据，价值 5 难度 5 风险 4 依赖 5 速度 1"},{"id":"P5","text":"P5 岗位重构 HR，价值 4 难度 3 风险 3 依赖 3 速度 3"},{"id":"P6","text":"P6 共享中心 运营，价值 4 难度 4 风险 3 依赖 4 速度 2"},{"id":"P7","text":"P7 文化宣导 运营，价值 2 难度 2 风险 2 依赖 1 速度 4"},{"id":"P8","text":"P8 全面自建 数据，价值 2 难度 5 风险 5 依赖 5 速度 1"},{"id":"S07","text":"Q3 启动清单：P1、P2、P3"}
+  ],
+  "title":{"text":"八项举措中三项落入高价值低难度区，应在 Q3 启动","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"bubble-heatmap","axis_labels":[{"text":"实施难度","source_ids":["S02"]},{"text":"价值贡献","source_ids":["S03"]}],"items":[
+    {"id":"P1","label":{"text":"智能问答","source_ids":["P1"]},"function":{"text":"HR","source_ids":["S04"]},"x":1.1,"y":4.6,"size":10,"scores":[5,1,1,1,5],"rank":1,"source_ids":["P1"]},
+    {"id":"P2","label":{"text":"招聘筛选","source_ids":["P2"]},"function":{"text":"HR","source_ids":["S04"]},"x":1.8,"y":4.1,"size":14,"scores":[5,2,2,2,5],"rank":2,"source_ids":["P2"]},
+    {"id":"P3","label":{"text":"主数据","source_ids":["P3"]},"function":{"text":"数据","source_ids":["S05"]},"x":2.2,"y":3.7,"size":16,"scores":[4,2,2,2,4],"rank":3,"source_ids":["P3"]},
+    {"id":"P4","label":{"text":"数据湖","source_ids":["P4"]},"function":{"text":"数据","source_ids":["S05"]},"x":4.6,"y":4.6,"size":30,"scores":[5,5,4,5,1],"rank":7,"source_ids":["P4"]},
+    {"id":"P5","label":{"text":"岗位重构","source_ids":["P5"]},"function":{"text":"HR","source_ids":["S04"]},"x":3.2,"y":3.4,"size":18,"scores":[4,3,3,3,3],"rank":4,"source_ids":["P5"]},
+    {"id":"P6","label":{"text":"共享中心","source_ids":["P6"]},"function":{"text":"运营","source_ids":["S06"]},"x":3.8,"y":3.8,"size":24,"scores":[4,4,3,4,2],"rank":5,"source_ids":["P6"]},
+    {"id":"P7","label":{"text":"文化宣导","source_ids":["P7"]},"function":{"text":"运营","source_ids":["S06"]},"x":1.3,"y":1.5,"size":6,"scores":[2,2,2,1,4],"rank":6,"source_ids":["P7"]},
+    {"id":"P8","label":{"text":"全面自建","source_ids":["P8"]},"function":{"text":"数据","source_ids":["S05"]},"x":4.7,"y":1.4,"size":28,"scores":[2,5,5,5,1],"rank":8,"hold":true,"source_ids":["P8"]}
+  ],"bottom_conclusion":{"text":"Q3 启动清单：P1、P2、P3","source_ids":["S07"]}}
+}

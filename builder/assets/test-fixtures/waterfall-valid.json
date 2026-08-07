@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "module_id": "waterfall-attribution",
+  "audience_mode": "analysis",
+  "title": { "text": "利润减少二十亿元，主要由人工和价格因素造成", "source_ids": ["S01"], "origin": "source" },
+  "source_anchors": [
+    { "id": "S01", "text": "利润减少二十亿元，主要由人工和价格因素造成。" },
+    { "id": "S02", "text": "基准期利润为一百亿元，当期利润为八十亿元。" },
+    { "id": "S03", "text": "价格因素减少十亿元，销量因素增加五亿元，人工成本增加导致利润减少十五亿元。" },
+    { "id": "S04", "text": "人工成本是最大的可控负向因素。" },
+    { "id": "S05", "text": "优先回收人工成本和价格损失。" }
+  ],
+  "diagram": {
+    "type": "waterfall",
+    "unit": "亿元",
+    "start": { "id": "start", "text": "基准期利润", "source_ids": ["S02"], "value": 100 },
+    "contributions": [
+      { "id": "price", "text": "价格因素", "source_ids": ["S03"], "value": -10 },
+      { "id": "volume", "text": "销量因素", "source_ids": ["S03"], "value": 5 },
+      { "id": "labor", "text": "人工成本", "source_ids": ["S03"], "value": -15 }
+    ],
+    "end": { "id": "end", "text": "当期利润", "source_ids": ["S02"], "value": 80 },
+    "insights": [{ "text": "人工成本是最大的可控负向因素", "source_ids": ["S04"] }],
+    "bottom_conclusion": { "text": "优先回收人工成本和价格损失", "source_ids": ["S05"] }
+  }
+}

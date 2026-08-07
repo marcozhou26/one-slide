@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+node_modules/
+.env
+.env.*
+*.log
+*.tmp
+*.bak
+dist/
+build/
+qa/
+verify/
+_internal-*/

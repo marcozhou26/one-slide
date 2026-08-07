@@ -1,0 +1,302 @@
+{
+  "version": "1.0",
+  "module_id": "chord-dependency",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "八个部门 62% 的协作集中在三条链路，其中两条缺少正式接口人"
+    },
+    {
+      "id": "S02",
+      "text": "销售；客户群；交付；产品；产品群；研发；财务；支持群；法务；人力；采购；销售→交付为最高频链路：92 次/月；产品→研发单向流量是反向的 2.1 倍；法务与人力处于协作网络边缘；设立 2 个跨部门接口岗，目标减少 25% 沟通往返；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "八个部门 62% 的协作集中在三条链路，其中两条缺少正式接口人",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "chord-dependency",
+    "nodes": [
+      {
+        "id": "n1",
+        "label": {
+          "text": "销售",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "客户群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 186,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n2",
+        "label": {
+          "text": "交付",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "客户群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 173,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n3",
+        "label": {
+          "text": "产品",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "产品群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 152,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n4",
+        "label": {
+          "text": "研发",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "产品群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 146,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n5",
+        "label": {
+          "text": "财务",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "支持群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 82,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n6",
+        "label": {
+          "text": "法务",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "支持群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 65,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n7",
+        "label": {
+          "text": "人力",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "支持群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 58,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "id": "n8",
+        "label": {
+          "text": "采购",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "支持群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "total": 51,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "flows": [
+      {
+        "from": "n1",
+        "to": "n2",
+        "value": 92,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "value": 78,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "value": 66,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n4",
+        "to": "n3",
+        "value": 32,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "value": 30,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n2",
+        "to": "n1",
+        "value": 28,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "value": 22,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n3",
+        "to": "n6",
+        "value": 18,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n4",
+        "to": "n8",
+        "value": 16,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n7",
+        "to": "n1",
+        "value": 14,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n5",
+        "to": "n8",
+        "value": 12,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "from": "n6",
+        "to": "n2",
+        "value": 10,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "销售→交付为最高频链路：92 次/月",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "产品→研发单向流量是反向的 2.1 倍",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "法务与人力处于协作网络边缘",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "设立 2 个跨部门接口岗，目标减少 25% 沟通往返",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

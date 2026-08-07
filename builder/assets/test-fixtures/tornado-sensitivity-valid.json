@@ -1,0 +1,301 @@
+{
+  "version": "1.0",
+  "module_id": "tornado-sensitivity",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "结果的 70% 波动来自两个变量，其余六个可暂不纳入管控"
+    },
+    {
+      "id": "S02",
+      "text": "价格实现率；90% / 100% / 108%；可控性 高；置信度 强；销量增速；-8% / 5% / 15%；可控性 中；产品组合；低 / 基准 / 高；置信度 中；人工成本；-3% / 0% / +6%；原料价格；-5% / 0% / +5%；可控性 低；汇率；6.8 / 7.1 / 7.4；税率；18% / 20% / 22%；管理费用；-2% / 0% / +2%；置信度 弱；价格实现率是首要敏感变量；销量增速与价格共同解释 70% 波动；后六项单项影响均低于 15%；管控动作：销售负责价格实现率，运营负责销量转化；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "结果的 70% 波动来自两个变量，其余六个可暂不纳入管控",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "tornado-sensitivity",
+    "base_value": 100,
+    "variables": [
+      {
+        "label": {
+          "text": "价格实现率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "90% / 100% / 108%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 72,
+        "high_result": 124,
+        "controllability": {
+          "text": "可控性 高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 强",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "销量增速",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "-8% / 5% / 15%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 80,
+        "high_result": 118,
+        "controllability": {
+          "text": "可控性 中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 强",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "产品组合",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "低 / 基准 / 高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 93,
+        "high_result": 107,
+        "controllability": {
+          "text": "可控性 中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "人工成本",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "-3% / 0% / +6%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 95,
+        "high_result": 105,
+        "controllability": {
+          "text": "可控性 高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 强",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "原料价格",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "-5% / 0% / +5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 96,
+        "high_result": 104,
+        "controllability": {
+          "text": "可控性 低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "汇率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "6.8 / 7.1 / 7.4",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 98,
+        "high_result": 102,
+        "controllability": {
+          "text": "可控性 低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 中",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "税率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "18% / 20% / 22%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 98.5,
+        "high_result": 101.5,
+        "controllability": {
+          "text": "可控性 低",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 强",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "管理费用",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "range": {
+          "text": "-2% / 0% / +2%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "low_result": 99,
+        "high_result": 101,
+        "controllability": {
+          "text": "可控性 高",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "confidence": {
+          "text": "置信度 弱",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "价格实现率是首要敏感变量",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "销量增速与价格共同解释 70% 波动",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "后六项单项影响均低于 15%",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "action": {
+      "text": "管控动作：销售负责价格实现率，运营负责销量转化",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

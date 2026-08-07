@@ -1,0 +1,453 @@
+{
+  "version": "1.0",
+  "module_id": "marimekko",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "56% 的市场集中在两个细分，但我方份额不足 8%"
+    },
+    {
+      "id": "S02",
+      "text": "大型企业；¥38 亿；CAGR +12%；我方；对手 A；对手 B；其他；中型企业；¥29 亿；CAGR +9%；小微企业；¥22 亿；CAGR +5%；政企；¥18 亿；CAGR +7%；个人；¥13 亿；CAGR +3%；★ 优先进攻；大型与中型企业占市场 56%；我方在两大细分份额均低于 8%；优先投入两大细分可覆盖主要增长空间；资源优先转向大型与中型企业细分；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "56% 的市场集中在两个细分，但我方份额不足 8%",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "marimekko",
+    "segments": [
+      {
+        "label": {
+          "text": "大型企业",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "size_share": 32,
+        "absolute_size": {
+          "text": "¥38 亿",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "growth": {
+          "text": "CAGR +12%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ],
+        "stacks": [
+          {
+            "id": "s1",
+            "label": {
+              "text": "我方",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 7,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s2",
+            "label": {
+              "text": "对手 A",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 38,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s3",
+            "label": {
+              "text": "对手 B",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 25,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s4",
+            "label": {
+              "text": "其他",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 30,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "中型企业",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "size_share": 24,
+        "absolute_size": {
+          "text": "¥29 亿",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "growth": {
+          "text": "CAGR +9%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ],
+        "stacks": [
+          {
+            "id": "s1",
+            "label": {
+              "text": "我方",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 8,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s2",
+            "label": {
+              "text": "对手 A",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 34,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s3",
+            "label": {
+              "text": "对手 B",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 28,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s4",
+            "label": {
+              "text": "其他",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 30,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "小微企业",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "size_share": 18,
+        "absolute_size": {
+          "text": "¥22 亿",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "growth": {
+          "text": "CAGR +5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ],
+        "stacks": [
+          {
+            "id": "s1",
+            "label": {
+              "text": "我方",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 14,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s2",
+            "label": {
+              "text": "对手 A",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 28,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s3",
+            "label": {
+              "text": "对手 B",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 24,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s4",
+            "label": {
+              "text": "其他",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 34,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "政企",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "size_share": 15,
+        "absolute_size": {
+          "text": "¥18 亿",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "growth": {
+          "text": "CAGR +7%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ],
+        "stacks": [
+          {
+            "id": "s1",
+            "label": {
+              "text": "我方",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 11,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s2",
+            "label": {
+              "text": "对手 A",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 31,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s3",
+            "label": {
+              "text": "对手 B",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 22,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s4",
+            "label": {
+              "text": "其他",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 36,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "text": "个人",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "size_share": 11,
+        "absolute_size": {
+          "text": "¥13 亿",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "growth": {
+          "text": "CAGR +3%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ],
+        "stacks": [
+          {
+            "id": "s1",
+            "label": {
+              "text": "我方",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 18,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s2",
+            "label": {
+              "text": "对手 A",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 25,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s3",
+            "label": {
+              "text": "对手 B",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 20,
+            "source_ids": [
+              "S02"
+            ]
+          },
+          {
+            "id": "s4",
+            "label": {
+              "text": "其他",
+              "source_ids": [
+                "S02"
+              ]
+            },
+            "share": 37,
+            "source_ids": [
+              "S02"
+            ]
+          }
+        ]
+      }
+    ],
+    "priority_label": {
+      "text": "★ 优先进攻",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "insights": [
+      {
+        "text": "大型与中型企业占市场 56%",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "我方在两大细分份额均低于 8%",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "优先投入两大细分可覆盖主要增长空间",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "资源优先转向大型与中型企业细分",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

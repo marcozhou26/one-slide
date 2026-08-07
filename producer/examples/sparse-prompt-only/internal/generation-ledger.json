@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "generation_mode": "SYNTHETIC_AUGMENTATION",
+  "gaps": [
+    {
+      "gap_id": "GAP01",
+      "need": "A small activity-by-hours dataset for the primary exhibit",
+      "action": "synthetic_generated",
+      "boundary": "anonymous illustrative scenario; no real organization attribution"
+    }
+  ]
+}

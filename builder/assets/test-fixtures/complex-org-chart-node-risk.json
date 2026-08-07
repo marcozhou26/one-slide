@@ -1,0 +1,8 @@
+{
+  "version": "0.1",
+  "type": "node_risk_encoding",
+  "disclosure": "合成示例数据，非真实客户数据",
+  "node_ids": ["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16","D17","D18","D19","D20","D21","D22","D23","D24","D25","D26","D27","D28","D29","D30","D31"],
+  "rules": {"high_turnover_threshold_pct":20,"key_role_dense_min_count":2,"key_role_dense_min_pct":3},
+  "expected_summary": {"nodeCount":31,"headcount":2180,"weightedTurnoverRatePct":11.4,"highTurnoverCount":6,"tripleBreakpointCount":3,"tripleHeadcount":287,"tripleKeyRoleCount":11}
+}

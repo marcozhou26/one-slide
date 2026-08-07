@@ -1,0 +1,256 @@
+{
+  "version": "1.0",
+  "module_id": "hr-eligibility-matrix",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "资格判断准确率 94.6%，但人工复核率 11.8%，异地新员工仍是主要兜底场景"
+    },
+    {
+      "id": "S02",
+      "text": "判断准确率；94.6%；目标 98%；人工复核率；11.8%；目标 <5%；首次解决率；89.3%；目标 95%；福利；休假；薪酬；培训；证明；异地政策；司龄 <1 年；P1–P3；异地员工；管理人员；派遣员工；低准确率集中在异地政策与新员工；规则不足和资料缺口解释多数人工复核；优先补齐异地与司龄相关规则；HR COE 统一规则口径，HRSSC 建立人工兜底与时限；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "资格判断准确率 94.6%，但人工复核率 11.8%，异地新员工仍是主要兜底场景",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-eligibility-matrix",
+    "metrics": [
+      {
+        "label": {
+          "text": "判断准确率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "94.6%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 98%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "人工复核率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "11.8%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 <5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "首次解决率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "89.3%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 95%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "policies": [
+      {
+        "text": "福利",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "休假",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "薪酬",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "培训",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "证明",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "异地政策",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "segments": [
+      {
+        "label": {
+          "text": "司龄 <1 年",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "scores": [
+          2,
+          2,
+          3,
+          2,
+          3,
+          1
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "P1–P3",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "scores": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          2
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "异地员工",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "scores": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          1
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "管理人员",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "scores": [
+          3,
+          3,
+          3,
+          2,
+          3,
+          2
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "派遣员工",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "scores": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          1
+        ],
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "低准确率集中在异地政策与新员工",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "规则不足和资料缺口解释多数人工复核",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "优先补齐异地与司龄相关规则",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "HR COE 统一规则口径，HRSSC 建立人工兜底与时限",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

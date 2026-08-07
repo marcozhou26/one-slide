@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "entries": [
+    {
+      "source_id": "U01",
+      "kind": "user_supplied",
+      "statement": "基层管理者被审批和会议占用",
+      "origin": "user prompt",
+      "status": "locked",
+      "affects": ["subject", "brief.must_include"]
+    },
+    {
+      "source_id": "G01",
+      "kind": "synthetic_generated",
+      "statement": "四类管理活动及每周耗时示例",
+      "origin": "minimum data required for an activity-by-hours ranking",
+      "status": "pending_confirmation",
+      "gap_id": "GAP01",
+      "generation_rule": "create four uneven anonymous illustrative activity records with explicit weekly-hour units",
+      "affects": ["content.subtitle", "display_blocks.B01", "datasets.D01"]
+    },
+    {
+      "source_id": "C01",
+      "kind": "calculated",
+      "statement": "审批与重复会议占所列活动总时间的 69%",
+      "origin": "calculation from G01 records",
+      "status": "locked",
+      "formula": "(9.2 + 7.4) / (9.2 + 7.4 + 4.1 + 3.3) = 69.1667%, displayed as 69%",
+      "input_source_ids": ["G01"],
+      "affects": ["content.title", "story"]
+    }
+  ]
+}

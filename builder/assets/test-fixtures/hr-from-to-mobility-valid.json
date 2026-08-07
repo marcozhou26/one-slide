@@ -1,0 +1,299 @@
+{
+  "version": "1.0",
+  "module_id": "hr-from-to-mobility",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "内部转岗率仅 6.3%，74% 的跨部门流动集中在销售与产品两条方向"
+    },
+    {
+      "id": "S02",
+      "text": "销售；产品；研发；交付；运营；职能；销售与产品之间形成主要人才通道；研发与交付存在单向输出；职能部门几乎没有跨部门流动；打通研发→产品通道并设立内部人才市场，目标转岗率提升至 12%；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "内部转岗率仅 6.3%，74% 的跨部门流动集中在销售与产品两条方向",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-from-to-mobility",
+    "departments": [
+      {
+        "text": "销售",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "产品",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "研发",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "交付",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "运营",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "职能",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "matrix": [
+      [
+        410,
+        28,
+        3,
+        2,
+        1,
+        1
+      ],
+      [
+        19,
+        260,
+        4,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        6,
+        330,
+        8,
+        2,
+        1
+      ],
+      [
+        3,
+        2,
+        10,
+        290,
+        5,
+        1
+      ],
+      [
+        1,
+        1,
+        2,
+        6,
+        220,
+        3
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        4,
+        180
+      ]
+    ],
+    "quality": [
+      [
+        {
+          "retention": 92,
+          "performance": 18
+        },
+        {
+          "retention": 95,
+          "performance": 48
+        },
+        {
+          "retention": 73,
+          "performance": 23
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        }
+      ],
+      [
+        {
+          "retention": 89,
+          "performance": 39
+        },
+        {
+          "retention": 92,
+          "performance": 18
+        },
+        {
+          "retention": 74,
+          "performance": 24
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 70,
+          "performance": 20
+        }
+      ],
+      [
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 76,
+          "performance": 26
+        },
+        {
+          "retention": 92,
+          "performance": 18
+        },
+        {
+          "retention": 78,
+          "performance": 28
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        }
+      ],
+      [
+        {
+          "retention": 73,
+          "performance": 23
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 80,
+          "performance": 30
+        },
+        {
+          "retention": 92,
+          "performance": 18
+        },
+        {
+          "retention": 75,
+          "performance": 25
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        }
+      ],
+      [
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 76,
+          "performance": 26
+        },
+        {
+          "retention": 92,
+          "performance": 18
+        },
+        {
+          "retention": 73,
+          "performance": 23
+        }
+      ],
+      [
+        {
+          "retention": 70,
+          "performance": 20
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 71,
+          "performance": 21
+        },
+        {
+          "retention": 72,
+          "performance": 22
+        },
+        {
+          "retention": 74,
+          "performance": 24
+        },
+        {
+          "retention": 92,
+          "performance": 18
+        }
+      ]
+    ],
+    "source_ids": [
+      "S02"
+    ],
+    "insights": [
+      {
+        "text": "销售与产品之间形成主要人才通道",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "研发与交付存在单向输出",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "职能部门几乎没有跨部门流动",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "打通研发→产品通道并设立内部人才市场，目标转岗率提升至 12%",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

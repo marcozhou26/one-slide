@@ -1,0 +1,360 @@
+{
+  "version": "1.0",
+  "module_id": "radar-capability",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "九项能力中四项落后标杆 2 档以上，治理、数据、平台与变革需优先补齐"
+    },
+    {
+      "id": "S02",
+      "text": "当前；标杆；目标；战略清晰度；战略与治理群；差距 -0.8；战略方向未充分量化；组织架构；差距 -0.8；职责边界仍有重叠；治理机制；差距 -2.2；跨部门决策机制缺失；流程标准化；运营与流程群；差距 -0.7；关键流程口径不一；数据基础；差距 -2.4；主数据尚未统一；工具平台；差距 -2.1；系统接口重复建设；人才结构；人才与文化群；差距 -0.7；关键岗位供给偏紧；能力发展；差距 -0.7；培养路径不够清楚；变革文化；差距 -2.1；一线采用动力不足；治理机制不完整；建立跨部门治理例会；数据与平台基础薄弱；统一主数据与接口；变革采用不足；设置业务采用目标；整体成熟度 2.5/5，12 个月目标 4.0/5；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "九项能力中四项落后标杆 2 档以上，治理、数据、平台与变革需优先补齐",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "radar-capability",
+    "scale": {
+      "min": 1,
+      "max": 5,
+      "unit": "分",
+      "source_label": "1至5分"
+    },
+    "series_labels": {
+      "current": { "text": "当前", "source_ids": ["S02"] },
+      "benchmark": { "text": "标杆", "source_ids": ["S02"] },
+      "target": { "text": "目标", "source_ids": ["S02"] }
+    },
+    "dimensions": [
+      {
+        "label": {
+          "text": "战略清晰度",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "战略与治理群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 3.2,
+        "benchmark": 4,
+        "target": 4.2,
+        "shortfall": {
+          "text": "差距 -0.8；战略方向未充分量化",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "组织架构",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "战略与治理群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 3,
+        "benchmark": 3.8,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -0.8；职责边界仍有重叠",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "治理机制",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "战略与治理群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 1.8,
+        "benchmark": 4,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -2.2；跨部门决策机制缺失",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "流程标准化",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "运营与流程群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 3.1,
+        "benchmark": 3.8,
+        "target": 4.2,
+        "shortfall": {
+          "text": "差距 -0.7；关键流程口径不一",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "数据基础",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "运营与流程群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 1.6,
+        "benchmark": 4,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -2.4；主数据尚未统一",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "工具平台",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "运营与流程群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 1.7,
+        "benchmark": 3.8,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -2.1；系统接口重复建设",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "人才结构",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "人才与文化群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 3,
+        "benchmark": 3.7,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -0.7；关键岗位供给偏紧",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "能力发展",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "人才与文化群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 2.9,
+        "benchmark": 3.6,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -0.7；培养路径不够清楚",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": false,
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "变革文化",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "group": {
+          "text": "人才与文化群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "current": 1.9,
+        "benchmark": 4,
+        "target": 4,
+        "shortfall": {
+          "text": "差距 -2.1；一线采用动力不足",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "priority": true,
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "group_cards": [
+      {
+        "group": {
+          "text": "战略与治理群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "average": 2.7,
+        "problem": {
+          "text": "治理机制不完整",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "action": {
+          "text": "建立跨部门治理例会",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "group": {
+          "text": "运营与流程群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "average": 2.1,
+        "problem": {
+          "text": "数据与平台基础薄弱",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "action": {
+          "text": "统一主数据与接口",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "group": {
+          "text": "人才与文化群",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "average": 2.6,
+        "problem": {
+          "text": "变革采用不足",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "action": {
+          "text": "设置业务采用目标",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "整体成熟度 2.5/5，12 个月目标 4.0/5",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

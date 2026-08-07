@@ -1,0 +1,236 @@
+{
+  "version": "1.0",
+  "module_id": "market-funnel",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "总体市场 50 亿中，可实际触达 12 亿，三年可获取 6 亿"
+    },
+    {
+      "id": "S02",
+      "text": "TAM；总体市场；剔除非目标行业；SAM；可服务市场；剔除不适配产品场景；SOM；可获取市场；受渠道与交付能力约束；三年目标；按现实渗透速度收敛；目标客户数；2,000 家；行业名录；敏感度 中；渗透率；15%；试点转化；敏感度 高；年客单价；160 万；合同样本；复购率；80%；续约数据；第 1/2/3 年收入目标：1.2 / 3.2 / 6.0 亿元；客户名录每半年更新一次；渗透率以已签约客户为准；测算日期：2026 年 8 月；优先验证渗透率和客单价，两项决定 78% 的结果波动；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "总体市场 50 亿中，可实际触达 12 亿，三年可获取 6 亿",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "market-funnel",
+    "layers": [
+      {
+        "label": {
+          "text": "TAM；总体市场",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": 50,
+        "reason": {
+          "text": "剔除非目标行业",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "SAM；可服务市场",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": 24,
+        "reason": {
+          "text": "剔除不适配产品场景",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "SOM；可获取市场",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": 12,
+        "reason": {
+          "text": "受渠道与交付能力约束",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "三年目标",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": 6,
+        "reason": {
+          "text": "按现实渗透速度收敛",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "label": {
+          "text": "目标客户数",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "2,000 家",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source": {
+          "text": "行业名录",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "sensitivity": {
+          "text": "敏感度 中",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "渗透率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "15%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source": {
+          "text": "试点转化",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "sensitivity": {
+          "text": "敏感度 高",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "年客单价",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "160 万",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source": {
+          "text": "合同样本",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "sensitivity": {
+          "text": "敏感度 高",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      },
+      {
+        "label": {
+          "text": "复购率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "80%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source": {
+          "text": "续约数据",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "sensitivity": {
+          "text": "敏感度 中",
+          "source_ids": [
+            "S02"
+          ]
+        }
+      }
+    ],
+    "milestone": {
+      "text": "第 1/2/3 年收入目标：1.2 / 3.2 / 6.0 亿元",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "assumptions": [
+      {
+        "text": "客户名录每半年更新一次",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "渗透率以已签约客户为准",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "测算日期：2026 年 8 月",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "优先验证渗透率和客单价，两项决定 78% 的结果波动",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}

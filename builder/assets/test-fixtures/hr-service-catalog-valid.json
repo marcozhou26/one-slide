@@ -1,0 +1,223 @@
+{
+  "version": "1.0",
+  "module_id": "hr-service-catalog",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "字段完整率 83%、无效工单率 7%，服务目录距 90% 与 5% 目标仍有差距"
+    },
+    {
+      "id": "S02",
+      "text": "字段完整率；83%；目标 90%；无效工单率；7%；目标 <5%；有效工单率；93%；目标 95%；薪资证明；薪酬组；假期资格；员工服务；异地政策；政策组；福利变更；福利组；培训报名；学习组；发起与字段受理是最大损失环节；异地政策成功率和自动化率最低；先改目录字段，再扩自动化覆盖；每万次发起减少 700 件无效工单，目标字段完整率达到 90%；全部示例数值与口径"
+    }
+  ],
+  "title": {
+    "text": "字段完整率 83%、无效工单率 7%，服务目录距 90% 与 5% 目标仍有差距",
+    "origin": "source",
+    "source_ids": [
+      "S01"
+    ]
+  },
+  "diagram": {
+    "type": "hr-service-catalog",
+    "metrics": [
+      {
+        "label": {
+          "text": "字段完整率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "83%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 90%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "无效工单率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "7%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 <5%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "有效工单率",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "value": {
+          "text": "93%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "target": {
+          "text": "目标 95%",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "services": [
+      {
+        "label": {
+          "text": "薪资证明",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "volume": 7000,
+        "success": 96,
+        "automation": 88,
+        "owner": {
+          "text": "薪酬组",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "假期资格",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "volume": 4800,
+        "success": 92,
+        "automation": 72,
+        "owner": {
+          "text": "员工服务",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "异地政策",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "volume": 3200,
+        "success": 76,
+        "automation": 45,
+        "owner": {
+          "text": "政策组",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "福利变更",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "volume": 2600,
+        "success": 89,
+        "automation": 68,
+        "owner": {
+          "text": "福利组",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "label": {
+          "text": "培训报名",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "volume": 1800,
+        "success": 94,
+        "automation": 80,
+        "owner": {
+          "text": "学习组",
+          "source_ids": [
+            "S02"
+          ]
+        },
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "insights": [
+      {
+        "text": "发起与字段受理是最大损失环节",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "异地政策成功率和自动化率最低",
+        "source_ids": [
+          "S02"
+        ]
+      },
+      {
+        "text": "先改目录字段，再扩自动化覆盖",
+        "source_ids": [
+          "S02"
+        ]
+      }
+    ],
+    "conclusion": {
+      "text": "每万次发起减少 700 件无效工单，目标字段完整率达到 90%",
+      "source_ids": [
+        "S02"
+      ]
+    }
+  }
+}
