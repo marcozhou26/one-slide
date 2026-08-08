@@ -30,7 +30,9 @@ function planSankey(data, base) {
     ...base,
     main: { left: 54, top: hasSla ? 146 : 132, width: hasSla ? 742 : 850, height: hasSla ? 436 : 450 },
     rail: { left: hasSla ? 826 : 934, top: 126, width: hasSla ? 400 : 292, height: 466 },
-    bottom: { left: 54, top: 620, width: 1172, height: 44 },
+    bottom: hasSla
+      ? { left: 54, top: 604, width: 1172, height: 68 }
+      : { left: 54, top: 620, width: 1172, height: 44 },
     sankey: {
       flow_semantics: data.diagram.flows.map((flow, index) => ({ index, ...sankeySemantics(flow.kind) })),
       sla_rows: slaRows,
