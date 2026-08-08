@@ -141,6 +141,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 双连续变量关系页使用 `scatter-regression`。`diagram` 必须包含 `x_metric`、`x_unit`、`y_metric`、`y_unit`、`period`、`population`、`sample_definition`、`source_note`，以及 8–200 条带唯一 `id`、逐条 `x`、`y` 和来源的原始 `observations`；缺失值用 `null` 显式保留。V1 固定使用 `method=ordinary_least_squares_with_intercept`、`handling.missing=pairwise_exclusion`、`handling.duplicates=retain_as_independent` 和 `handling.outliers=retain_and_label`。Producer 交付 `sample.total/valid/missing/duplicate_pairs`、声明的 `statistics.slope/intercept/r_squared`、按绝对残差排序的 1–3 个 `highlight_ids`、页面可见的异常点规则、复算/容差/显示舍入规则和“样本内关联不代表因果，外推需另行验证”的解释边界。Builder 从未舍入原始观测复算并对平；有效配对不足、任一轴零方差、单位/期间冲突、只有汇总统计、要求显著性但没有证据，或存在第二个独立主图时，不得强制命中模块。
 
+有序中心估计与区间页使用 `confidence-band`。`diagram` 必须包含 5–12 个标签唯一、`order` 严格递增的 `periods`，每期提供 `estimate/lower/upper` 且满足 `lower <= estimate <= upper`；同时保留 `metric`、`unit`、`interval_type`、`interval_label`、`interval_definition`、`estimation_method`、`sample_definition`、`population_definition`、`source_note` 和 1–3 条来源支持的 `insights`。置信区间必须提供 `confidence_level`，且不得改称预测区间或风险区间。单期缺失只能把三个值同时设为 `null`，并提供可见 `missing_value_note`；不得插值或补 0。阈值可省略；提供时必须包含数值、标签和可见语义，不能默认解释为统计显著性、风险或因果界限。核心序列、区间定义、估计方法、样本/总体或来源缺失时，不得强制命中本模块。
+
 ## builder-prompt.md
 
 Include, when applicable:

@@ -17,6 +17,7 @@ const pageModelMethodMap = new Map([
   ["raw_observation_distribution", "box-plot-jitter"],
   ["correlation_analysis", "correlation-matrix"],
   ["bivariate_linear_relationship", "scatter-regression"],
+  ["estimate_interval_band", "confidence-band"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -50,6 +51,7 @@ const definitions = {
   "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
   "correlation-matrix": { aliases: ["相关矩阵", "相关性矩阵", "correlation matrix"], cues: [["一起变化", "方向相反", "关系较弱", "最强正", "最强负", "系数", "pearson", "spearman"]] },
   "scatter-regression": { aliases: ["散点回归", "线性回归", "scatter regression"], cues: [["两个连续指标", "关系方向", "关系强度", "偏离趋势", "离群", "可解释范围", "样本内关联"]] },
+  "confidence-band": { aliases: ["置信带", "置信区间带", "confidence band"], cues: [["中心估计", "上下界", "区间宽度", "不确定性", "阈值", "重抽样"], ["estimate", "lower", "upper", "interval"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -221,6 +223,22 @@ function conflictingScatterScope(data) {
   return null;
 }
 
+function inferConfidenceBand(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const periods = Array.isArray(data.periods) ? data.periods : [];
+  const estimate = Array.isArray(data.estimate) ? data.estimate : [];
+  const lower = Array.isArray(data.lower) ? data.lower : [];
+  const upper = Array.isArray(data.upper) ? data.upper : [];
+  if (periods.length < 5 || periods.length > 12 || estimate.length !== periods.length || lower.length !== periods.length || upper.length !== periods.length) return null;
+  if (![estimate, lower, upper].every((series) => series.every((value) => Number.isFinite(Number(value))))) return null;
+  if (!periods.every((period, index) => index === 0 || String(period) !== String(periods[index - 1]))) return null;
+  if (!estimate.every((value, index) => Number(lower[index]) <= Number(value) && Number(value) <= Number(upper[index]))) return null;
+  const relationshipCue = ["中心估计", "上下界", "区间宽度", "不确定性", "阈值", "重抽样", "estimate", "lower", "upper", "interval"].some((cue) => text.includes(cue));
+  const metadataReady = Boolean(data.metric || data.unit || data.interval_definition);
+  if (!relationshipCue || !metadataReady) return null;
+  return ["inferred:ordered_estimate_bounds", "inferred:interval_definition", "cue:uncertainty_relationship"];
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -261,6 +279,7 @@ export async function routeInput(input) {
   const inferredJitter = inferGroupDistribution(input.data, text);
   const inferredCorrelation = inferCorrelationMatrix(input.data, text);
   const inferredScatter = inferScatterRegression(input.data, text);
+  const inferredConfidenceBand = inferConfidenceBand(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -289,6 +308,9 @@ export async function routeInput(input) {
       : item)
     .map((item) => inferredScatter && item.moduleId === "scatter-regression"
       ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredScatter] }
+      : item)
+    .map((item) => inferredConfidenceBand && item.moduleId === "confidence-band"
+      ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredConfidenceBand] }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));
