@@ -285,7 +285,7 @@ def validate(run_directory: Path, stage: str = "final") -> ValidationResult:
     output_mode = manifest.get("output_mode")
     if output_mode == "PPT_DRAFT" and stage == "final":
         delivery = run_directory / "delivery"
-        pptx_files = sorted(delivery.glob("*.pptx")) if delivery.is_dir() else []
+        pptx_files = sorted(path for path in delivery.glob("*.pptx") if not path.name.startswith("~$")) if delivery.is_dir() else []
         require(len(pptx_files) == 1, "PPT_DRAFT requires exactly one delivery PPTX", errors)
         if len(pptx_files) == 1:
             try:

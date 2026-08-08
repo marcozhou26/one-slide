@@ -137,6 +137,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 组间分布页使用 `box-plot-jitter`。`diagram` 必须包含 2–6 个带唯一 `id` 的 `groups`、每组 5–60 个原始 `observations`、与观测数量一致的 `n`、共同 `period`、`unit`、`observation_definition`、`sample_definition`、`statistics_rule=tukey_hinges_1_5_iqr`、可见 `statistics_note`、可见 `jitter_note` 和 1–3 条来源支持的 `insights`；整页原始观测不超过 240 个。横向抖动只能由 Builder 作为确定性视觉避让执行，不得写回数值。只有汇总统计、组间口径冲突、缺少单位/期间/样本定义、或页面还要求第二个主图时，不得强制命中模块。
 
+多指标关系筛选页使用 `correlation-matrix`。`diagram` 必须包含 4–10 个唯一指标 ID/标签、`method=pearson|spearman`、`sample_size`、`missing_value_handling`、`period`、`population`、`source_note`、`display_threshold`、可见 `causality_note`，以及对称 NxN `matrix` 或可复算的等长 `observations`。系数范围、对角线、对称性、维度和标签唯一性必须通过 Builder 门禁；矩阵与观测同时存在时必须对平。显示阈值和样式缺失可使用披露后的安全默认值，不得要求用户填写内部字段；数据、样本、期间、总体或来源缺失，以及口径冲突或第二个独立主图存在时，不得强制命中模块。页面必须同时用位置、带正负号的数值和颜色表达，并声明相关不代表因果。
+
 ## builder-prompt.md
 
 Include, when applicable:

@@ -150,6 +150,8 @@ For continuous numeric distributions, use `histogram` only when the reader needs
 
 For grouped distribution pages, use `box-plot-jitter` only when the reader must compare 2–6 groups while retaining every raw observation. The payload must include a shared period and unit, the observation grain, sample inclusion/denominator rule, each group's unique ID, label, declared `n`, 5–60 raw observations and source IDs, with no more than 240 observations on the page. Set `statistics_rule=tukey_hinges_1_5_iqr`, provide a visible statistics note and a visible statement that horizontal jitter is only a visual displacement and does not change values. Do not synthesize raw observations for a named real organization without authorization and disclosure. If only aggregated medians or quartiles are available, omit the module fields rather than inventing individual records.
 
+For multi-metric relationship screening, use `correlation-matrix` only for 4–10 uniquely labelled metrics with either a symmetric NxN coefficient matrix or aligned raw observations that Builder can reproduce. Preserve the declared Pearson or Spearman method, sample size, missing-value handling, period, population, source, units and display threshold. A missing method may use a disclosed Pearson default; missing data, conflicting periods/populations/units, non-unique labels, or a second independent primary exhibit must not be forced into the module. Every cell uses position, a signed numeric coefficient and color; the visible page must state that correlation does not imply causation.
+
 ### 7. Validate the package
 
 Run:

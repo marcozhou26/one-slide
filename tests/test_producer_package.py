@@ -186,6 +186,12 @@ class PackageValidationTests(unittest.TestCase):
         result = MODULE.validate(self.root)
         self.assertTrue(result["ok"], result)
 
+    def test_ppt_draft_ignores_powerpoint_lock_file(self):
+        make_package(self.root, output_mode="PPT_DRAFT")
+        (self.root / "delivery" / "~$one-slide-v1.0.0.pptx").write_bytes(b"office-lock")
+        result = MODULE.validate(self.root)
+        self.assertTrue(result["ok"], result)
+
     def test_ppt_draft_handoff_passes_before_delivery_exists(self):
         make_package(self.root, output_mode="PPT_DRAFT")
         delivery = self.root / "delivery" / "one-slide-v1.0.0.pptx"
