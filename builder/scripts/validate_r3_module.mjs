@@ -9,7 +9,7 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "small-multiples"]);
 
 function normalizeRankMigration(data) {
   if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
@@ -320,6 +320,54 @@ function validateBump(data, c) {
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
 }
 
+function validateCompositionShift(data, c) {
+  const periods = data.diagram.periods;
+  const components = data.diagram.components;
+  requireCondition(Array.isArray(periods) && periods.length >= 3 && periods.length <= 8, "DATA_CONTRACT_FAIL", "Composition shift requires 3–8 periods");
+  periods.forEach((period) => c.text(period, "Composition period"));
+  requireCondition(Array.isArray(components) && components.length >= 2 && components.length <= 6, "DATA_CONTRACT_FAIL", "Composition shift requires 2–6 components");
+  requireCondition(["share", "absolute"].includes(data.diagram.basis), "DATA_CONTRACT_FAIL", "Composition basis must be share or absolute");
+  c.text(data.diagram.denominator, "Composition denominator");
+  c.text(data.diagram.unit, "Composition unit");
+  const componentIds = new Set();
+  for (const component of components) {
+    requireCondition(typeof component.id === "string" && component.id.trim() !== "" && !componentIds.has(component.id), "DATA_CONTRACT_FAIL", "Composition component ids must be non-empty and unique");
+    componentIds.add(component.id);
+    c.text(component.label, "Composition component label");
+    requireCondition(Array.isArray(component.shares) && component.shares.length === periods.length, "DATA_CONTRACT_FAIL", "Every component needs one share per period");
+    requireCondition(component.shares.every((value) => Number.isFinite(value) && value >= 0 && value <= 100), "DATA_CONTRACT_FAIL", "Composition shares must be between 0 and 100");
+    if (data.diagram.basis === "absolute") {
+      requireCondition(Array.isArray(component.values) && component.values.length === periods.length, "DATA_CONTRACT_FAIL", "Absolute composition needs one value per component and period");
+      requireCondition(component.values.every((value) => Number.isFinite(value) && value >= 0), "DATA_CONTRACT_FAIL", "Absolute composition values must be non-negative numbers");
+    } else if (component.values !== undefined) {
+      requireCondition(Array.isArray(component.values) && component.values.length === periods.length && component.values.every((value) => value === null || Number.isFinite(value)), "DATA_CONTRACT_FAIL", "Optional composition values must align with periods");
+    }
+    c.source(component.source_ids, "Composition values");
+  }
+  for (let periodIndex = 0; periodIndex < periods.length; periodIndex += 1) {
+    const shareTotal = components.reduce((sum, component) => sum + component.shares[periodIndex], 0);
+    requireCondition(near(shareTotal, 100, 0.05), "COMPOSITION_RECONCILIATION_FAIL", `Composition shares for period ${periodIndex + 1} must sum to 100`);
+  }
+  if (data.diagram.basis === "absolute") {
+    requireCondition(Array.isArray(data.diagram.totals) && data.diagram.totals.length === periods.length, "DATA_CONTRACT_FAIL", "Absolute composition needs one denominator total per period");
+    requireCondition(data.diagram.totals.every((value) => Number.isFinite(value) && value > 0), "DATA_CONTRACT_FAIL", "Composition totals must be positive numbers");
+    c.source(data.diagram.total_source_ids, "Composition totals");
+    for (let periodIndex = 0; periodIndex < periods.length; periodIndex += 1) {
+      const valueTotal = components.reduce((sum, component) => sum + component.values[periodIndex], 0);
+      requireCondition(near(valueTotal, data.diagram.totals[periodIndex], 0.01), "COMPOSITION_RECONCILIATION_FAIL", `Absolute values for period ${periodIndex + 1} must equal the declared total`);
+      for (const component of components) {
+        const calculatedShare = component.values[periodIndex] / data.diagram.totals[periodIndex] * 100;
+        requireCondition(near(calculatedShare, component.shares[periodIndex], 0.05), "COMPOSITION_RECONCILIATION_FAIL", `Share and absolute value disagree for ${component.label.text} in period ${periodIndex + 1}`);
+      }
+    }
+  }
+  if (data.diagram.focus_component_id) requireCondition(componentIds.has(data.diagram.focus_component_id), "DATA_CONTRACT_FAIL", "focus_component_id must reference a declared component");
+  requireCondition(Array.isArray(data.diagram.insights) && data.diagram.insights.length >= 1 && data.diagram.insights.length <= 3, "DATA_CONTRACT_FAIL", "Composition shift requires 1–3 source-backed insights");
+  data.diagram.insights.forEach((item) => c.text(item, "Composition insight"));
+  if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
+}
+
 function validateSmallMultiples(data, c) {
   const panels = data.diagram.panels;
   requireCondition([4, 6, 9].includes(panels?.length), "DATA_CONTRACT_FAIL", "Small multiples requires 4, 6, or 9 panels");
@@ -345,7 +393,7 @@ export function validateR3Module(data) {
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 

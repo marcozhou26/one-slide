@@ -1,11 +1,12 @@
 # Changelog
 
-## Unreleased — bump-ranking upgrade
+## Unreleased — chart module upgrades
 
 - Upgraded the public rank-migration module from the two-period `slope-ranking` contract to the multi-period `bump-ranking` contract.
 - Added explicit period arrays, rank/value/state tracks, new-entry and exit handling, duplicate-rank blocking, and source-fidelity fixtures.
 - Kept legacy `slope-ranking` inputs and routing aliases compatible while the upgraded module becomes the canonical productized ID.
 - Added five-period and entry/exit regression fixtures and a rendered multi-period `bump-ranking.pptx` reference asset; artifact-tool rendering, overflow checks, and native-shape editability checks pass. Microsoft PowerPoint application review remains environment-blocked.
+- Added the productized `composition-shift` module for 3–8 periods and 2–6 stable components, with strict 100% reconciliation, optional absolute-value denominator checks, Producer handoff rules, routing regressions, abnormal fixtures, and a native-editable reference page.
 
 ## 1.2.2 — 2026-08-08
 

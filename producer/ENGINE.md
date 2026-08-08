@@ -140,6 +140,8 @@ If one productized Builder module can express every must-include item, read only
 
 For rank-migration pages, treat `bump-ranking` as the canonical module. Prefer it when the evidence contains an ordered ranking across two or more periods; two periods may render as a slope-style view, while three or more periods must be handed off as a bump chart. A complete payload must preserve the ordered `periods`, one `ranks`/`values`/`states` slot per period for each object, explicit `source_ids`, and `new`/`exited`/`not_ranked` states where applicable. Do not generate the legacy `left_period`/`right_period` payload for new work; Builder keeps that shape only as a compatibility input.
 
+For multi-period composition pages, use `composition-shift` only when one stable denominator is compared across 3–8 ordered periods and 2–6 stable components. The payload must include source-backed `periods`, unique component IDs and labels, one `shares` slot per period, `basis`, `denominator`, `unit`, and 1–3 data-backed insights. Each period must reconcile to 100%. When `basis=absolute`, also include component `values`, period `totals`, and `total_source_ids`, and ensure the absolute values, totals, and calculated shares reconcile. If widths also encode market size, use `marimekko`; if the page requires another independent primary exhibit, omit the three module fields and use guarded direct composition.
+
 ### 7. Validate the package
 
 Run:
