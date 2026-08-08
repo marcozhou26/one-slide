@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added the productized `correlation-matrix` module for 4–10 metrics, accepting a validated symmetric coefficient matrix or reproducible aligned observations with Pearson/Spearman, sample, missing-value, period, population, source and threshold metadata.
+- Added anonymous relationship-first routing, coefficient range/diagonal/symmetry/dimension/label gates, three-channel position-number-color encoding, visible non-causality language, native editable rendering and PowerPoint open evidence.
 - Added the productized `cohort-retention` module for 3–8 cohorts across 4–12 aligned relative periods, with explicit initial bases, counts/rates reconciliation, survival versus period-retention semantics, and trailing censoring that never converts unobserved periods to zero.
 - Added relationship-first routing from anonymous natural language and aligned cohort arrays, while preserving the narrower `hr-new-hire-survival` module for its fixed 0–24 month benchmark-and-risk-matrix page.
 - Added Producer handoff rules, complete/sparse/conflict/missing/censoring/abnormal-format fixtures, native-editable rendering, registry coverage, and PowerPoint QA hooks.

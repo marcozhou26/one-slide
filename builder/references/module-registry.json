@@ -2,7 +2,7 @@
   "schema_version": "3.0",
   "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 38,
+  "productized_module_count": 39,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -156,6 +156,15 @@
       "status": "productized",
       "signals": ["has_grouped_raw_observations", "has_distribution_statistics"],
       "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/box-plot-jitter-module.md"
+    },
+    {
+      "module_id": "correlation-matrix",
+      "status": "productized",
+      "signals": ["has_symmetric_coefficient_matrix", "has_relationship_screening_task"],
+      "validator": "scripts/validate_correlation_matrix.mjs",
+      "planner": "scripts/plan_correlation_matrix.mjs",
+      "renderer": "scripts/render_correlation_matrix.mjs",
+      "reference": "references/correlation-matrix-module.md"
     },
     {
       "module_id": "small-multiples",

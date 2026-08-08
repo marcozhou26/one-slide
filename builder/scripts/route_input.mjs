@@ -15,6 +15,7 @@ const pageModelMethodMap = new Map([
   ["group_distribution", "box-plot"],
   ["continuous_distribution", "histogram"],
   ["raw_observation_distribution", "box-plot-jitter"],
+  ["correlation_analysis", "correlation-matrix"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -46,6 +47,7 @@ const definitions = {
   "box-plot": { aliases: ["箱线图", "盒须图", "box plot", "boxplot"], cues: [["中位数", "四分位", "中间50%", "离散", "异常值", "须线", "分布"]] },
   histogram: { aliases: ["直方图", "histogram"], cues: [["连续数值", "分箱", "区间", "集中", "偏态", "长尾", "多峰", "缺失值", "样本"]] },
   "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
+  "correlation-matrix": { aliases: ["相关矩阵", "相关性矩阵", "correlation matrix"], cues: [["一起变化", "方向相反", "关系较弱", "最强正", "最强负", "系数", "pearson", "spearman"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -168,6 +170,31 @@ function inferGroupDistribution(data, text) {
   return ["inferred:grouped_raw_observations", "inferred:sample_sizes", "cue:distribution_relationship"];
 }
 
+function inferCorrelationMatrix(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const metrics = Array.isArray(data.metrics) ? data.metrics : [];
+  const matrix = Array.isArray(data.matrix) ? data.matrix : [];
+  const observations = Array.isArray(data.observations) ? data.observations : [];
+  if (metrics.length < 4 || metrics.length > 10) return null;
+  const matrixReady = matrix.length === metrics.length && matrix.every((row, i) => Array.isArray(row) && row.length === metrics.length && row.every((value, j) => Number.isFinite(Number(value)) && Number(value) >= -1 && Number(value) <= 1 && Math.abs(Number(value) - Number(matrix[j]?.[i])) <= .0001));
+  const observationReady = observations.length === metrics.length && observations.every((item) => Array.isArray(item.values) && item.values.length >= 3);
+  if (!matrixReady && !observationReady) return null;
+  const cue = ["一起变化", "方向相反", "关系", "关联", "系数", "pearson", "spearman", "正相关", "负相关"].some((item) => text.includes(item));
+  if (!cue) return null;
+  return matrixReady ? ["inferred:symmetric_coefficient_matrix", "inferred:unique_metric_axis", "cue:relationship_screening"] : ["inferred:aligned_raw_observations", "inferred:unique_metric_axis", "cue:relationship_screening"];
+}
+
+function conflictingCorrelationScope(data) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const looksLikeCorrelation = Array.isArray(data.metrics) && (Array.isArray(data.matrix) || Array.isArray(data.observations));
+  if (!looksLikeCorrelation) return null;
+  for (const field of ["methods", "periods", "populations", "units"]) {
+    const values = Array.isArray(data[field]) ? [...new Set(data[field].map(normalizeText).filter(Boolean))] : [];
+    if (values.length > 1) return field;
+  }
+  return null;
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -195,6 +222,8 @@ export async function routeInput(input) {
   const tokens = dataTokens(input.data ?? {});
   const distributionScopeConflict = conflictingDistributionScope(input.data);
   if (distributionScopeConflict) throw Object.assign(new Error(`Group distribution ${distributionScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
+  const correlationScopeConflict = conflictingCorrelationScope(input.data);
+  if (correlationScopeConflict) throw Object.assign(new Error(`Correlation ${correlationScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
@@ -202,6 +231,7 @@ export async function routeInput(input) {
   const inferredBoxPlot = inferBoxPlot(input.data, text);
   const inferredHistogram = inferHistogram(input.data, text);
   const inferredJitter = inferGroupDistribution(input.data, text);
+  const inferredCorrelation = inferCorrelationMatrix(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -221,6 +251,12 @@ export async function routeInput(input) {
       : item)
     .map((item) => inferredJitter && item.moduleId === "box-plot-jitter"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredJitter] }
+      : item)
+    .map((item) => inferredCorrelation && item.moduleId === "correlation-matrix"
+      ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredCorrelation] }
+      : item)
+    .map((item) => item.moduleId === "correlation-matrix" && !inferredCorrelation && !item.evidence.some((evidence) => evidence.startsWith("explicit:"))
+      ? { ...item, score: 0 }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));

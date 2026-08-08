@@ -1,0 +1,13 @@
+{
+  "version":"1.0","module_id":"correlation-matrix",
+  "source_anchors":[{"id":"S01","text":"客户触达与转化率同向最强，响应时长与转化率反向最强；客单价与退款率关系较弱"},{"id":"S02","text":"月度运营指标；2024年1月至2025年12月；匿名零售业务月度总体；24个月度观测；Pearson；成对删除；客户触达；转化率；响应时长；复购率；客单价；退款率；内部匿名合成数据；显示阈值0.50；相关不代表因果；后续变量分析候选；客户触达与转化率正相关最强（r=+0.84）；响应时长与转化率负相关最强（r=-0.79）；客单价与退款率接近无稳定线性关系（r=-0.06）；优先复核客户触达、响应时长与转化率的共同驱动因素"},{"id":"G01","text":"合成示例数据，非真实客户数据"}],
+  "title":{"text":"客户触达与转化率同向最强，响应时长与转化率反向最强","origin":"source","source_ids":["S01"]},
+  "subtitle":{"text":"24个月度观测，识别后续重点变量分析候选","source_ids":["S02"]},
+  "diagram":{"type":"correlation-matrix","method":"pearson","sample_size":24,"display_threshold":0.5,
+    "missing_value_handling":{"text":"成对删除","source_ids":["S02"]},"period":{"text":"2024年1月至2025年12月","source_ids":["S02"]},"population":{"text":"匿名零售业务月度总体","source_ids":["S02"]},"source_note":{"text":"内部匿名合成数据","source_ids":["S02"]},"causality_note":{"text":"相关不代表因果","source_ids":["S02"]},
+    "metrics":[{"id":"reach","label":{"text":"客户触达","source_ids":["S02"]}},{"id":"conversion","label":{"text":"转化率","source_ids":["S02"]}},{"id":"response","label":{"text":"响应时长","source_ids":["S02"]}},{"id":"repeat","label":{"text":"复购率","source_ids":["S02"]}},{"id":"ticket","label":{"text":"客单价","source_ids":["S02"]}},{"id":"refund","label":{"text":"退款率","source_ids":["S02"]}}],
+    "matrix":[[1,0.84,-0.48,0.61,0.33,-0.28],[0.84,1,-0.79,0.72,0.42,-0.55],[-0.48,-0.79,1,-0.58,-0.21,0.49],[0.61,0.72,-0.58,1,0.37,-0.44],[0.33,0.42,-0.21,0.37,1,-0.06],[-0.28,-0.55,0.49,-0.44,-0.06,1]],
+    "insights":[{"text":"客户触达与转化率正相关最强（r=+0.84）","source_ids":["S01","S02"]},{"text":"响应时长与转化率负相关最强（r=-0.79）","source_ids":["S01","S02"]},{"text":"客单价与退款率接近无稳定线性关系（r=-0.06）","source_ids":["S01","S02"]}],
+    "conclusion":{"text":"优先复核客户触达、响应时长与转化率的共同驱动因素","source_ids":["S02"]},"disclosure":{"text":"合成示例数据，非真实客户数据","source_ids":["G01"]}
+  }
+}

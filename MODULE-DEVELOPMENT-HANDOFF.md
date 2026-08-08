@@ -284,3 +284,19 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - `builder/assets/test-fixtures/box-plot-missing-method.json`
 - `builder/assets/test-fixtures/box-plot-invalid-outlier.json`
 - `builder/tests/box_plot_contracts.test.mjs`
+
+## 14. correlation-matrix 纵向切片
+
+`correlation-matrix` 已作为第 39 个正式模块注册，用于在 4–10 个指标中识别最强正相关、最强负相关和弱关系，并筛选后续重点变量组合。Producer 可交付对称 NxN 系数方阵，或可复算的对齐原始观测；Builder 校验 Pearson/Spearman、样本量、缺失值处理、期间、总体、来源、显示阈值、系数范围、对角线、对称性、维度和标签唯一性。
+
+页面使用原生 PowerPoint 方形单元格和文本，同时通过行列位置、带正负号数值和发散色表达关系；右侧列出三类候选，并可见声明“相关不代表因果”。代表性匿名合成案例从无模块名/图表名的自然语言输入贯通到正式 Producer handoff 与一页 PPTX。当前验证：Producer 19/19、Builder 129/129、模块专项 11/11；语义、布局、溢出、0 图片对象和 Microsoft PowerPoint 1/1 页打开检查通过。`PRODUCT_VALUE_PASS` 仅基于代表性任务评估，`USER_REQUIREMENT_PASS` 仍为 `not_tested`。
+
+关键文件：
+
+- `builder/references/correlation-matrix-module.md`
+- `builder/scripts/validate_correlation_matrix.mjs`
+- `builder/scripts/plan_correlation_matrix.mjs`
+- `builder/scripts/render_correlation_matrix.mjs`
+- `builder/assets/test-fixtures/correlation-matrix-valid.json`
+- `builder/tests/correlation_matrix_contracts.test.mjs`
+- `builder/assets/reference-pages/correlation-matrix.pptx`
