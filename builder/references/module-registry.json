@@ -1,8 +1,8 @@
 {
   "schema_version": "3.0",
-  "skill_version": "3.3.4",
+  "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 34,
+  "productized_module_count": 35,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -129,6 +129,15 @@
       "status": "productized",
       "signals": ["has_multi_period_composition", "has_reconciled_shares"],
       "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/composition-shift-module.md"
+    },
+    {
+      "module_id": "cohort-retention",
+      "status": "productized",
+      "signals": ["has_aligned_relative_periods", "has_cohort_initial_bases"],
+      "validator": "scripts/validate_cohort_retention.mjs",
+      "planner": "scripts/plan_cohort_retention.mjs",
+      "renderer": "scripts/render_cohort_retention.mjs",
+      "reference": "references/cohort-retention-module.md"
     },
     {
       "module_id": "small-multiples",

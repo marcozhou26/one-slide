@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "module_id": "cohort-retention",
+  "source_anchors": [
+    {
+      "id": "S01",
+      "text": "各批次首周均明显流失，二月批次持续落后；较新批次未成熟周期留空"
+    },
+    {
+      "id": "S02",
+      "text": "按首次激活月份分组；各批次首次激活客户数；各相对周仍活跃的客户数及其占初始基数的比例；周；第0周；第1周；第2周；第4周；第8周；第12周；2026年1月；2026年2月；2026年3月；2026年4月；2026年5月；空白表示批次尚未成熟或周期未观察，不等于0；首周流失是所有批次的共同断点；二月批次在各个已观察周期均低于一月批次；3月以后批次的长期表现尚不能与早期批次直接下结论；数据期间：2026年1月至5月，单位为客户数，相对周期按周；优先核查首周激活体验，并等待较新批次成熟后再比较长期留存；全部批次人数与相对周期"
+    },
+    {
+      "id": "G01",
+      "text": "合成示例数据，非真实客户数据"
+    }
+  ],
+  "title": {
+    "text": "各批次首周均明显流失，二月批次持续落后；较新批次未成熟周期留空",
+    "origin": "source",
+    "source_ids": ["S01"]
+  },
+  "diagram": {
+    "type": "cohort-retention",
+    "curve_mode": "survival",
+    "relative_period_unit": { "text": "周", "source_ids": ["S02"] },
+    "cohort_definition": { "text": "按首次激活月份分组", "source_ids": ["S02"] },
+    "denominator": { "text": "各批次首次激活客户数", "source_ids": ["S02"] },
+    "measure": { "text": "各相对周仍活跃的客户数及其占初始基数的比例", "source_ids": ["S02"] },
+    "relative_periods": [
+      { "value": 0, "label": { "text": "第0周", "source_ids": ["S02"] } },
+      { "value": 1, "label": { "text": "第1周", "source_ids": ["S02"] } },
+      { "value": 2, "label": { "text": "第2周", "source_ids": ["S02"] } },
+      { "value": 4, "label": { "text": "第4周", "source_ids": ["S02"] } },
+      { "value": 8, "label": { "text": "第8周", "source_ids": ["S02"] } },
+      { "value": 12, "label": { "text": "第12周", "source_ids": ["S02"] } }
+    ],
+    "cohorts": [
+      { "id": "2026-01", "label": { "text": "2026年1月", "source_ids": ["S02"] }, "initial_count": 200, "retained_counts": [200, 170, 156, 140, 124, 116], "source_ids": ["S02"] },
+      { "id": "2026-02", "label": { "text": "2026年2月", "source_ids": ["S02"] }, "initial_count": 180, "retained_counts": [180, 147, 133, 117, 99, 90], "source_ids": ["S02"] },
+      { "id": "2026-03", "label": { "text": "2026年3月", "source_ids": ["S02"] }, "initial_count": 210, "retained_counts": [210, 176, 163, 151, 135, null], "source_ids": ["S02"] },
+      { "id": "2026-04", "label": { "text": "2026年4月", "source_ids": ["S02"] }, "initial_count": 160, "retained_counts": [160, 130, 119, 104, null, null], "source_ids": ["S02"] },
+      { "id": "2026-05", "label": { "text": "2026年5月", "source_ids": ["S02"] }, "initial_count": 190, "retained_counts": [190, 163, 148, null, null, null], "source_ids": ["S02"] }
+    ],
+    "censoring_note": { "text": "空白表示批次尚未成熟或周期未观察，不等于0", "source_ids": ["S02"] },
+    "insights": [
+      { "text": "首周流失是所有批次的共同断点", "source_ids": ["S02"] },
+      { "text": "二月批次在各个已观察周期均低于一月批次", "source_ids": ["S02"] },
+      { "text": "3月以后批次的长期表现尚不能与早期批次直接下结论", "source_ids": ["S02"] }
+    ],
+    "source_note": { "text": "数据期间：2026年1月至5月，单位为客户数，相对周期按周", "source_ids": ["S02"] },
+    "conclusion": { "text": "优先核查首周激活体验，并等待较新批次成熟后再比较长期留存", "source_ids": ["S02"] },
+    "disclosure": { "text": "合成示例数据，非真实客户数据", "source_ids": ["G01"] }
+  }
+}
