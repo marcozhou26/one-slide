@@ -139,6 +139,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 多指标关系筛选页使用 `correlation-matrix`。`diagram` 必须包含 4–10 个唯一指标 ID/标签、`method=pearson|spearman`、`sample_size`、`missing_value_handling`、`period`、`population`、`source_note`、`display_threshold`、可见 `causality_note`，以及对称 NxN `matrix` 或可复算的等长 `observations`。系数范围、对角线、对称性、维度和标签唯一性必须通过 Builder 门禁；矩阵与观测同时存在时必须对平。显示阈值和样式缺失可使用披露后的安全默认值，不得要求用户填写内部字段；数据、样本、期间、总体或来源缺失，以及口径冲突或第二个独立主图存在时，不得强制命中模块。页面必须同时用位置、带正负号的数值和颜色表达，并声明相关不代表因果。
 
+双连续变量关系页使用 `scatter-regression`。`diagram` 必须包含 `x_metric`、`x_unit`、`y_metric`、`y_unit`、`period`、`population`、`sample_definition`、`source_note`，以及 8–200 条带唯一 `id`、逐条 `x`、`y` 和来源的原始 `observations`；缺失值用 `null` 显式保留。V1 固定使用 `method=ordinary_least_squares_with_intercept`、`handling.missing=pairwise_exclusion`、`handling.duplicates=retain_as_independent` 和 `handling.outliers=retain_and_label`。Producer 交付 `sample.total/valid/missing/duplicate_pairs`、声明的 `statistics.slope/intercept/r_squared`、按绝对残差排序的 1–3 个 `highlight_ids`、页面可见的异常点规则、复算/容差/显示舍入规则和“样本内关联不代表因果，外推需另行验证”的解释边界。Builder 从未舍入原始观测复算并对平；有效配对不足、任一轴零方差、单位/期间冲突、只有汇总统计、要求显著性但没有证据，或存在第二个独立主图时，不得强制命中模块。
+
 ## builder-prompt.md
 
 Include, when applicable:
