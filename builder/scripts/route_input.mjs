@@ -14,6 +14,7 @@ const pageModelMethodMap = new Map([
   ["survival_curve", "cohort-retention"],
   ["group_distribution", "box-plot"],
   ["continuous_distribution", "histogram"],
+  ["raw_observation_distribution", "box-plot-jitter"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -44,6 +45,7 @@ const definitions = {
   "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃"], ["第0周", "后面的周数", "空白", "早期流失"]] },
   "box-plot": { aliases: ["箱线图", "盒须图", "box plot", "boxplot"], cues: [["中位数", "四分位", "中间50%", "离散", "异常值", "须线", "分布"]] },
   histogram: { aliases: ["直方图", "histogram"], cues: [["连续数值", "分箱", "区间", "集中", "偏态", "长尾", "多峰", "缺失值", "样本"]] },
+  "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -155,6 +157,17 @@ function inferHistogram(data, text) {
   return ["inferred:continuous_numeric_observations", "inferred:distribution_relationship", "inferred:traceable_measurement_metadata"];
 }
 
+function inferGroupDistribution(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const groups = Array.isArray(data.groups) ? data.groups : [];
+  if (groups.length < 2 || groups.length > 6) return null;
+  if (!groups.every((group) => group && typeof group === "object" && typeof group.name === "string" && Array.isArray(group.observations) && group.observations.length >= 5 && group.observations.length <= 60 && group.observations.every((value) => Number.isFinite(Number(value))))) return null;
+  if (groups.reduce((sum, group) => sum + group.observations.length, 0) > 240) return null;
+  const relationshipCue = ["分布", "中位数", "四分位", "异常值", "离散", "个体观测", "每位", "样本量", "密度"].some((cue) => text.includes(cue));
+  if (!relationshipCue) return null;
+  return ["inferred:grouped_raw_observations", "inferred:sample_sizes", "cue:distribution_relationship"];
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -186,8 +199,9 @@ export async function routeInput(input) {
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
   const inferredCohort = inferCohortRetention(input.data, text);
-  const inferredDistribution = inferBoxPlot(input.data, text);
+  const inferredBoxPlot = inferBoxPlot(input.data, text);
   const inferredHistogram = inferHistogram(input.data, text);
+  const inferredJitter = inferGroupDistribution(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -196,14 +210,17 @@ export async function routeInput(input) {
     .map((item) => inferredCohort && item.moduleId === "cohort-retention"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredCohort] }
       : item)
-    .map((item) => inferredDistribution && item.moduleId === "box-plot"
-      ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredDistribution] }
+    .map((item) => inferredBoxPlot && item.moduleId === "box-plot"
+      ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredBoxPlot] }
       : item)
     .map((item) => inferredHistogram && item.moduleId === "histogram"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredHistogram] }
       : item)
     .map((item) => item.moduleId === "histogram" && !inferredHistogram && !item.evidence.some((evidence) => evidence.startsWith("explicit:"))
       ? { ...item, score: 0 }
+      : item)
+    .map((item) => inferredJitter && item.moduleId === "box-plot-jitter"
+      ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredJitter] }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));

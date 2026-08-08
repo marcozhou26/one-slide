@@ -9,7 +9,7 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "histogram", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "histogram", "box-plot-jitter", "small-multiples"]);
 
 function normalizeRankMigration(data) {
   if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
@@ -169,6 +169,10 @@ function normalizeRadarHandoff(data, radarRows, rankingRows) {
 export async function loadR3ModuleInput(inputPath) {
   const data = normalizeRankMigration(JSON.parse(await fs.readFile(inputPath, "utf8")));
   if (data?.version === "1.0" && data?.module_id) return data;
+  if (data?.schema_version === "1.0" && data?.module_payload) {
+    requireCondition(data.requested_module === data.structure?.primary_exhibit && data.requested_module === data.module_payload.module_id, "ROUTE_CONFLICT", "requested_module, primary_exhibit and module_payload.module_id must match");
+    return { ...data.module_payload, input_kind: "producer-module-payload" };
+  }
   if (data?.schema_version === "1.0" && data?.requested_module === "radar-capability") {
     const base = path.dirname(inputPath);
     const radarPath = data.datasets?.find((item) => item.dataset_id === "D01")?.path;
@@ -403,6 +407,34 @@ function validateBoxPlot(data, c) {
   if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
 }
 
+function validateBoxPlotJitter(data, c) {
+  const groups = data.diagram.groups;
+  requireCondition(Array.isArray(groups) && groups.length >= 2 && groups.length <= 6, "DATA_CONTRACT_FAIL", "Distribution comparison requires 2–6 groups");
+  c.text(data.diagram.period, "Observation period");
+  c.text(data.diagram.unit, "Observation unit");
+  c.text(data.diagram.observation_definition, "Observation definition");
+  c.text(data.diagram.sample_definition, "Sample definition");
+  requireCondition(data.diagram.statistics_rule === "tukey_hinges_1_5_iqr", "BOX_STATISTICS_RULE_FAIL", "statistics_rule must be tukey_hinges_1_5_iqr");
+  c.text(data.diagram.statistics_note, "Statistics note");
+  c.text(data.diagram.jitter_note, "Jitter note");
+  const groupIds = new Set();
+  for (const group of groups) {
+    requireCondition(typeof group.id === "string" && group.id.trim() !== "" && !groupIds.has(group.id), "DATA_CONTRACT_FAIL", "Group ids must be non-empty and unique");
+    groupIds.add(group.id);
+    c.text(group.label, "Group label");
+    requireCondition(Array.isArray(group.observations) && group.observations.length >= 5 && group.observations.length <= 60, "DATA_CONTRACT_FAIL", "Each group requires 5–60 raw observations");
+    requireCondition(group.observations.every(Number.isFinite), "ABNORMAL_FORMAT_FAIL", "Raw observations must be finite numbers");
+    requireCondition(group.n === group.observations.length, "SAMPLE_SIZE_MISMATCH", `Declared sample size for ${group.label.text} must equal the raw observation count`);
+    c.source(group.source_ids, "Raw observations");
+  }
+  const totalPoints = groups.reduce((sum, group) => sum + group.observations.length, 0);
+  requireCondition(totalPoints <= 240, "SINGLE_SLIDE_FIT_FAIL", "The page supports at most 240 editable observation points");
+  requireCondition(Array.isArray(data.diagram.insights) && data.diagram.insights.length >= 1 && data.diagram.insights.length <= 3, "DATA_CONTRACT_FAIL", "Distribution comparison requires 1–3 source-backed insights");
+  data.diagram.insights.forEach((item) => c.text(item, "Distribution insight"));
+  if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
+}
+
 export function calculateHistogram(diagram) {
   const edges = diagram.binning.edges;
   const counts = Array(edges.length - 1).fill(0);
@@ -455,7 +487,6 @@ function validateHistogram(data, c) {
   if (diagram.disclosure) c.text(diagram.disclosure, "Disclosure");
   return calculated;
 }
-
 function validateSmallMultiples(data, c) {
   const panels = data.diagram.panels;
   requireCondition([4, 6, 9].includes(panels?.length), "DATA_CONTRACT_FAIL", "Small multiples requires 4, 6, or 9 panels");
@@ -481,7 +512,7 @@ export function validateR3Module(data) {
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, histogram: validateHistogram, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, histogram: validateHistogram, "box-plot-jitter": validateBoxPlotJitter, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 

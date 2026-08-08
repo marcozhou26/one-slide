@@ -26,5 +26,6 @@ export function planR3Module(data) {
   if (data.module_id === "composition-shift") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   if (data.module_id === "box-plot") return { ...base, chart: { left: 60, top: 136, width: 866, height: 456 }, rail: { left: 952, top: 128, width: 274, height: 464 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   if (data.module_id === "histogram") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
+  if (data.module_id === "box-plot-jitter") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   return { ...base, grid: { left: 60, top: 130, width: 892, height: 464 }, rail: { left: 982, top: 128, width: 244, height: 468 }, bottom: { left: 54, top: 626, width: 1172, height: 38 } };
 }

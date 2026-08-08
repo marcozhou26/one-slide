@@ -148,6 +148,8 @@ For comparable group distributions, use `box-plot` only when 3–8 groups share 
 
 For continuous numeric distributions, use `histogram` only when the reader needs to understand concentration, skew, tails, or multiple peaks for one metric and one period. Preserve the raw numeric observations with explicit nulls, metric, unit, period, denominator, total/valid/missing sample counts, `frequency_basis`, and reproducible `explicit_edges` binning. Producer may calculate bins but must also hand off the original observations and declared inclusion rules so Builder can reproduce every count. Do not use a categorical column chart, silently drop missing values, or merge conflicting units or periods. Sparse natural language may use a declared reversible binning default only when the observations and measurement metadata are present; missing observations or conflicting unit/period is blocking for the formal module payload.
 
+For grouped distribution pages, use `box-plot-jitter` only when the reader must compare 2–6 groups while retaining every raw observation. The payload must include a shared period and unit, the observation grain, sample inclusion/denominator rule, each group's unique ID, label, declared `n`, 5–60 raw observations and source IDs, with no more than 240 observations on the page. Set `statistics_rule=tukey_hinges_1_5_iqr`, provide a visible statistics note and a visible statement that horizontal jitter is only a visual displacement and does not change values. Do not synthesize raw observations for a named real organization without authorization and disclosure. If only aggregated medians or quartiles are available, omit the module fields rather than inventing individual records.
+
 ### 7. Validate the package
 
 Run:
