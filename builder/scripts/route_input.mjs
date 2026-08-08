@@ -10,6 +10,8 @@ const pageModelMethodMap = new Map([
   ["multi_period_rank_migration", "bump-ranking"],
   ["composition_shift", "composition-shift"],
   ["share_shift", "composition-shift"],
+  ["cohort_retention", "cohort-retention"],
+  ["survival_curve", "cohort-retention"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -37,6 +39,7 @@ const definitions = {
   "dumbbell-gap": { aliases: ["哑铃图", "哑铃点图", "dumbbell"], cues: [["现状", "目标", "标杆", "差距", "指标"]] },
   "bump-ranking": { aliases: ["排名迁移图", "坡度图", "bump chart", "slope chart", "slope-ranking"], cues: [["排名", "时点", "上升", "下降", "榜单", "多期"]] },
   "composition-shift": { aliases: ["构成变化图", "百分比堆积柱状图", "100%堆积柱状图", "composition shift"], cues: [["占比", "构成", "时期", "合计100%", "结构变化"]] },
+  "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃"], ["第0周", "后面的周数", "空白", "早期流失"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -99,6 +102,23 @@ function inferCompositionShift(data, text) {
   return ["inferred:reconciled_component_series", "inferred:multi_period_totals", "cue:structure_relationship"];
 }
 
+function inferCohortRetention(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const periods = Array.isArray(data.relative_periods) ? data.relative_periods : [];
+  const cohorts = Array.isArray(data.cohorts) ? data.cohorts : [];
+  if (periods.length < 4 || periods.length > 12 || cohorts.length < 3 || cohorts.length > 8) return null;
+  const periodValues = periods.map((period) => Number(typeof period === "object" ? period.value : period));
+  if (!periodValues.every((value, index) => Number.isFinite(value) && (index === 0 ? value === 0 : value > periodValues[index - 1]))) return null;
+  const aligned = cohorts.every((cohort) => {
+    const values = cohort?.retained_counts ?? cohort?.retention_rates;
+    return Number.isFinite(Number(cohort?.initial_count)) && Number(cohort.initial_count) > 0 && Array.isArray(values) && values.length === periods.length;
+  });
+  if (!aligned) return null;
+  const relationshipCue = ["批次", "相对", "加入", "入职", "获客", "激活", "留存", "存续", "流失"].some((cue) => text.includes(cue));
+  if (!relationshipCue) return null;
+  return ["inferred:aligned_relative_periods", "inferred:cohort_initial_bases", "cue:cohort_comparison"];
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -127,10 +147,14 @@ export async function routeInput(input) {
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
+  const inferredCohort = inferCohortRetention(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
       ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredComposition] }
+      : item)
+    .map((item) => inferredCohort && item.moduleId === "cohort-retention"
+      ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredCohort] }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));

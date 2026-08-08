@@ -18,6 +18,7 @@ const blindCases = [
   ["dumbbell-gap", { input_mode: "text", text: "十项指标分别列现状、目标和标杆，按差距绝对值排序并标明改善难度" }],
   ["bump-ranking", { input_mode: "text", text: "比较两个时点的前十榜单排名，标出上升、下降、新进入与退出" }],
   ["composition-shift", { input_mode: "text", text: "比较2022到2025年四类收入占比的结构变化，每期合计100%" }],
+  ["cohort-retention", { input_mode: "text", text: "按首次激活月份分批，从第0周起比较第1、2、4、8周仍活跃的人数；较新批次后面的周数尚未观察，空白不能当0" }],
   ["small-multiples", { input_mode: "text", text: "九条业务线放进3×3矩阵，每格重复同一迷你折线并统一刻度和公司基准" }],
   ["sankey-flow", { input_mode: "text", text: "展示获客渠道到筛选再到成交和续约的四层分流，流带宽度按人数，损耗流向下方" }],
   ["chord-dependency", { input_mode: "data", data: { 圆周: ["销售", "产品", "交付", "财务", "人力"], 双向依赖: [], 交互强度: [] } }],
@@ -38,7 +39,7 @@ const blindCases = [
   ["hr-ticket-classification", { input_mode: "text", text: "按薪酬、招聘、员工关系等工单分类统计重分类率、优先级和服务水平" }],
 ];
 
-test("thirty-three unfamiliar text, data and mixed inputs route across every module category", async () => {
+test("thirty-four unfamiliar text, data and mixed inputs route across every module category", async () => {
   for (const [expected, input] of blindCases) {
     const result = await routeInput(input);
     assert.equal(result.decision, "selected", JSON.stringify({ expected, result }));

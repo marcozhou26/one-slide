@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added the productized `cohort-retention` module for 3–8 cohorts across 4–12 aligned relative periods, with explicit initial bases, counts/rates reconciliation, survival versus period-retention semantics, and trailing censoring that never converts unobserved periods to zero.
+- Added relationship-first routing from anonymous natural language and aligned cohort arrays, while preserving the narrower `hr-new-hire-survival` module for its fixed 0–24 month benchmark-and-risk-matrix page.
+- Added Producer handoff rules, complete/sparse/conflict/missing/censoring/abnormal-format fixtures, native-editable rendering, registry coverage, and PowerPoint QA hooks.
+
 ## Unreleased — chart module upgrades
 
 - Upgraded the public rank-migration module from the two-period `slope-ranking` contract to the multi-period `bump-ranking` contract.

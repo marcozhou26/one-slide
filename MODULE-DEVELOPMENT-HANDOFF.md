@@ -102,6 +102,29 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 - `builder/assets/test-fixtures/composition-shift-length-mismatch.json`
 - `builder/tests/composition_shift_contracts.test.mjs`
 
+## 4.1 已完成的 cohort-retention 纵向切片
+
+`cohort-retention` 已作为第 35 个正式模块注册，用于 3–8 个加入、入职、获客或首次激活批次在 4–12 个相对周期上的留存或存续比较。它显式保留初始基数、人数／比例、分母、单位、期间和未成熟尾期，并与固定四组、0–24 月、行业基准加风险矩阵的 `hr-new-hire-survival` 保持业务边界。
+
+已完成：
+
+- Case Factory 匿名自然语言案例不出现模块名和图表名，仍能自动识别批次、相对周期、早期流失和未成熟尾期关系；
+- Producer 同步增加完整可执行 payload 规则，`requested_module`、`structure.primary_exhibit` 与 `module_payload.module_id` 对齐；
+- 独立 reference、validator、planner、renderer、正式注册表和参考 PPTX；
+- 完整人数、仅比例、缺少初始基数、人数比例冲突、存续回升、当期留存回升、非尾部空值、非阻塞样式缺失和损坏 JSON 测试；
+- 一页原生可编辑 PPTX；语义、布局、溢出和对象审计通过；Microsoft PowerPoint 实际打开为 1/1 页、92 个原生 shape、0 图片对象；
+- 当前回归：Producer 18/18、Builder 90/90、模块专项 10/10。
+
+关键文件：
+
+- `builder/references/cohort-retention-module.md`
+- `builder/scripts/validate_cohort_retention.mjs`
+- `builder/scripts/plan_cohort_retention.mjs`
+- `builder/scripts/render_cohort_retention.mjs`
+- `builder/assets/test-fixtures/cohort-retention-valid.json`
+- `builder/tests/cohort_retention_contracts.test.mjs`
+- `builder/assets/reference-pages/cohort-retention.pptx`
+
 ## 5. Producer 与 Builder 的模块交接规则
 
 新增模块不能只改 Builder。只要模块需要 Producer 生成可执行 payload，就必须同时完成：

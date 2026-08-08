@@ -129,6 +129,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 多期构成变化页使用 `composition-shift`。`diagram` 必须包含 3–8 个有序 `periods`、2–6 个带唯一 `id` 的 `components`、与时期等长的 `shares`、`basis`、`denominator`、`unit` 和 1–3 条来源支持的 `insights`。每期占比必须对平到 100%。`basis=absolute` 时还要传入各构成的 `values`、每期 `totals` 和 `total_source_ids`，三者必须一致。缺失分母、期间口径冲突、构成项不稳定或页面还需第二个主图时，不得强制命中模块。
 
+分群留存或存续页使用 `cohort-retention`。`diagram` 必须包含 4–12 个严格递增且从 0 开始的 `relative_periods`、`relative_period_unit`、`cohort_definition`、`denominator`、`measure`、`curve_mode`，以及 3–8 个带唯一 `id`、`initial_count` 和等长 `retained_counts` 或 `retention_rates` 的 cohort。Producer 不要求用户重复填写人数和比例；只提供一种时由 Builder 计算另一种，两者都有时必须对平。未成熟或未观察周期只能作为尾部连续 `null`，并提供页面可见的 `censoring_note`，不得补 0。`survival` 必须非递增；允许真实回升的当期活跃口径使用 `period_retention`。固定四组、0–24 月并同时要求行业基准和风险矩阵的页面继续使用 `hr-new-hire-survival`。存在第二个独立主图时不得强制命中本模块。
+
 ## builder-prompt.md
 
 Include, when applicable:
