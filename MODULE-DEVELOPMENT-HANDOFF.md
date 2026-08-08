@@ -78,7 +78,29 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 - `builder/assets/test-fixtures/slope-ranking-valid.json`
 - `builder/references/slope-ranking-module.md`
 
-## 4. Producer 与 Builder 的模块交接规则
+## 4. 已完成的 composition-shift 纵向切片
+
+`composition-shift` 已作为第 34 个正式模块注册，用于 3–8 个时期、2–6 个稳定构成项的多期占比变化。它与 `marimekko` 分工明确：前者固定柱宽、回答结构如何变化；后者用宽度同时表达细分规模。
+
+已完成：
+
+- Producer 能识别多期构成关系并生成完整、可执行 payload；
+- `share` 与 `absolute` 两种口径，绝对值模式同时核对分母、总量与占比；
+- 每期占比强制对平到 100%，阻止数组错位、重复 ID、未知重点构成和分母冲突；
+- 自然语言、显式模块、完整输入、稀疏输入、异常合计和异常长度测试；
+- 原生 PowerPoint 堆积矩形、文字、轴线和洞察区；
+- 参考文件：`builder/assets/reference-pages/composition-shift.pptx`；
+- Artifact Tool 渲染、溢出、原生对象和 Microsoft PowerPoint 实际打开检查通过。
+
+关键文件：
+
+- `builder/references/composition-shift-module.md`
+- `builder/assets/test-fixtures/composition-shift-valid.json`
+- `builder/assets/test-fixtures/composition-shift-bad-total.json`
+- `builder/assets/test-fixtures/composition-shift-length-mismatch.json`
+- `builder/tests/composition_shift_contracts.test.mjs`
+
+## 5. Producer 与 Builder 的模块交接规则
 
 新增模块不能只改 Builder。只要模块需要 Producer 生成可执行 payload，就必须同时完成：
 
@@ -109,7 +131,7 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 
 不要为新任务生成旧的 `left_period`、`right_period`、`left_rank`、`right_rank` 字段。
 
-## 5. 新增模块的最小纵向切片
+## 6. 新增模块的最小纵向切片
 
 每个新模块必须一次完成一条真实可用链路，而不是只提交 renderer：
 
@@ -139,7 +161,7 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 
 不要先批量堆底层组件，再等待最后统一接入。第一个模块就必须能从代表性输入运行到用户可见的一页 PPT。
 
-## 6. 模块契约应回答的问题
+## 7. 模块契约应回答的问题
 
 开发前先写清楚：
 
@@ -152,7 +174,7 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 - 一页内哪些内容是主图，哪些是 0–3 个支持证据，哪些是 0–1 个行动/条件区？
 - 用户真正需要编辑什么：文字、数字、线条、节点、表格还是数据关系？
 
-## 7. 验收门禁
+## 8. 验收门禁
 
 必须分别报告，不得合并：
 
@@ -184,17 +206,19 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 
 文件存在、脚本跑通、ZIP 完整或 layout JSON 通过，都不能单独证明用户要求已经满足。最终仍要检查实际渲染和 PowerPoint 原生编辑性。
 
-## 8. 当前已知状态
+## 9. 当前已知状态
 
 - Producer 契约测试：18/18 通过；
 - bump-ranking 相关测试：22/22 通过；
-- Builder 全量测试：在默认 Node 环境中 70/71 通过，唯一失败是既有 Sankey 渲染测试缺少 `@oai/artifact-tool`；
+- Builder 全量测试：使用 bundled `@oai/artifact-tool` 运行 78/78 通过；
 - bump-ranking 已使用 bundled `@oai/artifact-tool` 成功生成 PPTX；
 - bump-ranking 的布局审计和溢出检查通过；
 - PPTX 内部确认使用原生文本框、椭圆、线条和矩形，没有整页图片；
-- Microsoft PowerPoint 应用内复核曾因当前 PowerPoint 进程无法激活而未完成，状态保持 `not_tested`，不得误报为通过。
+- bump-ranking 已在 Microsoft PowerPoint 中实际打开，确认 1/1 页、窗口正常渲染并暴露 94 个可独立编辑的布局对象；
+- composition-shift 的 validator、planner、路由、异常输入、渲染和溢出测试通过；参考 PPTX 在 Microsoft PowerPoint 中实际打开，确认 1/1 页、60 个原生形状、0 个图片对象；
+- Producer 套件测试 18/18 通过，发布源目录校验通过；`PRODUCT_VALUE_PASS` 与 `USER_REQUIREMENT_PASS` 仍为 `not_tested`。
 
-## 9. 建议的新工作空间启动顺序
+## 10. 建议的新工作空间启动顺序
 
 1. 将本交接文件和整个 `one-slide-github-public` 工作树作为初始上下文；
 2. 先运行 Producer 契约测试和 Builder registry/fixture 测试；
@@ -205,7 +229,7 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 7. 只有该模块通过后，再抽取至少两个模块都需要的共享底座；
 8. 每完成一个模块，回写模块注册表、CHANGELOG 和本交接文件的状态。
 
-## 10. 不要做的事
+## 11. 不要做的事
 
 - 不要把 ECharts 示例直接复制进 OneSlide 作为静态图；它只能作为图形研究参考；
 - 不要只新增 Builder renderer 而不更新 Producer 交接规则；
@@ -215,6 +239,6 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - 不要把旧模块删除到无法兼容已有运行包；
 - 不要把技术链路通过冒充用户验收通过。
 
-## 11. 迁移时的工作树提醒
+## 12. 迁移时的工作树提醒
 
-当前工作树中另有一个 `builder/scripts/plan_r4_module.mjs` 的未提交修改，不属于本次 bump-ranking 交接内容。迁移到新空间时请单独确认它的来源和是否保留，不要把它误并入新模块基线。
+`builder/scripts/plan_r4_module.mjs` 的 Sankey SLA 底部说明区修改已独立提交为 `123586f`，没有混入 bump-ranking 或 composition-shift。bump-ranking 基线提交为 `bbdab2b`。后续模块继续保持“一模块一条完整纵向切片”的独立提交边界。

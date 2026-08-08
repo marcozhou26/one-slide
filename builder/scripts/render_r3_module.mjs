@@ -6,6 +6,7 @@ import { planR3Module } from "./plan_r3_module.mjs";
 import { loadR3ModuleInput } from "./validate_r3_module.mjs";
 
 const STACK = [COLORS.orange, COLORS.navy, COLORS.blue, COLORS.line, COLORS.soft];
+const COMPOSITION_STACK = [COLORS.orange, COLORS.navy, COLORS.blue, "#5B8E7D", COLORS.line, "#6A5D8C"];
 const PALE_ORANGE = COLORS.orangeLight;
 const PALE_BLUE = COLORS.blueLight;
 
@@ -231,6 +232,45 @@ function renderBump(slide, data, plan) {
   bottom(slide, plan.bottom, data.diagram.conclusion);
 }
 
+function renderCompositionShift(slide, data, plan) {
+  panel(slide, "composition-frame", plan.chart);
+  const periods = data.diagram.periods;
+  const components = data.diagram.components;
+  const plot = { left: plan.chart.left + 76, top: plan.chart.top + 82, width: plan.chart.width - 116, height: plan.chart.height - 142 };
+  for (let tick = 0; tick <= 4; tick += 1) {
+    const y = plot.top + tick / 4 * plot.height;
+    line(slide, `composition-grid-${tick}`, plot.left, y, plot.left + plot.width, y, "solid", COLORS.border, .7);
+    addTextBox(slide, { name: `composition-tick-${tick}`, text: `${100 - tick * 25}%`, position: { left: plan.chart.left + 2, top: y - 12, width: 62, height: 24 }, fontSize: 14, color: COLORS.muted, alignment: "right" });
+  }
+  const legendWidth = Math.min(150, (plot.width - 24) / components.length);
+  components.forEach((component, index) => {
+    const color = COMPOSITION_STACK[index];
+    const left = plot.left + index * legendWidth;
+    slide.shapes.add({ name: `composition-legend-swatch-${index + 1}`, geometry: "rect", position: { left, top: plan.chart.top + 24, width: 16, height: 16 }, fill: color, line: { style: "solid", fill: color, width: 0 } });
+    addTextBox(slide, { name: `composition-legend-${index + 1}`, text: component.label.text, position: { left: left + 22, top: plan.chart.top + 17, width: legendWidth - 24, height: 30 }, fontSize: 14, bold: component.id === data.diagram.focus_component_id, color: component.id === data.diagram.focus_component_id ? COLORS.orange : COLORS.text });
+  });
+  const slot = plot.width / periods.length;
+  const columnWidth = Math.min(88, slot * .58);
+  periods.forEach((period, periodIndex) => {
+    const left = plot.left + periodIndex * slot + (slot - columnWidth) / 2;
+    let cursorY = plot.top + plot.height;
+    components.forEach((component, componentIndex) => {
+      const share = component.shares[periodIndex];
+      const height = plot.height * share / 100;
+      cursorY -= height;
+      const color = COMPOSITION_STACK[componentIndex];
+      if (height > 0) slide.shapes.add({ name: `composition-${periodIndex + 1}-${componentIndex + 1}`, geometry: "rect", position: { left, top: cursorY, width: columnWidth, height }, fill: color, line: { style: "solid", fill: COLORS.white, width: 1.2 } });
+      if (height >= 28) addTextBox(slide, { name: `composition-label-${periodIndex + 1}-${componentIndex + 1}`, text: `${share}%`, position: { left: left + 3, top: cursorY + height / 2 - 12, width: columnWidth - 6, height: 24 }, fontSize: 14, bold: component.id === data.diagram.focus_component_id, color: [0, 1, 2, 3, 5].includes(componentIndex) ? COLORS.white : COLORS.text, alignment: "center" });
+    });
+    if (data.diagram.basis === "absolute") addTextBox(slide, { name: `composition-total-${periodIndex + 1}`, text: `${data.diagram.totals[periodIndex]} ${data.diagram.unit.text}`, position: { left: left - 20, top: plot.top - 30, width: columnWidth + 40, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, alignment: "center" });
+    addTextBox(slide, { name: `composition-period-${periodIndex + 1}`, text: period.text, position: { left: left - 18, top: plot.top + plot.height + 8, width: columnWidth + 36, height: 30 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "center" });
+  });
+  addTextBox(slide, { name: "composition-denominator", text: `分母：${data.diagram.denominator.text}`, position: { left: plan.chart.left + 18, top: plan.chart.top + plan.chart.height - 30, width: 340, height: 22 }, fontSize: 12, color: COLORS.muted });
+  if (data.diagram.disclosure) addTextBox(slide, { name: "composition-disclosure", text: data.diagram.disclosure.text, position: { left: plan.chart.left + 370, top: plan.chart.top + plan.chart.height - 30, width: plan.chart.width - 388, height: 22 }, fontSize: 12, bold: true, color: COLORS.orange, alignment: "right" });
+  insights(slide, plan.rail, data.diagram.insights);
+  bottom(slide, plan.bottom, data.diagram.conclusion);
+}
+
 function renderSmallMultiples(slide, data, plan) {
   const panels = data.diagram.panels; const cols = panels.length === 4 ? 2 : 3; const rows = Math.ceil(panels.length / cols); const gap = 12; const w = (plan.grid.width - gap * (cols - 1)) / cols; const h = (plan.grid.height - gap * (rows - 1)) / rows; const all = panels.flatMap((p) => p.values).concat(data.diagram.benchmark); const min = Math.min(...all); const max = Math.max(...all);
   const classColor = (text) => /加大|增长|领先/.test(text) ? COLORS.blue : /退出|落后|收缩/.test(text) ? COLORS.orange : COLORS.muted;
@@ -251,7 +291,7 @@ function renderSmallMultiples(slide, data, plan) {
 
 export async function renderR3Module(data, output) {
   const plan = planR3Module(data); const { presentation, slide } = createPresentation(output.background); header(slide, plan);
-  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
+  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output); return plan;
 }
 async function main() { const options = parseCliArgs(process.argv.slice(2)); const data = await loadR3ModuleInput(options.input); const plan = await renderR3Module(data, options); process.stdout.write(`${JSON.stringify({ ok: true, module: data.module_id, input_kind: data.input_kind ?? "module-fixture", slide: plan.slide })}\n`); }

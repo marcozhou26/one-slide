@@ -8,6 +8,8 @@ const registryPath = path.join(scriptDir, "..", "references", "module-registry.j
 const pageModelMethodMap = new Map([
   ["two_period_rank_migration", "bump-ranking"],
   ["multi_period_rank_migration", "bump-ranking"],
+  ["composition_shift", "composition-shift"],
+  ["share_shift", "composition-shift"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -34,6 +36,7 @@ const definitions = {
   "radar-capability": { aliases: ["雷达图", "九维雷达", "radar chart"], cues: [["能力维度", "当前水平", "行业中位", "目标", "成熟度"]] },
   "dumbbell-gap": { aliases: ["哑铃图", "哑铃点图", "dumbbell"], cues: [["现状", "目标", "标杆", "差距", "指标"]] },
   "bump-ranking": { aliases: ["排名迁移图", "坡度图", "bump chart", "slope chart", "slope-ranking"], cues: [["排名", "时点", "上升", "下降", "榜单", "多期"]] },
+  "composition-shift": { aliases: ["构成变化图", "百分比堆积柱状图", "100%堆积柱状图", "composition shift"], cues: [["占比", "构成", "时期", "合计100%", "结构变化"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },

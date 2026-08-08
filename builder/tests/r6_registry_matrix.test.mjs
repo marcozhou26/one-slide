@@ -22,18 +22,19 @@ const validator = (moduleId) => {
   if (moduleId === "issue-tree") return validateIssueTree;
   if (moduleId === "stage-process") return validateStageProcess;
   if (moduleId === "waterfall-attribution") return validateWaterfall;
-  const index = registry.modules.filter((item) => item.module_id !== "complex-org-chart").findIndex((item) => item.module_id === moduleId);
-  if (index < 9) return validateR2Module;
-  if (index < 15) return validateR3Module;
-  if (index < 22) return validateR4Module;
-  return validateR5Module;
+  const validatorPath = registry.modules.find((item) => item.module_id === moduleId)?.validator;
+  if (validatorPath === "scripts/validate_r2_module.mjs") return validateR2Module;
+  if (validatorPath === "scripts/validate_r3_module.mjs") return validateR3Module;
+  if (validatorPath === "scripts/validate_r4_module.mjs") return validateR4Module;
+  if (validatorPath === "scripts/validate_r5_module.mjs") return validateR5Module;
+  throw new Error(`No validator test adapter for ${moduleId}`);
 };
 
-test("the V3 registry preserves 33 productized modules with resolvable runtime files", async () => {
-  assert.equal(registry.skill_version, "3.3.3");
-  assert.equal(registry.productized_module_count, 33);
-  assert.equal(registry.modules.length, 33);
-  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 33);
+test("the V3 registry preserves 34 productized modules with resolvable runtime files", async () => {
+  assert.equal(registry.skill_version, "3.3.4");
+  assert.equal(registry.productized_module_count, 34);
+  assert.equal(registry.modules.length, 34);
+  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 34);
   for (const module of registry.modules) {
     assert.equal(module.status, "productized");
     for (const field of ["validator", "planner", "renderer", "reference"]) {
@@ -43,7 +44,7 @@ test("the V3 registry preserves 33 productized modules with resolvable runtime f
   }
 });
 
-test("all 33 complete fixtures validate without style input and missing core content is blocked", async () => {
+test("all 34 complete fixtures validate without style input and missing core content is blocked", async () => {
   for (const module of registry.modules) {
     const fixturePath = path.join(skillRoot, "assets/test-fixtures", fixtureName(module.module_id));
     const data = JSON.parse(await fs.readFile(fixturePath, "utf8"));

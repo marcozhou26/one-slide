@@ -127,6 +127,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 排名迁移页使用正式模块 ID `bump-ranking`。Producer 交接时应使用 `diagram.periods` 和每个对象的 `ranks`、`values`、`states` 数组；数组长度必须与时期数一致，时期保持原始顺序。两期数据可以由 Builder 呈现为 slope-style 视觉，三期及以上数据呈现为 Bump Chart。新进入、退出或暂未上榜必须显式写入 `states`，不能靠颜色或文案猜测。旧版 `slope-ranking` 的左右字段只用于兼容已有运行包，不作为新提示词的生成目标。
 
+多期构成变化页使用 `composition-shift`。`diagram` 必须包含 3–8 个有序 `periods`、2–6 个带唯一 `id` 的 `components`、与时期等长的 `shares`、`basis`、`denominator`、`unit` 和 1–3 条来源支持的 `insights`。每期占比必须对平到 100%。`basis=absolute` 时还要传入各构成的 `values`、每期 `totals` 和 `total_source_ids`，三者必须一致。缺失分母、期间口径冲突、构成项不稳定或页面还需第二个主图时，不得强制命中模块。
+
 ## builder-prompt.md
 
 Include, when applicable:

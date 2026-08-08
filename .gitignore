@@ -10,6 +10,8 @@ node_modules/
 *.log
 *.tmp
 *.bak
+~$*.pptx
+*.layout.json.audit.json
 dist/
 build/
 qa/

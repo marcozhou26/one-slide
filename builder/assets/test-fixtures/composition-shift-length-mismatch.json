@@ -1,0 +1,6 @@
+{
+  "version":"1.0","module_id":"composition-shift",
+  "source_anchors":[{"id":"S01","text":"异常测试；2022；2023；2024；收入占比（%）；当年收入；A；B；结构变化"}],
+  "title":{"text":"异常测试","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"composition-shift","basis":"share","denominator":{"text":"当年收入","source_ids":["S01"]},"unit":{"text":"收入占比（%）","source_ids":["S01"]},"periods":[{"text":"2022","source_ids":["S01"]},{"text":"2023","source_ids":["S01"]},{"text":"2024","source_ids":["S01"]}],"components":[{"id":"a","label":{"text":"A","source_ids":["S01"]},"shares":[60,55],"source_ids":["S01"]},{"id":"b","label":{"text":"B","source_ids":["S01"]},"shares":[40,45,48],"source_ids":["S01"]}],"insights":[{"text":"结构变化","source_ids":["S01"]}]}
+}
