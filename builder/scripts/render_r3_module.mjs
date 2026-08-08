@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { COLORS, addChartLine, addNode, addTextBox, createPresentation, exportPresentation, fitPageTitleFontSize, parseCliArgs } from "./pptx_core.mjs";
 import { planR3Module } from "./plan_r3_module.mjs";
-import { loadR3ModuleInput } from "./validate_r3_module.mjs";
+import { calculateHistogram, loadR3ModuleInput } from "./validate_r3_module.mjs";
 
 const STACK = [COLORS.orange, COLORS.navy, COLORS.blue, COLORS.line, COLORS.soft];
 const COMPOSITION_STACK = [COLORS.orange, COLORS.navy, COLORS.blue, "#5B8E7D", COLORS.line, "#6A5D8C"];
@@ -333,6 +333,40 @@ function renderBoxPlot(slide, data, plan) {
   bottom(slide, plan.bottom, data.diagram.conclusion);
 }
 
+function renderHistogram(slide, data, plan) {
+  panel(slide, "histogram-frame", plan.chart);
+  const diagram = data.diagram;
+  const calculated = calculateHistogram(diagram);
+  const counts = calculated.counts;
+  const edges = diagram.binning.edges;
+  const plot = { left: plan.chart.left + 72, top: plan.chart.top + 78, width: plan.chart.width - 112, height: plan.chart.height - 174 };
+  const displayValues = diagram.frequency_basis === "frequency" ? counts.map((count) => count / calculated.valid * 100) : counts;
+  const maxValue = Math.max(...displayValues, 1);
+  const tickMax = Math.ceil(maxValue / 5) * 5;
+  for (let tick = 0; tick <= 4; tick += 1) {
+    const value = tickMax * (4 - tick) / 4;
+    const y = plot.top + tick / 4 * plot.height;
+    line(slide, `histogram-grid-${tick}`, plot.left, y, plot.left + plot.width, y, "solid", COLORS.border, .7);
+    addTextBox(slide, { name: `histogram-y-${tick}`, text: diagram.frequency_basis === "frequency" ? `${value.toFixed(0)}%` : String(Math.round(value)), position: { left: plan.chart.left + 4, top: y - 12, width: 58, height: 24 }, fontSize: 14, color: COLORS.muted, alignment: "right" });
+  }
+  addTextBox(slide, { name: "histogram-axis-title", text: diagram.frequency_basis === "frequency" ? "频率（有效样本占比）" : "频数（个）", position: { left: plot.left, top: plan.chart.top + 20, width: 260, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy });
+  const slot = plot.width / counts.length;
+  counts.forEach((count, index) => {
+    const height = plot.height * displayValues[index] / tickMax;
+    const left = plot.left + index * slot;
+    const top = plot.top + plot.height - height;
+    const isMode = count === Math.max(...counts);
+    slide.shapes.add({ name: `histogram-bar-${index + 1}`, geometry: "rect", position: { left, top, width: slot, height }, fill: isMode ? COLORS.orange : COLORS.blue, line: { style: "solid", fill: COLORS.white, width: .8 } });
+    addTextBox(slide, { name: `histogram-count-${index + 1}`, text: diagram.frequency_basis === "frequency" ? `${displayValues[index].toFixed(1)}%` : String(count), position: { left: left - 2, top: Math.max(plot.top - 2, top - 27), width: slot + 4, height: 24 }, fontSize: 14, bold: isMode, color: isMode ? COLORS.orange : COLORS.navy, alignment: "center", singleLine: true });
+    addTextBox(slide, { name: `histogram-bin-${index + 1}`, text: index === counts.length - 1 && diagram.binning.last_bin_inclusive ? `${edges[index]}–${edges[index + 1]}` : `${edges[index]}–<${edges[index + 1]}`, position: { left: left - 8, top: plot.top + plot.height + 8, width: slot + 16, height: 30 }, fontSize: 12, color: COLORS.text, alignment: "center", singleLine: true });
+  });
+  addTextBox(slide, { name: "histogram-x-title", text: `${diagram.metric.text}（${diagram.unit.text}）`, position: { left: plot.left, top: plot.top + plot.height + 42, width: plot.width, height: 26 }, fontSize: 14, bold: true, color: COLORS.navy, alignment: "center" });
+  addTextBox(slide, { name: "histogram-method", text: `样本 ${calculated.total}，有效 ${calculated.valid}，缺失 ${calculated.missing}；左闭右开，末箱含上界；期间：${diagram.period.text}`, position: { left: plan.chart.left + 16, top: plan.chart.top + plan.chart.height - 30, width: plan.chart.width - 32, height: 22 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
+  insights(slide, plan.rail, diagram.insights, "分布解读");
+  bottom(slide, plan.bottom, diagram.conclusion);
+  slide.speakerNotes.textFrame.setText(`[Sources]\n- ${diagram.disclosure?.text ?? "用户提供数据"}\n- 指标：${diagram.metric.text}；单位：${diagram.unit.text}；期间：${diagram.period.text}；分箱边界：${edges.join(", ")}。`);
+}
+
 function renderSmallMultiples(slide, data, plan) {
   const panels = data.diagram.panels; const cols = panels.length === 4 ? 2 : 3; const rows = Math.ceil(panels.length / cols); const gap = 12; const w = (plan.grid.width - gap * (cols - 1)) / cols; const h = (plan.grid.height - gap * (rows - 1)) / rows; const all = panels.flatMap((p) => p.values).concat(data.diagram.benchmark); const min = Math.min(...all); const max = Math.max(...all);
   const classColor = (text) => /加大|增长|领先/.test(text) ? COLORS.blue : /退出|落后|收缩/.test(text) ? COLORS.orange : COLORS.muted;
@@ -353,7 +387,7 @@ function renderSmallMultiples(slide, data, plan) {
 
 export async function renderR3Module(data, output) {
   const plan = planR3Module(data); const { presentation, slide } = createPresentation(output.background); header(slide, plan);
-  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "box-plot": renderBoxPlot, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
+  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "box-plot": renderBoxPlot, histogram: renderHistogram, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output); return plan;
 }
 async function main() { const options = parseCliArgs(process.argv.slice(2)); const data = await loadR3ModuleInput(options.input); const plan = await renderR3Module(data, options); process.stdout.write(`${JSON.stringify({ ok: true, module: data.module_id, input_kind: data.input_kind ?? "module-fixture", slide: plan.slide })}\n`); }

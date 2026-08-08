@@ -133,6 +133,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 分组分布比较页使用 `box-plot`。`diagram` 必须包含 3–8 个同口径组，以及页面可见的 `period`、`unit`、`denominator`、`sample_definition`、`missing_policy`、`quartile_method`、`whisker_multiplier=1.5` 和 `whisker_rule`。每组必须传入有效 `sample_size`、`missing_count`、`whisker_low`、`q1`、`median`、`q3`、`whisker_high`、逐点 `outliers` 和来源。四分位算法使用 `PERCENTILE.INC（线性插值，等同 Type 7）`，须线端点是 1.5×IQR 围栏内的最远观测；围栏外记录必须在页面逐点标为异常值，不能只用颜色暗示。统计口径缺失、组间口径冲突或页面还需第二个主图时，不得强制命中模块。
 
+连续数值分布页使用 `histogram`。`diagram` 必须包含一个指标、单位、期间、分母、原始 `observations`（缺失值用 `null` 或空字符串显式保留）、`sample.total/valid/missing`、`frequency_basis=count|frequency`、`binning.method=explicit_edges`、严格递增的 `edges`、左右边界包含规则，以及 1–3 条来源支持的分布洞察。Producer 可以计算 `bins`，但 Builder 必须从原始观测和边界复算并逐箱核对。缺少原始观测、样本无法对平、单位或期间冲突、分箱不能覆盖全部有效值时不得强制命中模块；分类数据使用其他模块，不能用分类柱状图冒充。
+
 ## builder-prompt.md
 
 Include, when applicable:

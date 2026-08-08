@@ -9,7 +9,7 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "histogram", "small-multiples"]);
 
 function normalizeRankMigration(data) {
   if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
@@ -403,6 +403,59 @@ function validateBoxPlot(data, c) {
   if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
 }
 
+export function calculateHistogram(diagram) {
+  const edges = diagram.binning.edges;
+  const counts = Array(edges.length - 1).fill(0);
+  let missing = 0;
+  for (const value of diagram.observations) {
+    if (value === null || value === "") { missing += 1; continue; }
+    const number = Number(value);
+    if (!Number.isFinite(number)) { missing += 1; continue; }
+    let index = -1;
+    for (let candidate = 0; candidate < edges.length - 1; candidate += 1) {
+      const isLast = candidate === edges.length - 2;
+      if (number >= edges[candidate] && (number < edges[candidate + 1] || (isLast && diagram.binning.last_bin_inclusive && number <= edges[candidate + 1]))) {
+        index = candidate;
+        break;
+      }
+    }
+    requireCondition(index >= 0, "HISTOGRAM_RANGE_FAIL", `Observation ${number} falls outside declared bin edges`);
+    counts[index] += 1;
+  }
+  return { counts, missing, valid: counts.reduce((sum, value) => sum + value, 0), total: diagram.observations.length };
+}
+
+function validateHistogram(data, c) {
+  const diagram = data.diagram;
+  c.text(diagram.metric, "Histogram metric");
+  c.text(diagram.unit, "Histogram unit");
+  c.text(diagram.period, "Histogram period");
+  c.text(diagram.denominator, "Histogram denominator");
+  requireCondition(["count", "frequency"].includes(diagram.frequency_basis), "DATA_CONTRACT_FAIL", "Histogram frequency_basis must be count or frequency");
+  requireCondition(Array.isArray(diagram.observations) && diagram.observations.length >= 10 && diagram.observations.length <= 500, "DATA_CONTRACT_FAIL", "Histogram requires 10–500 observations including explicit missing values");
+  requireCondition(diagram.observations.every((value) => value === null || value === "" || Number.isFinite(Number(value))), "ABNORMAL_FORMAT_FAIL", "Histogram observations must be numeric, null, or blank");
+  const edges = diagram.binning?.edges;
+  requireCondition(diagram.binning?.method === "explicit_edges", "DATA_CONTRACT_FAIL", "Histogram binning method must be explicit_edges");
+  requireCondition(Array.isArray(edges) && edges.length >= 5 && edges.length <= 13 && edges.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Histogram needs 4–12 finite bins");
+  requireCondition(edges.every((value, index) => index === 0 || value > edges[index - 1]), "HISTOGRAM_BINNING_FAIL", "Histogram bin edges must be strictly increasing");
+  requireCondition(diagram.binning.include_left === true && typeof diagram.binning.last_bin_inclusive === "boolean", "DATA_CONTRACT_FAIL", "Histogram inclusion rules must be explicit");
+  c.source(diagram.data_source_ids, "Histogram observations and bins");
+  const calculated = calculateHistogram(diagram);
+  requireCondition(diagram.sample?.total === calculated.total && diagram.sample?.valid === calculated.valid && diagram.sample?.missing === calculated.missing, "HISTOGRAM_SAMPLE_RECONCILIATION_FAIL", "Histogram total, valid, and missing sample counts must reconcile");
+  if (diagram.bins !== undefined) {
+    requireCondition(Array.isArray(diagram.bins) && diagram.bins.length === calculated.counts.length, "DATA_CONTRACT_FAIL", "Declared histogram bins must match edge count");
+    diagram.bins.forEach((bin, index) => {
+      requireCondition(bin.lower === edges[index] && bin.upper === edges[index + 1] && bin.count === calculated.counts[index], "HISTOGRAM_BINNING_FAIL", `Declared bin ${index + 1} does not reproduce from observations`);
+      c.source(bin.source_ids, `Histogram bin ${index + 1}`);
+    });
+  }
+  requireCondition(Array.isArray(diagram.insights) && diagram.insights.length >= 1 && diagram.insights.length <= 3, "DATA_CONTRACT_FAIL", "Histogram requires 1–3 source-backed insights");
+  diagram.insights.forEach((item) => c.text(item, "Histogram insight"));
+  if (diagram.conclusion) c.text(diagram.conclusion, "Conclusion");
+  if (diagram.disclosure) c.text(diagram.disclosure, "Disclosure");
+  return calculated;
+}
+
 function validateSmallMultiples(data, c) {
   const panels = data.diagram.panels;
   requireCondition([4, 6, 9].includes(panels?.length), "DATA_CONTRACT_FAIL", "Small multiples requires 4, 6, or 9 panels");
@@ -428,7 +481,7 @@ export function validateR3Module(data) {
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, histogram: validateHistogram, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 
