@@ -56,14 +56,14 @@ class SuiteContractTests(unittest.TestCase):
     def test_input_contract_covers_sparse_conflict_file_and_runtime_cases(self):
         contract = (ROOT / "references/input-contract.md").read_text(encoding="utf-8")
         for term in (
-            "稀疏自然语言",
-            "权威版本",
-            "异常文件",
-            "真实公司无数据",
-            "PPT 依赖不可用",
+            "sparse natural language",
+            "authoritative version",
+            "exception file",
+            "No data for the real company",
+            "PPT Dependencies are unavailable",
             "ASK_ONE_BLOCKING_QUESTION",
         ):
-            self.assertIn(term, contract)
+            self.assertIn(term.casefold(), contract.casefold())
 
     def test_public_license_files_and_scopes_are_present(self):
         status = (ROOT / "LICENSE_STATUS.md").read_text(encoding="utf-8")

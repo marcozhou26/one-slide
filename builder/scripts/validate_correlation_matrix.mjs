@@ -43,7 +43,7 @@ export function validateCorrelationMatrix(data) {
   const displayThreshold = d.display_threshold ?? 0.5;
   fail(Number.isFinite(displayThreshold) && displayThreshold >= 0 && displayThreshold <= 1, "THRESHOLD_FAIL", "display_threshold must stay within 0-1");
   for (const [item, label] of [[d.missing_value_handling,"Missing value handling"],[d.period,"Period"],[d.population,"Population"],[d.source_note,"Source note"],[d.causality_note,"Causality note"]]) visible(item, label);
-  fail(/不代表因果|does not imply causation/i.test(d.causality_note.text), "CAUSALITY_DISCLOSURE_FAIL", "A visible non-causality note is required");
+  fail(/does not represent cause and effect|does not imply causation|does not mean causation/i.test(d.causality_note.text), "CAUSALITY_DISCLOSURE_FAIL", "A visible non-causality note is required");
   fail(Array.isArray(d.metrics) && d.metrics.length >= 4 && d.metrics.length <= 10, "DIMENSION_FAIL", "Correlation matrix needs 4-10 metrics");
   const ids = new Set(); const labels = new Set();
   d.metrics.forEach((metric) => { fail(typeof metric.id === "string" && metric.id && !ids.has(metric.id), "LABEL_UNIQUENESS_FAIL", "Metric IDs must be unique"); ids.add(metric.id); visible(metric.label, "Metric label"); fail(!labels.has(metric.label.text), "LABEL_UNIQUENESS_FAIL", "Metric labels must be unique"); labels.add(metric.label.text); });

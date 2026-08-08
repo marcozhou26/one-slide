@@ -1,6 +1,6 @@
 # HR level-function matrix
 
-- 用于：八个职级和五个职能序列的人数、薪酬、司龄和管理跨度。
-- 必填：8×5 单元格与每层管理跨度。
-- 阻塞：矩阵尺寸不符、人数为负或跨度缺失。
-- QA：左侧层级金字塔与矩阵逐行对齐；空缺标断层；窄跨度使用橙色边框。
+- Used for: headcount, salary, seniority and management span for eight ranks and five functional sequences.
+- Required:8×5 Cells and management spans for each level.
+- Blocking: Matrix dimensions do not match, number of people is negative, or span is missing.
+- QA: The hierarchical pyramid on the left is aligned with the matrix row by row; there are blank mark layers; orange borders are used for narrow spans.

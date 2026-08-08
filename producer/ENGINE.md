@@ -16,10 +16,10 @@ This Skill combines source-faithful slide architecture with controlled synthetic
 
 Use this Skill when the user asks for exactly one consulting-style slide and any of the following is true:
 
-- `帮我写一个咨询级单页 PPT 提示词`;
-- `把这些零散资料整理成一页 PPT`;
-- `信息不够的地方你补齐，但要标出来`;
-- `直接帮我画成一页可编辑 PowerPoint`.
+- `Help me write a consulting-level single page PPT prompt word`;
+- `Organize these scattered information into one page PPT`;
+- `If there is insufficient information, you can fill it in, but it should be marked.`;
+- `Just draw it for me and make it editable on one page PowerPoint`.
 
 Do not use it for a multi-page deck, a deck-wide storyline, editing an existing slide without rebuilding its content, or a request whose primary output is not a slide.
 
@@ -124,8 +124,8 @@ Follow `references/provenance-contract.md`. Every visible claim or structured it
 
 Use visible review marking only where needed:
 
-- any synthetic metric or dataset requires `合成示例数据，非真实客户数据` on the slide;
-- synthetic qualitative content requires a nearby `待确认` marker or a clearly mapped page-level legend;
+- any synthetic metric or dataset requires `Synthetic sample data, not real customer data` on the slide;
+- synthetic qualitative content requires a nearby `Pending confirmation` marker or a clearly mapped page-level legend;
 - user-supplied, derived, calculated, and externally verified items remain traceable in `review/content-review.md` without cluttering the page.
 
 User confirmation does not convert synthetic data into verified fact. It becomes a confirmed scenario assumption and retains an appropriate external disclosure.

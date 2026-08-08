@@ -1,6 +1,6 @@
 # HR age and gender pyramid
 
-- 用于：七个年龄段的男女结构、健康轮廓、骨干密集与断层诊断。
-- 必填：每段男女人数、健康基准、司龄、薪酬、离职率和管理岗占比。
-- 阻塞：年龄段不是七档、人数为负或基准缺失。
-- QA：左右条共享尺度；健康轮廓为虚线；三位数与年龄标签不得竖排。
+- Used for: Structural, health contour, backbone density and tomographic diagnosis of men and women across seven age groups.
+- Required: Number of men and women in each section, health standards, seniority, salary, turnover rate and proportion of management positions.
+- Blocking: The age range is not seven, the number of people is negative, or the benchmark is missing.
+- QA: The left and right bars share scale; the health outline is a dotted line; three-digit numbers and age labels must not be arranged vertically.

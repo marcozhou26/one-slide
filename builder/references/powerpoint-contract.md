@@ -1,24 +1,24 @@
-# PowerPoint 输出契约
+# PowerPoint export contract
 
-## 页面
+## Page
 
-- 画布固定为 16:9，默认 `1280×720`。
-- 无模板时背景为纯白 `#FFFFFF`；只有明确背景或品牌模板输入才覆盖。
-- 标题使用所属容器完整宽度，默认单行，不人为插入换行。
-- 常规正文优先 14/16 pt；12 pt 仅限来源、图注、坐标标签和密集局部。内容放不下时返回 `SINGLE_SLIDE_FIT_FAIL`。
-- 编号、短列名、状态标签和数据标签不得换行；页面标题最多自然换为两行，不得手工插入断行。标题实际为两行时不得继续显示副标题。
-- 输出必须包含 `.json` layout，并通过 `layout_quality.mjs`；换行孤字、英文追踪 key 拆词、两行标题叠加副标题、数字单位拆分、跨区块边缘错位、画布利用不足和对象越界均阻断交付。
+- The canvas is fixed to 16:9, default `1280×720`.
+- When there is no template, the background is pure white `#FFFFFF`; Only explicit background or brand template inputs are overridden.
+- The title uses the full width of the container it belongs to. It defaults to a single line and no line breaks are inserted artificially.
+- Regular text takes precedence 14/16 pt; 12 pt Sources, legends, coordinate labels, and dense locales only. Return when the content cannot be placed `SINGLE_SLIDE_FIT_FAIL`.
+- Numbers, short column names, status labels, and data labels must not be wrapped; page titles can be naturally wrapped to two lines at most, and line breaks must not be inserted manually. Subtitles must not be displayed when the title is actually two lines.
+- The output must contain `.json` layout, and pass `layout_quality.mjs`;Line break orphan word, English tracking key Splitting words, two-line titles overlaid with subtitles, number unit splits, misaligned edges across blocks, underutilization of the canvas and objects out of bounds all block delivery.
 
-## 连接线
+## Connecting line
 
-- 关系线和引线只使用一个原生 `straight`、`elbow` 或 `curved` 连接器。
-- 关系线先于节点渲染并位于节点后；标注引线按阅读需要置顶。
-- 导出后核对箭头 FROM／TO、对象顺序和 PowerPoint 实际显示，不能只信任 `sendToBack()`。
-- 普通 `geometry: "line"` 的左下到右上方向必须在位置对象中写入 `verticalFlip`；不得设置无效的临时属性。
-- 雷达轴等径向线检查共同圆心；弦图、洞察和图表引线逐条核对两端对象。
+- Relationship lines and leaders only use a native `straight`, `elbow` or `curved` connector.
+- The relationship line is rendered before the node and is located after the node; the label leader is placed on top according to reading needs.
+- Check arrows after exporting FROM/TO, object order and PowerPoint The actual show is that you can’t just trust `sendToBack()`.
+- Ordinary `geometry: "line"` The bottom left to top right direction must be written in the position object `verticalFlip`;Invalid temporary properties must not be set.
+- Radar axis and other radial lines check the common center of the circle; chord diagrams, insights and chart leads check the objects at both ends one by one.
 
-## 可编辑性与分区
+## Editability and Partitioning
 
-- 标题、正文、节点、连接器、图例和数据标记均为原生对象。
-- 客户目录只放版本化 PPTX；源文、映射、结构、预览和 QA 放内部目录。
-- 最终 PPTX 必须通过压缩结构、渲染、溢出、真实 PowerPoint 打开和导出预览检查。
+- Titles, text, nodes, connectors, legends, and data markers are all native objects.
+- The customer directory only contains versions PPTX; source text, mapping, structure, preview and QA Put the internal directory.
+- eventually PPTX Must pass compression structure, rendering, overflow, real PowerPoint Open and export preview inspections.

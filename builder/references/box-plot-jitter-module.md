@@ -1,31 +1,31 @@
-# 组间分布与个体观测模块
+# Inter-group distribution and individual observation module
 
-适用：回答“各组的典型水平、离散程度、样本密度和异常观测有何不同”。正式模块 ID 为 `box-plot-jitter`，`diagram.type` 必须同名。主图将 Tukey 箱线统计与全部原始观测叠加，但横向抖动只用于避免点位遮挡，不改变任何观测值。
+Applicable: Answer "How do the typical levels, dispersion, sample density, and abnormal observations of each group differ?" formal module ID for `box-plot-jitter`, `diagram.type` Must have the same name. Main map will Tukey Box line statistics are superimposed with all original observations, but the lateral jitter is only used to avoid point occlusion and does not change any observation values.
 
-## 输入契约
+## Enter the contract
 
-- `groups`：2–6 个组别；每组 `id` 唯一，含组名、5–60 个原始数值、声明样本量 `n` 和来源；整页最多 240 个观测点；
-- `period`：所有组共同的观察期间；
-- `unit`：所有原始观测共同的单位；
-- `observation_definition`：单个观测代表什么；
-- `sample_definition`：样本纳入范围、分母或筛选口径；
-- `statistics_rule`：固定为 `tukey_hinges_1_5_iqr`；
-- `statistics_note`：可见说明箱体、中位线、须和异常值规则；
-- `jitter_note`：可见说明横向抖动仅是视觉位移，不改变数值；
-- `insights`：1–3 条由原始观测或计算结果支持的洞察；
-- 可选 `conclusion` 与合成数据 `disclosure`。
+- `groups`: 2–6 individual groups; each group `id` Unique, including group name,5–60 original values, declared sample size `n` and source; full page maximum 240 observation points;
+- `period`: Observation period common to all groups;
+- `unit`: The unit common to all original observations;
+- `observation_definition`: What a single observation represents;
+- `sample_definition`: Sample inclusion range, denominator or screening criteria;
+- `statistics_rule`: Fixed to `tukey_hinges_1_5_iqr`;
+- `statistics_note`: Visible description box, median line, whiskers and outlier rules;
+- `jitter_note`: It can be seen that the lateral jitter is only a visual displacement and does not change the value;
+- `insights`: 1–3 An insight supported by original observations or calculations;
+- Optional `conclusion` with synthetic data `disclosure`.
 
-## 统计规则与门禁
+## Statistical rules and access control
 
-- 先对每组原始观测升序排列；奇数样本的上下半区不包含总体中位数；
-- `Q1`、中位数、`Q3` 使用上下半区中位数，即 Tukey hinges；
-- 箱须止于 `Q1−1.5×IQR` 与 `Q3+1.5×IQR` 范围内最远的实际观测；范围外观测单独标记；
-- `n` 必须等于原始观测数量；组别 ID、单位、期间、观测定义和样本口径不得缺失或冲突；
-- 原始观测必须是有限数值；异常字符串、空值、样本量不一致或超过 240 点时阻断；
-- 缺少样式、配色或自定义抖动参数不阻断，使用确定性默认视觉位移。
+- First, arrange each group of original observations in ascending order; the upper and lower half of the odd-numbered samples do not include the overall median;
+- `Q1`, median,`Q3` Use the median of the upper and lower halves, that is Tukey hinges;
+- The box must end at `Q1−1.5×IQR` with `Q3+1.5×IQR` The farthest actual observation within range; observations outside range are marked separately;
+- `n` Must equal the original number of observations; group ID, unit, period, observation definition and sample size must not be missing or conflicting;
+- Original observations must be finite values; outlier strings, null values, inconsistent sample sizes or exceeded 240 Block when clicked;
+- Missing styles, colors, or custom dither parameters do not block and use deterministic default visual displacement.
 
-## 页面与编辑性
+## Pages and editability
 
-每个箱体、须、中位线和观测点都使用独立 PowerPoint 原生对象。横向偏移由观测在输入数组中的稳定次序确定，不写回数据，也不影响统计量。页面必须显示组名、`n`、单位、期间、样本口径、统计规则及抖动说明。合成数据必须显示“合成示例数据，非真实客户数据”。
+Each box, whisker, midline and observation point uses an independent PowerPoint native object. Lateral offset is determined by the stable ordering of the observations in the input array, does not write back data, and does not affect statistics. The page must display the group name,`n`, unit, period, sample size, statistical rules and jitter description. Synthetic data must show "synthetic sample data, not real customer data."
 
-验收：完整输入、稀疏自然语言自动识别、关键字段缺失、样本量冲突、非阻塞样式缺失、异常格式和单页点数上限均须测试；生成参考 PPTX 后检查渲染、溢出、全部点位原生对象、图片对象数量和 Microsoft PowerPoint 打开结果。
+Acceptance: complete input, automatic recognition of sparse natural language, missing key fields, sample size conflicts, missing non-blocking styles, abnormal formats and the upper limit of points on a single page must be tested; generate reference PPTX Then check the rendering, overflow, all point native objects, the number of picture objects and Microsoft PowerPoint Open the result.

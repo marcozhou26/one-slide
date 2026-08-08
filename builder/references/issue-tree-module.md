@@ -1,17 +1,17 @@
-# 问题树与议题树模块
+# Problem Tree and Issue Tree Modules
 
-## 适用
+## Applicable
 
-原文明确给出核心问题、二至三个一级分支及其子议题。树只表达分解关系，不自动把并列事实改成因果。
+The original article clearly states the core issue, two to three first-level branches and their sub-topics. Trees only express decomposition relationships and do not automatically change parallel facts into cause and effect.
 
-## 禁止
+## prohibited
 
-- 原文未明确互斥和穷尽时，不显示或声称 MECE。
-- 不为填满树结构补写分支；缺失但原文明示应保留的位置使用“待客户补充”。
-- 已验证核心根因、已排除等状态必须有原文锚点。
+- When the original text does not clearly indicate mutual exclusion and exhaustion, do not show or claim that MECE.
+- Do not add branches to fill the tree structure; use "to be supplemented by the customer" for missing positions that the original text indicates should be retained.
+- Verified core root cause, excluded and other statuses must have original text anchors.
 
-## 输入结构
+## input structure
 
-`module_id` 为 `issue-tree`；`diagram.type` 为 `issue-tree`。包含一个 `root`、二至三个 `branches`，每个分支包含一至三个 `children`。可选 `verification`、`status`、`so_what` 和有证据的 `mece`。
+`module_id` for `issue-tree`; `diagram.type` for `issue-tree`. contains a `root`, two to three `branches`, each branch contains one to three `children`. Optional `verification`, `status`, `so_what` with evidence `mece`.
 
-运行 `validate_issue_tree.mjs`、`plan_issue_tree.mjs` 和 `render_issue_tree.mjs`。正式输出必须执行 PowerPoint 输出契约。
+run `validate_issue_tree.mjs`, `plan_issue_tree.mjs` and `render_issue_tree.mjs`. Formal output must be performed PowerPoint Export contract.

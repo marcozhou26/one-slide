@@ -9,11 +9,11 @@ metadata:
 
 # OneSlide
 
-一次只处理一页 PPT，并以咨询报告级标准组织逻辑、信息和版式。用户只接触这一个入口；内部先完成内容设计与来源标注，需要 PPTX 时再调用随包附带的 Builder 引擎。
+Process one page at a time. Create exactly one PowerPoint slide per run, applying consulting-grade standards to its logic, information structure, and layout. This file is the only user-facing entry point. Content design and provenance work happen first; when a PPTX is requested, pass the approved package to the bundled Builder engine.
 
-## 每次运行先读
+## Read first on every run
 
-完整读取：
+Read these files in full:
 
 - `references/input-contract.md`
 - `references/suite-contract.md`
@@ -21,142 +21,141 @@ metadata:
 - `producer/references/provenance-contract.md`
 - `producer/references/output-contract.md`
 
-进入绘制阶段时，再读取 `builder/ENGINE.md` 和路由返回的唯一模块 reference。不要预读全部 Builder 模块。
+Before drawing, also read `builder/ENGINE.md` and the reference for the single module returned by routing. Do not preload every Builder module.
 
-## 首次互动
+## First interaction
 
-自然说明本轮只制作一页，然后根据当前对话、附件和已确认决定预填：
+State naturally that this run will create one slide, then prefill the following from the conversation, attachments, and confirmed decisions:
 
-- 这一页要说明什么；
-- 谁会看，以及他看完要理解或决定什么；
-- 一个主要问题、一个主要关系和一个中心结论；
-- 哪些内容由用户提供并必须保留；
-- 哪些缺口会被定向补全并标记。
+- what the slide must communicate;
+- who will read it and what they should understand or decide;
+- one main question, one main relationship, and one central conclusion;
+- which user-supplied content must be preserved; and
+- which essential gaps may be filled and visibly labeled.
 
-只有两个同样合理的页面方向会改变中心结论或主图时，才问一个阻塞问题。不得要求用户填写内部字段、模块编号、坐标、卡片数量或装饰偏好。
+Ask a blocking question only when two equally reasonable page directions would change the central conclusion or main exhibit. Never ask the user to fill internal fields, module identifiers, coordinates, card counts, or decorative preferences.
 
-## 两种输出
+## Two output modes
 
-从用户原话推导：
+Infer the output mode from the user's own words:
 
-- `PROMPT_ONLY`：用户要求提示词、Brief、交接包或生成指令。
-- `PPT_DRAFT`：用户要求直接创建、绘制、生成或交付 PowerPoint。
+- `PROMPT_ONLY`: the user asks for a prompt, brief, handoff package, or generation instructions.
+- `PPT_DRAFT`: the user asks OneSlide to create, draw, generate, or deliver a PowerPoint slide.
 
-未说明载体时默认 `PROMPT_ONLY`，并简短说明。用户随后改为 `PPT_DRAFT` 时，复用已经锁定的来源和页面方向，不要求重述材料。
+When the carrier is not specified, default to `PROMPT_ONLY` and explain that choice briefly. If the user later switches to `PPT_DRAFT`, reuse the locked sources and page direction without asking them to restate the material.
 
-## 三种内容模式
+## Three content modes
 
-- `SOURCE_ONLY`：现有信息足以支持这一页，不新增事实。
-- `SYNTHETIC_AUGMENTATION`：只补页面必要缺口，不改变用户事实和主逻辑。
-- `EVIDENCE_BLOCKED`：目标要求真实事实，但缺少证据且不能诚实补全。
+- `SOURCE_ONLY`: existing evidence is sufficient; add no new facts.
+- `SYNTHETIC_AUGMENTATION`: fill only the gaps essential to the slide, without changing user facts or the main logic.
+- `EVIDENCE_BLOCKED`: the requested conclusion requires real evidence that is unavailable, so it cannot be completed honestly.
 
-样式、措辞、版式和图表选择不是事实缺口，可以从主要关系推导。
+Style, wording, layout, and diagram selection are not factual gaps; infer them from the main relationship.
 
-## 工作流
+## Workflow
 
-### 1. 锁定单页边界
+### 1. Lock the single-slide boundary
 
-保留用户原始请求，给使用的附件建立来源记录和哈希。每次只能有：
-
-```text
-1 个受众任务
-1 个主要问题
-1 个主要关系
-1 个中心结论
-1 个主图
-0-3 个支持证据主题
-0-1 个行动或条件区
-```
-
-出现竞争性主图或超过三个证据主题时，返回 `SINGLE_SLIDE_SCOPE_OVERLOAD`，推荐最强的单页焦点；不得暗中删掉必需内容或生成第二页。
-
-### 2. 建立来源基线
-
-对用户提供、稳定推导、计算、外部核验和模型补全分别设置稳定 `source_id`。保持用户数字、定义、结论强度、必含项和排除项不变。
-
-用户附件是“用户提供的证据”，不自动等于独立核验事实。权威值冲突时停止受影响的计算，不能暗自选边。
-
-### 3. 定向补全
-
-内容不足时只补主图和已声明证据主题所需的最少内容：
-
-- 合成数据必须定义对象、粒度、期间、单位、分母和计算规则；
-- 合计、占比、漏斗、桥接、重复值和标题结论必须能对上；
-- 合成定性内容按“假设”“示例”或“待确认”处理；
-- 不得编造来源、客户原话、行业基准、法律结论或真实公司业绩。
-
-真实组织缺少真实数据时，不得把虚构指标写在该组织名下。可以改成匿名示例，或返回 `EVIDENCE_BLOCKED`。
-
-### 4. 生成内容包
-
-按 `producer/ENGINE.md` 执行，输出版本化运行目录。每个可见事实、标题、图表数据、洞察和行动项都要有 `source_ids`。
-
-合成数字或数据集必须在页面上显示：
+Preserve the original request and create source records and hashes for every attachment used. A run may contain only:
 
 ```text
-合成示例数据，非真实客户数据
+1 audience task
+1 main question
+1 main relationship
+1 central conclusion
+1 main exhibit
+0-3 supporting evidence topics
+0-1 action or condition area
 ```
 
-合成定性内容在相邻位置显示“待确认”，或使用能逐项映射的页面图例。用户确认采用某个情景后，它仍是情景假设，不会变成真实事实。
+If competing main exhibits or more than three evidence topics remain, return `SINGLE_SLIDE_SCOPE_OVERLOAD` and recommend the strongest single-slide focus. Do not silently remove essential content or create a second slide.
 
-运行：
+### 2. Establish the source baseline
+
+Assign a stable `source_id` to every user-supplied fact, stable inference, calculation, external verification, and model-generated completion. Preserve the user's numbers, definitions, conclusion strength, inclusions, and exclusions.
+
+Treat user attachments as user-supplied evidence, not automatic independent verification. If authoritative values conflict, stop the affected calculation instead of choosing a side silently.
+
+### 3. Fill only targeted gaps
+
+When content is insufficient, add only what the main exhibit and declared evidence topics require:
+
+- Synthetic data must define the object, granularity, period, unit, denominator, and calculation rule.
+- Totals, percentages, funnels, bridges, repeated values, and title claims must reconcile.
+- Synthetic qualitative content must be labeled as a hypothesis, example, or pending confirmation.
+- Never fabricate sources, customer quotations, industry benchmarks, legal conclusions, or actual company performance.
+
+If a real organization lacks real data, never present invented metrics under that organization's name. Use an anonymous example or return `EVIDENCE_BLOCKED`.
+
+### 4. Build the content package
+
+Follow `producer/ENGINE.md` and write a versioned run directory. Every visible fact, headline, chart value, insight, and action must include `source_ids`.
+
+Any synthetic metric or dataset requires this visible disclosure:
+
+```text
+Synthetic sample data, not real customer data
+```
+
+Place “Pending confirmation” beside synthetic qualitative content, or provide a page legend with an item-by-item mapping. User approval of an illustrative scenario does not convert it into verified fact.
+
+Run:
 
 ```bash
 python3 producer/scripts/validate_package.py <run-directory> --stage handoff --write-report
 ```
 
-结构验证通过后仍要完整阅读 Brief、Prompt、交接文件和内容确认清单。脚本不能证明咨询逻辑或 PPT 视觉质量。
+After structural validation, read the brief, prompt, handoff files, and content-review checklist in full. Passing the script does not prove sound consulting logic or visual quality.
 
-### 5. 按输出模式交付
+### 5. Deliver the selected output
 
-`PROMPT_ONLY` 交付：
+For `PROMPT_ONLY`, deliver:
 
 - `handoff/builder-prompt.md`
 - `handoff/builder-handoff.json`
 - `review/content-review.md`
 
-`PPT_DRAFT` 在内容包通过后读取 `builder/ENGINE.md`，将 `handoff/builder-handoff.json` 交给内置 Builder。Builder 负责模块选择、精确几何、PowerPoint 对象、渲染和 PPTX QA；不得再次改写页面目标或来源事实。
+For `PPT_DRAFT`, read `builder/ENGINE.md` after the content package passes, then pass `handoff/builder-handoff.json` to the bundled Builder. Builder owns module selection, exact geometry, native PowerPoint objects, rendering, and PPTX quality checks. It must not reinterpret the page objective or source facts.
 
-Builder 交付后再次运行：
+After Builder delivers, run:
 
 ```bash
 python3 producer/scripts/validate_package.py <run-directory> --stage final --write-report
 ```
 
-Builder 不可用、运行依赖缺失或返回 `MODULE_COVERAGE_GAP` 时，保留可用提示词包并返回 `PPT_RENDERING_BLOCKED`。不得偷偷换用普通渲染器后宣称生成了咨询级 PPT。
+If Builder is unavailable, a runtime dependency is missing, or routing returns `MODULE_COVERAGE_GAP`, preserve the validated prompt package and return `PPT_RENDERING_BLOCKED`. Do not substitute a generic renderer and claim consulting-grade PowerPoint output.
 
-Producer 只有在一个已产品化模块能覆盖全部必含内容时，才同时写入 `requested_module` 和完整、可通过该模块 validator 的 `module_payload`。只有模块名没有可执行载荷时不得强制命中；混合页面使用带 layout 门禁的直接编排。
+Producer may write `requested_module` and a complete executable `module_payload` only when a productized module covers all required content and its validator accepts the payload. A module name without an executable payload must not force routing. Mixed-layout pages use `direct_composition`.
 
-组间分布任务只有在原始观测、组别、样本量、共同期间、单位和样本口径齐全时才使用 `box-plot-jitter`。Producer 必须保留全部观测，Builder 依据 Tukey hinges 与 1.5×IQR 规则计算箱线统计，并把每个点绘制为原生对象；横向抖动只用于避免遮挡，页面必须明确说明它不改变观测值。
+Module-specific statistical boundaries:
 
-多指标关系筛选任务在 4–10 个指标具备对称系数方阵或可复算的对齐原始观测时使用 `correlation-matrix`。Producer 必须保留指标 ID/标签、Pearson 或 Spearman、样本量、缺失值处理、期间、总体、来源和显示阈值；缺少方法时可默认 Pearson 并披露，缺少数据或出现口径冲突时不得强制命中。页面必须用位置、带正负号的数值和颜色共同表达，并明确“相关不代表因果”。
+- Use `box-plot-jitter` only with complete raw observations, groups, sample sizes, a common period and unit, and the sample definition. Preserve every observation. Builder calculates Tukey hinges and 1.5×IQR whiskers, draws each point as a native object, and discloses that horizontal jitter prevents overlap without changing values.
+- Use `correlation-matrix` for 4–10 indicators with a symmetric coefficient matrix or aligned raw observations that can be recalculated. Preserve indicator IDs and labels, Pearson or Spearman method, sample size, missing-value handling, period, population, source, and display threshold. If the method is absent, Pearson may be used only with disclosure. The slide must state that correlation does not imply causation.
+- Use `scatter-regression` only with complete paired x/y observations, both metrics and units, sample definition, period, population, and source. Version 1 supports univariate ordinary least squares with an intercept. Producer declares missing pairs, exact duplicates, and outliers; Builder recalculates slope, intercept, and R². Block insufficient valid pairs or zero variance. Never describe correlation or regression as causation or fabricate significance.
+- Use `confidence-band` for an ordered central estimate with intervals. Preserve 5–12 unique ordered periods; `estimate`, `lower`, and `upper`; metric and unit; interval type and definition; estimation method; sample or population; source; missing-value semantics; and optional threshold semantics. Missing patterns or thresholds do not block. Missing core series, interval definitions, or statistical conventions do. Do not relabel confidence intervals as prediction or risk intervals or overstate probability, causality, or significance.
 
-两个连续指标的关系判断只有在逐条 x/y 原始观测、两轴指标与单位、样本定义、期间、总体和来源齐全时才使用 `scatter-regression`。V1 仅使用带截距的一元普通最小二乘线性拟合；Producer 必须声明配对缺失、精确重复和异常点处理，Builder 从原始观测复算斜率、截距与 R²。有效配对不足或任一轴零方差时阻断正式模块；相关或回归不得写成因果，不得伪造显著性。
+### 6. Verify the PPTX
 
-有序中心估计与区间任务使用 `confidence-band`。Producer 必须保留 5–12 个唯一且有序的时期、`estimate/lower/upper`、指标与单位、区间类型和完整定义、估计方法、样本/总体、来源、缺失值语义及可选阈值语义。缺少样式或阈值不阻塞；缺少核心序列、区间定义或统计口径时不得猜测。置信区间不得被改称预测区间或风险区间，也不得据此夸大概率、因果或显著性含义。
+A `PPT_DRAFT` must satisfy all of the following:
 
-### 6. 检查 PPTX
+- exactly one 16:9 slide;
+- text, shapes, tables, and charts remain native editable PowerPoint objects;
+- semantic audits, full-slide rendering checks, and readability checks pass;
+- layout JSON passes checks for wrapped short labels, orphan words, unbreakable tokens, number-unit splits, two-line-title/subtitle conflicts, title safe zones, vertical balance, cross-block alignment, canvas use, and overflow;
+- organization charts also pass peer-row alignment, straight one-to-one reporting lines, functional-line direction, and route-crossing checks. Do not deliver results containing `ORG_PEER_ROW_MISALIGNMENT`, `ORG_DIRECT_REPORT_DOGLEG`, or `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS`;
+- if Microsoft PowerPoint is available, open the actual file there and inspect it; and
+- the external delivery folder contains only the versioned PPTX. Keep sources, prompts, previews, and QA evidence in the internal directory.
 
-`PPT_DRAFT` 必须满足：
+## Hard boundaries
 
-- 恰好一页、16:9；
-- 文字、形状、表格和图表为 PowerPoint 原生可编辑对象；
-- 通过语义审计、整页渲染检查和可读性检查；
-- layout JSON 通过短标签单行、孤字、英文 token、数字单位、两行标题与副标题互斥、标题安全区、纵向空间平衡、跨区块边缘对齐、画布利用率和越界门禁；
-- 组织架构图额外检查同层节点水平对齐、一对一直属线垂直对齐、职能虚线方向与无穿越路由；出现 `ORG_PEER_ROW_MISALIGNMENT`、`ORG_DIRECT_REPORT_DOGLEG` 或 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` 时不得交付；
-- 当前环境能使用 Microsoft PowerPoint 时，实际打开检查；
-- 对外交付目录只放版本化 PPTX，来源、提示词、预览和 QA 留在内部目录。
+- Do not generate a multi-slide deck, hidden overflow slide, or second candidate slide.
+- Do not add decorative cards, recommendations, metrics, or benchmarks merely to fill space.
+- Do not remove essential content, shrink text below readable size, or alter the main point to make content fit.
+- Do not present model-generated content as user-supplied or externally verified.
+- Do not expose local paths, prompt history, rejected approaches, internal QA, or production instructions.
+- Do not treat file generation, a passing validation script, or ZIP integrity as proof of product value or user acceptance.
 
-## 硬边界
-
-- 不生成多页报告、隐藏溢出页或第二个候选页。
-- 不为凑满页面增加装饰性卡片、建议、指标或基准。
-- 不为了装下一页而删必需内容、缩成不可读字号或改变中心思想。
-- 不把模型补全内容伪装成用户提供或外部核验。
-- 不暴露本机路径、提示词历史、被否决方案、内部 QA 或制作说明。
-- 不把文件生成、验证脚本通过或 ZIP 完整冒充产品价值或用户验收。
-
-## 发布包自检
+## Release package self-test
 
 ```bash
 python3 scripts/validate_suite.py .
@@ -164,9 +163,9 @@ python3 -m unittest discover -s tests -v
 python3 scripts/check_environment.py
 ```
 
-## 状态
+## Status reporting
 
-分别报告：
+Report these independently:
 
 ```text
 BASIC_OUTPUT_PASS | fail
@@ -187,4 +186,4 @@ USER_REQUIREMENT_PASS | not_tested
 PUBLIC_LICENSE_READY | pass
 ```
 
-只有真实用户可见结果满足本 Skill 的单页、来源和可编辑性要求时，才能标记 `PRODUCT_VALUE_PASS`。只有用户看过具体结果后，才能标记 `USER_REQUIREMENT_PASS`。
+Mark `PRODUCT_VALUE_PASS` only after real users have received results that satisfy the single-slide, provenance, and editability requirements. Mark `USER_REQUIREMENT_PASS` only after the user has reviewed a specific result.

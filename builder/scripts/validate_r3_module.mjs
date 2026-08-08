@@ -80,9 +80,9 @@ function numeric(value, label) {
 }
 
 function scaleFromUnit(unit) {
-  const match = String(unit ?? "").match(/(-?\d+(?:\.\d+)?)\s*(?:至|[-–—])\s*(-?\d+(?:\.\d+)?)/u);
-  requireCondition(match, "SCALE_CONTRACT_FAIL", "Radar dataset unit must explicitly declare a numeric range such as 0至10分");
-  return { min: Number(match[1]), max: Number(match[2]), unit: String(unit).replace(match[0], "").trim() || "分", source_label: String(unit) };
+  const match = String(unit ?? "").match(/(-?\d+(?:\.\d+)?)\s*(?:to|[-–—])\s*(-?\d+(?:\.\d+)?)/u);
+  requireCondition(match, "SCALE_CONTRACT_FAIL", "Radar dataset unit must explicitly declare a numeric range such as 0to10points");
+  return { min: Number(match[1]), max: Number(match[2]), unit: String(unit).replace(match[0], "").trim() || "points", source_label: String(unit) };
 }
 
 function handoffTextSources(data, radarRows, rankingRows) {
@@ -93,14 +93,14 @@ function handoffTextSources(data, radarRows, rankingRows) {
   for (const value of data.content?.footnotes ?? []) add("G18", value);
   for (const row of radarRows) {
     add("S18", row.dimension); add("S18", row.current_score); add("G18", row.peer_median_score); add("G18", row.target_score);
-    add("S18", `现状 ${row.current_score}；同业 ${row.peer_median_score}；目标 ${row.target_score}`);
+    add("S18", `Current situation ${row.current_score};Peers ${row.peer_median_score}; target ${row.target_score}`);
   }
   for (const row of rankingRows) {
     add("S18", row.unit_name); add("S18", row.decentralization_index); add("G18", row.revenue_100m_cny); add("G18", row.headcount);
   }
   for (const block of data.display_blocks ?? []) for (const item of block.items ?? []) { add("S18", item.label); add("S18", typeof item.value === "string" ? item.value : null); }
-  ["本司现状", "同业中位", "目标态", "业务单元分权排序", "试点边界", "6个月观察门槛", "试点边界与观察门槛"].forEach((value) => add("S18", value));
-  return [...byId].map(([id, values]) => ({ id, text: [...new Set(values)].join("；") })).filter((item) => item.text);
+  ["Current status of our company", "Industry median", "target state", "Decentralized ranking of business units", "pilot boundary", "6Monthly observation threshold", "Pilot boundaries and observation thresholds"].forEach((value) => add("S18", value));
+  return [...byId].map(([id, values]) => ({ id, text: [...new Set(values)].join("; ") })).filter((item) => item.text);
 }
 
 function textItem(text, source_ids) { return { text: String(text), source_ids }; }
@@ -127,9 +127,9 @@ function normalizeRadarHandoff(data, radarRows, rankingRows) {
       type: "radar-capability",
       scale,
       series_labels: {
-        current: textItem(seriesItems[0]?.label ?? "本司现状", ["S18"]),
-        benchmark: textItem(seriesItems[1]?.label ?? "同业中位", ["S18"]),
-        target: textItem(seriesItems[2]?.label ?? "目标态", ["S18"]),
+        current: textItem(seriesItems[0]?.label ?? "Current status of our company", ["S18"]),
+        benchmark: textItem(seriesItems[1]?.label ?? "Industry median", ["S18"]),
+        target: textItem(seriesItems[2]?.label ?? "target state", ["S18"]),
       },
       composite,
       dimensions: radarRows.sort((a, b) => numeric(a.dimension_order, "dimension_order") - numeric(b.dimension_order, "dimension_order")).map((row) => ({
@@ -137,13 +137,13 @@ function normalizeRadarHandoff(data, radarRows, rankingRows) {
         current: numeric(row.current_score, `${row.dimension}.current_score`),
         benchmark: numeric(row.peer_median_score, `${row.dimension}.peer_median_score`),
         target: numeric(row.target_score, `${row.dimension}.target_score`),
-        shortfall: textItem(`现状 ${row.current_score}；同业 ${row.peer_median_score}；目标 ${row.target_score}`, sourceIds),
-        priority: ["定价权", "组织设置权"].includes(row.dimension),
+        shortfall: textItem(`Current situation ${row.current_score};Peers ${row.peer_median_score}; target ${row.target_score}`, sourceIds),
+        priority: ["pricing power", "Organization setting right"].includes(row.dimension),
         source_ids: sourceIds,
       })),
       supporting_evidence: {
         type: "business-unit-ranking",
-        title: textItem("业务单元分权排序", ["S18"]),
+        title: textItem("Decentralized ranking of business units", ["S18"]),
         ordering: rankingDataset.ordering,
         items: rankingRows.sort((a, b) => numeric(a.unit_order, "unit_order") - numeric(b.unit_order, "unit_order")).map((row) => ({
           label: textItem(row.unit_name, ["S18"]),
@@ -157,7 +157,7 @@ function normalizeRadarHandoff(data, radarRows, rankingRows) {
         })),
       },
       condition: conditionItems.length ? {
-        title: textItem("试点边界与观察门槛", ["S18"]),
+        title: textItem("Pilot boundaries and observation thresholds", ["S18"]),
         items: conditionItems.map((item) => ({ label: textItem(item.label, ["S18"]), value: textItem(item.value, ["S18"]), source_ids: ["S18"] })),
       } : null,
       conclusion: data.content.action ? textItem(data.content.action, ["S18"]) : null,
@@ -256,7 +256,7 @@ function validateRadar(data, c) {
     for (const item of evidence.items) {
       c.text(item.label, "Business-unit label");
       requireCondition(Number.isFinite(item.value) && item.value >= scale.min && item.value <= scale.max, "SCALE_RANGE_FAIL", `Business-unit score for ${item.label.text} must be within ${scale.min}–${scale.max}`);
-      if (/降序/u.test(evidence.ordering ?? "")) requireCondition(item.value <= previous, "RANKING_ORDER_FAIL", "Business-unit ranking must follow its declared descending order");
+      if (/descending order/u.test(evidence.ordering ?? "")) requireCondition(item.value <= previous, "RANKING_ORDER_FAIL", "Business-unit ranking must follow its declared descending order");
       previous = item.value;
       requireCondition(item.revenue_applicable === false ? item.revenue === null : Number.isFinite(item.revenue), "DATA_CONTRACT_FAIL", "Revenue must be numeric or explicit not-applicable");
       requireCondition(Number.isFinite(item.headcount) && item.headcount >= 0, "DATA_CONTRACT_FAIL", "Business-unit headcount must be non-negative");

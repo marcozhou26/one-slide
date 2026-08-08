@@ -20,7 +20,7 @@ from typing import Any
 ValidationResult = dict[str, Any]
 
 
-DISCLOSURE = "合成示例数据，非真实客户数据"
+DISCLOSURE = "Synthetic sample data, not real customer data"
 VALID_KINDS = {
     "user_supplied": "U",
     "derived_from_source": "D",
@@ -237,10 +237,10 @@ def validate(run_directory: Path, stage: str = "final") -> ValidationResult:
     require(manifest.get("synthetic_content") is synthetic_visible, "manifest synthetic_content does not match visible provenance", errors)
     if synthetic_visible:
         require(manifest.get("generation_mode") == "SYNTHETIC_AUGMENTATION", "visible synthetic content requires SYNTHETIC_AUGMENTATION", errors)
-        require("模型补全" in review and "待确认" in review, "content-review must identify synthetic content as pending confirmation", errors)
+        require("Model-generated completion" in review and "Pending confirmation" in review, "content-review must identify synthetic content as pending confirmation", errors)
         marking = handoff.get("review_marking") or {}
         require(marking.get("required") is True, "synthetic content requires review_marking", errors)
-        require(marking.get("qualitative_marker") == "待确认", "qualitative marker must be 待确认", errors)
+        require(marking.get("qualitative_marker") == "Pending confirmation", "qualitative marker must be Pending confirmation", errors)
     if synthetic_data:
         all_visible_text = "\n".join(text for _, text in iter_text(handoff.get("content") or {}))
         require(DISCLOSURE in prompt, "builder prompt missing synthetic data disclosure", errors)
@@ -309,7 +309,7 @@ def validate(run_directory: Path, stage: str = "final") -> ValidationResult:
         "stage": stage,
         "single_slide": not any("slide" in error and ("exactly" in error or "slide_count" in error) for error in errors),
         "provenance_coverage": not any("source_id" in error or "provenance" in error for error in errors),
-        "synthetic_disclosure": not any("synthetic" in error or "模型补全" in error or "待确认" in error for error in errors),
+        "synthetic_disclosure": not any("synthetic" in error or "Model-generated completion" in error or "Pending confirmation" in error for error in errors),
         "package_integrity": not any("missing" in error or "sha256" in error or "path" in error for error in errors),
     }
     return {"ok": not errors, "errors": errors, "warnings": warnings, "checks": checks}

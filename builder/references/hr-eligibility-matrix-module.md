@@ -1,6 +1,6 @@
 # HR eligibility matrix
 
-- 用于：员工分群在多项政策中的自动判断、条件覆盖和人工兜底。
-- 必填：三项核心指标、4–7 项政策、4–8 个员工分群及同宽评分。
-- 阻塞：评分列数与政策数不一致。
-- QA：三档语义固定；人工兜底用橙色；指标和矩阵使用同一口径。
+- Used for: automatic judgment, condition coverage and manual coverage of employee groups in multiple policies.
+- Required: three core indicators,4–7 policies,4–8 Individual employees are divided into groups and rated across the board.
+- Blocking: The number of rating columns is inconsistent with the number of policies.
+- QA: The three-level semantics are fixed; the manual bottom line is orange; the indicator and matrix use the same caliber.

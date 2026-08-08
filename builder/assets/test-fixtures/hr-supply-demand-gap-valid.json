@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "三年后关键岗位需求 452 人，内部自然供给仅 284 人，缺口 168 人"
+      "text": "Demand for key positions in three years’ time 452 Man, internal natural supply only 284 person, gap 168 people"
     },
     {
       "id": "S02",
-      "text": "H1；H2；H3；H4；H5；H6；内部培养；12–18月；8万/人；转化不及预期；外部招聘；6–9月；12万/人；市场供给紧张；外包或 AI 替代；3–6月；6万/人；质量与采用风险；最终缺口 168 人，且从 H3 开始加速扩大；内部供给受流失与退休双重挤压；80 人内部培养是成本与风险最平衡的组合；用内部培养 80 人、外部招聘 60 人、外包或 AI 替代 28 人关闭缺口；全部示例数值与口径"
+      "text": "H1; H2; H3; H4; H5; H6;Internal training;12–18month;8million/People; conversion is not as good as expected; external recruitment;6–9month;12million/people; tight market supply; outsourcing or AI substitute;3–6month;6million/People; Quality and Adoption Risk; Final Gap 168 People, please follow H3 Expansion began to accelerate; internal supply was squeezed by attrition and retirement;80 Internal training of people is the most balanced combination of cost and risk; using internal training 80 People, external recruitment 60 people, outsourcing or AI substitute 28 Man closes the gap; all example values and calibers; final gap 168 People, please follow H3 Begin to accelerate expansion; Internal supply is squeezed by attrition and retirement; 80 Internal training is the most balanced combination of cost and risk; cultivate internally 80 People, external recruitment 60 people, outsourcing or AI substitute 28 man closing gap; 8million/people; Conversions are not as good as expected; Market supply is tight; External recruitment; 6million/people; Quality and Adoption Risks; Outsourcing or AI substitute"
     }
   ],
   "title": {
-    "text": "三年后关键岗位需求 452 人，内部自然供给仅 284 人，缺口 168 人",
+    "text": "Demand for key positions in three years’ time 452 Man, internal natural supply only 284 person, gap 168 people",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -157,26 +157,26 @@
     "strategies": [
       {
         "label": {
-          "text": "内部培养",
+          "text": "Internal training",
           "source_ids": [
             "S02"
           ]
         },
         "count": 80,
         "cycle": {
-          "text": "12–18月",
+          "text": "12–18month",
           "source_ids": [
             "S02"
           ]
         },
         "cost": {
-          "text": "8万/人",
+          "text": "8million/people",
           "source_ids": [
             "S02"
           ]
         },
         "risk": {
-          "text": "转化不及预期",
+          "text": "Conversions are not as good as expected",
           "source_ids": [
             "S02"
           ]
@@ -187,26 +187,26 @@
       },
       {
         "label": {
-          "text": "外部招聘",
+          "text": "External recruitment",
           "source_ids": [
             "S02"
           ]
         },
         "count": 60,
         "cycle": {
-          "text": "6–9月",
+          "text": "6–9month",
           "source_ids": [
             "S02"
           ]
         },
         "cost": {
-          "text": "12万/人",
+          "text": "12million/people",
           "source_ids": [
             "S02"
           ]
         },
         "risk": {
-          "text": "市场供给紧张",
+          "text": "Market supply is tight",
           "source_ids": [
             "S02"
           ]
@@ -217,26 +217,26 @@
       },
       {
         "label": {
-          "text": "外包或 AI 替代",
+          "text": "Outsourcing or AI substitute",
           "source_ids": [
             "S02"
           ]
         },
         "count": 28,
         "cycle": {
-          "text": "3–6月",
+          "text": "3–6month",
           "source_ids": [
             "S02"
           ]
         },
         "cost": {
-          "text": "6万/人",
+          "text": "6million/people",
           "source_ids": [
             "S02"
           ]
         },
         "risk": {
-          "text": "质量与采用风险",
+          "text": "Quality and Adoption Risks",
           "source_ids": [
             "S02"
           ]
@@ -248,26 +248,26 @@
     ],
     "insights": [
       {
-        "text": "最终缺口 168 人，且从 H3 开始加速扩大",
+        "text": "final gap 168 People, please follow H3 Begin to accelerate expansion",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "内部供给受流失与退休双重挤压",
+        "text": "Internal supply is squeezed by attrition and retirement",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "80 人内部培养是成本与风险最平衡的组合",
+        "text": "80 Internal training is the most balanced combination of cost and risk",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "用内部培养 80 人、外部招聘 60 人、外包或 AI 替代 28 人关闭缺口",
+      "text": "cultivate internally 80 People, external recruitment 60 people, outsourcing or AI substitute 28 man closing gap",
       "source_ids": [
         "S02"
       ]

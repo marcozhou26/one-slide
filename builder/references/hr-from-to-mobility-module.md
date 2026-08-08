@@ -1,6 +1,6 @@
 # HR From-To mobility
 
-- 用于：六个部门的流出、流入、留任和转岗质量。
-- 必填：6×6 人数方阵、6×6 留存与绩效质量数据。
-- 阻塞：矩阵尺寸不符、人数不是非负整数。
-- QA：对角线与跨部门流动分色；行列可核对；右侧只强调三条主通道。
+- Used for: outflow, inflow, retention and transfer quality in six departments.
+- Required:6×6 Square array of people,6×6 Retention and performance quality data.
+- Blocking: The matrix size does not match and the number of people is not a non-negative integer.
+- QA: Color separation of diagonal lines and cross-department flows; rows and columns can be checked; only three main channels are emphasized on the right side.

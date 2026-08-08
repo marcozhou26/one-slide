@@ -2,40 +2,40 @@
   "version": "1.0",
   "module_id": "box-plot",
   "source_anchors": [
-    {"id":"S01","text":"华东的典型交付周期最短且波动最小；西南的中位数和上尾均最高"},
-    {"id":"S02","text":"2026年第二季度；单位：自然日；分母：五个区域已完成且有有效起止时间的订单；每条观察为一笔订单的签收日期减下单日期；缺失起止时间的订单不参与分位数计算，缺失数单独列示"},
-    {"id":"S03","text":"华东 n=64 缺失2 低须4.8 Q1=6.1 中位数7.0 Q3=8.2 高须10.9 异常值13.8；华南 n=58 缺失1 低须5.2 Q1=6.8 中位数8.1 Q3=9.7 高须13.4 异常值15.6；华北 n=61 缺失3 低须5.5 Q1=7.2 中位数8.8 Q3=10.5 高须14.2 异常值16.9；西南 n=55 缺失4 低须6.4 Q1=8.6 中位数10.2 Q3=12.7 高须18.1 异常值21.4和23.0；华中 n=60 缺失2 低须5.0 Q1=7.0 中位数8.4 Q3=10.0 高须14.0 无异常值"},
-    {"id":"S04","text":"四分位算法：PERCENTILE.INC（线性插值，等同 Type 7）"},
-    {"id":"S05","text":"须线规则：端点为 1.5×IQR 围栏内的最远观测；围栏外记录逐点标为异常值"},
-    {"id":"S06","text":"华东中位数为7.0天，且中间50%仅跨2.1天，五个区域中最集中"},
-    {"id":"S07","text":"西南中位数为10.2天，并出现21.4天和23.0天两笔异常长周期记录"},
-    {"id":"S08","text":"结论：优先复盘西南长周期订单，同时保留区域口径与缺失记录供后续复算"},
-    {"id":"S09","text":"合成示例数据，非真实客户数据"}
+    {"id":"S01","text":"East China has the shortest typical lead times and the least fluctuations; Southwest has the highest medians and upper tails"},
+    {"id":"S02","text":"2026Second quarter of the year; unit: natural day; denominator: completed orders in five areas with valid start and end times; each observation is the receipt date of an order minus the order date; orders with missing start and end times are not included in the quantile calculation, and the missing numbers are listed separately; Unit: natural day; 2026second quarter; Denominator: Completed orders in five areas with valid start and end times; Orders with missing start and end times are not included in the quantile calculation, and the missing numbers are listed separately. Each observation is the receipt date of an order minus the order date."},
+    {"id":"S03","text":"East China n=64 Missing2 low beard4.8 Q1=6.1 median7.0 Q3=8.2 Takasu10.9 Outliers13.8; South China n=58 Missing1 low beard5.2 Q1=6.8 median8.1 Q3=9.7 Takasu13.4 Outliers15.6; North China n=61 Missing3 low beard5.5 Q1=7.2 median8.8 Q3=10.5 Takasu14.2 Outliers16.9; Southwest n=55 Missing4 low beard6.4 Q1=8.6 median10.2 Q3=12.7 Takasu18.1 Outliers21.4and23.0; Central China n=60 Missing2 low beard5.0 Q1=7.0 median8.4 Q3=10.0 Takasu14.0 No outliers"},
+    {"id":"S04","text":"Quartile algorithm:PERCENTILE.INC(linear interpolation, equivalent to Type 7)"},
+    {"id":"S05","text":"Whisker rules: endpoints are 1.5×IQR The farthest observation inside the fence; records outside the fence are marked point by point as outliers; The endpoint is 1.5×IQR The farthest observation inside the fence; records outside the fence are marked point by point as outliers"},
+    {"id":"S06","text":"The median in East China is7.0Heaven, and the middle50%only across2.1days, the most concentrated among the five regions"},
+    {"id":"S07","text":"The Southwest median is10.2days and appear21.4Tianhe23.0Two unusually long period records per day"},
+    {"id":"S08","text":"Conclusion: Give priority to reviewing long-term orders in the southwest, while retaining regional caliber and missing records for subsequent recalculation."},
+    {"id":"S09","text":"Synthetic sample data, not real customer data"}
   ],
-  "title":{"text":"华东的典型交付周期最短且波动最小；西南的中位数和上尾均最高","origin":"source","source_ids":["S01"]},
-  "subtitle":{"text":"合成示例数据，非真实客户数据","source_ids":["S09"]},
+  "title":{"text":"East China has the shortest typical lead times and the least fluctuations; Southwest has the highest medians and upper tails","origin":"source","source_ids":["S01"]},
+  "subtitle":{"text":"Synthetic sample data, not real customer data","source_ids":["S09"]},
   "diagram":{
     "type":"box-plot",
-    "period":{"text":"2026年第二季度","source_ids":["S02"]},
-    "unit":{"text":"单位：自然日","source_ids":["S02"]},
-    "denominator":{"text":"分母：五个区域已完成且有有效起止时间的订单","source_ids":["S02"]},
-    "sample_definition":{"text":"每条观察为一笔订单的签收日期减下单日期","source_ids":["S02"]},
-    "missing_policy":{"text":"缺失起止时间的订单不参与分位数计算，缺失数单独列示","source_ids":["S02"]},
-    "quartile_method":{"text":"PERCENTILE.INC（线性插值，等同 Type 7）","source_ids":["S04"]},
+    "period":{"text":"2026second quarter","source_ids":["S02"]},
+    "unit":{"text":"Unit: natural day","source_ids":["S02"]},
+    "denominator":{"text":"Denominator: Completed orders in five areas with valid start and end times","source_ids":["S02"]},
+    "sample_definition":{"text":"Each observation is the receipt date of an order minus the order date.","source_ids":["S02"]},
+    "missing_policy":{"text":"Orders with missing start and end times are not included in the quantile calculation, and the missing numbers are listed separately.","source_ids":["S02"]},
+    "quartile_method":{"text":"PERCENTILE.INC(linear interpolation, equivalent to Type 7)","source_ids":["S04"]},
     "whisker_multiplier":1.5,
-    "whisker_rule":{"text":"端点为 1.5×IQR 围栏内的最远观测；围栏外记录逐点标为异常值","source_ids":["S05"]},
+    "whisker_rule":{"text":"The endpoint is 1.5×IQR The farthest observation inside the fence; records outside the fence are marked point by point as outliers","source_ids":["S05"]},
     "groups":[
-      {"id":"east","label":{"text":"华东","source_ids":["S03"]},"sample_size":64,"missing_count":2,"whisker_low":4.8,"q1":6.1,"median":7.0,"q3":8.2,"whisker_high":10.9,"outliers":[13.8],"source_ids":["S03"]},
-      {"id":"south","label":{"text":"华南","source_ids":["S03"]},"sample_size":58,"missing_count":1,"whisker_low":5.2,"q1":6.8,"median":8.1,"q3":9.7,"whisker_high":13.4,"outliers":[15.6],"source_ids":["S03"]},
-      {"id":"north","label":{"text":"华北","source_ids":["S03"]},"sample_size":61,"missing_count":3,"whisker_low":5.5,"q1":7.2,"median":8.8,"q3":10.5,"whisker_high":14.2,"outliers":[16.9],"source_ids":["S03"]},
-      {"id":"southwest","label":{"text":"西南","source_ids":["S03"]},"sample_size":55,"missing_count":4,"whisker_low":6.4,"q1":8.6,"median":10.2,"q3":12.7,"whisker_high":18.1,"outliers":[21.4,23.0],"source_ids":["S03"]},
-      {"id":"central","label":{"text":"华中","source_ids":["S03"]},"sample_size":60,"missing_count":2,"whisker_low":5.0,"q1":7.0,"median":8.4,"q3":10.0,"whisker_high":14.0,"outliers":[],"source_ids":["S03"]}
+      {"id":"east","label":{"text":"East China","source_ids":["S03"]},"sample_size":64,"missing_count":2,"whisker_low":4.8,"q1":6.1,"median":7.0,"q3":8.2,"whisker_high":10.9,"outliers":[13.8],"source_ids":["S03"]},
+      {"id":"south","label":{"text":"South China","source_ids":["S03"]},"sample_size":58,"missing_count":1,"whisker_low":5.2,"q1":6.8,"median":8.1,"q3":9.7,"whisker_high":13.4,"outliers":[15.6],"source_ids":["S03"]},
+      {"id":"north","label":{"text":"North China","source_ids":["S03"]},"sample_size":61,"missing_count":3,"whisker_low":5.5,"q1":7.2,"median":8.8,"q3":10.5,"whisker_high":14.2,"outliers":[16.9],"source_ids":["S03"]},
+      {"id":"southwest","label":{"text":"Southwest","source_ids":["S03"]},"sample_size":55,"missing_count":4,"whisker_low":6.4,"q1":8.6,"median":10.2,"q3":12.7,"whisker_high":18.1,"outliers":[21.4,23.0],"source_ids":["S03"]},
+      {"id":"central","label":{"text":"Central China","source_ids":["S03"]},"sample_size":60,"missing_count":2,"whisker_low":5.0,"q1":7.0,"median":8.4,"q3":10.0,"whisker_high":14.0,"outliers":[],"source_ids":["S03"]}
     ],
     "insights":[
-      {"text":"华东中位数为7.0天，且中间50%仅跨2.1天，五个区域中最集中","source_ids":["S06"]},
-      {"text":"西南中位数为10.2天，并出现21.4天和23.0天两笔异常长周期记录","source_ids":["S07"]}
+      {"text":"The median in East China is7.0Heaven, and the middle50%only across2.1days, the most concentrated among the five regions","source_ids":["S06"]},
+      {"text":"The Southwest median is10.2days and appear21.4Tianhe23.0Two unusually long period records per day","source_ids":["S07"]}
     ],
-    "conclusion":{"text":"结论：优先复盘西南长周期订单，同时保留区域口径与缺失记录供后续复算","source_ids":["S08"]},
-    "disclosure":{"text":"合成示例数据，非真实客户数据","source_ids":["S09"]}
+    "conclusion":{"text":"Conclusion: Give priority to reviewing long-term orders in the southwest, while retaining regional caliber and missing records for subsequent recalculation.","source_ids":["S08"]},
+    "disclosure":{"text":"Synthetic sample data, not real customer data","source_ids":["S09"]}
   }
 }

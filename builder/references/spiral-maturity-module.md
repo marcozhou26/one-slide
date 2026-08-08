@@ -1,8 +1,8 @@
 # Spiral maturity
 
-- 用于：四轮成熟度升级，每轮重复同一组四个动作。
-- 不用于：阶段不是四级，或各阶段动作集合不一致。
-- 必填：L1–L4、四个固定动作、阶段特征、证据、退出标准、耗时、当前水位。
-- 冲突：动作顺序不同或当前水位越界时停止。
-- 输出：单一螺旋主线、16 个编号节点、四阶段信息卡、三个阶段门和反馈箭头。
-- QA：只保留一条主螺旋；节点编号与阶段卡一一对应，不出现线段杂乱或文字相叠。
+- Used for: Four rounds of maturity upgrades, each repeating the same set of four actions.
+- Not used for: The stage is not level four, or the set of actions in each stage is inconsistent.
+- Required:L1–L4, four fixed actions, stage characteristics, evidence, exit criteria, time consumption, and current water level.
+- Conflict: The sequence of actions is different or the current water level stops when it crosses the boundary.
+- Output: single spiral main line,16 numbered nodes, four-stage information cards, three-stage gates and feedback arrows.
+- QA: Only one main spiral is retained; node numbers correspond to stage cards one-to-one, and there is no cluttered lines or overlapping text.

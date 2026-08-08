@@ -29,7 +29,7 @@ test("template following preserves master and adds native editable shapes", asyn
   const slide = extract(output, "ppt/slides/slide1.xml");
   assert.equal(slide.status, 0);
   assert.match(slide.stdout.toString("utf8"), /template-footer/);
-  assert.match(slide.stdout.toString("utf8"), /结果的 70% 波动来自两个变量/);
+  assert.match(slide.stdout.toString("utf8"), /Resultant 70% The fluctuation comes from two variables/);
   assert.doesNotMatch(slide.stdout.toString("utf8"), /<p:pic>/);
 });
 

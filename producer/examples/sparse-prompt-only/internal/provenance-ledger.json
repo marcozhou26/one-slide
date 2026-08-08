@@ -4,7 +4,7 @@
     {
       "source_id": "U01",
       "kind": "user_supplied",
-      "statement": "基层管理者被审批和会议占用",
+      "statement": "Lower-level managers are occupied by approvals and meetings",
       "origin": "user prompt",
       "status": "locked",
       "affects": ["subject", "brief.must_include"]
@@ -12,7 +12,7 @@
     {
       "source_id": "G01",
       "kind": "synthetic_generated",
-      "statement": "四类管理活动及每周耗时示例",
+      "statement": "Examples of four types of management activities and weekly time consumption",
       "origin": "minimum data required for an activity-by-hours ranking",
       "status": "pending_confirmation",
       "gap_id": "GAP01",
@@ -22,7 +22,7 @@
     {
       "source_id": "C01",
       "kind": "calculated",
-      "statement": "审批与重复会议占所列活动总时间的 69%",
+      "statement": "Approval and recurring meetings as a percentage of total time listed for activities 69%",
       "origin": "calculation from G01 records",
       "status": "locked",
       "formula": "(9.2 + 7.4) / (9.2 + 7.4 + 4.1 + 3.3) = 69.1667%, displayed as 69%",

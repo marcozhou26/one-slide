@@ -1,6 +1,6 @@
 # HR service catalog
 
-- 用于：五类 HR 服务的需求量、办理成功率、自动化覆盖和责任组。
-- 必填：三项核心指标和五条服务记录。
-- 阻塞：服务数不等于五或任一指标缺失。
-- QA：需求量条共享尺度；成功率、自动化和责任组分列；低值只用一处橙色强调。
+- Used for: Category 5 HR Service demand, processing success rate, automation coverage and responsibility group.
+- Required: three core indicators and five service records.
+- Blocking: The number of services is not equal to five or any indicator is missing.
+- QA: Demand bars share scale; success rate, automation, and responsibility groups are listed; low values are highlighted with only one orange.

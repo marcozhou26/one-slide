@@ -57,8 +57,8 @@ test("survival cannot rise while period retention may contain a real rebound", a
 });
 
 test("representative natural language routes without naming a module or visual", async () => {
-  const text = "我们按客户首次激活月份分了五批，从第0周起记录第1、2、4、8和12周仍活跃的人数。请比较各批的早期流失、差异和异常拐点；较新的批次还没走到后面的周数，不能把空白算成0。";
-  assert.doesNotMatch(text, /cohort|retention|曲线|折线|图表|模块/i);
+  const text = "We divided the customers into five batches according to the first activation month, starting from the0Record number from week1, 2, 4, 8and12The number of people who are still active during the week. Please compare the early churn, differences and abnormal turning points of each batch; newer batches have not reached the later weeks and cannot count blanks as0.";
+  assert.doesNotMatch(text, /cohort|retention|Curve|Polyline|chart|module/i);
   const result = await routeInput({ input_mode: "text", text });
   assert.equal(result.decision, "selected");
   assert.equal(result.module.module_id, "cohort-retention");
@@ -67,13 +67,13 @@ test("representative natural language routes without naming a module or visual",
 test("structured cohort arrays infer the module without visual hints", async () => {
   const result = await routeInput({
     input_mode: "mixed",
-    text: "请比较各加入批次在相对周数上的早期流失和长期差异，后续尚未观察的周期保留为空。",
+    text: "Please compare the early churn and long-term differences in relative weeks for each joining batch. Subsequent unobserved periods are left empty.",
     data: {
       relative_periods: [0, 1, 2, 4, 8, 12],
       cohorts: [
-        { label: "1月", initial_count: 100, retained_counts: [100, 84, 76, 68, 60, 55] },
-        { label: "2月", initial_count: 90, retained_counts: [90, 72, 64, 55, 48, null] },
-        { label: "3月", initial_count: 110, retained_counts: [110, 91, 82, 74, null, null] }
+        { label: "1month", initial_count: 100, retained_counts: [100, 84, 76, 68, 60, 55] },
+        { label: "2month", initial_count: 90, retained_counts: [90, 72, 64, 55, 48, null] },
+        { label: "3month", initial_count: 110, retained_counts: [110, 91, 82, 74, null, null] }
       ]
     }
   });
@@ -83,7 +83,7 @@ test("structured cohort arrays infer the module without visual hints", async () 
 
 test("executable Producer handoff keeps the three module fields aligned", async () => {
   const data = await fixture("cohort-retention-valid.json");
-  const result = await routeV3({ subject: "分群比较", story: data.title.text, source_ids: ["S01"], requested_module: "cohort-retention", structure: { primary_exhibit: "cohort-retention" }, module_payload: data });
+  const result = await routeV3({ subject: "Group comparison", story: data.title.text, source_ids: ["S01"], requested_module: "cohort-retention", structure: { primary_exhibit: "cohort-retention" }, module_payload: data });
   assert.equal(result.route, "deterministic_module");
   assert.equal(result.module_input, "module_payload");
 });

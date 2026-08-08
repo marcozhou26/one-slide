@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "全年净增 42 人，但招聘 218 人、离职 176 人，替换性招聘占比 81%"
+      "text": "Net increase for the year 42 people, but recruiting 218 people, resignation 176 People, proportion of replacement recruitment 81%"
     },
     {
       "id": "S02",
-      "text": "1月；2月；3月；年终奖后；4月；5月；6月；7月；8月；9月；组织调整；10月；11月；业务淡季；12月；招聘总量的 81% 用于填补离职缺口；3 月、9 月和 11 月离职出现峰值；编制连续低于预算，增量被流失反复消耗；净增 42 人对应招聘投入 336 万，单位净增成本 8.0 万元/人；全部示例数值与口径"
+      "text": "1month;2month;3Month; after year-end bonus;4month;5month;6month;7month;8month;9month; organizational adjustment;10month;11month; business off-season;12month; total recruitment amount 81% Used to fill separation gaps;3 month,9 Yuehe 11 Monthly turnover peaks; staffing continues to be lower than budget, increments are repeatedly consumed by losses; net additions 42 People correspond to recruitment investment 336 Ten thousand, net incremental cost per unit 8.0 Ten thousand yuan/People; All example values and calibers; of total recruitment 81% Used to fill separation gaps; The preparation is continuously below the budget, and the increment is repeatedly consumed by losses. net increase 42 People correspond to recruitment investment 336 Ten thousand, net incremental cost per unit 8.0 Ten thousand yuan/people; 3month; After year-end bonus; Off-season business"
     }
   ],
   "title": {
-    "text": "全年净增 42 人，但招聘 218 人、离职 176 人，替换性招聘占比 81%",
+    "text": "Net increase for the year 42 people, but recruiting 218 people, resignation 176 People, proportion of replacement recruitment 81%",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "months": [
       {
         "label": {
-          "text": "1月",
+          "text": "1month",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       },
       {
         "label": {
-          "text": "2月",
+          "text": "2month",
           "source_ids": [
             "S02"
           ]
@@ -69,7 +69,7 @@
       },
       {
         "label": {
-          "text": "3月",
+          "text": "3month",
           "source_ids": [
             "S02"
           ]
@@ -90,7 +90,7 @@
           "S02"
         ],
         "annotation": {
-          "text": "年终奖后",
+          "text": "After year-end bonus",
           "source_ids": [
             "S02"
           ]
@@ -98,7 +98,7 @@
       },
       {
         "label": {
-          "text": "4月",
+          "text": "4month",
           "source_ids": [
             "S02"
           ]
@@ -121,7 +121,7 @@
       },
       {
         "label": {
-          "text": "5月",
+          "text": "5month",
           "source_ids": [
             "S02"
           ]
@@ -144,7 +144,7 @@
       },
       {
         "label": {
-          "text": "6月",
+          "text": "6month",
           "source_ids": [
             "S02"
           ]
@@ -167,7 +167,7 @@
       },
       {
         "label": {
-          "text": "7月",
+          "text": "7month",
           "source_ids": [
             "S02"
           ]
@@ -190,7 +190,7 @@
       },
       {
         "label": {
-          "text": "8月",
+          "text": "8month",
           "source_ids": [
             "S02"
           ]
@@ -213,7 +213,7 @@
       },
       {
         "label": {
-          "text": "9月",
+          "text": "9month",
           "source_ids": [
             "S02"
           ]
@@ -234,7 +234,7 @@
           "S02"
         ],
         "annotation": {
-          "text": "组织调整",
+          "text": "organizational adjustment",
           "source_ids": [
             "S02"
           ]
@@ -242,7 +242,7 @@
       },
       {
         "label": {
-          "text": "10月",
+          "text": "10month",
           "source_ids": [
             "S02"
           ]
@@ -265,7 +265,7 @@
       },
       {
         "label": {
-          "text": "11月",
+          "text": "11month",
           "source_ids": [
             "S02"
           ]
@@ -286,7 +286,7 @@
           "S02"
         ],
         "annotation": {
-          "text": "业务淡季",
+          "text": "Off-season business",
           "source_ids": [
             "S02"
           ]
@@ -294,7 +294,7 @@
       },
       {
         "label": {
-          "text": "12月",
+          "text": "12month",
           "source_ids": [
             "S02"
           ]
@@ -318,26 +318,26 @@
     ],
     "insights": [
       {
-        "text": "招聘总量的 81% 用于填补离职缺口",
+        "text": "of total recruitment 81% Used to fill separation gaps",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "3 月、9 月和 11 月离职出现峰值",
+        "text": "3 month,9 Yuehe 11 Monthly turnover peaks",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "编制连续低于预算，增量被流失反复消耗",
+        "text": "The preparation is continuously below the budget, and the increment is repeatedly consumed by losses.",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "净增 42 人对应招聘投入 336 万，单位净增成本 8.0 万元/人",
+      "text": "net increase 42 People correspond to recruitment investment 336 Ten thousand, net incremental cost per unit 8.0 Ten thousand yuan/people",
       "source_ids": [
         "S02"
       ]

@@ -31,9 +31,9 @@ export async function renderConfidenceBand(data, output) {
   addTextBox(slide, { name: "page-title", text: plan.title.text, position: plan.title, fontSize: fitPageTitleFontSize(plan.title.text), bold: true, color: COLORS.navy, maxLines: 2 });
   if (plan.subtitle) addTextBox(slide, { name: "page-subtitle", text: plan.subtitle.text, position: plan.subtitle, fontSize: 16, color: COLORS.muted, maxLines: 1 });
   panel(slide, "interval-chart-frame", plan.chart);
-  addTextBox(slide, { name: "metric-definition", text: `${d.metric.text}（${d.unit.text}）`, position: { left: plan.chart.left + 18, top: plan.chart.top + 14, width: 300, height: 26 }, fontSize: 16, bold: true, color: COLORS.navy, singleLine: true });
+  addTextBox(slide, { name: "metric-definition", text: `${d.metric.text}(${d.unit.text})`, position: { left: plan.chart.left + 18, top: plan.chart.top + 14, width: 300, height: 26 }, fontSize: 16, bold: true, color: COLORS.navy, singleLine: true });
   addTextBox(slide, { name: "interval-definition", text: d.interval_label.text, position: { left: plan.chart.left + 326, top: plan.chart.top + 14, width: 260, height: 26 }, fontSize: 14, color: COLORS.blue, singleLine: true });
-  addTextBox(slide, { name: "sample-definition", text: `样本：${d.sample_definition.text}`, position: { left: plan.chart.left + 590, top: plan.chart.top + 14, width: 252, height: 26 }, fontSize: 14, color: COLORS.muted, alignment: "right", singleLine: true });
+  addTextBox(slide, { name: "sample-definition", text: `Sample:${d.sample_definition.text}`, position: { left: plan.chart.left + 590, top: plan.chart.top + 14, width: 252, height: 26 }, fontSize: 14, color: COLORS.muted, alignment: "right", singleLine: true });
 
   const observed = d.periods.filter((period) => period.estimate !== null);
   const values = observed.flatMap((period) => [period.lower, period.upper]);
@@ -68,16 +68,16 @@ export async function renderConfidenceBand(data, output) {
       addTextBox(slide, { name: `estimate-label-${index + 1}`, text: fmt(period.estimate), position: { left: xx - 28, top: y(period.estimate) - 28, width: 56, height: 20 }, fontSize: 12, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
     }
   });
-  addTextBox(slide, { name: "visual-legend", text: `实线与圆点：中心估计　半透明带：${d.interval_label.text}　虚线：阈值`, position: { left: plot.left, top: plot.top + plot.height + 40, width: plot.width, height: 22 }, fontSize: 12, color: COLORS.muted, singleLine: true });
+  addTextBox(slide, { name: "visual-legend", text: `Solid line vs. dot: center estimate　Translucent tape:${d.interval_label.text}　Dashed line: threshold`, position: { left: plot.left, top: plot.top + plot.height + 40, width: plot.width, height: 22 }, fontSize: 12, color: COLORS.muted, singleLine: true });
 
   panel(slide, "interpretation-rail", plan.rail, COLORS.soft);
-  addTextBox(slide, { name: "rail-title", text: "读图与口径", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
+  addTextBox(slide, { name: "rail-title", text: "Reading pictures and caliber", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
   d.insights.forEach((item, index) => addTextBox(slide, { name: `insight-${index + 1}`, text: `${index + 1}. ${item.text}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 54 + index * 70, width: plan.rail.width - 32, height: 58 }, fontSize: 14, bold: index === 0, color: COLORS.text, verticalAlignment: "top", maxLines: 4 }));
-  const methodText = `区间：重复抽样覆盖，不是单期概率\n估计：季度比例；重抽样2000次\n总体：${d.population_definition.text}`;
+  const methodText = `Interval: repeated sampling coverage, not single-period probability\nEstimates: quarterly proportions; resampling2000times\nOverall:${d.population_definition.text}`;
   addTextBox(slide, { name: "method-note", text: methodText, position: { left: plan.rail.left + 16, top: plan.rail.top + 264, width: plan.rail.width - 32, height: 76 }, fontSize: 12, color: COLORS.muted, verticalAlignment: "top", maxLines: 5 });
   if (d.threshold) addTextBox(slide, { name: "threshold-semantics", text: d.threshold.semantics.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 350, width: plan.rail.width - 32, height: 60 }, fontSize: 12, bold: true, color: COLORS.orange, verticalAlignment: "top", maxLines: 4 });
 
-  const notes = [d.source_note.text, d.missing_value_note?.text, d.disclosure?.text].filter(Boolean).join("；");
+  const notes = [d.source_note.text, d.missing_value_note?.text, d.disclosure?.text].filter(Boolean).join("; ");
   addTextBox(slide, { name: "source-note", text: notes, position: { left: plan.footer.left, top: plan.footer.top, width: plan.footer.width, height: 24 }, fontSize: 12, color: d.disclosure ? COLORS.orange : COLORS.muted, maxLines: 1 });
   if (d.conclusion) addTextBox(slide, { name: "conclusion", text: d.conclusion.text, position: { left: plan.footer.left, top: plan.footer.top + 28, width: plan.footer.width, height: 34 }, fontSize: 16, bold: true, color: COLORS.navy, fill: COLORS.orangeLight, line: { style: "solid", fill: COLORS.orange, width: 1 }, alignment: "center", maxLines: 2 });
   await exportPresentation(presentation, output);

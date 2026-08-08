@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "字段完整率 83%、无效工单率 7%，服务目录距 90% 与 5% 目标仍有差距"
+      "text": "Field completeness rate 83%, invalid work order rate 7%, the service directory is 90% with 5% There is still a gap between the goals"
     },
     {
       "id": "S02",
-      "text": "字段完整率；83%；目标 90%；无效工单率；7%；目标 <5%；有效工单率；93%；目标 95%；薪资证明；薪酬组；假期资格；员工服务；异地政策；政策组；福利变更；福利组；培训报名；学习组；发起与字段受理是最大损失环节；异地政策成功率和自动化率最低；先改目录字段，再扩自动化覆盖；每万次发起减少 700 件无效工单，目标字段完整率达到 90%；全部示例数值与口径"
+      "text": "Field completeness rate;83%; target 90%;Invalid work order rate;7%; target <5%;Effective work order rate;93%; target 95%; Salary certificate; Salary group; Holiday qualification; Employee service; Off-site policy; Policy group; Benefits change; Benefits group; Training registration; Learning group; Initiation and field acceptance are the biggest losses; Off-site policy success rate and automation rate are the lowest; Change directory fields first, then expand automation coverage; Reduction in every 10,000 initiations 700 invalid work orders, and the target field completeness rate reaches 90%;All example values and calibers; Initiation and field acceptance are the biggest losses. Off-site policy has the lowest success rate and automation rate; Reduction per 10,000 launches 700 invalid work orders, and the target field completeness rate reaches 90%; Pay group; Staff service; Holiday eligibility; policy group; Welfare group; Benefit changes; study group"
     }
   ],
   "title": {
-    "text": "字段完整率 83%、无效工单率 7%，服务目录距 90% 与 5% 目标仍有差距",
+    "text": "Field completeness rate 83%, invalid work order rate 7%, the service directory is 90% with 5% There is still a gap between the goals",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "metrics": [
       {
         "label": {
-          "text": "字段完整率",
+          "text": "Field completeness rate",
           "source_ids": [
             "S02"
           ]
@@ -35,7 +35,7 @@
           ]
         },
         "target": {
-          "text": "目标 90%",
+          "text": "target 90%",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       },
       {
         "label": {
-          "text": "无效工单率",
+          "text": "Invalid work order rate",
           "source_ids": [
             "S02"
           ]
@@ -58,7 +58,7 @@
           ]
         },
         "target": {
-          "text": "目标 <5%",
+          "text": "target <5%",
           "source_ids": [
             "S02"
           ]
@@ -69,7 +69,7 @@
       },
       {
         "label": {
-          "text": "有效工单率",
+          "text": "Effective work order rate",
           "source_ids": [
             "S02"
           ]
@@ -81,7 +81,7 @@
           ]
         },
         "target": {
-          "text": "目标 95%",
+          "text": "target 95%",
           "source_ids": [
             "S02"
           ]
@@ -94,7 +94,7 @@
     "services": [
       {
         "label": {
-          "text": "薪资证明",
+          "text": "Salary certificate",
           "source_ids": [
             "S02"
           ]
@@ -103,7 +103,7 @@
         "success": 96,
         "automation": 88,
         "owner": {
-          "text": "薪酬组",
+          "text": "Pay group",
           "source_ids": [
             "S02"
           ]
@@ -114,7 +114,7 @@
       },
       {
         "label": {
-          "text": "假期资格",
+          "text": "Holiday eligibility",
           "source_ids": [
             "S02"
           ]
@@ -123,7 +123,7 @@
         "success": 92,
         "automation": 72,
         "owner": {
-          "text": "员工服务",
+          "text": "Staff service",
           "source_ids": [
             "S02"
           ]
@@ -134,7 +134,7 @@
       },
       {
         "label": {
-          "text": "异地政策",
+          "text": "Off-site policy",
           "source_ids": [
             "S02"
           ]
@@ -143,7 +143,7 @@
         "success": 76,
         "automation": 45,
         "owner": {
-          "text": "政策组",
+          "text": "policy group",
           "source_ids": [
             "S02"
           ]
@@ -154,7 +154,7 @@
       },
       {
         "label": {
-          "text": "福利变更",
+          "text": "Benefit changes",
           "source_ids": [
             "S02"
           ]
@@ -163,7 +163,7 @@
         "success": 89,
         "automation": 68,
         "owner": {
-          "text": "福利组",
+          "text": "Welfare group",
           "source_ids": [
             "S02"
           ]
@@ -174,7 +174,7 @@
       },
       {
         "label": {
-          "text": "培训报名",
+          "text": "Training registration",
           "source_ids": [
             "S02"
           ]
@@ -183,7 +183,7 @@
         "success": 94,
         "automation": 80,
         "owner": {
-          "text": "学习组",
+          "text": "study group",
           "source_ids": [
             "S02"
           ]
@@ -195,26 +195,26 @@
     ],
     "insights": [
       {
-        "text": "发起与字段受理是最大损失环节",
+        "text": "Initiation and field acceptance are the biggest losses.",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "异地政策成功率和自动化率最低",
+        "text": "Off-site policy has the lowest success rate and automation rate",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "先改目录字段，再扩自动化覆盖",
+        "text": "Change directory fields first, then expand automation coverage",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "每万次发起减少 700 件无效工单，目标字段完整率达到 90%",
+      "text": "Reduction per 10,000 launches 700 invalid work orders, and the target field completeness rate reaches 90%",
       "source_ids": [
         "S02"
       ]

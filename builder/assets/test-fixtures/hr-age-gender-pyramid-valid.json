@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "36–45 岁段占比 41%，形成腰部堵塞与底部断层，未来三年 68 个岗位面临经验断代"
+      "text": "36–45 Proportion of age groups 41%, forming waist blockage and bottom fault, in the next three years 68 Positions facing experience shortage"
     },
     {
       "id": "S02",
-      "text": "51 岁以上；12.8年；29.4万；6.0%；38%；46–50；11.2年；27.8万；7.8%；32%；41–45；9.4年；25.6万；6.5%；29%；36–40；7.1年；22.8万；8.2%；24%；31–35；4.8年；18.6万；11.5%；15%；26–30；2.6年；13.8万；18.2%；6%；18–25；0.9年；9.6万；25.0%；1%；腰部员工占比过高，晋升通道拥堵；30 岁以下占比偏低，后备力量不足；高龄关键岗位需提前完成知识转移；补充校招 60 人、内部提拔 36 人、完成 68 个关键岗位知识转移；全部示例数值与口径"
+      "text": "51 years and above;12.8years;29.4Ten thousand;6.0%; 38%; 46–50; 11.2years;27.8Ten thousand;7.8%; 32%; 41–45; 9.4years;25.6Ten thousand;6.5%; 29%; 36–40; 7.1years;22.8Ten thousand;8.2%; 24%; 31–35; 4.8years;18.6Ten thousand;11.5%; 15%; 26–30; 2.6years;13.8Ten thousand;18.2%; 6%; 18–25; 0.9years;9.6Ten thousand;25.0%; 1%;The proportion of waist-level employees is too high and promotion channels are congested;30 The proportion of under-year-olds is low and reserve forces are insufficient; key positions for the elderly need to complete knowledge transfer in advance; supplementary school recruitment 60 People, internal promotion 36 person, complete 68 Knowledge transfer of key positions; all example values and calibers; 30 The proportion of under-year-olds is low and the reserve force is insufficient. Key positions for the elderly need to complete knowledge transfer in advance; Supplementary school recruitment 60 People, internal promotion 36 person, complete 68 knowledge transfer to key positions; 29.4million; 27.8million; 25.6million; 22.8million; 18.6million; 13.8million; 9.6million"
     }
   ],
   "title": {
-    "text": "36–45 岁段占比 41%，形成腰部堵塞与底部断层，未来三年 68 个岗位面临经验断代",
+    "text": "36–45 Proportion of age groups 41%, forming waist blockage and bottom fault, in the next three years 68 Positions facing experience shortage",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "bands": [
       {
         "label": {
-          "text": "51 岁以上",
+          "text": "51 years and above",
           "source_ids": [
             "S02"
           ]
@@ -33,13 +33,13 @@
         "healthy_male": 20,
         "healthy_female": 18,
         "tenure": {
-          "text": "12.8年",
+          "text": "12.8year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "29.4万",
+          "text": "29.4million",
           "source_ids": [
             "S02"
           ]
@@ -72,13 +72,13 @@
         "healthy_male": 34,
         "healthy_female": 32,
         "tenure": {
-          "text": "11.2年",
+          "text": "11.2year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "27.8万",
+          "text": "27.8million",
           "source_ids": [
             "S02"
           ]
@@ -111,13 +111,13 @@
         "healthy_male": 52,
         "healthy_female": 50,
         "tenure": {
-          "text": "9.4年",
+          "text": "9.4year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "25.6万",
+          "text": "25.6million",
           "source_ids": [
             "S02"
           ]
@@ -150,13 +150,13 @@
         "healthy_male": 64,
         "healthy_female": 62,
         "tenure": {
-          "text": "7.1年",
+          "text": "7.1year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "22.8万",
+          "text": "22.8million",
           "source_ids": [
             "S02"
           ]
@@ -189,13 +189,13 @@
         "healthy_male": 76,
         "healthy_female": 74,
         "tenure": {
-          "text": "4.8年",
+          "text": "4.8year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "18.6万",
+          "text": "18.6million",
           "source_ids": [
             "S02"
           ]
@@ -228,13 +228,13 @@
         "healthy_male": 88,
         "healthy_female": 84,
         "tenure": {
-          "text": "2.6年",
+          "text": "2.6year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "13.8万",
+          "text": "13.8million",
           "source_ids": [
             "S02"
           ]
@@ -267,13 +267,13 @@
         "healthy_male": 96,
         "healthy_female": 92,
         "tenure": {
-          "text": "0.9年",
+          "text": "0.9year",
           "source_ids": [
             "S02"
           ]
         },
         "salary": {
-          "text": "9.6万",
+          "text": "9.6million",
           "source_ids": [
             "S02"
           ]
@@ -297,26 +297,26 @@
     ],
     "insights": [
       {
-        "text": "腰部员工占比过高，晋升通道拥堵",
+        "text": "The proportion of waist-level employees is too high and promotion channels are congested",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "30 岁以下占比偏低，后备力量不足",
+        "text": "30 The proportion of under-year-olds is low and the reserve force is insufficient.",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "高龄关键岗位需提前完成知识转移",
+        "text": "Key positions for the elderly need to complete knowledge transfer in advance",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "补充校招 60 人、内部提拔 36 人、完成 68 个关键岗位知识转移",
+      "text": "Supplementary school recruitment 60 People, internal promotion 36 person, complete 68 knowledge transfer to key positions",
       "source_ids": [
         "S02"
       ]

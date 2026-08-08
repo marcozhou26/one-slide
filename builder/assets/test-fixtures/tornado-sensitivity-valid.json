@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "结果的 70% 波动来自两个变量，其余六个可暂不纳入管控"
+      "text": "Resultant 70% The fluctuation comes from two variables, and the remaining six can not be controlled for the time being."
     },
     {
       "id": "S02",
-      "text": "价格实现率；90% / 100% / 108%；可控性 高；置信度 强；销量增速；-8% / 5% / 15%；可控性 中；产品组合；低 / 基准 / 高；置信度 中；人工成本；-3% / 0% / +6%；原料价格；-5% / 0% / +5%；可控性 低；汇率；6.8 / 7.1 / 7.4；税率；18% / 20% / 22%；管理费用；-2% / 0% / +2%；置信度 弱；价格实现率是首要敏感变量；销量增速与价格共同解释 70% 波动；后六项单项影响均低于 15%；管控动作：销售负责价格实现率，运营负责销量转化；全部示例数值与口径"
+      "text": "price realization rate;90% / 100% / 108%; Controllability high; confidence Strong; sales growth;-8% / 5% / 15%; Controllability medium; product mix; low / benchmark / high; confidence Medium; labor cost;-3% / 0% / +6%;Raw material prices;-5% / 0% / +5%; Controllability low; exchange rate;6.8 / 7.1 / 7.4;tax rate;18% / 20% / 22%;Administrative expenses;-2% / 0% / +2%;Confidence Weak; price realization rate is the primary sensitive variable; sales growth and price jointly explain 70% Fluctuations; the last six individual impacts are all lower than 15%;Management and control actions: Sales are responsible for price realization rate, operations are responsible for sales conversion; all example values and calibers; Price realization rate is the primary sensitive variable; Sales growth and price jointly explain 70% Fluctuation; The individual impacts of the last six items are all lower than 15%; Management and control actions: Sales is responsible for price realization rate, operations is responsible for sales conversion; Confidence Strong; Controllability in; Confidence in; product portfolio; Labor cost; Confidence weak; overhead"
     }
   ],
   "title": {
-    "text": "结果的 70% 波动来自两个变量，其余六个可暂不纳入管控",
+    "text": "Resultant 70% The fluctuation comes from two variables, and the remaining six can not be controlled for the time being.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -24,7 +24,7 @@
     "variables": [
       {
         "label": {
-          "text": "价格实现率",
+          "text": "price realization rate",
           "source_ids": [
             "S02"
           ]
@@ -38,13 +38,13 @@
         "low_result": 72,
         "high_result": 124,
         "controllability": {
-          "text": "可控性 高",
+          "text": "Controllability high",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 强",
+          "text": "Confidence Strong",
           "source_ids": [
             "S02"
           ]
@@ -55,7 +55,7 @@
       },
       {
         "label": {
-          "text": "销量增速",
+          "text": "Sales growth",
           "source_ids": [
             "S02"
           ]
@@ -69,13 +69,13 @@
         "low_result": 80,
         "high_result": 118,
         "controllability": {
-          "text": "可控性 中",
+          "text": "Controllability in",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 强",
+          "text": "Confidence Strong",
           "source_ids": [
             "S02"
           ]
@@ -86,13 +86,13 @@
       },
       {
         "label": {
-          "text": "产品组合",
+          "text": "product portfolio",
           "source_ids": [
             "S02"
           ]
         },
         "range": {
-          "text": "低 / 基准 / 高",
+          "text": "low / benchmark / high",
           "source_ids": [
             "S02"
           ]
@@ -100,13 +100,13 @@
         "low_result": 93,
         "high_result": 107,
         "controllability": {
-          "text": "可控性 中",
+          "text": "Controllability in",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 中",
+          "text": "Confidence in",
           "source_ids": [
             "S02"
           ]
@@ -117,7 +117,7 @@
       },
       {
         "label": {
-          "text": "人工成本",
+          "text": "Labor cost",
           "source_ids": [
             "S02"
           ]
@@ -131,13 +131,13 @@
         "low_result": 95,
         "high_result": 105,
         "controllability": {
-          "text": "可控性 高",
+          "text": "Controllability high",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 强",
+          "text": "Confidence Strong",
           "source_ids": [
             "S02"
           ]
@@ -148,7 +148,7 @@
       },
       {
         "label": {
-          "text": "原料价格",
+          "text": "Raw material price",
           "source_ids": [
             "S02"
           ]
@@ -162,13 +162,13 @@
         "low_result": 96,
         "high_result": 104,
         "controllability": {
-          "text": "可控性 低",
+          "text": "Controllability low",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 中",
+          "text": "Confidence in",
           "source_ids": [
             "S02"
           ]
@@ -179,7 +179,7 @@
       },
       {
         "label": {
-          "text": "汇率",
+          "text": "exchange rate",
           "source_ids": [
             "S02"
           ]
@@ -193,13 +193,13 @@
         "low_result": 98,
         "high_result": 102,
         "controllability": {
-          "text": "可控性 低",
+          "text": "Controllability low",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 中",
+          "text": "Confidence in",
           "source_ids": [
             "S02"
           ]
@@ -210,7 +210,7 @@
       },
       {
         "label": {
-          "text": "税率",
+          "text": "tax rate",
           "source_ids": [
             "S02"
           ]
@@ -224,13 +224,13 @@
         "low_result": 98.5,
         "high_result": 101.5,
         "controllability": {
-          "text": "可控性 低",
+          "text": "Controllability low",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 强",
+          "text": "Confidence Strong",
           "source_ids": [
             "S02"
           ]
@@ -241,7 +241,7 @@
       },
       {
         "label": {
-          "text": "管理费用",
+          "text": "overhead",
           "source_ids": [
             "S02"
           ]
@@ -255,13 +255,13 @@
         "low_result": 99,
         "high_result": 101,
         "controllability": {
-          "text": "可控性 高",
+          "text": "Controllability high",
           "source_ids": [
             "S02"
           ]
         },
         "confidence": {
-          "text": "置信度 弱",
+          "text": "Confidence weak",
           "source_ids": [
             "S02"
           ]
@@ -273,26 +273,26 @@
     ],
     "insights": [
       {
-        "text": "价格实现率是首要敏感变量",
+        "text": "Price realization rate is the primary sensitive variable",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "销量增速与价格共同解释 70% 波动",
+        "text": "Sales growth and price jointly explain 70% Fluctuation",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "后六项单项影响均低于 15%",
+        "text": "The individual impacts of the last six items are all lower than 15%",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "action": {
-      "text": "管控动作：销售负责价格实现率，运营负责销量转化",
+      "text": "Management and control actions: Sales is responsible for price realization rate, operations is responsible for sales conversion",
       "source_ids": [
         "S02"
       ]

@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "1,200 名候选人最终仅 60 人留任，漏损集中在筛选与入职后流失"
+      "text": "Only 60 of 1,200 candidates remain after screening, hiring, and post-hire attrition."
     },
     {
       "id": "S02",
-      "text": "来源渠道；1,200 人；社会招聘；校园招聘；筛选结果；通过率 67%；筛选通过；筛选损耗；入职去向；入职率 20%；完成入职；入职前损耗；筛选关闭；12 个月状态；留任率 25%；留任；入职后流失；未入职；已淘汰；已入职人群 12 个月流失 180 人；筛选通过后仍有 560 人未入职；两个漏点合计占总损耗 62%；先改善入职转化与 12 个月留任，预计每年新增留任 95 人；全部示例数值与口径"
+      "text": "Sources (n=1,200); social recruitment; campus recruitment; Screening results; pass rate 67%; Screened; screening loss; Employment destination; employment rate 20%; Complete onboarding; Pre-employment attrition; Filter off; 12 month status; retention rate 25%; stay in office; Attrition after joining; Not hired yet; Obsolete; Already employed people 12 Monthly churn 180 people; After passing the screening, there are still 560 People have not joined the job; The two leakage points add up to the total loss. 62%; First improve onboarding conversion and 12 Months of retention, expected to increase retention each year 95 people; all values and definitions are illustrative."
     }
   ],
   "title": {
-    "text": "1,200 名候选人最终仅 60 人留任，漏损集中在筛选与入职后流失",
+    "text": "Only 60 of 1,200 candidates remain after screening, hiring, and post-hire attrition.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "layers": [
       {
         "label": {
-          "text": "来源渠道；1,200 人",
+          "text": "Sources (n=1,200)",
           "source_ids": [
             "S02"
           ]
@@ -32,7 +32,7 @@
           {
             "id": "social",
             "label": {
-              "text": "社会招聘",
+              "text": "social recruitment",
               "source_ids": [
                 "S02"
               ]
@@ -45,7 +45,7 @@
           {
             "id": "campus",
             "label": {
-              "text": "校园招聘",
+              "text": "campus recruitment",
               "source_ids": [
                 "S02"
               ]
@@ -59,7 +59,7 @@
       },
       {
         "label": {
-          "text": "筛选结果；通过率 67%",
+          "text": "Screening results; pass rate 67%",
           "source_ids": [
             "S02"
           ]
@@ -68,7 +68,7 @@
           {
             "id": "pass",
             "label": {
-              "text": "筛选通过",
+              "text": "Screened",
               "source_ids": [
                 "S02"
               ]
@@ -81,7 +81,7 @@
           {
             "id": "reject",
             "label": {
-              "text": "筛选损耗",
+              "text": "screening loss",
               "source_ids": [
                 "S02"
               ]
@@ -95,7 +95,7 @@
       },
       {
         "label": {
-          "text": "入职去向；入职率 20%",
+          "text": "Employment destination; employment rate 20%",
           "source_ids": [
             "S02"
           ]
@@ -104,7 +104,7 @@
           {
             "id": "hired",
             "label": {
-              "text": "完成入职",
+              "text": "Complete onboarding",
               "source_ids": [
                 "S02"
               ]
@@ -117,7 +117,7 @@
           {
             "id": "preloss",
             "label": {
-              "text": "入职前损耗",
+              "text": "Pre-employment attrition",
               "source_ids": [
                 "S02"
               ]
@@ -130,7 +130,7 @@
           {
             "id": "closed",
             "label": {
-              "text": "筛选关闭",
+              "text": "Filter off",
               "source_ids": [
                 "S02"
               ]
@@ -144,7 +144,7 @@
       },
       {
         "label": {
-          "text": "12 个月状态；留任率 25%",
+          "text": "12 month status; retention rate 25%",
           "source_ids": [
             "S02"
           ]
@@ -153,7 +153,7 @@
           {
             "id": "retained",
             "label": {
-              "text": "留任",
+              "text": "stay in office",
               "source_ids": [
                 "S02"
               ]
@@ -166,7 +166,7 @@
           {
             "id": "turnover",
             "label": {
-              "text": "入职后流失",
+              "text": "Attrition after joining",
               "source_ids": [
                 "S02"
               ]
@@ -179,7 +179,7 @@
           {
             "id": "not_hired",
             "label": {
-              "text": "未入职",
+              "text": "Not hired yet",
               "source_ids": [
                 "S02"
               ]
@@ -192,7 +192,7 @@
           {
             "id": "screened_out",
             "label": {
-              "text": "已淘汰",
+              "text": "Obsolete",
               "source_ids": [
                 "S02"
               ]
@@ -308,26 +308,26 @@
     ],
     "insights": [
       {
-        "text": "已入职人群 12 个月流失 180 人",
+        "text": "Already employed people 12 Monthly churn 180 people",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "筛选通过后仍有 560 人未入职",
+        "text": "After passing the screening, there are still 560 People have not joined the job",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "两个漏点合计占总损耗 62%",
+        "text": "The two leakage points add up to the total loss. 62%",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "先改善入职转化与 12 个月留任，预计每年新增留任 95 人",
+      "text": "First improve onboarding conversion and 12 Months of retention, expected to increase retention each year 95 people",
       "source_ids": [
         "S02"
       ]

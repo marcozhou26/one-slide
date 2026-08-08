@@ -27,7 +27,7 @@ test("structured composite handoff uses direct composition without a second page
 });
 
 test("explicit productized module returns only the selected module contract", async () => {
-  const result = await routeV3({ subject: "归因", story: "利润变化由四项因素解释", source_ids: ["S01"], requested_module: "waterfall-attribution", data: { start: 100, end: 90 } });
+  const result = await routeV3({ subject: "attribution", story: "Profit changes are explained by four factors", source_ids: ["S01"], requested_module: "waterfall-attribution", data: { start: 100, end: 90 } });
   assert.equal(result.route, "deterministic_module");
   assert.equal(result.module_id, "waterfall-attribution");
   assert.equal(result.load_only.length, 1);
@@ -36,13 +36,13 @@ test("explicit productized module returns only the selected module contract", as
 
 test("executable module payload wins over generic display block count", async () => {
   const result = await routeV3({
-    subject: "利润归因",
-    story: "利润由三项因素桥接",
+    subject: "profit attribution",
+    story: "Profit is bridged by three factors",
     source_ids: ["S01"],
     requested_module: "waterfall-attribution",
     structure: { primary_exhibit: "waterfall-attribution" },
     display_blocks: [{ budget_role: "primary_exhibit" }, { budget_role: "supporting_evidence" }],
-    module_payload: { version: "1.0", module_id: "waterfall-attribution", source_anchors: [{ id: "S01", text: "利润归因" }], title: { text: "利润归因" }, diagram: { type: "waterfall" } },
+    module_payload: { version: "1.0", module_id: "waterfall-attribution", source_anchors: [{ id: "S01", text: "profit attribution" }], title: { text: "profit attribution" }, diagram: { type: "waterfall" } },
   });
   assert.equal(result.route, "deterministic_module");
   assert.equal(result.module_id, "waterfall-attribution");
@@ -51,8 +51,8 @@ test("executable module payload wins over generic display block count", async ()
 
 test("conflicting executable module payload is blocked", async () => {
   const result = await routeV3({
-    subject: "利润归因",
-    story: "利润由三项因素桥接",
+    subject: "profit attribution",
+    story: "Profit is bridged by three factors",
     source_ids: ["S01"],
     requested_module: "dumbbell-gap",
     structure: { primary_exhibit: "waterfall-attribution" },
@@ -62,7 +62,7 @@ test("conflicting executable module payload is blocked", async () => {
 });
 
 test("sparse raw source routes without requesting style fields", async () => {
-  const result = await routeV3({ text: "请把这组明确的因果链做成一页：需求频繁变更导致交付周期延长。" });
+  const result = await routeV3({ text: "Please make this clear set of cause and effect chains into one page: Frequent changes in requirements lead to extended delivery cycles." });
   assert.equal(result.route, "deterministic_module");
   assert.equal(result.module_id, "causal-chain");
 });
@@ -80,14 +80,14 @@ test("a module name without source data does not bypass the source gate", async 
 });
 
 test("equally explicit raw structures require an upstream brief", async () => {
-  const result = await routeV3({ text: "请同时考虑因果链与议题树，两种结构都要比较。" });
+  const result = await routeV3({ text: "Please consider both the causal chain and the issue tree, and compare both structures." });
   assert.equal(result.route, "BRIEF_REQUIRED");
   assert.ok(result.candidates.length <= 2);
   assert.equal(result.next_skill, "consulting-slide-prompt-architect");
 });
 
 test("a detailed raw composite request requires an approved brief", async () => {
-  const result = await routeV3({ text: "请生成一页组织层级诊断。左侧展示十一层人员金字塔，右侧比较最长链、最短链和同规模企业中位，下方展示冗余来源、决策周期、三张洞察卡以及压层收益；所有字段必须可编辑并保持同一口径。" });
+  const result = await routeV3({ text: "Please generate one page of organizational level diagnostics. The left side shows the eleven-layer personnel pyramid, the right side compares the longest chain, the shortest chain and the median of enterprises of the same size. The bottom side shows redundant sources, decision-making cycles, three insight cards and layer-by-layer benefits; all fields must be editable and maintain the same caliber." });
   assert.equal(result.route, "BRIEF_REQUIRED");
   assert.equal(result.source_mode, "raw_source");
   assert.equal(result.next_skill, "consulting-slide-prompt-architect");
@@ -95,9 +95,9 @@ test("a detailed raw composite request requires an approved brief", async () => 
 
 test("Prompt Architect datasets count as a structured handoff", async () => {
   const result = await routeV3({
-    subject: "城市增长",
-    story: "重点城市增长更快",
-    audience_task: "识别重点城市",
+    subject: "urban growth",
+    story: "Key cities are growing faster",
+    audience_task: "Identify key cities",
     source_ids: ["S01"],
     structure: { primary_exhibit: "bubble-chart", primary_relationship: "city x growth x talent" },
     datasets: [{ dataset_id: "D01", path: "data/cities.csv", encoding: { x: "growth", y: "talent" } }],
@@ -140,8 +140,8 @@ test("typography uses role-based hierarchy instead of a universal 16 pt floor", 
   assert.throws(() => validateTypography("body", 11), /cannot be smaller than 12 pt/);
   assert.equal(toArtifactFontSize(12), 16);
   assert.ok(Math.abs(toArtifactFontSize(34) - 45.33333333333333) < 1e-9);
-  assert.equal(fitPageTitleFontSize("短标题"), 30);
-  assert.equal(fitPageTitleFontSize("这是一个长度明显超过三十六个字符并且需要自动缩小字号以保持单行阅读的行动标题"), 24);
+  assert.equal(fitPageTitleFontSize("short title"), 30);
+  assert.equal(fitPageTitleFontSize("This is an action title that is significantly longer than thirty-six characters and requires automatic font size reduction to remain readable on a single line."), 24);
 });
 
 test("renderer font literals stay on the consulting typography scale", async () => {

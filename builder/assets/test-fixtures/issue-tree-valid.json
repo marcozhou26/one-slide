@@ -2,40 +2,40 @@
   "version": "1.0",
   "module_id": "issue-tree",
   "audience_mode": "analysis",
-  "title": { "text": "人效下滑的根因集中在岗位结构与排班执行", "source_ids": ["S01"], "origin": "source" },
+  "title": { "text": "The root cause of the decline in human efficiency is concentrated on job structure and shift execution", "source_ids": ["S01"], "origin": "source" },
   "source_anchors": [
-    { "id": "S01", "text": "人效下滑的根因集中在岗位结构与排班执行。" },
-    { "id": "S02", "text": "核心问题是人效为何持续下滑。" },
-    { "id": "S03", "text": "结构性因素包括关键岗位空缺和管理层级过多；关键岗位空缺已验证为主要根因。" },
-    { "id": "S04", "text": "运营性因素包括高峰排班不足和低峰冗余；低峰冗余已经数据验证排除。" },
-    { "id": "S05", "text": "应先补齐关键岗位，再调整高峰排班。" }
+    { "id": "S01", "text": "The root cause of the decline in human efficiency is concentrated on job structure and shift scheduling. The root cause of the decline in human efficiency is concentrated on job structure and shift execution" },
+    { "id": "S02", "text": "The core question is why human efficiency continues to decline. Why human efficiency continues to decline" },
+    { "id": "S03", "text": "Structural factors include vacancies in key positions and excessive management levels; vacancies in key positions have been proven to be the main root cause. structural factors; Key positions vacant; Too many levels of management" },
+    { "id": "S04", "text": "Operational factors include insufficient peak scheduling and off-peak redundancy; off-peak redundancy has been eliminated through data verification. operational factors; Insufficient peak shifts; low peak redundancy" },
+    { "id": "S05", "text": "Key positions should be filled first, and then peak shifts should be adjusted. Fill key positions first; Adjust peak shift schedule again" }
   ],
   "diagram": {
     "type": "issue-tree",
-    "root": { "id": "root", "text": "人效为何持续下滑", "source_ids": ["S02"] },
+    "root": { "id": "root", "text": "Why human efficiency continues to decline", "source_ids": ["S02"] },
     "branches": [
       {
         "id": "b1",
-        "text": "结构性因素",
+        "text": "structural factors",
         "source_ids": ["S03"],
         "children": [
-          { "id": "c11", "text": "关键岗位空缺", "source_ids": ["S03"], "status": "core", "status_source_ids": ["S03"] },
-          { "id": "c12", "text": "管理层级过多", "source_ids": ["S03"], "status": "neutral" }
+          { "id": "c11", "text": "Key positions vacant", "source_ids": ["S03"], "status": "core", "status_source_ids": ["S03"] },
+          { "id": "c12", "text": "Too many levels of management", "source_ids": ["S03"], "status": "neutral" }
         ]
       },
       {
         "id": "b2",
-        "text": "运营性因素",
+        "text": "operational factors",
         "source_ids": ["S04"],
         "children": [
-          { "id": "c21", "text": "高峰排班不足", "source_ids": ["S04"], "status": "neutral" },
-          { "id": "c22", "text": "低峰冗余", "source_ids": ["S04"], "status": "excluded", "status_source_ids": ["S04"] }
+          { "id": "c21", "text": "Insufficient peak shifts", "source_ids": ["S04"], "status": "neutral" },
+          { "id": "c22", "text": "low peak redundancy", "source_ids": ["S04"], "status": "excluded", "status_source_ids": ["S04"] }
         ]
       }
     ],
     "so_what": [
-      { "text": "先补齐关键岗位", "source_ids": ["S05"] },
-      { "text": "再调整高峰排班", "source_ids": ["S05"] }
+      { "text": "Fill key positions first", "source_ids": ["S05"] },
+      { "text": "Adjust peak shift schedule again", "source_ids": ["S05"] }
     ]
   }
 }

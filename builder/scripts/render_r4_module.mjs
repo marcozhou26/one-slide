@@ -71,7 +71,7 @@ function line(
     line: { style, fill: color, width },
   });
 }
-function rail(slide, pos, items, title = "关键洞察") {
+function rail(slide, pos, items, title = "key insights") {
   panel(slide, `${title}-rail`, pos, COLORS.soft);
   addTextBox(slide, {
     name: `${title}-title`,
@@ -129,21 +129,21 @@ function formatNumber(value) {
 }
 
 function keepNumberUnitTogether(text) {
-  return String(text ?? "").replace(/(\d)\s+(?=(?:个月|人|个|年|月|周|天|小时|分钟|%))/gu, "$1");
+  return String(text ?? "").replace(/(\d)\s+(?=(?:months|people|a|year|month|week|day|hours|minutes|%))/gu, "$1");
 }
 
 function sankeyEvidenceRail(slide, p, rows, insights) {
   panel(slide, "sankey-evidence-rail", p.rail, COLORS.soft);
   addTextBox(slide, {
     name: "sla-verification-title",
-    text: "SLA 核验",
+    text: "SLA Verify",
     position: { left: p.rail.left + 14, top: p.rail.top + 10, width: p.rail.width - 28, height: 26 },
     fontSize: 18,
     bold: true,
     color: COLORS.navy,
   });
   const table = { left: p.rail.left + 10, top: p.rail.top + 42, width: p.rail.width - 20 };
-  const weights=[.22,.18,.13,.17,.30],headers=["服务","服务量","FTE","准时率","SLA 状态"];
+  const weights=[.22,.18,.13,.17,.30],headers=["service","Service volume","FTE","punctuality","SLA Status"];
   const addRow=(name,values,top,height,fill,bold=false)=>{
     let left=table.left;
     values.forEach((value,index)=>{
@@ -245,7 +245,7 @@ function renderSankey(slide, data, p) {
       : geometry.columnGap;
     addTextBox(slide, {
       name: `layer-${layerIndex + 1}`,
-      text: layer.label?.text ?? `第 ${layerIndex + 1} 层`,
+      text: layer.label?.text ?? `No. ${layerIndex + 1} layer`,
       position: {
         left: titleLeft,
         top: p.main.top + 8,
@@ -285,7 +285,7 @@ function renderSankey(slide, data, p) {
       const compact = layer.nodes.length >= 5;
       addTextBox(slide, {
         name: `node-label-${node.id}`,
-        text: node.label.text.replaceAll("；", "\n"),
+        text: node.label.text.replaceAll("; ", "\n"),
         position: {
           left: labelLeft,
           top: nodePosition.top + nodePosition.height / 2 - (compact ? 18 : 22),
@@ -332,7 +332,7 @@ function renderChord(slide, data, p) {
   panel(slide, "chord-frame", p.main);
   addTextBox(slide, {
     name: "chord-node-legend",
-    text: "节点外显示总量和净流；正值为净流入，负值为净流出",
+    text: "The total amount and net flow are displayed outside the node; positive values are net inflows, and negative values are net outflows.",
     position: { left: p.main.left + 16, top: p.main.top + 10, width: 330, height: 24 },
     fontSize: 16,
     color: COLORS.muted,
@@ -377,7 +377,7 @@ function renderChord(slide, data, p) {
       : { left: x - 70, top: y + 28, width: 140, height: 24 };
     addTextBox(slide, {
       name: `chord-node-metric-${n.id}`,
-      text: `总量 ${n.total ?? "—"}\n净流 ${net >= 0 ? "+" : "−"}${Math.abs(net)}`,
+      text: `total amount ${n.total ?? "—"}\nnet flow ${net >= 0 ? "+" : "−"}${Math.abs(net)}`,
       position: labelPos,
       fontSize: 16,
       bold: true,
@@ -425,9 +425,9 @@ function renderFunnel(slide, data, p) {
       top = p.main.top + 24 + i * 103;
     addNode(slide, {
       name: `funnel-${i + 1}`,
-      text: `${x.label.text}  ${x.value}\n占上一层 ${
+      text: `${x.label.text}  ${x.value}\nTake up one floor ${
         i === 0 ? "100" : Math.round(x.value / layers[i - 1].value * 100)
-      }%\n原因：${x.reason.text}`,
+      }%\nReason:${x.reason.text}`,
       position: { left: center - w / 2, top, width: w, height: h },
       fill: i === 3 ? COLORS.orange : [COLORS.navy, COLORS.blue, "#7397BD"][i],
       border: COLORS.white,
@@ -452,7 +452,7 @@ function renderFunnel(slide, data, p) {
   });
   addTextBox(slide, {
     name: "calc-title",
-    text: "测算逻辑",
+    text: "Calculation logic",
     position: {
       left: p.side.left + 22,
       top: p.side.top + 18,
@@ -469,7 +469,7 @@ function renderFunnel(slide, data, p) {
     factorShapes.push(addNode(slide, {
       name: `factor-${i + 1}`,
       text:
-        `${x.label.text}\n${x.value.text}\n${x.sensitivity.text}\n来源：${x.source.text}`,
+        `${x.label.text}\n${x.value.text}\n${x.sensitivity.text}\nSource:${x.source.text}`,
       position: {
         left: p.side.left + 20 + i * factorW,
         top: p.side.top + 76,
@@ -607,7 +607,7 @@ function renderRegion(slide, data, p) {
     height: 330,
   };
   addContainer(slide, { name: "region-table-head-frame", position: { left: table.left, top: table.top, width: table.width, height: 32 }, fill: COLORS.soft, border: COLORS.border });
-  addFieldGroup(slide, { name: "region-table-head", fields: ["区域", "人数", "成本", "产出", "人效"].map((value) => ({ value, bold: true, alignment: "center" })), position: { left: table.left + 4, top: table.top, width: table.width - 8, height: 32 }, gap: 2, fontSize: 16, color: COLORS.navy });
+  addFieldGroup(slide, { name: "region-table-head", fields: ["area", "Number of people", "cost", "output", "Human efficiency"].map((value) => ({ value, bold: true, alignment: "center" })), position: { left: table.left + 4, top: table.top, width: table.width - 8, height: 32 }, gap: 2, fontSize: 16, color: COLORS.navy });
   const rowShapes = new Map();
   data.diagram.regions.forEach((x, i) => {
     const rowPosition = { left: table.left, top: table.top + 32 + i * 34, width: table.width, height: 34 };
@@ -674,7 +674,7 @@ function renderValueChain(slide, data, p) {
     addNode(slide, {
       name: `stage-${x.id}`,
       text:
-        `${x.label.text}\n利润率 ${x.margin}%\n规模 ${x.market_size} 亿\nCR5 ${x.concentration}%`,
+        `${x.label.text}\nprofit margin ${x.margin}%\nscale ${x.market_size} billion\nCR5 ${x.concentration}%`,
       position: { left, top, width: w, height: 96 },
       fill: i === stages.length - 1
         ? COLORS.orange
@@ -731,7 +731,7 @@ function renderValueChain(slide, data, p) {
         planned = (player.planned ?? []).includes(s.id);
       addTextBox(slide, {
         name: `coverage-${ri + 1}-${si + 1}`,
-        text: planned ? "拟进入" : covered ? "●" : "",
+        text: planned ? "intends to enter" : covered ? "●" : "",
         position: {
           left: stageStart + si * (w + gap),
           top: rowTop + ri * rowH,
@@ -821,7 +821,7 @@ function renderSpiral(slide, data, p) {
     addTextBox(slide, {
       name: `level-${li + 1}`,
       text:
-        `${level.label.text}\n${level.duration.text}；${level.feature.text}\n证据：${level.evidence.text}\n退出：${level.exit.text}`,
+        `${level.label.text}\n${level.duration.text}; ${level.feature.text}\nEvidence:${level.evidence.text}\nExit:${level.exit.text}`,
       position: { left, top, width: 444, height: 46 },
       fontSize: 16,
       bold: true,
@@ -886,7 +886,7 @@ function renderSpiral(slide, data, p) {
   }
   addTextBox(slide, {
     name: "feedback-label",
-    text: "经验回灌",
+    text: "Experience feedback",
     position: { left: cx + 82, top: cy - 66, width: 92, height: 26 },
     fontSize: 16,
     bold: true,
@@ -896,7 +896,7 @@ function renderSpiral(slide, data, p) {
   });
   addTextBox(slide, {
     name: "score-title",
-    text: "成熟度水位",
+    text: "maturity level",
     position: {
       left: p.side.left + 18,
       top: p.side.top + 16,
@@ -1069,7 +1069,7 @@ function renderGantt(slide, data, p) {
       layerX = (slot) => plotL + (slot - .5) * monthW;
     addTextBox(slide, {
       name: "layer-step-label",
-      text: "阶段层级",
+      text: "Stage level",
       position: { left: p.main.left + 60, top: areaTop, width: laneW - 66, height: areaBottom - areaTop },
       fontSize: 16,
       bold: true,
@@ -1084,7 +1084,7 @@ function renderGantt(slide, data, p) {
     line(slide, "layer-step-horizontal-final", layerX(last.slot), layerY(last.layer_count), plotL + plotW, layerY(last.layer_count), "solid", COLORS.orange, 2.2);
     layerSteps.forEach((step, index) => addTextBox(slide, {
       name: `layer-step-node-${index + 1}`,
-      text: `${step.layer_count}层`,
+      text: `${step.layer_count}layer`,
       position: { left: layerX(step.slot) - 31, top: layerY(step.layer_count) - 14, width: 62, height: 28 },
       fontSize: 14,
       bold: true,
@@ -1110,7 +1110,7 @@ function renderGantt(slide, data, p) {
   });
   addTextBox(slide, {
     name: "gantt-relationship-legend",
-    text: "虚线：仅时间顺序\n实线箭头：必要依赖",
+    text: "Dashed line: chronological order only\nSolid arrow: necessary dependencies",
     position: { left: p.side.left + 16, top: p.side.top + 46, width: p.side.width - 32, height: 38 },
     fontSize: 12,
     color: COLORS.muted,

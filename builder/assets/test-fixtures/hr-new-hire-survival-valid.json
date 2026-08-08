@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "新人在第 3 个月和第 13 个月出现两个陡降拐点，1 年留存率仅 62%，低于行业 75%"
+      "text": "Newcomer is here 3 month and month 13 There were two steep turning points in the month.1 The annual retention rate is only 62%, lower than the industry 75%"
     },
     {
       "id": "S02",
-      "text": "0；1；2；3；4；5；6；7；8；9；10；11；12；13；14；15；16；17；18；19；20；21；22；23；24；校招；社招；内推；猎头；行业基准；试用期评估通过率；直属上级变更率；首次调薪触达率；培训完成率；第 3 个月下降来自融入与岗位匹配；第 13 个月下降来自晋升与调薪预期；内推留存最好，可优先扩大渠道占比；第 30/60/90 天设置干预节点，目标将 1 年留存提升至 75%；全部示例数值与口径"
+      "text": "0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12; 13; 14; 15; 16; 17; 18; 19; 20; 21; 22; 23; 24;School recruitment; Social recruitment; Internal recommendation; Headhunting; Industry benchmarks; Probation period evaluation pass rate; Change rate of direct superiors; First salary increase reach rate; Training completion rate; 3 The monthly decline comes from integration and job matching; No. 13 The monthly decrease comes from promotion and salary increase expectations; internal referrals are best retained and can be prioritized to expand channel share; 30/60/90 Set intervention nodes every day, and the target will be 1 Annual retention increased to 75%;All example values and calibers; No. 3 Monthly decline comes from integration and job matching; No. 13 Monthly decline comes from promotion and salary increase expectations; Internal referrals are the best for retention and can be prioritized to expand channel share. Referral; Headhunter; No. 30/60/90 Set intervention nodes every day, and the target will be 1 Annual retention increased to 75%; Probation period assessment pass rate; Change rate of immediate superiors; training completion rate; Industry Benchmark"
     }
   ],
   "title": {
-    "text": "新人在第 3 个月和第 13 个月出现两个陡降拐点，1 年留存率仅 62%，低于行业 75%",
+    "text": "Newcomer is here 3 month and month 13 There were two steep turning points in the month.1 The annual retention rate is only 62%, lower than the industry 75%",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -175,7 +175,7 @@
     "cohorts": [
       {
         "label": {
-          "text": "校招",
+          "text": "School recruitment",
           "source_ids": [
             "S02"
           ]
@@ -213,7 +213,7 @@
       },
       {
         "label": {
-          "text": "社招",
+          "text": "Social recruitment",
           "source_ids": [
             "S02"
           ]
@@ -251,7 +251,7 @@
       },
       {
         "label": {
-          "text": "内推",
+          "text": "Referral",
           "source_ids": [
             "S02"
           ]
@@ -289,7 +289,7 @@
       },
       {
         "label": {
-          "text": "猎头",
+          "text": "Headhunter",
           "source_ids": [
             "S02"
           ]
@@ -328,7 +328,7 @@
     ],
     "benchmark": {
       "label": {
-        "text": "行业基准",
+        "text": "Industry Benchmark",
         "source_ids": [
           "S02"
         ]
@@ -367,7 +367,7 @@
     "risk_rows": [
       {
         "label": {
-          "text": "试用期评估通过率",
+          "text": "Probation period assessment pass rate",
           "source_ids": [
             "S02"
           ]
@@ -385,7 +385,7 @@
       },
       {
         "label": {
-          "text": "直属上级变更率",
+          "text": "Change rate of immediate superiors",
           "source_ids": [
             "S02"
           ]
@@ -403,7 +403,7 @@
       },
       {
         "label": {
-          "text": "首次调薪触达率",
+          "text": "First salary increase reach rate",
           "source_ids": [
             "S02"
           ]
@@ -421,7 +421,7 @@
       },
       {
         "label": {
-          "text": "培训完成率",
+          "text": "training completion rate",
           "source_ids": [
             "S02"
           ]
@@ -440,26 +440,26 @@
     ],
     "insights": [
       {
-        "text": "第 3 个月下降来自融入与岗位匹配",
+        "text": "No. 3 Monthly decline comes from integration and job matching",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "第 13 个月下降来自晋升与调薪预期",
+        "text": "No. 13 Monthly decline comes from promotion and salary increase expectations",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "内推留存最好，可优先扩大渠道占比",
+        "text": "Internal referrals are the best for retention and can be prioritized to expand channel share.",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "第 30/60/90 天设置干预节点，目标将 1 年留存提升至 75%",
+      "text": "No. 30/60/90 Set intervention nodes every day, and the target will be 1 Annual retention increased to 75%",
       "source_ids": [
         "S02"
       ]

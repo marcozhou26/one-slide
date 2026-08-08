@@ -1,14 +1,14 @@
-# 单页 Brief
+# single page Brief
 
-本次只制作一页 PPT。
+Only one page will be produced this time PPT.
 
-- 页面对象：基层管理者每周管理活动时间分配
-- 目标读者及任务：业务负责人识别最值得减少的低价值管理活动
-- 页面问题：基层管理者的管理时间主要消耗在哪里
-- 中心思想：在合成示例中，审批与重复会议合计占所列管理活动时间的 69%
-- 主要关系：活动类型与每周耗时
-- 主图：四类活动的横向排序条形图
-- 辅助证据：无独立辅助证据主题
-- 必须保留：管理者被审批和会议占用这一用户判断
-- 模型补全：活动分类、每周耗时及由此计算的占比，均待确认
-- 单页边界：不扩展为管理机制、原因分析或行动方案页
+- Page object: Weekly management activity time allocation of lower-level managers
+- Target audience and mission: Business leaders identify low-value management activities most worth reducing
+- Page problem: Where do lower-level managers mainly spend their management time?
+- Central idea: In the composite example, approvals and recurring meetings combined account for 40% of the listed management activity time. 69%
+- Main relationship: activity type and weekly time
+- Main image: horizontally sorted bar chart of four types of activities
+- Supporting evidence: No independent supporting evidence subject
+- Must be retained: User judgment that managers are occupied by approvals and meetings
+- Model-generated completion: activity classification, weekly time consumption and the calculated proportion are all pending confirmation
+- Single page boundary: does not extend to management mechanism, cause analysis, or action plan pages

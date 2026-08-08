@@ -1,23 +1,23 @@
-# OneSlide 输入契约
+# OneSlide Enter the contract
 
-风险等级：B。它处理文件、数据、内容生产和多步骤 PowerPoint 工作流。内部完整性不能变成用户问卷。
+Risk level:B. It handles files, data, content production and multi-step PowerPoint Workflow. Internal integrity cannot be turned into a user questionnaire.
 
-## 输入登记
+## Enter registration
 
-| 输入 | 程度 | 接受形式 | 缺失处理 | 歧义或冲突处理 | 流程去向 |
+| input | degree | acceptance form | Missing handling | Ambiguity or conflict handling | where the process goes |
 | --- | --- | --- | --- | --- | --- |
-| 单页主题、任务或材料 | required | 自然语言，或可读取的 TXT、MD、CSV、XLSX、DOCX、PPTX、PDF、图片、JSON、GeoJSON | 先读当前对话、附件和唯一对象；仍无法识别主题或读者任务时，只问一个阻塞问题 | 保留竞争解释；能推荐时先给推荐方向 | 来源基线和单页范围 |
-| 输出意图 | derived / optional | “提示词、Brief、交接包”或“创建、绘制、生成 PPT” | 默认 `PROMPT_ONLY` 并说明 | 最新明确请求优先 | 输出模式 |
-| 受众及其任务 | derived / conditional | 用户原话、附件、项目语境 | 稳定推导；必要时采用可撤销假设 | 不同受众会改变中心结论或主图时才问 | 页面目标 |
-| 用户事实、数字、定义和结论 | optional / source-locked | 用户文字或来源文件 | 使用现有证据；允许定向补全的只补缺口 | 不修改冲突值；停止受影响的计算 | 内容与来源标注 |
-| 是否允许补全 | derived / conditional | 调用 OneSlide 默认授权“明确标注的可撤销补全”；用户可明确禁止 | 禁止补全时使用 `SOURCE_ONLY` 或 `EVIDENCE_BLOCKED` | 要求真实事实时，事实要求覆盖默认补全 | 内容模式 |
-| 中心结论 | derived / conditional | 一句由来源或计算支持的话 | 从材料推导；合成数据场景先生成数据再计算 | 两个不兼容结论需要不同主图时才问 | 标题与故事 |
-| 主要关系 | derived / conditional | 对象、维度、指标、方向 | 从读者任务和证据推导 | 信息关系优先于不兼容的图形偏好 | 主图与 Builder 路由 |
-| 输出目录 | optional | 可写目录 | 当前工作区创建新版本目录 | 不覆盖现有运行目录 | 交付位置 |
-| PowerPoint 运行能力 | derived / conditional | `PPT_DRAFT` 时需要 Node.js、内置 Builder 及其渲染依赖 | 降级交付已验证提示词包，返回 `PPT_RENDERING_BLOCKED` | 不替换为通用渲染器 | 绘制阶段 |
-| 模板或品牌 | optional | PPTX、颜色、字体、Logo、明确规则 | 使用内置中性咨询风格 | 与可读性或单页逻辑冲突时说明并采用安全边界 | Builder 视觉实现 |
+| Single page topic, task or material | required | natural language, or readable TXT, MD, CSV, XLSX, DOCX, PPTX, PDF, pictures,JSON, GeoJSON | Read the current conversation, attachments, and unique objects first; if the topic or reader task is still not recognized, just ask a blocking question | Keep competitive explanations; give the recommended direction first if you can recommend it. | Source baseline and single page range |
+| Output intent | derived / optional | "Prompt word,Brief, handover package" or "create, draw, generate PPT” | Default `PROMPT_ONLY` and explain | Latest explicit requests take precedence | Output mode |
+| Audiences and their tasks | derived / conditional | User’s original words, attachments, project context | Stable derivation; use revocable assumptions when necessary | Ask only when different audiences will change the central conclusion or main image | Page target |
+| User facts, figures, definitions and conclusions | optional / source-locked | User text or source file | Use existing evidence; only fill gaps if directed completion is allowed | Do not modify conflicting values; stop affected calculations | Content and source labeling |
+| Whether to allow completion | derived / conditional | call OneSlide Grants "clearly marked revocable completion" by default; user can explicitly disable it | Use when completing is prohibited `SOURCE_ONLY` or `EVIDENCE_BLOCKED` | When requiring true facts, the fact requirement overrides the default completion | content mode |
+| central conclusion | derived / conditional | a sentence supported by a source or calculation | Derivation from materials; in synthetic data scenarios, first generate data and then calculate | Ask only when two incompatible conclusions require different main images | Titles and Stories |
+| main relationship | derived / conditional | Object, dimension, indicator, direction | Derivation from reader tasks and evidence | Information relationships take precedence over incompatible graphics preferences | Main picture and Builder routing |
+| Output directory | optional | Writable directory | Create a new version directory in the current workspace | Do not overwrite existing run directory | delivery location |
+| PowerPoint operating capability | derived / conditional | `PPT_DRAFT` when needed Node.js, built-in Builder and its rendering dependencies | Downgrade the delivery of the verified prompt word package and return `PPT_RENDERING_BLOCKED` | Not replaced by universal renderer | drawing phase |
+| template or brand | optional | PPTX, color, font,Logo, clear rules | Use a built-in neutral consulting style | Explain and apply safety boundaries when conflicting with readability or single-page logic | Builder visual realization |
 
-## 固定判断顺序
+## Fixed judgment order
 
 ```text
 READ_CONTEXT
@@ -29,32 +29,32 @@ READ_CONTEXT
 → STOP / HANDOFF / REFUSE
 ```
 
-不得因为用户没有给样本量、时间范围、图形类型、颜色、模板、模块、坐标或精细度而阻塞。能生成诚实、可撤销的第一版时，直接继续并标明假设。
+Do not block because the user did not give sample size, time range, graph type, color, template, module, coordinates or granularity. When an honest, revocable first version can be produced, proceed directly and note the assumptions.
 
-## 允许追问的情况
+## Circumstances where follow-up questions are allowed
 
-- 两个以上同样合理的页面问题会产生不同中心结论或主图；
-- 必含内容超过单页预算，且无法给出不删内容的安全焦点；
-- 两个权威版本的核心数字冲突，页面计算必须使用其中一个；
-- 用户要求真实公司事实，但没有足够证据且禁止匿名示例；
-- 多个同等候选文件或版本，选错会明显改变结果。
+- Two or more equally legitimate page questions will produce different central conclusions or main images;
+- The required content exceeds the single-page budget, and it is impossible to provide a security focus that does not delete the content;
+- The core numbers of the two authoritative versions conflict and one of them must be used for page calculations;
+- User requests real company facts, but does not have enough evidence and anonymous examples are prohibited;
+- There are multiple equivalent candidate files or versions, and choosing the wrong one can significantly change the results.
 
-## B 级文件和数据规则
+## B Level file and data rules
 
-- 给每个使用的附件记录文件名、SHA-256、读取状态和版本判断。
-- 乱码、加密、损坏、缺页、扫描件或截断文件必须标明，不假装读取成功。
-- 保留单位、期间、粒度、分母、筛选范围、缺失值含义和计算口径。
-- 原文基线默认不删减；单页只做经声明的选取和重组，不能把必需信息偷偷移入备注。
-- 不把客户敏感信息、真实个人数据或内部协作记录放进公开示例和发布 ZIP。
+- Record the file name for each attachment used,SHA-256, reading status and version judgment.
+- Garbled, encrypted, damaged, missing pages, scanned or truncated files must be marked and do not pretend to be read successfully.
+- Keep the unit, period, granularity, denominator, filter range, meaning of missing values and calculation caliber.
+- The original baseline is not deleted by default; only declared selection and reorganization is done on a single page, and necessary information cannot be secretly moved into notes.
+- Do not include sensitive customer information, real personal data, or internal collaboration records in public samples and releases ZIP.
 
-## 最小行为矩阵
+## minimal behavior matrix
 
-- 完整输入：走 `SOURCE_ONLY`，不无故增加内容或追问。
-- 稀疏自然语言：推导单页方向，定向补全并标注。
-- 缺少关键主题：只问“这一页要让读者看懂或决定什么”。
-- 模糊或冲突目标：推荐最强焦点；确实不能共同推进时才问。
-- 非阻塞偏好缺失：不问颜色、模块、坐标和卡片数量。
-- 异常文件：记录问题，能用现有文字继续时降级继续。
-- 真实公司无数据：不生成该公司名下的事实指标。
-- 多页请求：锁定一页；推荐单页焦点或返回 `SINGLE_SLIDE_SCOPE_OVERLOAD`。
-- PPT 依赖不可用：保留提示词包，不伪造 PPT 完成状态。
+- Complete input: go `SOURCE_ONLY`, do not add content or ask questions without reason.
+- Sparse natural language: deriving single page direction, directional completion and annotation.
+- Missing key themes: Just ask “What does this page want the reader to understand or decide?”
+- Ambiguous or conflicting goals: Recommend the strongest focus; ask only when you really can’t advance together.
+- Non-blocking preferences are missing: regardless of color, module, coordinate, or card count.
+- Exception file: log issues, downgrade to continue when able to continue with existing text.
+- No data for the real company: no fact indicators under the name of the company are generated.
+- Multi-page request: lock one page; recommend single page focus or return `SINGLE_SLIDE_SCOPE_OVERLOAD`.
+- PPT Dependencies are unavailable: keep the prompt word package and do not forge it PPT Complete status.

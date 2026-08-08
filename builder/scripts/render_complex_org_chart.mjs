@@ -442,7 +442,7 @@ export function planComplexOrgChart(model, overlayInput, pageContext = {}) {
       const risk = byId.get(node.id);
       if (!risk) continue;
       node.risk = risk;
-      node.metricText = `${risk.headcount}人 ${risk.turnoverRatePct}%`;
+      node.metricText = `${risk.headcount}people ${risk.turnoverRatePct}%`;
       if (node.localMode !== "risk_column") {
         const maxHeadcount = Math.max(...computed.map((item) => item.headcount));
         const ratio = Math.sqrt(risk.headcount / maxHeadcount);
@@ -494,7 +494,7 @@ export function planComplexOrgChart(model, overlayInput, pageContext = {}) {
       sourceX,
       targetX,
       laneY,
-      label: `${item.interface_id} ${sourceZone.label}→${targetZone.label} · ${item.conflict_type} · ${item.rule_status === "missing" ? "缺书面规则" : "已有书面规则"}`,
+      label: `${item.interface_id} ${sourceZone.label}→${targetZone.label} · ${item.conflict_type} · ${item.rule_status === "missing" ? "No written rules" : "There are written rules"}`,
       labelLeft: 82,
     };
   }) : [];
@@ -518,7 +518,7 @@ export function planComplexOrgChart(model, overlayInput, pageContext = {}) {
       item.type === "primary_reporting" && item.source === layout.root
     )) ? "condensed_direct_reports" : "full",
     legend: {
-      text: "实线：直接汇报    虚线：职能管理 / 临时项目成员",
+      text: "Solid line: direct reporting    Dotted line: functional management / Temporary project member",
       left: 40,
       top: 680,
       width: 700,
@@ -547,7 +547,7 @@ function riskFill(rate, colors) {
 }
 
 function evidenceText(item) {
-  return `${item.label}（${item.node_ids.length}个）\n授权 ${item.authorization_score}分 · 周期 ${item.cycle_months}月 · 里程碑 ${item.milestone_rate_pct}%\n${item.governance_conditions.join("；")}`;
+  return `${item.label}(${item.node_ids.length})\nAuthorize ${item.authorization_score}points · cycle ${item.cycle_months}month · milestone ${item.milestone_rate_pct}%\n${item.governance_conditions.join("; ")}`;
 }
 
 export async function renderComplexOrgChart(model, output, overlayInput, pageContext = {}) {
@@ -613,7 +613,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
       borderWidth: 1.2,
     });
     container.sendToBack();
-    const unit = frame.unit_count == null ? `${frame.headcount}人 · 双线覆盖` : `${frame.unit_count}${frame.unit_label} · ${frame.headcount}人`;
+    const unit = frame.unit_count == null ? `${frame.headcount}people · Double line coverage` : `${frame.unit_count}${frame.unit_label} · ${frame.headcount}people`;
     addTextBox(slide, {
       name: `org-hybrid-zone-label-${frame.zone_id}`,
       text: `${frame.label}\n${unit}`,
@@ -668,7 +668,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
   if (plan.relationshipRenderMode === "condensed_direct_reports") {
     addTextBox(slide, {
       name: "org-risk-direct-report-note",
-      text: "31个一级部门均为CEO直属；四个业务分组仅用于风险阅读，不新增组织层级",
+      text: "31All first-level departments areCEODirectly subordinate; the four business groups are only used for risk reading, and no new organizational levels are added.",
       position: { left: 350, top: 153, width: 580, height: 24 },
       fontSize: 12,
       color: COLORS.muted,
@@ -731,9 +731,9 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
   const riskOverlayShapes = [];
   for (const node of plan.nodes.filter((item) => item.risk)) {
     const badges = [
-      [node.risk.successorGap, "继", COLORS.orange],
-      [node.risk.keyRoleDense, "岗", COLORS.navy],
-      [node.risk.newManager, "新", COLORS.blue],
+      [node.risk.successorGap, "follow", COLORS.orange],
+      [node.risk.keyRoleDense, "post", COLORS.navy],
+      [node.risk.newManager, "new", COLORS.blue],
     ].filter(([active]) => active);
     riskOverlayShapes.push(addTextBox(slide, {
       name: `org-risk-metric-${node.id}`,
@@ -808,7 +808,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
       const shared = placementOverlay.shared_evidence;
       addNode(slide, {
         name: "org-placement-shared-evidence",
-        text: `${shared.scope_label}\n人力被母体挪用 ${shared.talent_reassigned_events}次；预算被截留比例平均 ${shared.budget_withheld_pct}%——这是4个挂靠型单元的合计/汇总，不分别归属事业部挂靠或职能挂靠`,
+        text: `${shared.scope_label}\nHuman power is appropriated by the mother body ${shared.talent_reassigned_events}times; average budget interception ratio ${shared.budget_withheld_pct}%——This is4The total number of affiliated units/Aggregated, not separately attributed to business unit affiliation or functional affiliation`,
         position: { left: 70, top: 555, width: 930, height: 62 },
         fill: COLORS.soft,
         border: COLORS.line,
@@ -852,7 +852,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
   if (plan.overlays.some((item) => item.type === "node_risk_encoding")) {
     addTextBox(slide, {
       name: "org-risk-overlay-legend",
-      text: "面积：人数　填色：流失率　徽标：继=无继任关键岗　岗=关键岗密集　新=新任管理者　橙框=三重风险",
+      text: "Area: Number of people　Color: churn rate　Logo: Following=No succession for key positions　post=Concentrated key positions　new=new managers　orange frame=triple risk",
       position: { left: 355, top: 650, width: 865, height: 26 },
       fontSize: 12,
       color: COLORS.muted,
@@ -862,7 +862,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
   if (plan.overlays.some((item) => item.type === "hybrid_interface_overlay")) {
     addTextBox(slide, {
       name: "org-hybrid-overlay-legend",
-      text: "实线：正式汇报　蓝色虚线：职能指导　橙色三角：缺书面规则　蓝色菱形：已有书面规则",
+      text: "Solid line: formal report　Blue dotted line: functional guidance　Orange triangle: lack of written rules　Blue diamond: There are written rules",
       position: { left: 470, top: 650, width: 750, height: 26 },
       fontSize: 12,
       color: COLORS.muted,

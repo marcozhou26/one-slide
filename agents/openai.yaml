@@ -1,4 +1,4 @@
 interface:
   display_name: "OneSlide"
-  short_description: "把完整或零散材料做成一页来源可追溯、原生可编辑的PowerPoint"
+  short_description: "Turn source material into one traceable, natively editable PowerPoint slide"
   default_prompt: "Use $one-slide to turn my material into exactly one source-traceable, presentation-ready slide prompt or one editable PowerPoint page. Complete only necessary gaps and label every synthetic element."

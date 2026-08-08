@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "18 个月计划有 6 项关键路径任务，其中 3 项存在延期风险"
+      "text": "18 Monthly plan has 6 critical path tasks, of which 3 There is a risk of delay in the project"
     },
     {
       "id": "S02",
-      "text": "业务；技术；数据；变革管理；业务蓝图；陈总；流程设计；李经理；平台选型；王经理；核心开发；赵经理；接口联调；主数据治理；周经理；数据迁移；试点培训；孙经理；业务试点；全面推广；M1；蓝图批准；M2；选型完成；M3；核心上线；M4；试点启动；M5；试点验收；M6；全面推广；关键路径总时长；18 个月；剩余浮动时间；1 个月；最可能延期；接口联调、数据迁移、业务试点；优先锁定接口与数据资源，确保第 11 月试点不被关键路径拖延；全部示例数值与口径"
+      "text": "Business; Technology; Data; Change Management; Business Blueprint; Manager Chen; Process Design; Manager Li; Platform Selection; Manager Wang; Core Development; Manager Zhao; Interface Joint Debugging; Master Data Governance; Manager Zhou; Data Migration; Pilot Training; Manager Sun; Business Pilot; Comprehensive Promotion;M1;Blueprint Approval;M2;Selection completed;M3;Core online;M4;Pilot start;M5;Pilot acceptance;M6; Comprehensive promotion; Total critical path duration;18 months; remaining float time;1 months; most likely to be postponed; interface joint debugging, data migration, business pilot; priority is given to locking interfaces and data resources to ensure the 11 Monthly pilot is not delayed by the critical path; all sample values and calibers; The total duration of the critical path;18 months; Most likely to be postponed; interface joint debugging, data migration, business pilot; M1; Blueprint Approval; M4; Pilot started; M5; Pilot acceptance; M6;Comprehensive promotion; Prioritize locking interfaces and data resources to ensure that 11 Monthly pilots are not delayed by the critical path; Mr. Chen; business blueprint; process design; Platform selection; core development; Interface joint debugging; Master data governance; Data migration; Pilot training; Business pilot; change management"
     }
   ],
   "title": {
-    "text": "18 个月计划有 6 项关键路径任务，其中 3 项存在延期风险",
+    "text": "18 Monthly plan has 6 critical path tasks, of which 3 There is a risk of delay in the project",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -22,25 +22,25 @@
     "type": "gantt-dependency",
     "lanes": [
       {
-        "text": "业务",
+        "text": "business",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "技术",
+        "text": "Technology",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "数据",
+        "text": "data",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "变革管理",
+        "text": "change management",
         "source_ids": [
           "S02"
         ]
@@ -50,18 +50,18 @@
       {
         "id": "t1",
         "label": {
-          "text": "业务蓝图",
+          "text": "business blueprint",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "陈总",
+          "text": "Mr. Chen",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "业务",
+        "lane": "business",
         "start": 1,
         "end": 2,
         "progress": 100,
@@ -70,18 +70,18 @@
       {
         "id": "t2",
         "label": {
-          "text": "流程设计",
+          "text": "process design",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "李经理",
+          "text": "Manager Li",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "业务",
+        "lane": "business",
         "start": 2,
         "end": 5,
         "progress": 70,
@@ -90,18 +90,18 @@
       {
         "id": "t3",
         "label": {
-          "text": "平台选型",
+          "text": "Platform selection",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "王经理",
+          "text": "Manager Wang",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "技术",
+        "lane": "Technology",
         "start": 1,
         "end": 3,
         "progress": 100,
@@ -110,18 +110,18 @@
       {
         "id": "t4",
         "label": {
-          "text": "核心开发",
+          "text": "core development",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "赵经理",
+          "text": "Manager Zhao",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "技术",
+        "lane": "Technology",
         "start": 4,
         "end": 9,
         "progress": 45,
@@ -130,18 +130,18 @@
       {
         "id": "t5",
         "label": {
-          "text": "接口联调",
+          "text": "Interface joint debugging",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "赵经理",
+          "text": "Manager Zhao",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "技术",
+        "lane": "Technology",
         "start": 9,
         "end": 12,
         "progress": 10,
@@ -150,18 +150,18 @@
       {
         "id": "t6",
         "label": {
-          "text": "主数据治理",
+          "text": "Master data governance",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "周经理",
+          "text": "Manager Zhou",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "数据",
+        "lane": "data",
         "start": 2,
         "end": 7,
         "progress": 60,
@@ -170,18 +170,18 @@
       {
         "id": "t7",
         "label": {
-          "text": "数据迁移",
+          "text": "Data migration",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "周经理",
+          "text": "Manager Zhou",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "数据",
+        "lane": "data",
         "start": 8,
         "end": 11,
         "progress": 20,
@@ -190,18 +190,18 @@
       {
         "id": "t8",
         "label": {
-          "text": "试点培训",
+          "text": "Pilot training",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "孙经理",
+          "text": "Manager Sun",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "变革管理",
+        "lane": "change management",
         "start": 9,
         "end": 10,
         "progress": 0,
@@ -210,18 +210,18 @@
       {
         "id": "t9",
         "label": {
-          "text": "业务试点",
+          "text": "Business pilot",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "李经理",
+          "text": "Manager Li",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "变革管理",
+        "lane": "change management",
         "start": 11,
         "end": 14,
         "progress": 0,
@@ -230,18 +230,18 @@
       {
         "id": "t10",
         "label": {
-          "text": "全面推广",
+          "text": "Comprehensive promotion",
           "source_ids": [
             "S02"
           ]
         },
         "owner": {
-          "text": "孙经理",
+          "text": "Manager Sun",
           "source_ids": [
             "S02"
           ]
         },
-        "lane": "变革管理",
+        "lane": "change management",
         "start": 15,
         "end": 18,
         "progress": 0,
@@ -289,7 +289,7 @@
     "milestones": [
       {
         "label": {
-          "text": "M1；蓝图批准",
+          "text": "M1; Blueprint Approval",
           "source_ids": [
             "S02"
           ]
@@ -298,7 +298,7 @@
       },
       {
         "label": {
-          "text": "M2；选型完成",
+          "text": "M2;Selection completed",
           "source_ids": [
             "S02"
           ]
@@ -307,7 +307,7 @@
       },
       {
         "label": {
-          "text": "M3；核心上线",
+          "text": "M3;Core online",
           "source_ids": [
             "S02"
           ]
@@ -316,7 +316,7 @@
       },
       {
         "label": {
-          "text": "M4；试点启动",
+          "text": "M4; Pilot started",
           "source_ids": [
             "S02"
           ]
@@ -325,7 +325,7 @@
       },
       {
         "label": {
-          "text": "M5；试点验收",
+          "text": "M5; Pilot acceptance",
           "source_ids": [
             "S02"
           ]
@@ -334,7 +334,7 @@
       },
       {
         "label": {
-          "text": "M6；全面推广",
+          "text": "M6;Comprehensive promotion",
           "source_ids": [
             "S02"
           ]
@@ -344,26 +344,26 @@
     ],
     "side_metrics": [
       {
-        "text": "关键路径总时长；18 个月",
+        "text": "The total duration of the critical path;18 months",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "剩余浮动时间；1 个月",
+        "text": "remaining float time;1 months",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "最可能延期；接口联调、数据迁移、业务试点",
+        "text": "Most likely to be postponed; interface joint debugging, data migration, business pilot",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "优先锁定接口与数据资源，确保第 11 月试点不被关键路径拖延",
+      "text": "Prioritize locking interfaces and data resources to ensure that 11 Monthly pilots are not delayed by the critical path",
       "source_ids": [
         "S02"
       ]

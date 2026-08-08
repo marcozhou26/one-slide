@@ -1,9 +1,9 @@
-# 气泡矩阵＋热力表模块
+# bubble matrix+Heat meter module
 
-适用：6–15 个候选项同时具备二维坐标、规模、五项评分和综合排名。
+Applicable:6–15 Each candidate item has two-dimensional coordinates, scale, five ratings and comprehensive ranking at the same time.
 
-必需输入：每项唯一 ID、短标签、职能、X/Y 值、气泡规模、五个 1–5 分、唯一排名及来源。
+Required input: unique for each item ID, short tag, function,X/Y value, bubble size, five 1–5 points, unique ranking and source.
 
-缺失或冲突：坐标、评分、排名任一缺失时不进入正式输出；排名重复、超范围数值或同一项两套冲突数据必须先处理。
+Missing or conflicting: No formal output will be entered when coordinates, ratings, and rankings are missing; duplicate rankings, out-of-range values, or two sets of conflicting data for the same item must be processed first.
 
-禁止：根据文字印象替客户打分、自动选定启动清单、把气泡面积解释为未提供的业务量。
+Prohibited: Scoring customers based on text impressions, automatically selecting startup lists, and interpreting bubble area as unprovided business volume.

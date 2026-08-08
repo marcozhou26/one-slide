@@ -1,32 +1,32 @@
-# 统一路由、模板与安装
+# Unified routing, templates and installation
 
-## 路由
+## routing
 
-将输入整理为 JSON：
+Sort the input into JSON:
 
 ```json
 {
   "input_mode": "text | data | mixed",
-  "text": "原文或任务描述",
+  "text": "Original text or task description",
   "data": {},
-  "requested_module": "可选；用户明确指定时填写"
+  "requested_module": "Optional; filled in if explicitly specified by the user"
 }
 ```
 
-运行：
+Run:
 
 ```bash
 node scripts/route_input.mjs input.json
 ```
 
-- `selected`：读取返回模块的 reference、validator、planner 和 renderer。
-- `needs_structure_choice`：只展示返回的两种候选结构，不生成正式页。
-- `ROUTE_EVIDENCE_INSUFFICIENT`：缺乏可靠结构证据，停止猜测。
-- 用户明确指定图形只决定路由；数据不足仍由对应 validator 阻塞。
+- `selected`: Read the return module's reference, validator, planner and renderer.
+- `needs_structure_choice`: Only display the two returned candidate structures and do not generate a formal page.
+- `ROUTE_EVIDENCE_INSUFFICIENT`: In the absence of reliable structural evidence, stop speculating.
+- The user explicitly specifies that the graph only determines routing; insufficient data is still determined by the corresponding validator blocked.
 
-## 模板跟随
+## template follow
 
-先生成并通过逻辑、版式和溢出检查的无模板 PPTX，再运行：
+No template that is generated first and passes logic, layout and overflow checks PPTX, and then run:
 
 ```bash
 python3 scripts/apply_powerpoint_template.py \
@@ -37,10 +37,10 @@ python3 scripts/apply_powerpoint_template.py \
   --manifest internal/template-manifest.json
 ```
 
-模板页必须与生成页同为 16:9，并提供不与正文冲突的目标页。脚本保留模板包、母版、版式、主题、背景和已有装饰，把生成页的原生形状写入目标页；生成页包含需要额外关系的图片、媒体、超链接或图表时停止，不做不完整克隆。
+The template page must be the same as the generated page 16:9, and provide a target page that does not conflict with the main text. The script retains the template package, master, layout, theme, background and existing decorations, and writes the native shape of the generated page to the target page; it stops when the generated page contains pictures, media, hyperlinks or charts that require additional relationships, and does not perform incomplete cloning.
 
-模板输出仍需执行全尺寸渲染、溢出检查和 Microsoft PowerPoint 实际打开检查。清单只放 `internal/`，客户目录只放版本化 PPTX。
+Template output still needs to perform full size rendering, overflow checking and Microsoft PowerPoint Actual opening check. List only `internal/`, the customer directory only contains versioned PPTX.
 
-## 安装验证
+## Installation verification
 
-标准交付为保留顶层 `consulting-logic-slide/` 的 ZIP。解压后分别执行 Skill 规范检查、内置测试和目标客户端安装；压缩完整性不能替代安装验证。
+Standard delivery is reserved for the top layer `consulting-logic-slide/` of ZIP. Execute separately after decompression Skill Specification checks, built-in tests, and target client installations; compression integrity is not a substitute for installation verification.

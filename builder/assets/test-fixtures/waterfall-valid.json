@@ -2,25 +2,25 @@
   "version": "1.0",
   "module_id": "waterfall-attribution",
   "audience_mode": "analysis",
-  "title": { "text": "利润减少二十亿元，主要由人工和价格因素造成", "source_ids": ["S01"], "origin": "source" },
+  "title": { "text": "Profit decreased by RMB 2 billion, mainly caused by labor and price factors", "source_ids": ["S01"], "origin": "source" },
   "source_anchors": [
-    { "id": "S01", "text": "利润减少二十亿元，主要由人工和价格因素造成。" },
-    { "id": "S02", "text": "基准期利润为一百亿元，当期利润为八十亿元。" },
-    { "id": "S03", "text": "价格因素减少十亿元，销量因素增加五亿元，人工成本增加导致利润减少十五亿元。" },
-    { "id": "S04", "text": "人工成本是最大的可控负向因素。" },
-    { "id": "S05", "text": "优先回收人工成本和价格损失。" }
+    { "id": "S01", "text": "The profit decreased by RMB 2 billion, mainly due to labor and price factors. Profit decreased by RMB 2 billion, mainly caused by labor and price factors" },
+    { "id": "S02", "text": "The profit in the base period was 10 billion yuan, and the profit in the current period was 8 billion yuan. Profit for the current period; Base period profit" },
+    { "id": "S03", "text": "The price factor decreased by 1 billion yuan, the sales factor increased by 500 million yuan, and the increase in labor costs led to a decrease in profit of 1.5 billion yuan. Labor cost" },
+    { "id": "S04", "text": "Labor cost is the largest controllable negative factor." },
+    { "id": "S05", "text": "Prioritize recovery of labor costs and price losses." }
   ],
   "diagram": {
     "type": "waterfall",
-    "unit": "亿元",
-    "start": { "id": "start", "text": "基准期利润", "source_ids": ["S02"], "value": 100 },
+    "unit": "billion",
+    "start": { "id": "start", "text": "Base period profit", "source_ids": ["S02"], "value": 100 },
     "contributions": [
-      { "id": "price", "text": "价格因素", "source_ids": ["S03"], "value": -10 },
-      { "id": "volume", "text": "销量因素", "source_ids": ["S03"], "value": 5 },
-      { "id": "labor", "text": "人工成本", "source_ids": ["S03"], "value": -15 }
+      { "id": "price", "text": "price factor", "source_ids": ["S03"], "value": -10 },
+      { "id": "volume", "text": "sales factor", "source_ids": ["S03"], "value": 5 },
+      { "id": "labor", "text": "Labor cost", "source_ids": ["S03"], "value": -15 }
     ],
-    "end": { "id": "end", "text": "当期利润", "source_ids": ["S02"], "value": 80 },
-    "insights": [{ "text": "人工成本是最大的可控负向因素", "source_ids": ["S04"] }],
-    "bottom_conclusion": { "text": "优先回收人工成本和价格损失", "source_ids": ["S05"] }
+    "end": { "id": "end", "text": "Profit for the current period", "source_ids": ["S02"], "value": 80 },
+    "insights": [{ "text": "Labor cost is the largest controllable negative factor", "source_ids": ["S04"] }],
+    "bottom_conclusion": { "text": "Prioritize recovery of labor costs and price losses", "source_ids": ["S05"] }
   }
 }

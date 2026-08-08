@@ -1,8 +1,8 @@
 # Region map and table
 
-- 用于：4–10 个区域的强度、人数、人效、成本和产出对照。
-- 不用于：需要精确地理边界或行政区 GIS 分析。
-- 必填：区域名称、画布坐标、强度、人数、人效、成本占比、产出占比与来源。
-- 冲突：地图点位与明细表名称不一致时停止。
-- 输出：简化区域轮廓、气泡、明细表和重点行到气泡的原生引线。
-- QA：气泡与表格逐行对应，引线不穿过表格文字，色阶含义一致。
+- Used for:4–10 Comparison of intensity, number of people, human efficiency, cost and output of each region.
+- Not used for: requiring precise geographic boundaries or administrative divisions GIS Analysis.
+- Required: area name, canvas coordinates, intensity, number of people, personnel efficiency, cost ratio, output ratio and source.
+- Conflict: Stop when the map point is inconsistent with the name of the detailed table.
+- Output: Simplified native leaders of area outlines, bubbles, parts lists, and focus lines to bubbles.
+- QA: The bubbles correspond to the table line by line, the leading lines do not pass through the table text, and the color scale has the same meaning.

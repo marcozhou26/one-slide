@@ -80,7 +80,7 @@ export async function renderWaterfall(data, output) {
   });
   addTextBox(slide, {
     name: "insight-title",
-    text: "关键洞察",
+    text: "key insights",
     position: { left: 968, top: 170, width: 238, height: 28 },
     fontSize: 18,
     bold: true,

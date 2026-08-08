@@ -1,8 +1,8 @@
 # Chord dependency
 
-- 用于：5–15 个实体之间存在双向协作强度或依赖流量。
-- 不用于：单向流程、层级树或没有强度数据的关系网。
-- 必填：节点、职能群、流向、正数流量与来源；禁止自连接。
-- 冲突：同一链路出现重复口径时停止，不能自动合并。
-- 输出：节点环形排布，原生曲线连接器宽度随流量变化，前三链路强调。
-- QA：最粗链路与数据排序一致，方向可读，弱线不遮挡节点，PowerPoint 无修复提示。
+- Used for:5–15 There is two-way collaboration intensity or dependency flow between entities.
+- Not used for: one-way processes, hierarchical trees, or networks of relationships without strength data.
+- Required: node, functional group, flow direction, positive flow and source; self-connection is prohibited.
+- Conflict: Stop when duplicate calibers appear on the same link and cannot be automatically merged.
+- Output: nodes are arranged in a ring, the width of the native curve connector changes with the traffic, and the first three links are emphasized.
+- QA: The thickest link is consistent with the data sorting, the direction is readable, and the weak line does not block the node.PowerPoint No repair tips.

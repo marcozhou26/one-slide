@@ -59,7 +59,7 @@ function sankey(d,c,data){
   const sla=(data.display_blocks??[]).find(block=>block.display_intent==="local_verification"||block.block_id==="E25_SLA");
   if(sla){
     requireCondition(Array.isArray(sla.items)&&sla.items.length===5,"SANKEY_SLA_BLOCK_FAIL","SLA verification block must contain exactly five rows");
-    const serviceNodes=new Map(d.layers[0].nodes.map(node=>[node.label.text.split("；")[0],node]));
+    const serviceNodes=new Map(d.layers[0].nodes.map(node=>[node.label.text.split("; ")[0],node]));
     sla.items.forEach((item,index)=>{
       requireCondition(typeof item.label==="string"&&item.label.length>0,"SANKEY_SLA_BLOCK_FAIL",`SLA row ${index+1} label is required`);
       c.rawText(item.label,item.source_ids,`SLA row ${index+1} label`);c.source(item.source_ids,`SLA row ${index+1}`);
@@ -99,9 +99,9 @@ export function extractGanttLayerSteps(d,timeAxis=normalizeGanttTimeAxis(d)){
     label:step.source_time_label,layer_count:step.layer_count,source_ids:step.source_ids??[],
   })):null;
   if(!steps){
-    const metric=(d.side_metrics??[]).find(item=>item.text?.startsWith("阶段层级"));
+    const metric=(d.side_metrics??[]).find(item=>item.text?.startsWith("Stage level"));
     if(metric){
-      steps=[];const pattern=/(T0|T\+\d+)为(\d+)层/g;let match;
+      steps=[];const pattern=/(T0|T\+\d+)for(\d+)layer/g;let match;
       while((match=pattern.exec(metric.text)))steps.push({label:match[1],layer_count:Number(match[2]),source_ids:metric.source_ids??[]});
     }
   }

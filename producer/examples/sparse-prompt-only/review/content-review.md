@@ -1,13 +1,13 @@
-# 单页内容确认
+# Single page content confirmation
 
-这份提示词只处理一页 PPT。
+This prompt word only processes one page PPT.
 
-| 页面位置 | 内容 | 来源状态 | 用户需要确认什么 |
+| Page location | content | Source status | What does the user need to confirm? |
 | --- | --- | --- | --- |
-| 页面主题 | 基层管理者被审批和会议占用 | 用户提供 | 是否准确表达原意 |
-| 主图分类 | 审批、重复会议、团队辅导、跨部门协调 | 模型补全，待确认 | 分类是否符合实际工作 |
-| 主图数值 | 9.2、7.4、4.1、3.3 小时/周 | 模型补全，待确认 | 用真实数据替换，或继续作为示例 |
-| 标题占比 | 69% | 根据数据计算 | 计算基于上述合成数据，不代表真实比例 |
-| 页面披露 | 合成示例数据，非真实客户数据 | 根据资料推导 | 使用合成数据时必须保留 |
+| Page theme | Lower-level managers are occupied by approvals and meetings | User provided | Whether the original intention is accurately expressed |
+| Main picture classification | Approval, recurring meetings, team coaching, cross-department coordination | Model-generated completion, pending confirmation | Whether the classification is consistent with actual work |
+| Main image value | 9.2, 7.4, 4.1, 3.3 hours/week | Model-generated completion, pending confirmation | Replace with real data, or continue as example |
+| Title proportion | 69% | Calculate based on data | Calculations are based on the above synthetic data and do not represent true proportions |
+| Page Disclosure | Synthetic sample data, not real customer data | Derivation based on data | Must be preserved when using synthetic data |
 
-当前输出是可生成的一页 PPT 提示词。它没有证明真实业务中审批与重复会议占 69%。
+The current output is a page that can be generated PPT Prompt word. It does not prove that approvals and repeated meetings account for a large proportion of real business 69%.

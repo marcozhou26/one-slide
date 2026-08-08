@@ -1,7 +1,7 @@
-# 龙卷风敏感性模块
+# Tornado Susceptibility Module
 
-适用：4–10 个变量采用单变量法，分别给出悲观与乐观结果端点。
+Applicable:4–10 The univariate method is used for each variable, and the endpoints of pessimistic and optimistic results are given respectively.
 
-必需输入：基准结果、变量区间、两端结果、可控性、数据置信度及来源；变量按最大绝对影响降序。
+Required inputs: baseline results, variable interval, end results, controllability, data confidence and source; variables are ordered in descending order of greatest absolute impact.
 
-阻塞：端点缺失、排序错误或多变量联动结果混入单变量法时停止。不得把相关性解释为敏感度。
+Blocking: Stops when endpoints are missing, ordering errors occur, or multivariate linkage results are mixed into univariate methods. Correlation must not be interpreted as sensitivity.

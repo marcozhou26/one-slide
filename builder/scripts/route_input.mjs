@@ -29,51 +29,51 @@ const pageModelMethodMap = new Map([
 ]);
 
 const definitions = {
-  "complex-org-chart": { aliases: ["组织架构", "组织结构图", "org chart", "organization chart"], cues: [["汇报", "上级", "下级", "部门", "虚线", "项目组", "大区"]] },
-  "causal-chain": { aliases: ["因果链", "驱动因素", "causal chain", "driver tree"], cues: [["导致", "影响", "驱动", "传导", "继而", "最终", "改善", "结果"]] },
-  "issue-tree": { aliases: ["议题树", "问题树", "issue tree", "logic tree"], cues: [["拆解", "分支", "子议题", "根因", "mece"]] },
-  "stage-process": { aliases: ["五步流程", "阶段流程", "chevron", "step process"], cues: [["步骤", "阶段", "流程", "里程碑", "阶段门"]] },
-  "waterfall-attribution": { aliases: ["瀑布图", "waterfall"], cues: [["起点", "终点", "预算利润", "实际利润", "增减", "差额", "逐项解释", "归因", "对平"]] },
-  "route-tradeoff": { aliases: ["路线对比", "两种路线", "tradeoff", "路线 a", "路线 b"], cues: [["取舍", "对比", "争议点", "推荐路线", "两条路线"]] },
-  "scqa-roadmap": { aliases: ["scqa", "情境冲突问题答案"], cues: [["情境", "冲突", "问题", "答案", "落地路径"]] },
-  "bubble-heatmap": { aliases: ["气泡矩阵", "2×2", "2x2", "bubble matrix"], cues: [["价值", "难度", "气泡", "热力", "优先级"]] },
-  "chart-insight": { aliases: ["图表加洞察", "图表＋洞察", "柱状图洞察", "chart insight"], cues: [["柱状图", "折线", "洞察栏", "引线", "数据结论"]] },
-  "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
-  marimekko: { aliases: ["marimekko", "mekko", "马赛克图"], cues: [["列宽", "横向宽度", "市场规模占比", "内部构成", "份额构成", "块面积"]] },
-  "tornado-sensitivity": { aliases: ["龙卷风图", "敏感性分析", "tornado", "一次只变一个变量"], cues: [["悲观值", "乐观值", "低值", "高值", "基准情形", "基准结果", "参数", "变量", "单变量"]] },
-  "radar-capability": { aliases: ["雷达图", "九维雷达", "radar chart"], cues: [["能力维度", "当前水平", "行业中位", "目标", "成熟度"]] },
-  "dumbbell-gap": { aliases: ["哑铃图", "哑铃点图", "dumbbell"], cues: [["现状", "目标", "标杆", "差距", "指标"]] },
-  "bump-ranking": { aliases: ["排名迁移图", "坡度图", "bump chart", "slope chart", "slope-ranking"], cues: [["排名", "时点", "上升", "下降", "榜单", "多期"]] },
-  "composition-shift": { aliases: ["构成变化图", "百分比堆积柱状图", "100%堆积柱状图", "composition shift"], cues: [["占比", "构成", "时期", "合计100%", "结构变化"]] },
-  "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃"], ["第0周", "后面的周数", "空白", "早期流失"]] },
-  "box-plot": { aliases: ["箱线图", "盒须图", "box plot", "boxplot"], cues: [["中位数", "四分位", "中间50%", "离散", "异常值", "须线", "分布"]] },
-  histogram: { aliases: ["直方图", "histogram"], cues: [["连续数值", "分箱", "区间", "集中", "偏态", "长尾", "多峰", "缺失值", "样本"]] },
-  "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
-  "correlation-matrix": { aliases: ["相关矩阵", "相关性矩阵", "correlation matrix"], cues: [["一起变化", "方向相反", "关系较弱", "最强正", "最强负", "系数", "pearson", "spearman"]] },
-  "scatter-regression": { aliases: ["散点回归", "线性回归", "scatter regression"], cues: [["两个连续指标", "关系方向", "关系强度", "偏离趋势", "离群", "可解释范围", "样本内关联"]] },
-  "confidence-band": { aliases: ["置信带", "置信区间带", "confidence band"], cues: [["中心估计", "上下界", "区间宽度", "不确定性", "阈值", "重抽样"], ["estimate", "lower", "upper", "interval"]] },
-  "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
-  "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
-  "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
-  "market-funnel": { aliases: ["tam sam som", "市场漏斗", "市场空间漏斗"], cues: [["tam", "sam", "som", "渗透率", "客单价"]] },
-  "region-map-table": { aliases: ["地图明细", "分布地图", "区域地图"], cues: [["城市", "区域", "地图", "气泡", "明细表"]] },
-  "industry-value-chain": { aliases: ["产业价值链", "价值链图", "value chain"], cues: [["上游", "中游", "下游", "参与者", "利润率"]] },
-  "spiral-maturity": { aliases: ["螺旋成熟度", "螺旋线", "spiral maturity"], cues: [["多轮迭代", "四圈", "设计", "执行", "度量", "沉淀"]] },
-  "gantt-dependency": { aliases: ["甘特图", "gantt"], cues: [["任务", "月份", "依赖", "关键路径", "里程碑"]] },
-  "hr-age-gender-pyramid": { aliases: ["年龄性别金字塔", "人口金字塔", "人员金字塔"], cues: [["年龄段", "男性", "女性", "人数", "人员结构"]] },
-  "hr-workforce-reconciliation": { aliases: ["人员对账", "编制对账", "人头对账"], cues: [["期初", "入职", "离职", "转出", "转入", "期末"]] },
-  "hr-new-hire-survival": { aliases: ["新人留存生存曲线", "留存生存曲线", "cohort survival"], cues: [["入职后", "留存率", "批次", "司龄", "存活"]] },
-  "hr-supply-demand-gap": { aliases: ["人力供需缺口", "编制供需", "人才供需"], cues: [["需求预测", "内部供给", "自然流失", "退休", "外部补充"]] },
-  "hr-level-function-matrix": { aliases: ["职级职能矩阵", "岗位体系矩阵"], cues: [["职级", "职能序列", "管理跨度", "人数倒挂", "层级"]] },
-  "hr-from-to-mobility": { aliases: ["from-to 人才流动", "from-to 方阵", "人才流动方阵", "内部流动矩阵"], cues: [["流出部门", "流入部门", "跨部门转岗", "转岗后质量", "转岗率", "留任人数", "人才孤岛"]] },
-  "hr-eligibility-matrix": { aliases: ["资格覆盖矩阵", "政策覆盖矩阵", "eligibility matrix"], cues: [["资格条件", "覆盖人群", "政策", "例外", "是否适用"]] },
-  "hr-service-catalog": { aliases: ["hr 服务目录", "人力资源服务目录", "service catalog"], cues: [["服务目录", "服务层级", "渠道", "时效承诺", "自动化"]] },
-  "hr-ticket-intake": { aliases: ["hr 工单受理", "工单入口", "ticket intake"], cues: [["受理渠道", "工单量", "一次解决率", "积压", "受理"]] },
-  "hr-ticket-classification": { aliases: ["hr 工单分类", "工单分类流", "ticket classification"], cues: [["工单分类", "重分类率", "服务水平", "优先级", "分派"]] },
+  "complex-org-chart": { aliases: ["Organizational structure", "organizational chart", "org chart", "organization chart"], cues: [["report", "Superior", "subordinate", "Department", "dashed line", "project team", "Region"]] },
+  "causal-chain": { aliases: ["causal chain", "cause-and-effect chain", "cause and effect chain", "driving factors", "driver tree"], cues: [["cause", "effect", "influence", "drive", "lead to", "reduce", "thereby", "then", "ultimately", "improve", "result"]] },
+  "issue-tree": { aliases: ["issue tree", "problem tree", "logic tree"], cues: [["break down", "divide", "branch", "sub-issue", "sub-topic", "root cause", "mece"]] },
+  "stage-process": { aliases: ["five step process", "stage process", "chevron", "step process"], cues: [["steps", "stage", "Process", "milestone", "stage gate"]] },
+  "waterfall-attribution": { aliases: ["waterfall chart", "waterfall"], cues: [["starting point", "end point", "budget profit", "budgeted profit", "actual profit", "increase or decrease", "difference", "item by item", "attribution", "balanced"]] },
+  "route-tradeoff": { aliases: ["Route comparison", "Two routes", "tradeoff", "route a", "route b"], cues: [["trade-off", "Contrast", "Disputed points", "Recommended route", "two routes"]] },
+  "scqa-roadmap": { aliases: ["scqa", "Situational conflict questions answers"], cues: [["situation", "conflict", "question", "answer", "landing path"]] },
+  "bubble-heatmap": { aliases: ["bubble matrix", "2×2", "2x2", "bubble matrix"], cues: [["value", "difficulty", "Bubbles", "heat", "priority"]] },
+  "chart-insight": { aliases: ["charts and insights", "chart insight", "bar chart insights"], cues: [["bar chart", "line", "insight card", "leader line", "data point", "data conclusion"]] },
+  "scenario-planning": { aliases: ["scenario planning", "pessimistic baseline optimistic", "scenario planning"], cues: [["pessimistic", "benchmark", "optimistic", "probability of occurrence", "no regrets move"]] },
+  marimekko: { aliases: ["marimekko", "mekko", "mosaic chart"], cues: [["column width", "horizontal width", "horizontal breadth", "market size", "segment", "share", "composition", "block area"]] },
+  "tornado-sensitivity": { aliases: ["tornado diagram", "sensitivity analysis", "tornado", "Only change one variable at a time"], cues: [["Pessimistic value", "optimistic value", "low value", "high value", "Base case", "Benchmark results", "parameters", "variable", "Univariate"]] },
+  "radar-capability": { aliases: ["radar chart", "nine-dimensional radar"], cues: [["capability dimension", "current level", "industry median", "target", "maturity"]] },
+  "dumbbell-gap": { aliases: ["Dumbbell diagram", "Dumbbell point chart", "dumbbell"], cues: [["Current situation", "target", "Benchmark", "gap", "indicator"]] },
+  "bump-ranking": { aliases: ["Ranking migration chart", "slope map", "bump chart", "slope chart", "slope-ranking"], cues: [["Ranking", "time point", "rise", "fall", "List", "Multiple issues"]] },
+  "composition-shift": { aliases: ["composition change diagram", "Percent stacked column chart", "100%stacked column chart", "composition shift"], cues: [["Proportion", "constitute", "period", "total100%", "structural changes"]] },
+  "cohort-retention": { aliases: ["cohort retention", "Group retention", "Batch retention"], cues: [["batch", "relative period", "initial base", "immature", "still active"], ["No.0week", "the following weeks", "blank", "early churn"]] },
+  "box-plot": { aliases: ["boxplot", "box-and-whisker plot", "box plot"], cues: [["median", "quartile", "middle 50%", "middle50%", "typical level", "dispersion", "outlier", "whisker", "distribution"]] },
+  histogram: { aliases: ["Histogram", "histogram"], cues: [["continuous numeric value", "binning", "interval", "Concentrate", "Skewness", "long tail", "Many peaks", "Missing values", "sample"]] },
+  "box-plot-jitter": { aliases: ["box plot with observations", "box plot with jittered points", "box plot jitter", "per employee"], cues: [["original observations", "individual observations", "median", "quartile", "outliers", "sample size", "per person"]] },
+  "correlation-matrix": { aliases: ["correlation matrix", "correlation matrix", "correlation matrix"], cues: [["change together", "opposite direction", "weak relationship", "The strongest positive", "The strongest negative", "coefficient", "pearson", "spearman"]] },
+  "scatter-regression": { aliases: ["scatter regression", "linear regression", "scatter regression"], cues: [["Two continuous indicators", "relationship direction", "relationship strength", "deviation from trend", "outlier", "Interpretable range", "intra-sample correlation"]] },
+  "confidence-band": { aliases: ["confidence band", "confidence interval band", "confidence band"], cues: [["center estimate", "upper and lower bounds", "interval width", "uncertainty", "threshold", "Resampling"], ["estimate", "lower", "upper", "interval"]] },
+  "small-multiples": { aliases: ["small multiples", "small multiples", "3×3 miniature"], cues: [["multiple objects", "unified scale", "mini polyline", "matrix", "benchmark"]] },
+  "sankey-flow": { aliases: ["Sankey diagram", "sankey"], cues: [["flow band", "Diversion", "loss", "conversion rate", "Four layers of nodes"]] },
+  "chord-dependency": { aliases: ["chord diagram", "dependency wheel", "chord"], cues: [["Two-way dependency", "interaction strength", "circumference", "Department collaboration"]] },
+  "market-funnel": { aliases: ["tam sam som", "market funnel", "market space funnel"], cues: [["tam", "sam", "som", "Penetration", "Price per customer"]] },
+  "region-map-table": { aliases: ["Map details", "Distribution map", "area map"], cues: [["city", "area", "map", "Bubbles", "detailed list"]] },
+  "industry-value-chain": { aliases: ["Industrial value chain", "value chain diagram", "value chain"], cues: [["upstream", "midstream", "downstream", "participants", "profit margin"]] },
+  "spiral-maturity": { aliases: ["spiral maturity", "spiral", "spiral maturity"], cues: [["multiple iterations", "four circles", "design", "execute", "measure", "precipitation"]] },
+  "gantt-dependency": { aliases: ["Gantt chart", "gantt"], cues: [["Task", "month", "Depend on", "critical path", "milestone"]] },
+  "hr-age-gender-pyramid": { aliases: ["Age and Gender Pyramid", "population pyramid", "People Pyramid"], cues: [["age group", "male", "women", "Number of people", "Personnel structure"]] },
+  "hr-workforce-reconciliation": { aliases: ["Personnel reconciliation", "Prepare reconciliation", "Headcount reconciliation"], cues: [["Beginning of period", "Onboarding", "Resign", "transfer out", "transfer in", "End of term"]] },
+  "hr-new-hire-survival": { aliases: ["Newcomer retention survival curve", "survival curve", "cohort survival"], cues: [["After joining", "Retention rate", "batch", "Si Ling", "survive"]] },
+  "hr-supply-demand-gap": { aliases: ["Manpower supply and demand gap", "Prepare supply and demand", "Talent supply and demand"], cues: [["demand forecast", "internal supply", "natural loss", "retire", "external supplement"]] },
+  "hr-level-function-matrix": { aliases: ["job function matrix", "Job system matrix"], cues: [["Rank", "functional sequence", "management span", "Number of people upside down", "Hierarchy"]] },
+  "hr-from-to-mobility": { aliases: ["department from-to matrix", "from-to talent flow", "from-to matrix", "talent mobility matrix", "internal flow matrix"], cues: [["outflow department", "inflow department", "internal transfer", "cross-department transfer", "post-transfer quality", "transfer rate", "retention", "talent island"]] },
+  "hr-eligibility-matrix": { aliases: ["Eligibility Coverage Matrix", "policy coverage matrix", "eligibility matrix"], cues: [["Eligibility", "Cover people", "Policy", "exception", "Applicable"]] },
+  "hr-service-catalog": { aliases: ["hr Service catalog", "Human Resources Service Directory", "service catalog"], cues: [["Service catalog", "Service level", "channel", "time commitment", "Automation"]] },
+  "hr-ticket-intake": { aliases: ["hr Work order acceptance", "Work order entry", "ticket intake"], cues: [["Acceptance channels", "Work order quantity", "First time resolution rate", "backlog", "accept"]] },
+  "hr-ticket-classification": { aliases: ["hr Work order classification", "Work order classification flow", "ticket classification"], cues: [["Work order classification", "reclassification rate", "service level", "priority", "dispatch"]] },
 };
 
 function normalizeText(value) {
-  return String(value ?? "").toLowerCase().replace(/[：:／/、，,；;（）()\[\]【】"']/g, " ").replace(/\s+/g, " ").trim();
+  return String(value ?? "").toLowerCase().replace(/[: ://, , ,; ;()()\[\][]"']/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function dataTokens(value, out = new Set()) {
@@ -109,7 +109,7 @@ function inferCompositionShift(data, text) {
     return Math.abs(sum - expected) <= Math.max(0.01, expected * 0.001);
   });
   if (!reconciles) return null;
-  const relationshipCue = ["结构", "构成", "占比", "组合", "mix", "share", "composition"].some((cue) => text.includes(cue));
+  const relationshipCue = ["structure", "constitute", "Proportion", "combination", "mix", "share", "composition"].some((cue) => text.includes(cue));
   if (!relationshipCue) return null;
   return ["inferred:reconciled_component_series", "inferred:multi_period_totals", "cue:structure_relationship"];
 }
@@ -126,7 +126,7 @@ function inferCohortRetention(data, text) {
     return Number.isFinite(Number(cohort?.initial_count)) && Number(cohort.initial_count) > 0 && Array.isArray(values) && values.length === periods.length;
   });
   if (!aligned) return null;
-  const relationshipCue = ["批次", "相对", "加入", "入职", "获客", "激活", "留存", "存续", "流失"].some((cue) => text.includes(cue));
+  const relationshipCue = ["batch", "relatively", "Join", "Onboarding", "Acquire customers", "activate", "retain", "Survive", "Loss"].some((cue) => text.includes(cue));
   if (!relationshipCue) return null;
   return ["inferred:aligned_relative_periods", "inferred:cohort_initial_bases", "cue:cohort_comparison"];
 }
@@ -137,7 +137,7 @@ function inferBoxPlot(data, text) {
   if (groups.length < 3 || groups.length > 8) return null;
   const complete = groups.every((group) => group && typeof group === "object" && ["q1", "median", "q3", "whisker_low", "whisker_high", "sample_size", "missing_count"].every((key) => Number.isFinite(Number(group[key]))));
   if (!complete) return null;
-  const relationshipCue = ["分布", "中间50%", "中位数", "四分位", "离散", "波动", "异常值"].some((cue) => text.includes(cue));
+  const relationshipCue = ["distribution", "middle 50%", "middle50%", "typical level", "median", "quartile", "dispersion", "variation", "outlier"].some((cue) => text.includes(cue));
   if (!relationshipCue) return null;
   return ["inferred:group_distribution_summary", "inferred:quartile_whisker_fields", "cue:distribution_relationship"];
 }
@@ -157,7 +157,7 @@ function inferHistogram(data, text) {
   const values = Array.isArray(data.values) ? data.values : Array.isArray(data.observations) ? data.observations : [];
   const numeric = values.filter((value) => value !== null && value !== "" && Number.isFinite(Number(value))).map(Number);
   const hasContinuousValues = numeric.length >= 8 && new Set(numeric).size >= 5;
-  const relationshipCue = ["分布", "集中", "偏态", "长尾", "多峰", "区间", "distribution", "skew", "tail", "mode"].some((cue) => text.includes(cue));
+  const relationshipCue = ["Distribution", "Concentrate", "Skewness", "long tail", "Many peaks", "interval", "distribution", "skew", "tail", "mode"].some((cue) => text.includes(cue));
   const metadataReady = Boolean(data.unit || data.metric || data.period || data.sample);
   if (!hasContinuousValues || !relationshipCue || !metadataReady) return null;
   return ["inferred:continuous_numeric_observations", "inferred:distribution_relationship", "inferred:traceable_measurement_metadata"];
@@ -169,7 +169,7 @@ function inferGroupDistribution(data, text) {
   if (groups.length < 2 || groups.length > 6) return null;
   if (!groups.every((group) => group && typeof group === "object" && typeof group.name === "string" && Array.isArray(group.observations) && group.observations.length >= 5 && group.observations.length <= 60 && group.observations.every((value) => Number.isFinite(Number(value))))) return null;
   if (groups.reduce((sum, group) => sum + group.observations.length, 0) > 240) return null;
-  const relationshipCue = ["分布", "中位数", "四分位", "异常值", "离散", "个体观测", "每位", "样本量", "密度"].some((cue) => text.includes(cue));
+  const relationshipCue = ["distribution", "median", "quartile", "outlier", "dispersion", "individual observation", "original observation", "per person", "sample size", "density"].some((cue) => text.includes(cue));
   if (!relationshipCue) return null;
   return ["inferred:grouped_raw_observations", "inferred:sample_sizes", "cue:distribution_relationship"];
 }
@@ -183,7 +183,7 @@ function inferCorrelationMatrix(data, text) {
   const matrixReady = matrix.length === metrics.length && matrix.every((row, i) => Array.isArray(row) && row.length === metrics.length && row.every((value, j) => Number.isFinite(Number(value)) && Number(value) >= -1 && Number(value) <= 1 && Math.abs(Number(value) - Number(matrix[j]?.[i])) <= .0001));
   const observationReady = observations.length === metrics.length && observations.every((item) => Array.isArray(item.values) && item.values.length >= 3);
   if (!matrixReady && !observationReady) return null;
-  const cue = ["一起变化", "方向相反", "关系", "关联", "系数", "pearson", "spearman", "正相关", "负相关"].some((item) => text.includes(item));
+  const cue = ["change together", "opposite direction", "relationship", "association", "coefficient", "pearson", "spearman", "Positive correlation", "negative correlation"].some((item) => text.includes(item));
   if (!cue) return null;
   return matrixReady ? ["inferred:symmetric_coefficient_matrix", "inferred:unique_metric_axis", "cue:relationship_screening"] : ["inferred:aligned_raw_observations", "inferred:unique_metric_axis", "cue:relationship_screening"];
 }
@@ -208,7 +208,7 @@ function inferScatterRegression(data, text) {
   const yValues = new Set(valid.map((item) => Number(item.y)));
   if (xValues.size < 2 || yValues.size < 2) return null;
   const metadataReady = Boolean(data.x_metric && data.y_metric && data.x_unit && data.y_unit && data.period);
-  const relationshipCue = ["关系", "方向", "强度", "偏离", "离群", "关联", "一起变化", "外推"].some((cue) => text.includes(cue));
+  const relationshipCue = ["relationship", "direction", "intensity", "deviate", "outlier", "association", "change together", "extrapolate"].some((cue) => text.includes(cue));
   if (!metadataReady || !relationshipCue) return null;
   return ["inferred:paired_continuous_observations", "inferred:nonzero_bivariate_variance", "cue:bivariate_relationship"];
 }
@@ -233,7 +233,7 @@ function inferConfidenceBand(data, text) {
   if (![estimate, lower, upper].every((series) => series.every((value) => Number.isFinite(Number(value))))) return null;
   if (!periods.every((period, index) => index === 0 || String(period) !== String(periods[index - 1]))) return null;
   if (!estimate.every((value, index) => Number(lower[index]) <= Number(value) && Number(value) <= Number(upper[index]))) return null;
-  const relationshipCue = ["中心估计", "上下界", "区间宽度", "不确定性", "阈值", "重抽样", "estimate", "lower", "upper", "interval"].some((cue) => text.includes(cue));
+  const relationshipCue = ["center estimate", "upper and lower bounds", "interval width", "uncertainty", "threshold", "Resampling", "estimate", "lower", "upper", "interval"].some((cue) => text.includes(cue));
   const metadataReady = Boolean(data.metric || data.unit || data.interval_definition);
   if (!relationshipCue || !metadataReady) return null;
   return ["inferred:ordered_estimate_bounds", "inferred:interval_definition", "cue:uncertainty_relationship"];
@@ -291,6 +291,9 @@ export async function routeInput(input) {
     .map((item) => inferredBoxPlot && item.moduleId === "box-plot"
       ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredBoxPlot] }
       : item)
+    .map((item) => item.moduleId === "box-plot" && Array.isArray(input.data?.groups) && !inferredBoxPlot && !item.evidence.some((evidence) => evidence.startsWith("explicit:"))
+      ? { ...item, score: 0 }
+      : item)
     .map((item) => inferredHistogram && item.moduleId === "histogram"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredHistogram] }
       : item)
@@ -299,6 +302,9 @@ export async function routeInput(input) {
       : item)
     .map((item) => inferredJitter && item.moduleId === "box-plot-jitter"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredJitter] }
+      : item)
+    .map((item) => item.moduleId === "box-plot-jitter" && Array.isArray(input.data?.groups) && !inferredJitter && !item.evidence.some((evidence) => evidence.startsWith("explicit:"))
+      ? { ...item, score: 0 }
       : item)
     .map((item) => inferredCorrelation && item.moduleId === "correlation-matrix"
       ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredCorrelation] }

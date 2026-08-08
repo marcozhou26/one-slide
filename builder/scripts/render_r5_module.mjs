@@ -68,7 +68,7 @@ function line(
     line: { style, fill: color, width },
   });
 }
-function rail(slide, pos, items, title = "管理洞察") {
+function rail(slide, pos, items, title = "management insights") {
   panel(slide, `${title}-rail`, pos, COLORS.soft);
   addTextBox(slide, {
     name: `${title}-title`,
@@ -160,7 +160,7 @@ function renderAge(slide, data, p) {
     metricColW = (p.main.width - 606) / 4;
   addTextBox(slide, {
     name: "male-head",
-    text: `男性  总计 ${bands.reduce((s, x) => s + x.male, 0)} 人`,
+    text: `male  total ${bands.reduce((s, x) => s + x.male, 0)} people`,
     position: {
       left: p.main.left + 80,
       top: p.main.top + 10,
@@ -174,7 +174,7 @@ function renderAge(slide, data, p) {
   });
   addTextBox(slide, {
     name: "age-head",
-    text: "年龄段",
+    text: "age group",
     position: {
       left: center - 42,
       top: p.main.top + 10,
@@ -188,7 +188,7 @@ function renderAge(slide, data, p) {
   });
   addTextBox(slide, {
     name: "female-head",
-    text: `女性  总计 ${bands.reduce((s, x) => s + x.female, 0)} 人`,
+    text: `women  total ${bands.reduce((s, x) => s + x.female, 0)} people`,
     position: {
       left: center + 80,
       top: p.main.top + 10,
@@ -200,7 +200,7 @@ function renderAge(slide, data, p) {
     color: COLORS.orange,
     alignment: "center",
   });
-  ["司龄", "薪酬", "离职", "管理"].forEach((t, i) =>
+  ["Si Ling", "Salary", "Resign", "management"].forEach((t, i) =>
     addTextBox(slide, {
       name: `age-metric-head-${i + 1}`,
       text: t,
@@ -392,8 +392,8 @@ function renderWorkforce(slide, data, p) {
   addTextBox(slide, {
     name: "rate-legend",
     text: hasAttrition || hasRecruitment
-      ? `${hasAttrition ? "橙：离职率" : "离职率待补充"}；${hasRecruitment ? "蓝：招聘完成率" : "招聘完成率待补充"}`
-      : "离职率／招聘完成率：待客户补充",
+      ? `${hasAttrition ? "Orange: turnover rate" : "Turnover rate to be added"}; ${hasRecruitment ? "Blue: Recruitment completion rate" : "Recruitment completion rate to be supplemented"}`
+      : "turnover rate/Recruitment completion rate: to be supplemented by customers",
     position: { left: left, top: top + h + 4, width: 430, height: 24 },
     fontSize: 16,
     bold: true,
@@ -401,7 +401,7 @@ function renderWorkforce(slide, data, p) {
   });
   addTextBox(slide, {
     name: "workforce-row-legend",
-    text: "对账顺序：期初 / 入 / 离 / 调 / 期末 / 净增",
+    text: "Reconciliation sequence: beginning of period / enter / away from / tune / End of term / net increase",
     position: { left, top: top + h + 24, width: 500, height: 20 },
     fontSize: 16,
     color: COLORS.muted,
@@ -513,7 +513,7 @@ function renderWorkforce(slide, data, p) {
     });
     if (hasBudget) addTextBox(slide, {
       name: `budget-${i + 1}`,
-      text: `编差 ${m.closing - m.budget}`,
+      text: `Editorial error ${m.closing - m.budget}`,
       position: {
         left: boxLeft,
         top: cellTop + 220,
@@ -541,7 +541,7 @@ function renderWorkforce(slide, data, p) {
   });
   if (!hasBudget) addTextBox(slide, {
     name: "budget-missing-note",
-    text: "编制预算偏差：待客户补充",
+    text: "Budget deviation: to be supplemented by the customer",
     position: { left, top: cellTop + 228, width: 300, height: 28 },
     fontSize: 16,
     bold: true,
@@ -639,7 +639,7 @@ function renderSurvival(slide, data, p) {
   data.diagram.cohorts.forEach((s, i) =>
     addTextBox(slide, {
       name: `cohort-legend-${i + 1}`,
-      text: `● ${s.label.text}\n12月 ${Math.round(s.values[12])}%  24月 ${
+      text: `● ${s.label.text}\n12month ${Math.round(s.values[12])}%  24month ${
         Math.round(s.values[24])
       }%`,
       position: {
@@ -656,7 +656,7 @@ function renderSurvival(slide, data, p) {
   );
   addTextBox(slide, {
     name: "benchmark-legend",
-    text: "灰虚线：行业基准",
+    text: "Dotted gray line: industry benchmark",
     position: { left: plot.left, top: plot.top - 28, width: 160, height: 24 },
     fontSize: 16,
     bold: true,
@@ -664,7 +664,7 @@ function renderSurvival(slide, data, p) {
   });
   addTextBox(slide, {
     name: "survival-notes",
-    text: "3 个月：融入与岗位匹配问题        13 个月：晋升与调薪预期落空",
+    text: "3 Month: Integration and job matching issues        13 Month: Promotion and salary increase expectations fell through",
     position: {
       left: plot.left + 170,
       top: plot.top - 28,
@@ -696,7 +696,7 @@ function renderSurvival(slide, data, p) {
     r.scores.forEach((v, ci) =>
       addTextBox(slide, {
         name: `risk-${ri + 1}-${ci + 1}`,
-        text: ["低", "中", "高"][v - 1],
+        text: ["low", "in", "high"][v - 1],
         position: {
           left: p.main.left + 14 + labelW + ci * colW,
           top: riskTop + ri * 30,
@@ -801,7 +801,7 @@ function renderSupply(slide, data, p) {
     });
   });
   const tableTop = p.main.top + 326,
-    rowNames = ["期初", "流失", "退休", "晋升", "转岗", "内部供给", "需外补"],
+    rowNames = ["Beginning of period", "Loss", "retire", "promotion", "Transfer", "internal supply", "Need external supplementation"],
     keys = [
       "opening",
       "attrition",
@@ -849,7 +849,7 @@ function renderSupply(slide, data, p) {
   panel(slide, "strategy-rail", p.rail, COLORS.soft);
   addTextBox(slide, {
     name: "strategy-title",
-    text: "补充策略",
+    text: "complementary strategies",
     position: {
       left: p.rail.left + 16,
       top: p.rail.top + 14,
@@ -864,7 +864,7 @@ function renderSupply(slide, data, p) {
     addNode(slide, {
       name: `strategy-${i + 1}`,
       text:
-        `${s.label.text}\n${s.count} 人\n周期：${s.cycle.text}\n成本：${s.cost.text}\n风险：${s.risk.text}`,
+        `${s.label.text}\n${s.count} people\nCycle:${s.cycle.text}\nCost:${s.cost.text}\nRisks:${s.risk.text}`,
       position: {
         left: p.rail.left + 14,
         top: p.rail.top + 58 + i * 124,
@@ -953,7 +953,7 @@ function renderLevel(slide, data, p) {
           : COLORS.soft;
       addTextBox(slide, {
         name: `level-cell-${ri + 1}-${ci + 1}`,
-        text: c.count ? `${c.count}人\n${c.salary}万\n${c.tenure}年司龄` : "断层",
+        text: c.count ? `${c.count}people\n${c.salary}million\n${c.tenure}years old` : "fault",
         position: {
           left: left + ci * colW,
           top: top + ri * rowH,
@@ -1057,7 +1057,7 @@ function renderMobility(slide, data, p) {
   const totalTop = top + n * rowH + 2;
   addTextBox(slide, {
     name: "mob-total-label",
-    text: "流入合计",
+    text: "total inflow",
     position: {
       left: p.matrix.left + 8,
       top: totalTop,
@@ -1089,7 +1089,7 @@ function renderMobility(slide, data, p) {
   }
   addTextBox(slide, {
     name: "mobility-cell-legend",
-    text: "格内顺序：人数 / 12 月留存率 / 绩效提升比例（%）；对角线为留任人数",
+    text: "Order within cells: number of people / 12 monthly retention rate / Performance improvement ratio (%); the diagonal line is the number of people retained",
     position: { left: p.matrix.left + labelW, top: totalTop + 42, width: 420, height: 24 },
     fontSize: 16,
     color: COLORS.muted,
@@ -1205,7 +1205,7 @@ function renderEligibility(slide, data, p) {
     s.scores.forEach((v, ci) =>
       addTextBox(slide, {
         name: `eligible-${ri + 1}-${ci + 1}`,
-        text: ["需人工", "条件覆盖", "自动判断"][v - 1],
+        text: ["Requires labor", "condition coverage", "Automatic judgment"][v - 1],
         position: {
           left: p.main.left + labelW + ci * colW,
           top: top + ri * rowH,
@@ -1221,7 +1221,7 @@ function renderEligibility(slide, data, p) {
       })
     );
   });
-  rail(slide, p.rail, data.diagram.insights, "发现与动作");
+  rail(slide, p.rail, data.diagram.insights, "discovery and action");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 function renderService(slide, data, p) {
@@ -1239,7 +1239,7 @@ function renderService(slide, data, p) {
   const max = Math.max(...data.diagram.services.map((x) => x.volume)),
     top = p.main.top + 126,
     rowH = 64;
-  addFieldGroup(slide, { name: "service-head", fields: ["服务目录", "需求量", "办理成功率", "自动化覆盖", "责任组"].map((value) => ({ value, bold: true, alignment: "center" })), position: { left: p.main.left + 16, top, width: p.main.width - 32, height: 28 }, gap: 4, fontSize: 16, color: COLORS.navy });
+  addFieldGroup(slide, { name: "service-head", fields: ["Service catalog", "demand", "Success rate", "Automated coverage", "Responsible group"].map((value) => ({ value, bold: true, alignment: "center" })), position: { left: p.main.left + 16, top, width: p.main.width - 32, height: 28 }, gap: 4, fontSize: 16, color: COLORS.navy });
   data.diagram.services.forEach((s, i) => {
     const y = top + 36 + i * rowH;
     const volumeWidth = 250 * s.volume / max;
@@ -1304,7 +1304,7 @@ function renderService(slide, data, p) {
       line: { style: "solid", fill: COLORS.border, width: .7 },
     });
   });
-  rail(slide, p.rail, data.diagram.insights, "发现／根因／动作");
+  rail(slide, p.rail, data.diagram.insights, "discover/root cause/action");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 function renderIntake(slide, data, p) {
@@ -1359,7 +1359,7 @@ function renderIntake(slide, data, p) {
     data.diagram.matrix[ri].forEach((v, ci) =>
       addTextBox(slide, {
         name: `intake-${ri + 1}-${ci + 1}`,
-        text: `${v.volume}\n命中 ${Math.round(v.one_touch)}%`,
+        text: `${v.volume}\nhit ${Math.round(v.one_touch)}%`,
         position: {
           left: p.main.left + labelW + ci * colW,
           top: top + ri * rowH,
@@ -1379,7 +1379,7 @@ function renderIntake(slide, data, p) {
       })
     );
   });
-  rail(slide, p.rail, data.diagram.insights, "发现／根因／动作");
+  rail(slide, p.rail, data.diagram.insights, "discover/root cause/action");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 function renderClassification(slide, data, p) {
@@ -1397,7 +1397,7 @@ function renderClassification(slide, data, p) {
   const top = p.main.top + 132, rowH = 54;
   addTextBox(slide, {
     name: "class-head",
-    text: "模型输入                      AI 初分                     最终分类",
+    text: "Model input                      AI first division                     final classification",
     position: {
       left: p.main.left + 60,
       top: p.main.top + 108,
@@ -1423,7 +1423,7 @@ function renderClassification(slide, data, p) {
     });
     const b = addNode(slide, {
       name: `class-predict-${i + 1}`,
-      text: `${c.predicted}\n改判 ${c.reclassified}`,
+      text: `${c.predicted}\nChange the sentence ${c.reclassified}`,
       position: { left: p.main.left + 340, top: y, width: 170, height: 48 },
       fill: i === 4 ? PALE_ORANGE : PALE_BLUE,
       border: i === 4 ? COLORS.orange : COLORS.blue,
@@ -1472,7 +1472,7 @@ function renderClassification(slide, data, p) {
     fill: PALE_ORANGE,
     line: { style: "dashed", fill: COLORS.orange, width: 1 },
   });
-  rail(slide, p.rail, data.diagram.insights, "发现／根因／动作");
+  rail(slide, p.rail, data.diagram.insights, "discover/root cause/action");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 

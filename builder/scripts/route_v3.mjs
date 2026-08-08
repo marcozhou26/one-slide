@@ -115,7 +115,7 @@ export async function routeV3(input) {
   }
 
   const rawText = [input.text, input.title, input.page_claim].filter((value) => typeof value === "string").join(" ");
-  const compositeCueCount = ["金字塔", "链路", "并排比较", "洞察卡", "证据带", "结论带", "主视觉"].filter((cue) => rawText.includes(cue)).length;
+  const compositeCueCount = ["pyramid", "link", "side by side comparison", "Insight Card", "evidence tape", "conclusion band", "main vision"].filter((cue) => rawText.includes(cue)).length;
   if (rawText.trim().length >= 80 && compositeCueCount >= 2) {
     return {
       status: "blocked",

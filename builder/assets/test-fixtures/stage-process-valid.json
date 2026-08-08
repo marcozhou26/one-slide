@@ -2,40 +2,40 @@
   "version": "1.0",
   "module_id": "stage-process",
   "audience_mode": "analysis",
-  "title": { "text": "三阶段推进可在十二个月内完成转型", "source_ids": ["S01"], "origin": "source" },
+  "title": { "text": "Three-stage advancement can complete the transformation within twelve months", "source_ids": ["S01"], "origin": "source" },
   "source_anchors": [
-    { "id": "S01", "text": "三阶段推进可在十二个月内完成转型。" },
-    { "id": "S02", "text": "第一阶段诊断现状并形成问题清单，周期为一至三月。" },
-    { "id": "S03", "text": "完成诊断后进入第二阶段试点，验证核心流程并交付试点报告，周期为四至八月。" },
-    { "id": "S04", "text": "试点通过后进入第三阶段推广，完成制度固化和全员上线，周期为九至十二月。" },
-    { "id": "S05", "text": "全过程跟踪风险、资源和量化指标。" }
+    { "id": "S01", "text": "The three-phase advancement can complete the transformation within twelve months. Three-stage advancement can complete the transformation within twelve months" },
+    { "id": "S02", "text": "The first phase is to diagnose the current situation and form a problem list, which lasts from January to March. Diagnosis; Diagnosis status; Create a list of questions" },
+    { "id": "S03", "text": "After completing the diagnosis, it will enter the second phase of the pilot to verify the core process and deliver the pilot report, which lasts from April to August. Pilot report; Verify core process" },
+    { "id": "S04", "text": "After the pilot is passed, it will enter the third phase of promotion, complete the system solidification and all employees go online, and the cycle will be from September to December. Complete system solidification; All members are online" },
+    { "id": "S05", "text": "Track risks, resources and quantitative indicators throughout the entire process. Resources; Quantitative indicators" }
   ],
   "diagram": {
     "type": "stage-process",
     "steps": [
       {
         "id": "s1",
-        "text": "诊断",
+        "text": "Diagnosis",
         "source_ids": ["S02"],
-        "action": { "text": "诊断现状", "source_ids": ["S02"] },
-        "activities": [{ "text": "形成问题清单", "source_ids": ["S02"] }],
-        "owner_period": { "text": "一至三月", "source_ids": ["S02"] }
+        "action": { "text": "Diagnosis status", "source_ids": ["S02"] },
+        "activities": [{ "text": "Create a list of questions", "source_ids": ["S02"] }],
+        "owner_period": { "text": "January to March", "source_ids": ["S02"] }
       },
       {
         "id": "s2",
-        "text": "试点",
+        "text": "pilot",
         "source_ids": ["S03"],
-        "action": { "text": "验证核心流程", "source_ids": ["S03"] },
-        "deliverable": { "text": "试点报告", "source_ids": ["S03"] },
-        "owner_period": { "text": "四至八月", "source_ids": ["S03"] }
+        "action": { "text": "Verify core process", "source_ids": ["S03"] },
+        "deliverable": { "text": "Pilot report", "source_ids": ["S03"] },
+        "owner_period": { "text": "April to August", "source_ids": ["S03"] }
       },
       {
         "id": "s3",
-        "text": "推广",
+        "text": "promotion",
         "source_ids": ["S04"],
-        "action": { "text": "完成制度固化", "source_ids": ["S04"] },
-        "activities": [{ "text": "全员上线", "source_ids": ["S04"] }],
-        "owner_period": { "text": "九至十二月", "source_ids": ["S04"] }
+        "action": { "text": "Complete system solidification", "source_ids": ["S04"] },
+        "activities": [{ "text": "All members are online", "source_ids": ["S04"] }],
+        "owner_period": { "text": "September to December", "source_ids": ["S04"] }
       }
     ],
     "transitions": [
@@ -43,9 +43,9 @@
       { "from": "s2", "to": "s3", "source_ids": ["S04"] }
     ],
     "bottom_strip": [
-      { "text": "跟踪风险", "source_ids": ["S05"] },
-      { "text": "资源", "source_ids": ["S05"] },
-      { "text": "量化指标", "source_ids": ["S05"] }
+      { "text": "Track risks", "source_ids": ["S05"] },
+      { "text": "Resources", "source_ids": ["S05"] },
+      { "text": "Quantitative indicators", "source_ids": ["S05"] }
     ]
   }
 }

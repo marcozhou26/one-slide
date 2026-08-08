@@ -1,11 +1,10 @@
-# 关于作者
+# About the author
 
-OneSlide 由周俊东 Marco 创建并维护。
+OneSlide is created and maintained by 周俊东 Marco.
 
-- 微信公众号：周俊东 Marco
-- 视频号：周俊东 Marco
-- 微信：zhou139223
-- 添加微信时请备注：OneSlide
+- WeChat public account: 周俊东 Marco
+- WeChat Channels account: 周俊东 Marco
+- WeChat: `zhou139223`
+- Include “OneSlide” in the invitation note.
 
-欢迎反馈安装问题、使用障碍、生成效果和希望增加的单页类型。请勿通过公开问题区提交客户数据、个人信息或其他敏感材料。
-
+Feedback is welcome on installation, usability, generated slides, and slide types you would like OneSlide to support. Do not submit customer data, personal information, or other sensitive material through the public issue tracker.

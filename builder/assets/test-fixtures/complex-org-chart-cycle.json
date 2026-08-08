@@ -1,9 +1,9 @@
 {
   "version": "0.1",
-  "title": { "text": "循环汇报冲突", "source_ids": ["S0"] },
+  "title": { "text": "Conflict reporting cycle", "source_ids": ["S0"] },
   "nodes": [
-    { "id": "node-a", "label": "节点甲", "kind": "org_unit", "source_ids": ["S1"] },
-    { "id": "node-b", "label": "节点乙", "kind": "position", "source_ids": ["S2"] }
+    { "id": "node-a", "label": "Node A", "kind": "org_unit", "source_ids": ["S1"] },
+    { "id": "node-b", "label": "Node B", "kind": "position", "source_ids": ["S2"] }
   ],
   "relationships": [
     { "id": "rel-a-b", "source": "node-a", "target": "node-b", "type": "primary_reporting", "source_ids": ["S3"] },
@@ -11,10 +11,10 @@
   ],
   "temporary_groups": [],
   "source_anchors": [
-    { "id": "S0", "text": "循环汇报冲突。" },
-    { "id": "S1", "text": "节点甲。" },
-    { "id": "S2", "text": "节点乙。" },
-    { "id": "S3", "text": "节点乙向节点甲汇报。" },
-    { "id": "S4", "text": "节点甲又向节点乙汇报。" }
+    { "id": "S0", "text": "Conflict reporting cycle." },
+    { "id": "S1", "text": "Node A." },
+    { "id": "S2", "text": "Node B." },
+    { "id": "S3", "text": "Node B reports to Node A." },
+    { "id": "S4", "text": "Node A reports to node B." }
   ]
 }

@@ -44,7 +44,7 @@ export function validateConfidenceBand(data) {
   fail(["confidence_interval", "credible_interval", "other_interval"].includes(d.interval_type), "INTERVAL_DEFINITION_FAIL", "interval_type must identify the interval semantics");
   if (d.interval_type === "confidence_interval") {
     fail(Number.isFinite(d.confidence_level) && d.confidence_level > 0 && d.confidence_level < 100, "INTERVAL_DEFINITION_FAIL", "A confidence interval needs a confidence_level between 0 and 100");
-    fail(/置信/u.test(d.interval_label.text) && !/预测|风险/u.test(d.interval_label.text), "INTERVAL_SEMANTICS_FAIL", "A confidence interval must not be relabelled as prediction or risk interval");
+    fail(/confidence/iu.test(d.interval_label.text) && !/prediction|forecast|risk/iu.test(d.interval_label.text), "INTERVAL_SEMANTICS_FAIL", "A confidence interval must not be relabelled as a prediction or risk interval");
   }
   fail(Array.isArray(d.periods) && d.periods.length >= 5 && d.periods.length <= 12, "DATA_CONTRACT_FAIL", "Confidence band needs 5–12 ordered periods");
   const labels = new Set();

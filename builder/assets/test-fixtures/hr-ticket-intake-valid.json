@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "一次命中率 78.4%、转人工率 14.8%，证明与异动入口仍让员工二次找路"
+      "text": "one hit rate 78.4%, transfer labor rate 14.8%, the proof and change entrance still allow employees to find their way again."
     },
     {
       "id": "S02",
-      "text": "一次命中率；78.4%；目标 85%；转人工率；14.8%；目标 <10%；目录完整率；82%；目标 90%；薪资；福利；休假；证明；其他；一次命中；二次澄清；转人工；证明与异动的一次命中率最低；目录命名不一致造成二次澄清；合并证明入口并优化推荐顺序；每万次入口减少 480 次转人工，目标一次命中率达到 85%；全部示例数值与口径"
+      "text": "one hit rate;78.4%; target 85%;Transfer labor rate;14.8%; target <10%;Directory completeness rate;82%; target 90%; Salary; Benefits; Vacation; Certification; Others; One hit; Second clarification; Transfer to manual; The first hit rate of certification and change is the lowest; Inconsistent directory naming causes secondary clarification; Merge certification entries and optimize the recommendation order; Reduce the number of entries per 10,000 times 480 After one manual transfer, the target hit rate reaches 85%;All example values and calibers; directory completeness; Proof and abnormality have the lowest one-hit rate; Merge the proof entrance and optimize the recommendation order; Reduction per 10,000 entries 480 After one manual transfer, the target hit rate reaches 85%; Switch to manual; salary; welfare; vacation; prove"
     }
   ],
   "title": {
-    "text": "一次命中率 78.4%、转人工率 14.8%，证明与异动入口仍让员工二次找路",
+    "text": "one hit rate 78.4%, transfer labor rate 14.8%, the proof and change entrance still allow employees to find their way again.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "metrics": [
       {
         "label": {
-          "text": "一次命中率",
+          "text": "one hit rate",
           "source_ids": [
             "S02"
           ]
@@ -35,7 +35,7 @@
           ]
         },
         "target": {
-          "text": "目标 85%",
+          "text": "target 85%",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       },
       {
         "label": {
-          "text": "转人工率",
+          "text": "Transfer labor rate",
           "source_ids": [
             "S02"
           ]
@@ -58,7 +58,7 @@
           ]
         },
         "target": {
-          "text": "目标 <10%",
+          "text": "target <10%",
           "source_ids": [
             "S02"
           ]
@@ -69,7 +69,7 @@
       },
       {
         "label": {
-          "text": "目录完整率",
+          "text": "directory completeness",
           "source_ids": [
             "S02"
           ]
@@ -81,7 +81,7 @@
           ]
         },
         "target": {
-          "text": "目标 90%",
+          "text": "target 90%",
           "source_ids": [
             "S02"
           ]
@@ -93,31 +93,31 @@
     ],
     "services": [
       {
-        "text": "薪资",
+        "text": "salary",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "福利",
+        "text": "welfare",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "休假",
+        "text": "vacation",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "证明",
+        "text": "prove",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "其他",
+        "text": "Others",
         "source_ids": [
           "S02"
         ]
@@ -125,25 +125,25 @@
     ],
     "intents": [
       {
-        "text": "一次命中",
+        "text": "one hit",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "二次澄清",
+        "text": "Second clarification",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "转人工",
+        "text": "Switch to manual",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "其他",
+        "text": "Others",
         "source_ids": [
           "S02"
         ]
@@ -246,26 +246,26 @@
     ],
     "insights": [
       {
-        "text": "证明与异动的一次命中率最低",
+        "text": "Proof and abnormality have the lowest one-hit rate",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "目录命名不一致造成二次澄清",
+        "text": "Inconsistent directory naming causes secondary clarification",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "合并证明入口并优化推荐顺序",
+        "text": "Merge the proof entrance and optimize the recommendation order",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "每万次入口减少 480 次转人工，目标一次命中率达到 85%",
+      "text": "Reduction per 10,000 entries 480 After one manual transfer, the target hit rate reaches 85%",
       "source_ids": [
         "S02"
       ]

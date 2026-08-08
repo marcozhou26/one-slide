@@ -65,22 +65,22 @@ Minimum structure:
   "output_mode": "PROMPT_ONLY",
   "generation_mode": "SYNTHETIC_AUGMENTATION",
   "single_slide": true,
-  "subject": "页面对象",
-  "story": "证据支持的一句话中心思想",
-  "audience_task": "读者看完要理解或决定什么",
+  "subject": "page object",
+  "story": "One sentence central idea supported by evidence",
+  "audience_task": "What should readers understand or decide after reading",
   "source_ids": ["U01", "G01", "C01"],
   "content": {
-    "title": {"text": "结论式标题", "source_ids": ["C01"]},
-    "subtitle": {"text": "合成示例数据，非真实客户数据", "source_ids": ["G01"]},
+    "title": {"text": "concluding title", "source_ids": ["C01"]},
+    "subtitle": {"text": "Synthetic sample data, not real customer data", "source_ids": ["G01"]},
     "insights": [],
     "actions": [],
     "footnotes": []
   },
   "structure": {
-    "primary_question": "页面要回答的问题",
+    "primary_question": "Questions to answer on the page",
     "primary_relationship": "category x value",
     "primary_exhibit": "ranking-chart",
-    "visual_intent": "横向排序条形图",
+    "visual_intent": "Horizontally sorted bar chart",
     "layout_intent": "full-canvas"
   },
   "information_budget": {
@@ -93,8 +93,8 @@ Minimum structure:
   "datasets": [],
   "review_marking": {
     "required": true,
-    "synthetic_data_disclosure": "合成示例数据，非真实客户数据",
-    "qualitative_marker": "待确认"
+    "synthetic_data_disclosure": "Synthetic sample data, not real customer data",
+    "qualitative_marker": "Pending confirmation"
   },
   "constraints": {
     "must_include": [],
@@ -106,9 +106,9 @@ Minimum structure:
 
 Every visible text object uses `{text, source_ids}`. Structured display items use their own `source_ids`. Dataset records stay in CSV or JSON when more than a few values are required.
 
-### 可执行模块载荷
+### Executable module payload
 
-当且仅当一个已产品化 Builder 模块可以覆盖全部必含内容，且 Producer 已能按该模块 reference 填满真实输入契约时，`builder-handoff.json` 增加：
+if and only if a product has been Builder The module can cover all required content, and Producer Already able to press this module reference When filling in the real input contract,`builder-handoff.json` Added:
 
 ```json
 {
@@ -123,25 +123,25 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 }
 ```
 
-`requested_module`、`structure.primary_exhibit` 和 `module_payload.module_id` 必须一致。`module_payload` 必须包含该模块 validator 所需的全部字段和全部可见内容；不得只放模块名或半成品骨架。混合页面或模块无法容纳全部必含内容时，三项都省略，由 Builder 进入 `direct_composition`，不得硬塞模块。
+`requested_module`, `structure.primary_exhibit` and `module_payload.module_id` Must be consistent.`module_payload` This module must be included validator All required fields and all visible content; not just module names or half-finished skeletons. When the mixed page or module cannot accommodate all required content, all three items are omitted, and the Builder enter `direct_composition`, the module must not be shoehorned into the module.
 
-排名迁移页使用正式模块 ID `bump-ranking`。Producer 交接时应使用 `diagram.periods` 和每个对象的 `ranks`、`values`、`states` 数组；数组长度必须与时期数一致，时期保持原始顺序。两期数据可以由 Builder 呈现为 slope-style 视觉，三期及以上数据呈现为 Bump Chart。新进入、退出或暂未上榜必须显式写入 `states`，不能靠颜色或文案猜测。旧版 `slope-ranking` 的左右字段只用于兼容已有运行包，不作为新提示词的生成目标。
+The ranking migration page uses the official module ID `bump-ranking`.Producer Should be used when handing over `diagram.periods` and each object's `ranks`, `values`, `states` Array; the length of the array must match the number of epochs, and the epochs maintain their original order. The data for the two periods can be obtained by Builder rendered as slope-style Visually, data of three periods and above are presented as Bump Chart. New entries, exits, or not listed yet must be written explicitly. `states`, you can’t guess based on color or copywriting. Old version `slope-ranking` The left and right fields are only used for compatibility with existing running packages and are not used as generation targets for new prompt words.
 
-多期构成变化页使用 `composition-shift`。`diagram` 必须包含 3–8 个有序 `periods`、2–6 个带唯一 `id` 的 `components`、与时期等长的 `shares`、`basis`、`denominator`、`unit` 和 1–3 条来源支持的 `insights`。每期占比必须对平到 100%。`basis=absolute` 时还要传入各构成的 `values`、每期 `totals` 和 `total_source_ids`，三者必须一致。缺失分母、期间口径冲突、构成项不稳定或页面还需第二个主图时，不得强制命中模块。
+Use of multi-issue composition change page `composition-shift`.`diagram` must contain 3–8 orderly `periods`, 2–6 The only one with `id` of `components`, equal to the period `shares`, `basis`, `denominator`, `unit` and 1–3 source supported `insights`. The proportions in each period must be equal to 100%.`basis=absolute` It is also necessary to pass in the components of each component `values`, each issue `totals` and `total_source_ids`, the three must be consistent. When the denominator is missing, the period caliber conflicts, the components are unstable, or the page requires a second main image, the module must not be forced to hit.
 
-分群留存或存续页使用 `cohort-retention`。`diagram` 必须包含 4–12 个严格递增且从 0 开始的 `relative_periods`、`relative_period_unit`、`cohort_definition`、`denominator`、`measure`、`curve_mode`，以及 3–8 个带唯一 `id`、`initial_count` 和等长 `retained_counts` 或 `retention_rates` 的 cohort。Producer 不要求用户重复填写人数和比例；只提供一种时由 Builder 计算另一种，两者都有时必须对平。未成熟或未观察周期只能作为尾部连续 `null`，并提供页面可见的 `censoring_note`，不得补 0。`survival` 必须非递增；允许真实回升的当期活跃口径使用 `period_retention`。固定四组、0–24 月并同时要求行业基准和风险矩阵的页面继续使用 `hr-new-hire-survival`。存在第二个独立主图时不得强制命中本模块。
+Use in group retention or survival pages `cohort-retention`.`diagram` must contain 4–12 Strictly increasing and starting from 0 started `relative_periods`, `relative_period_unit`, `cohort_definition`, `denominator`, `measure`, `curve_mode`, and 3–8 The only one with `id`, `initial_count` and equal length `retained_counts` or `retention_rates` of cohort.Producer Users are not required to repeatedly fill in the number of people and proportions; only one reason is provided Builder To calculate the other, both must sometimes be equalized. Immature or unobserved cycles can only be continued as tails `null`, and provide the page visible `censoring_note`, shall not be supplemented 0.`survival` Must be non-increasing; use the current active caliber that allows for real recovery `period_retention`. Fixed four groups,0–24 month and also require the industry benchmark and risk matrix pages to continue to be used `hr-new-hire-survival`. This module must not be forced to hit when there is a second independent main picture.
 
-分组分布比较页使用 `box-plot`。`diagram` 必须包含 3–8 个同口径组，以及页面可见的 `period`、`unit`、`denominator`、`sample_definition`、`missing_policy`、`quartile_method`、`whisker_multiplier=1.5` 和 `whisker_rule`。每组必须传入有效 `sample_size`、`missing_count`、`whisker_low`、`q1`、`median`、`q3`、`whisker_high`、逐点 `outliers` 和来源。四分位算法使用 `PERCENTILE.INC（线性插值，等同 Type 7）`，须线端点是 1.5×IQR 围栏内的最远观测；围栏外记录必须在页面逐点标为异常值，不能只用颜色暗示。统计口径缺失、组间口径冲突或页面还需第二个主图时，不得强制命中模块。
+Group distribution comparison page usage `box-plot`.`diagram` must contain 3–8 groups of the same caliber, and those visible on the page `period`, `unit`, `denominator`, `sample_definition`, `missing_policy`, `quartile_method`, `whisker_multiplier=1.5` and `whisker_rule`. Each group must be passed in a valid `sample_size`, `missing_count`, `whisker_low`, `q1`, `median`, `q3`, `whisker_high`, point by point `outliers` and source. Use the quartile algorithm `PERCENTILE.INC(linear interpolation, equivalent to Type 7)`, the endpoint of the whisker is 1.5×IQR The farthest observation within the fence; records outside the fence must be marked as outliers point by point on the page, not just indicated by color. When the statistical caliber is missing, the caliber conflicts between groups, or the page needs a second main image, the module must not be forced to be hit.
 
-连续数值分布页使用 `histogram`。`diagram` 必须包含一个指标、单位、期间、分母、原始 `observations`（缺失值用 `null` 或空字符串显式保留）、`sample.total/valid/missing`、`frequency_basis=count|frequency`、`binning.method=explicit_edges`、严格递增的 `edges`、左右边界包含规则，以及 1–3 条来源支持的分布洞察。Producer 可以计算 `bins`，但 Builder 必须从原始观测和边界复算并逐箱核对。缺少原始观测、样本无法对平、单位或期间冲突、分箱不能覆盖全部有效值时不得强制命中模块；分类数据使用其他模块，不能用分类柱状图冒充。
+Continuous numerical distribution page usage `histogram`.`diagram` Must contain an indicator, unit, period, denominator, original `observations`(For missing values, use `null` or the empty string is explicitly reserved),`sample.total/valid/missing`, `frequency_basis=count|frequency`, `binning.method=explicit_edges`, strictly incremental `edges`, left and right boundary inclusion rules, and 1–3 Distribution insights supported by strip sources.Producer can be calculated `bins`, but Builder It must be recalculated from the original observations and boundaries and checked box by box. The module must not be forced to hit when there is a lack of original observations, samples cannot be aligned, unit or period conflicts, or binning cannot cover all valid values; use other modules for classification data and cannot pretend to be a classification histogram.
 
-组间分布页使用 `box-plot-jitter`。`diagram` 必须包含 2–6 个带唯一 `id` 的 `groups`、每组 5–60 个原始 `observations`、与观测数量一致的 `n`、共同 `period`、`unit`、`observation_definition`、`sample_definition`、`statistics_rule=tukey_hinges_1_5_iqr`、可见 `statistics_note`、可见 `jitter_note` 和 1–3 条来源支持的 `insights`；整页原始观测不超过 240 个。横向抖动只能由 Builder 作为确定性视觉避让执行，不得写回数值。只有汇总统计、组间口径冲突、缺少单位/期间/样本定义、或页面还要求第二个主图时，不得强制命中模块。
+Use of distribution page between groups `box-plot-jitter`.`diagram` must contain 2–6 The only one with `id` of `groups`, each group 5–60 a primitive `observations`, consistent with the number of observations `n`, common `period`, `unit`, `observation_definition`, `sample_definition`, `statistics_rule=tukey_hinges_1_5_iqr`, visible `statistics_note`, visible `jitter_note` and 1–3 source supported `insights`;A full page of raw observations does not exceed 240 . Lateral jitter can only be caused by Builder As a deterministic visual avoidance execution, values must not be written back. Only summary statistics, caliber conflicts between groups, missing units/period/When the sample definition or the page also requires a second main image, the module must not be forced to be hit.
 
-多指标关系筛选页使用 `correlation-matrix`。`diagram` 必须包含 4–10 个唯一指标 ID/标签、`method=pearson|spearman`、`sample_size`、`missing_value_handling`、`period`、`population`、`source_note`、`display_threshold`、可见 `causality_note`，以及对称 NxN `matrix` 或可复算的等长 `observations`。系数范围、对角线、对称性、维度和标签唯一性必须通过 Builder 门禁；矩阵与观测同时存在时必须对平。显示阈值和样式缺失可使用披露后的安全默认值，不得要求用户填写内部字段；数据、样本、期间、总体或来源缺失，以及口径冲突或第二个独立主图存在时，不得强制命中模块。页面必须同时用位置、带正负号的数值和颜色表达，并声明相关不代表因果。
+Use of multi-index relationship filtering page `correlation-matrix`.`diagram` must contain 4–10 unique indicators ID/label,`method=pearson|spearman`, `sample_size`, `missing_value_handling`, `period`, `population`, `source_note`, `display_threshold`, visible `causality_note`, and symmetry NxN `matrix` or computable equal length `observations`. Coefficient range, diagonal, symmetry, dimensions and label uniqueness must pass Builder Access control; matrix and observation must be aligned when they exist at the same time. Missing display thresholds and styles can use disclosed safe defaults, and users must not be required to fill in internal fields; modules must not be forced to hit when data, samples, periods, populations, or sources are missing, as well as caliber conflicts or the presence of a second independent master graph. The page must be expressed in terms of position, signed value, and color at the same time, and it must be stated that correlation does not mean causation.
 
-双连续变量关系页使用 `scatter-regression`。`diagram` 必须包含 `x_metric`、`x_unit`、`y_metric`、`y_unit`、`period`、`population`、`sample_definition`、`source_note`，以及 8–200 条带唯一 `id`、逐条 `x`、`y` 和来源的原始 `observations`；缺失值用 `null` 显式保留。V1 固定使用 `method=ordinary_least_squares_with_intercept`、`handling.missing=pairwise_exclusion`、`handling.duplicates=retain_as_independent` 和 `handling.outliers=retain_and_label`。Producer 交付 `sample.total/valid/missing/duplicate_pairs`、声明的 `statistics.slope/intercept/r_squared`、按绝对残差排序的 1–3 个 `highlight_ids`、页面可见的异常点规则、复算/容差/显示舍入规则和“样本内关联不代表因果，外推需另行验证”的解释边界。Builder 从未舍入原始观测复算并对平；有效配对不足、任一轴零方差、单位/期间冲突、只有汇总统计、要求显著性但没有证据，或存在第二个独立主图时，不得强制命中模块。
+Bicontinuous variable relationship page usage `scatter-regression`.`diagram` must contain `x_metric`, `x_unit`, `y_metric`, `y_unit`, `period`, `population`, `sample_definition`, `source_note`, and 8–200 Strip unique `id`, item by item `x`, `y` and original source `observations`;Use for missing values `null` Explicitly reserved.V1 fixed use `method=ordinary_least_squares_with_intercept`, `handling.missing=pairwise_exclusion`, `handling.duplicates=retain_as_independent` and `handling.outliers=retain_and_label`.Producer Delivery `sample.total/valid/missing/duplicate_pairs`, declared `statistics.slope/intercept/r_squared`, sorted by absolute residuals 1–3 a `highlight_ids`, abnormal point rules visible on the page, recalculation/Tolerance/Show rounding rules and interpretation boundaries that “intra-sample correlation does not represent causation, extrapolation needs to be verified separately”.Builder Unrounded original observations are recalculated and squared; insufficient valid pairing, zero variance in either axis, unit/The hit module must not be forced when there is a period conflict, when there are only summary statistics, when significance is required without evidence, or when there is a second independent master image.
 
-有序中心估计与区间页使用 `confidence-band`。`diagram` 必须包含 5–12 个标签唯一、`order` 严格递增的 `periods`，每期提供 `estimate/lower/upper` 且满足 `lower <= estimate <= upper`；同时保留 `metric`、`unit`、`interval_type`、`interval_label`、`interval_definition`、`estimation_method`、`sample_definition`、`population_definition`、`source_note` 和 1–3 条来源支持的 `insights`。置信区间必须提供 `confidence_level`，且不得改称预测区间或风险区间。单期缺失只能把三个值同时设为 `null`，并提供可见 `missing_value_note`；不得插值或补 0。阈值可省略；提供时必须包含数值、标签和可见语义，不能默认解释为统计显著性、风险或因果界限。核心序列、区间定义、估计方法、样本/总体或来源缺失时，不得强制命中本模块。
+Ordered Center Estimation and Interval Page Use `confidence-band`.`diagram` must contain 5–12 Each label is unique,`order` strictly incremental `periods`, provided in each issue `estimate/lower/upper` and satisfied `lower <= estimate <= upper`;while retaining `metric`, `unit`, `interval_type`, `interval_label`, `interval_definition`, `estimation_method`, `sample_definition`, `population_definition`, `source_note` and 1–3 source supported `insights`. Confidence intervals are required `confidence_level`, and shall not be renamed prediction interval or risk interval. Single-period missing can only set three values to `null`, and provide visible `missing_value_note`;Do not interpolate or complement 0. Thresholds may be omitted; when provided they must include numerical values, labels, and visible semantics and cannot be interpreted by default as statistical significance, risk, or causal bounds. Core sequence, interval definition, estimation method, sample/This module may not be forced to hit when the totality or source is missing.
 
 ## builder-prompt.md
 

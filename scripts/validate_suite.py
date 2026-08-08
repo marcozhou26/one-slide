@@ -77,7 +77,7 @@ def validate(root: Path) -> dict:
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
             if term not in skill_text:
                 errors.append(f"SKILL.md missing required mode or state: {term}")
-        if "一次只处理一页" not in skill_text:
+        if "Process one page at a time" not in skill_text:
             errors.append("SKILL.md must state the one-slide boundary")
 
     for path in root.rglob("*"):

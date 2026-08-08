@@ -2,26 +2,26 @@
   "version": "0.1",
   "audience_mode": "analysis",
   "title": {
-    "text": "交付周期延长",
+    "text": "Extended lead time",
     "source_ids": ["S01"],
     "origin": "source"
   },
   "source_anchors": [
     {
       "id": "S01",
-      "text": "交付周期延长，主要由需求频繁变更、关键岗位资源不足和跨部门确认时间过长共同造成。"
+      "text": "The extended delivery cycle is mainly caused by frequent changes in requirements, insufficient resources in key positions, and long cross-department confirmation times. Requirements change frequently; Insufficient resources for key positions; Cross-department confirmation takes too long; Extended lead time"
     },
     {
       "id": "S02",
-      "text": "需求变更增加了返工。"
+      "text": "Changes in requirements increase rework. Rework"
     },
     {
       "id": "S03",
-      "text": "关键岗位资源不足拉长了任务等待时间。"
+      "text": "Insufficient resources for key positions have lengthened waiting times for tasks. Extended task waiting time"
     },
     {
       "id": "S04",
-      "text": "跨部门确认时间过长推迟了关键决策。"
+      "text": "Long cross-department confirmation times delay critical decisions. Cross-department confirmation takes too long; Delaying key decisions"
     }
   ],
   "diagram": {
@@ -29,43 +29,43 @@
     "nodes": [
       {
         "id": "n-demand",
-        "text": "需求频繁变更",
+        "text": "Requirements change frequently",
         "source_ids": ["S01"],
         "kind": "cause"
       },
       {
         "id": "n-rework",
-        "text": "返工",
+        "text": "Rework",
         "source_ids": ["S02"],
         "kind": "mechanism"
       },
       {
         "id": "n-resource",
-        "text": "关键岗位资源不足",
+        "text": "Insufficient resources for key positions",
         "source_ids": ["S01", "S03"],
         "kind": "cause"
       },
       {
         "id": "n-wait",
-        "text": "拉长了任务等待时间",
+        "text": "Extended task waiting time",
         "source_ids": ["S03"],
         "kind": "mechanism"
       },
       {
         "id": "n-confirm",
-        "text": "跨部门确认时间过长",
+        "text": "Cross-department confirmation takes too long",
         "source_ids": ["S01", "S04"],
         "kind": "cause"
       },
       {
         "id": "n-decision",
-        "text": "推迟了关键决策",
+        "text": "Delaying key decisions",
         "source_ids": ["S04"],
         "kind": "mechanism"
       },
       {
         "id": "n-delay",
-        "text": "交付周期延长",
+        "text": "Extended lead time",
         "source_ids": ["S01"],
         "kind": "effect"
       }

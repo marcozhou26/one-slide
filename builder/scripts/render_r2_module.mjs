@@ -48,10 +48,10 @@ function renderRouteTradeoff(slide, data, plan) {
       addTextBox(slide, { name: `route-${routeIndex + 1}-score-${rowIndex + 1}`, text: row.score === 3 ? "●" : row.score === 2 ? "◐" : "○", position: { left: panel.left + 362, top: rowTop + rowIndex * rowH + 7, width: 48, height: rowH - 14 }, fontSize: 24, bold: true, color: row.score === 3 ? COLORS.blue : row.score === 2 ? COLORS.orange : COLORS.line, alignment: "center" });
     });
     const total = route.rows.reduce((sum, item) => sum + item.score, 0);
-    addTextBox(slide, { name: `route-${routeIndex + 1}-total`, text: `总评分 ${total}/${rows * 3}`, position: { left: panel.left + 16, top: panel.top + panel.height - 43, width: panel.width - 32, height: 30 }, fontSize: 18, bold: true, color: routeIndex === 0 ? COLORS.muted : COLORS.blue, alignment: "right" });
+    addTextBox(slide, { name: `route-${routeIndex + 1}-total`, text: `Overall rating ${total}/${rows * 3}`, position: { left: panel.left + 16, top: panel.top + panel.height - 43, width: panel.width - 32, height: 30 }, fontSize: 18, bold: true, color: routeIndex === 0 ? COLORS.muted : COLORS.blue, alignment: "right" });
   });
   addPanel(slide, "conflict-band", plan.conflict, COLORS.white, COLORS.border, 1);
-  addTextBox(slide, { name: "conflict-label", text: "关键权衡", position: { left: plan.conflict.left + 18, top: plan.conflict.top + 12, width: plan.conflict.width - 36, height: 30 }, fontSize: 18, bold: true, color: COLORS.orange, alignment: "center" });
+  addTextBox(slide, { name: "conflict-label", text: "Key trade-offs", position: { left: plan.conflict.left + 18, top: plan.conflict.top + 12, width: plan.conflict.width - 36, height: 30 }, fontSize: 18, bold: true, color: COLORS.orange, alignment: "center" });
   const conflicts = data.diagram.conflicts ?? [];
   conflicts.forEach((item, index) => {
     const top = plan.conflict.top + 62 + index * 102;
@@ -66,7 +66,7 @@ function renderRouteTradeoff(slide, data, plan) {
 
 function renderScqaRoadmap(slide, data, plan) {
   const sequence = [data.diagram.scqa.s, data.diagram.scqa.c, data.diagram.scqa.q, data.diagram.scqa.a];
-  const labels = ["S 情境", "C 冲突", "Q 问题", "A 答案"];
+  const labels = ["S situation", "C conflict", "Q question", "A answer"];
   const gap = 22;
   const w = (plan.scqa.width - gap * 3) / 4;
   const shapes = sequence.map((item, index) => addNode(slide, { name: `scqa-${index + 1}`, text: `${labels[index]}\n${item.text}`, position: { left: plan.scqa.left + index * (w + gap), top: plan.scqa.top, width: w, height: plan.scqa.height }, fill: index === 3 ? COLORS.navy : index === 1 ? PALE_ORANGE : COLORS.soft, border: index === 1 ? COLORS.orange : COLORS.border, borderWidth: index === 3 ? 0 : 1.3, fontSize: 18, bold: true, color: index === 3 ? COLORS.white : COLORS.text }));
@@ -119,14 +119,14 @@ function renderBubbleHeatmap(slide, data, plan) {
   const rowH = (plan.table.height - 52) / sorted.length;
   const firstW = 98;
   const scoreW = 55;
-  addTextBox(slide, { name: "heatmap-header", text: "举措        价值  难度  风险  依赖  速度   排名", position: { left: plan.table.left + 10, top: plan.table.top + 8, width: plan.table.width - 20, height: 34 }, fontSize: 16, bold: true, color: COLORS.navy });
+  addTextBox(slide, { name: "heatmap-header", text: "measures        value  difficulty  risk  Depend on  speed   Ranking", position: { left: plan.table.left + 10, top: plan.table.top + 8, width: plan.table.width - 20, height: 34 }, fontSize: 16, bold: true, color: COLORS.navy });
   sorted.forEach((item, rowIndex) => {
     const top = plan.table.top + 46 + rowIndex * rowH;
     const rowFill = item.rank <= 4 ? PALE_ORANGE : item.hold ? COLORS.soft : COLORS.white;
     slide.shapes.add({ name: `heat-row-${item.id}`, geometry: "rect", position: { left: plan.table.left + 8, top, width: plan.table.width - 16, height: rowH }, fill: rowFill, line: { style: "solid", fill: COLORS.border, width: 0.6 } });
     addTextBox(slide, { name: `heat-label-${item.id}`, text: `${item.id} ${item.label.text}`, position: { left: plan.table.left + 12, top, width: firstW, height: rowH }, fontSize: 16, bold: item.rank <= 4, color: COLORS.text });
     item.scores.forEach((score, scoreIndex) => addTextBox(slide, { name: `heat-${item.id}-${scoreIndex + 1}`, text: String(score), position: { left: plan.table.left + firstW + 10 + scoreIndex * scoreW, top: top + 3, width: 42, height: rowH - 6 }, fontSize: 16, bold: true, color: score >= 4 ? COLORS.white : COLORS.text, alignment: "center", fill: score >= 4 ? COLORS.blue : score === 3 ? COLORS.blueLight : COLORS.soft, line: { style: "solid", fill: "none", width: 0 } }));
-    addTextBox(slide, { name: `rank-${item.id}`, text: item.hold ? "暂缓" : `#${item.rank}`, position: { left: plan.table.left + 392, top, width: 72, height: rowH }, fontSize: 16, bold: true, color: item.hold ? COLORS.muted : COLORS.orange, alignment: "center" });
+    addTextBox(slide, { name: `rank-${item.id}`, text: item.hold ? "Suspend" : `#${item.rank}`, position: { left: plan.table.left + 392, top, width: 72, height: rowH }, fontSize: 16, bold: true, color: item.hold ? COLORS.muted : COLORS.orange, alignment: "center" });
   });
   if (data.diagram.bottom_conclusion) addNode(slide, { name: "bottom-conclusion", text: data.diagram.bottom_conclusion.text, position: plan.bottom, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.5, fontSize: 18, bold: true, color: COLORS.navy });
 }
@@ -163,7 +163,7 @@ function renderChartInsight(slide, data, plan) {
   const ratioShapes = ratioPoints.map((point, index) => addTextBox(slide, { name: `ratio-point-${index + 1}`, text: "", position: { left: point.x - 5, top: point.y - 5, width: 10, height: 10 }, fontSize: 16, geometry: "ellipse", fill: COLORS.orange, line: { style: "solid", fill: COLORS.orange, width: 0 } }));
   addTextBox(slide, { name: "legend", text: `${data.diagram.series[0].label.text}  ■   ${data.diagram.series[1].label.text}  □   ${data.diagram.ratio.label.text}  ┄`, position: { left: plan.chart.left + 340, top: plan.chart.top + 6, width: 390, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "right" });
   addPanel(slide, "insight-rail", plan.insight, COLORS.soft, COLORS.border, 1.2);
-  addTextBox(slide, { name: "insight-title", text: "关键洞察", position: { left: plan.insight.left + 20, top: plan.insight.top + 16, width: plan.insight.width - 40, height: 34 }, fontSize: 18, bold: true, color: COLORS.navy });
+  addTextBox(slide, { name: "insight-title", text: "key insights", position: { left: plan.insight.left + 20, top: plan.insight.top + 16, width: plan.insight.width - 40, height: 34 }, fontSize: 18, bold: true, color: COLORS.navy });
   data.diagram.insights.forEach((insight, index) => {
     const box = addNode(slide, { name: `insight-${index + 1}`, text: insight.text, position: { left: plan.insight.left + 20, top: plan.insight.top + 66 + index * 117, width: plan.insight.width - 40, height: 92 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.8 : 1, fontSize: 18, bold: index === 0, color: COLORS.text, alignment: "left" });
     const targets = [anchors[anchors.length - 1], anchors[Math.floor(anchors.length / 2)], ratioShapes[ratioShapes.length - 1]];
@@ -184,11 +184,11 @@ function renderScenarioPlanning(slide, data, plan) {
     addFieldGroup(slide, { name: `scenario-title-${index + 1}`, fields: [{ value: scenario.label.text, bold: true }, { value: `${scenario.probability}%`, bold: true, alignment: "right" }], position: { left: left + 16, top: plan.scenarios.top + 12, width: w - 32, height: 36 }, fontSize: 18, color: index === 2 ? COLORS.orange : COLORS.navy });
     const metrics = scenario.metrics.map((item) => `${item.label.text} ${item.value.text}`).join("   ");
     const sections = [
-      ["关键假设", scenario.assumptions.text],
-      ["核心指标", metrics],
-      ["业务影响", scenario.impact.text],
-      ["领先指标", scenario.indicator.text],
-      ["应对策略", scenario.response.text],
+      ["key assumptions", scenario.assumptions.text],
+      ["core indicators", metrics],
+      ["business impact", scenario.impact.text],
+      ["leading indicators", scenario.indicator.text],
+      ["coping strategies", scenario.response.text],
     ];
     sections.forEach(([label, value], sectionIndex) => {
       const top = plan.scenarios.top + 58 + sectionIndex * 68;

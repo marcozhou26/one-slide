@@ -13,7 +13,7 @@ function requireCondition(condition, code, message) {
 }
 
 function isExactSourceSubstring(text, sourceIds, anchors) {
-  if (text === "待客户补充") return true;
+  if (text === "To be supplemented by customers") return true;
   return sourceIds.some((id) => anchors.get(id)?.includes(text));
 }
 
@@ -99,7 +99,7 @@ export function validateLogicStructure(data) {
   );
   if (data.title.origin === "placeholder") {
     requireCondition(
-      data.title.text === "待客户补充",
+      data.title.text === "To be supplemented by customers",
       "SOURCE_FIDELITY_FAIL",
       "Placeholder title must use the approved text",
     );

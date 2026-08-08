@@ -1,28 +1,28 @@
-# 相关关系矩阵模块
+# Correlation matrix module
 
-正式模块 ID 为 `correlation-matrix`。它帮助读者在 4–10 个指标中识别最强正相关、最强负相关和弱关系，并选出后续重点变量分析的候选关系；不得把相关解释为因果。
+formal module ID for `correlation-matrix`. it helps readers in 4–10 Identify the strongest positive correlation, the strongest negative correlation and the weakest relationship among the indicators, and select candidate relationships for subsequent key variable analysis; correlation must not be interpreted as cause and effect.
 
-## 低负担输入契约
+## low burden input contract
 
-用户可以提供自然语言任务加一份对称 NxN 系数矩阵，也可以提供 4–10 个指标的等长原始观测。内部契约完整不等于要求用户填写字段表。缺少显示阈值或视觉偏好时采用可撤销默认值；缺少方法时默认 Pearson 并在页上披露。缺少可计算数据、样本、期间、总体或来源时，不得生成正式模块载荷。
+Users can provide natural language tasks plus a symmetry NxN A coefficient matrix can also be provided 4–10 Original observations of equal length for each indicator. A complete internal contract does not mean requiring users to fill in a field table. Takes unvocable default when display threshold or visual preference is missing; defaults when method is missing Pearson and disclosed on the page. Formal module loads shall not be generated in the absence of calculable data, samples, periods, populations, or sources.
 
-`diagram` 至少包含：
+`diagram` Contains at least:
 
-- `method`: `pearson` 或 `spearman`；
-- `sample_size`、`missing_value_handling`、`period`、`population`、`source_note`；
-- `display_threshold`: 0–1，用于候选关系筛选，不改变矩阵数值；
-- `metrics`: 4–10 个唯一 ID 与唯一可见标签；
-- `matrix`: 对称 NxN 系数矩阵，或 `observations`: 每个指标一组对齐数值/null；
-- 1–3 条来源支持的 `insights`，以及可见 `causality_note`。
+- `method`: `pearson` or `spearman`;
+- `sample_size`, `missing_value_handling`, `period`, `population`, `source_note`;
+- `display_threshold`: 0–1, used for candidate relationship screening without changing the matrix value;
+- `metrics`: 4–10 unique ID with the only visible label;
+- `matrix`: Symmetry NxN coefficient matrix, or `observations`: A set of aligned values for each indicator/null;
+- 1–3 source supported `insights`, as well as visible `causality_note`.
 
-## 数学门禁
+## math access control
 
-- 系数必须在 [-1,1]；对角线为 1；矩阵对称；维度与指标数一致；
-- 指标 ID 与标签均唯一；原始观测长度一致，非空有效样本满足声明口径；
-- Pearson 用线性相关，Spearman 对平均秩计算 Pearson；零方差序列阻断；
-- 当矩阵和原始观测同时提供时，复算差异超过 0.01 阻断；
-- 单位、期间、总体、来源或方法冲突不得暗自合并。
+- The coefficient must be in [-1,1];The diagonal is 1;The matrix is symmetrical; the dimensions are consistent with the number of indicators;
+- indicator ID and labels are unique; the original observation length is consistent, and non-empty valid samples meet the declared caliber;
+- Pearson Using linear correlation,Spearman Compute the average rank Pearson;Zero-variance sequence blocking;
+- When the matrix and original observations are provided simultaneously, the complex difference exceeds 0.01 block; block;
+- Unit, period, population, source or method conflicts may not be implicitly merged.
 
-## 页面与编辑性
+## Pages and editability
 
-主图使用原生 PowerPoint 方形单元格和文本。每个非对角单元格同时通过行列位置、带正负号的数值和发散色表达关系；对角线显示 1.00。右侧列出最强正、最强负和弱关系候选。页面可见方法、样本、缺失处理、期间、总体、来源、阈值和“相关不代表因果”。颜色不是唯一通道，整页不含图片对象。
+The main image uses native PowerPoint Square cells and text. Each off-diagonal cell simultaneously expresses relationships through row and column positions, signed values, and divergent colors; the diagonal line displays 1.00. The strongest positive, strongest negative, and weakest relationship candidates are listed on the right. Method, sample, missing treatment, period, population, source, threshold and "correlation does not mean causation" are visible on the page. Color is not the only channel, and the entire page does not contain image objects.

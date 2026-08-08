@@ -53,11 +53,11 @@ Container-level IDs do not replace item-level IDs when items come from different
 
 `review/content-review.md` is user-facing and must let a non-technical user locate every synthetic item. Organize it by visible page location and use these Chinese labels:
 
-- 用户提供
-- 根据资料推导
-- 根据数据计算
-- 模型补全，待确认
-- 外部来源核验
+- User provided
+- Derivation based on data
+- Calculate based on data
+- Model-generated completion, pending confirmation
+- External source verification
 
 Do not expose internal reasoning, rejected alternatives, system prompts, validator internals, or local absolute paths.
 
@@ -66,9 +66,9 @@ Do not expose internal reasoning, rejected alternatives, system prompts, validat
 When any visible number, record, event, or metric is synthetic, the slide must visibly contain:
 
 ```text
-合成示例数据，非真实客户数据
+Synthetic sample data, not real customer data
 ```
 
-When qualitative content is synthetic but no synthetic metrics are present, mark the affected block `待确认` or include a page-level legend that maps the marker to `模型补全，待确认`.
+When qualitative content is synthetic but no synthetic metrics are present, mark the affected block `Pending confirmation` or include a page-level legend that maps the marker to `Model-generated completion, pending confirmation`.
 
 Do not mark user-supplied content as synthetic merely because it was reformatted. Do not remove synthetic disclosure merely because the user approved the layout.

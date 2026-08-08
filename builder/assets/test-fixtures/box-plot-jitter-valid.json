@@ -2,38 +2,38 @@
   "version": "1.0",
   "module_id": "box-plot-jitter",
   "source_anchors": [
-    {"id":"S01","text":"四个班组的典型处理时长接近，但甲组和丁组各有一个明显高值"},
-    {"id":"S02","text":"2026年第二季度"},
-    {"id":"S03","text":"单位：分钟；观测粒度：每位一线员工月均处理时长；样本纳入：在岗满60天且当季有效工单不少于30件的员工"},
-    {"id":"S04","text":"甲组12人：42 44 45 46 47 48 49 50 52 54 58 72；乙组12人：38 40 41 42 43 44 45 46 47 49 51 53；丙组12人：45 46 47 48 49 50 51 52 54 56 59 61；丁组12人：35 37 39 40 41 42 43 44 46 48 50 65"},
-    {"id":"C01","text":"箱体：Q1–Q3；中线：中位数；须：1.5×IQR内最远观测；异常值单独标记"},
-    {"id":"C02","text":"横向抖动仅为避免遮挡，不改变观测值"},
-    {"id":"C03","text":"甲组与丁组分别出现72分钟和65分钟的高值观测，需核对具体工单情境；乙组的观测更集中，组内波动小于甲组与丁组；先复核甲组与丁组的高值观测，再判断是否需要调整流程"},
-    {"id":"G01","text":"合成示例数据，非真实客户数据"},
-    {"id":"S08","text":"2026年第二季度；每位一线员工月均处理时长；合成示例数据，非真实客户数据"}
+    {"id":"S01","text":"The typical processing times of the four teams are similar, but Group A and Group D each have a significantly higher value."},
+    {"id":"S02","text":"2026second quarter"},
+    {"id":"S03","text":"Unit: minutes; observation granularity: average monthly processing time per front-line employee; sample inclusion: full-time employees60days and the valid work orders for the current quarter are no less than30employees; Average monthly processing time per frontline employee; Full at post60days and the valid work orders for the current quarter are no less than30employees"},
+    {"id":"S04","text":"Group A12Person:42 44 45 46 47 48 49 50 52 54 58 72;Group B12Person:38 40 41 42 43 44 45 46 47 49 51 53;Group C12Person:45 46 47 48 49 50 51 52 54 56 59 61; Group D12Person:35 37 39 40 41 42 43 44 46 48 50 65"},
+    {"id":"C01","text":"Cabinet:Q1–Q3;Midline: median; Must:1.5×IQRthe most distant observation within; outliers are marked individually"},
+    {"id":"C02","text":"Lateral jitter is only to avoid occlusion and does not change the observation value"},
+    {"id":"C03","text":"Group A and Group D appear separately72minutes and65For high-value observations in minutes, you need to check the specific work order situation; the observations of Group B are more concentrated, and the fluctuations within the group are smaller than those of Groups A and D; first review the high-value observations of Groups A and D, and then determine whether the process needs to be adjusted. Group A and Group D appear separately72minutes and65Minutes of high-value observation, need to check the specific work order situation; The observations in Group B are more concentrated, and the fluctuations within the group are smaller than those in Groups A and D. First review the high-value observations in Group A and Group D, and then determine whether the process needs to be adjusted."},
+    {"id":"G01","text":"Synthetic sample data, not real customer data"},
+    {"id":"S08","text":"2026Second quarter of the year; average monthly processing time per front-line employee; synthetic sample data, not real customer data"}
   ],
-  "title":{"text":"四个班组的典型处理时长接近，但甲组和丁组各有一个明显高值","origin":"source","source_ids":["S01"]},
-  "subtitle":{"text":"2026年第二季度；每位一线员工月均处理时长；合成示例数据，非真实客户数据","source_ids":["S08"]},
+  "title":{"text":"The typical processing times of the four teams are similar, but Group A and Group D each have a significantly higher value.","origin":"source","source_ids":["S01"]},
+  "subtitle":{"text":"2026Second quarter of the year; average monthly processing time per front-line employee; synthetic sample data, not real customer data","source_ids":["S08"]},
   "diagram":{
     "type":"box-plot-jitter",
-    "period":{"text":"2026年第二季度","source_ids":["S02"]},
-    "unit":{"text":"分钟","source_ids":["S03"]},
-    "observation_definition":{"text":"每位一线员工月均处理时长","source_ids":["S03"]},
-    "sample_definition":{"text":"在岗满60天且当季有效工单不少于30件的员工","source_ids":["S03"]},
+    "period":{"text":"2026second quarter","source_ids":["S02"]},
+    "unit":{"text":"minutes","source_ids":["S03"]},
+    "observation_definition":{"text":"Average monthly processing time per frontline employee","source_ids":["S03"]},
+    "sample_definition":{"text":"Full at post60days and the valid work orders for the current quarter are no less than30employees","source_ids":["S03"]},
     "statistics_rule":"tukey_hinges_1_5_iqr",
-    "statistics_note":{"text":"箱体：Q1–Q3；中线：中位数；须：1.5×IQR内最远观测；异常值单独标记","source_ids":["C01"]},
-    "jitter_note":{"text":"横向抖动仅为避免遮挡，不改变观测值","source_ids":["C02"]},
+    "statistics_note":{"text":"Cabinet:Q1–Q3;Midline: median; Must:1.5×IQRthe most distant observation within; outliers are marked individually","source_ids":["C01"]},
+    "jitter_note":{"text":"Lateral jitter is only to avoid occlusion and does not change the observation value","source_ids":["C02"]},
     "groups":[
-      {"id":"team_a","label":{"text":"甲组","source_ids":["S04"]},"n":12,"observations":[42,44,45,46,47,48,49,50,52,54,58,72],"source_ids":["S04"]},
-      {"id":"team_b","label":{"text":"乙组","source_ids":["S04"]},"n":12,"observations":[38,40,41,42,43,44,45,46,47,49,51,53],"source_ids":["S04"]},
-      {"id":"team_c","label":{"text":"丙组","source_ids":["S04"]},"n":12,"observations":[45,46,47,48,49,50,51,52,54,56,59,61],"source_ids":["S04"]},
-      {"id":"team_d","label":{"text":"丁组","source_ids":["S04"]},"n":12,"observations":[35,37,39,40,41,42,43,44,46,48,50,65],"source_ids":["S04"]}
+      {"id":"team_a","label":{"text":"Group A","source_ids":["S04"]},"n":12,"observations":[42,44,45,46,47,48,49,50,52,54,58,72],"source_ids":["S04"]},
+      {"id":"team_b","label":{"text":"Group B","source_ids":["S04"]},"n":12,"observations":[38,40,41,42,43,44,45,46,47,49,51,53],"source_ids":["S04"]},
+      {"id":"team_c","label":{"text":"Group C","source_ids":["S04"]},"n":12,"observations":[45,46,47,48,49,50,51,52,54,56,59,61],"source_ids":["S04"]},
+      {"id":"team_d","label":{"text":"Group D","source_ids":["S04"]},"n":12,"observations":[35,37,39,40,41,42,43,44,46,48,50,65],"source_ids":["S04"]}
     ],
     "insights":[
-      {"text":"甲组与丁组分别出现72分钟和65分钟的高值观测，需核对具体工单情境","source_ids":["S04","C03"]},
-      {"text":"乙组的观测更集中，组内波动小于甲组与丁组","source_ids":["S04","C03"]}
+      {"text":"Group A and Group D appear separately72minutes and65Minutes of high-value observation, need to check the specific work order situation","source_ids":["S04","C03"]},
+      {"text":"The observations in Group B are more concentrated, and the fluctuations within the group are smaller than those in Groups A and D.","source_ids":["S04","C03"]}
     ],
-    "conclusion":{"text":"先复核甲组与丁组的高值观测，再判断是否需要调整流程","source_ids":["S04","C03"]},
-    "disclosure":{"text":"合成示例数据，非真实客户数据","source_ids":["G01"]}
+    "conclusion":{"text":"First review the high-value observations in Group A and Group D, and then determine whether the process needs to be adjusted.","source_ids":["S04","C03"]},
+    "disclosure":{"text":"Synthetic sample data, not real customer data","source_ids":["G01"]}
   }
 }

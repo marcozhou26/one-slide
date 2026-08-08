@@ -1,9 +1,9 @@
-# 图表＋洞察栏模块
+# chart+Insight Column Module
 
-适用：4–8 个时点或类别、两组可比柱形数据、一组比值或指数，以及三条有数据依据的洞察。
+Applicable:4–8 time points or categories, two sets of comparable bars, a set of ratios or indices, and three data-backed insights.
 
-必需输入：类别、两组等长数列、比值数列、三条洞察和各自来源；如有行动结论也必须来自原文。
+Required input: category, two sets of equal-length series, ratio series, three insights and their respective sources; if there are any action conclusions, they must also come from the original text.
 
-缺失或冲突：数组长度不一致、单位不可比、次坐标含义缺失或洞察无法锚定到数据时停止。
+Missing or conflicting: Array lengths are inconsistent, units are not comparable, secondary coordinate meaning is missing, or insights cannot be anchored to the data. Stop.
 
-禁止：为了让图好看改变坐标、补齐年份、外推趋势或替客户写 So What。
+Prohibited: Changing coordinates to make the graph look better, filling in years, extrapolating trends, or writing for clients So What.

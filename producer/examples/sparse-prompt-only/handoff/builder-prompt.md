@@ -1,39 +1,39 @@
-# 单页 Builder Prompt
+# single page Builder Prompt
 
-只生成一页 16:9、原生可编辑的咨询型 PowerPoint，不创建第二页、附录页或隐藏页。
+Generate only one page 16:9, native editable consultation type PowerPoint, does not create a second page, appendix page, or hidden page.
 
-## 页面任务
+## page tasks
 
-面向业务负责人，回答“基层管理者的管理时间主要消耗在哪里”。读者看完应能识别最值得进一步核实和减少的低价值活动。
+For business leaders, answer "Where do grassroots managers mainly spend their management time?" Readers should be able to identify low-value activities that are most worthy of further verification and reduction.
 
-## 标题与结论
+## Title and conclusion
 
-标题：审批与重复会议占所列管理活动时间的 69%
+Title: Approval and recurring meetings as a share of listed management activity time 69%
 
-这是由合成示例记录计算出的情景结论，不得写成真实客户调研结果。
+This is a scenario conclusion calculated from synthetic sample records and should not be written as the results of real customer research.
 
-## 主图
+## Main picture
 
-使用 `data/workload.csv` 绘制横向排序条形图：
+Use `data/workload.csv` Draw a horizontally sorted bar chart:
 
-- 分类字段：`activity`
-- 数值字段：`hours_per_week`
-- 单位：小时/周
-- 排序：从高到低
-- 四个活动全部显示数值标签
-- 审批与重复会议作为同一重点组强调，但仍保持两个独立条目
+- Classification fields:`activity`
+- Numeric fields:`hours_per_week`
+- Unit: hour/week
+- Sort: from high to low
+- All four activities display numerical labels
+- Approval and recurring meetings are highlighted as the same focus group, but remain two separate items
 
-## 来源与审阅标记
+## Sources and Review Marks
 
-四项活动和耗时均为模型补全的合成示例，主图区显示轻量“待确认”标记。副标题或图下注明：合成示例数据，非真实客户数据。
+The four activities and time consumption are all synthetic examples of model-generated completion, with a lightweight "pending confirmation" mark is displayed in the main image area. Note below the subtitle or figure: Synthetic sample data, not real customer data.
 
-## 布局
+## Layout
 
-标题使用页面完整可用宽度，不手动断行。主图占据主要画布，不增加洞察侧栏、行动条、原因卡片或装饰性结论带。
+The title uses the full available width of the page, without manual line breaks. The main image occupies the main canvas and does not add insight sidebars, action bars, reason cards, or decorative conclusion ribbons.
 
-## 禁止
+## prohibited
 
-- 不得把示例值写成真实公司事实。
-- 不得补充行业基准、客户引语、原因判断或建议。
-- 不得用竖线字符拼接字段。
-- 不得缩小正文或标签来塞入额外内容。
+- Do not write example values as actual company facts.
+- May not be supplemented with industry benchmarks, customer quotes, reasoning or recommendations.
+- Fields must not be spliced with pipe characters.
+- Do not shrink body text or tags to squeeze in extra content.

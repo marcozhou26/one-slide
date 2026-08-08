@@ -1,21 +1,21 @@
-# OneSlide 输入契约测试结果
+# OneSlide Enter contract test results
 
-测试对象：`one-slide` 1.2.2（输入契约继承已验证的 1.2.0）
-输入契约等级：B  
-测试日期：2026-08-07
+Test objects:`one-slide` 1.2.2(Enter Contract Inheritance Verified 1.2.0)
+Input contract level: B
+Test date:2026-08-07
 
-| test_id | 场景 | 输入 | 实际行为 | 是否追问 | 证据 | 结果 |
+| test_id | scene | input | actual behavior | Do you want to ask? | evidence | result |
 | --- | --- | --- | --- | --- | --- | --- |
-| IC01 | 完整输入 | 受众、结论、真实数据、单位齐全，只要提示词 | 使用 `SOURCE_ONLY`；不增加合成内容 | 否 | `test_source_only_package_passes` | pass |
-| IC02 | 稀疏自然语言 | “说明基层管理者审批为什么慢，信息不足可以补，直接做成 PPT” | 推导审批阶段×耗时；补匿名示例；逐项来源标注；生成一页 PPTX | 否 | `qa_runs/sparse-ppt-draft-v1` | pass |
-| IC03 | 缺少关键主题 | “帮我做一页咨询 PPT” | 没有主题和读者任务可推导；只问“这一页主要想让读者看懂或决定什么？” | 是，达到门槛 | 契约语义演练 | pass |
-| IC04 | 模糊或冲突目标 | 同一页要求薪酬倒挂、组织层级和完整行动计划 | 返回 `SINGLE_SLIDE_SCOPE_OVERLOAD`；推荐最强单页焦点，不生成多页 | 是，达到门槛 | 契约语义演练 | pass |
-| IC05 | 非阻塞偏好缺失 | 主题和数据完整，但没有颜色、模块、坐标和模板 | 使用中性专业风格；从主要关系选择图形 | 否 | OneSlide 契约与 Builder 默认规则 | pass |
-| IC06 | 异常文件 | 附件损坏，但用户文字已经说明主题 | 标记附件不可读；只使用可读文字继续，不假装提取成功 | 否 | B 级异常输入语义演练 | pass |
-| IC07 | 真实公司无数据 | 要求生成某真实公司的事实离职率，但没有证据 | 不生成真实公司名下的虚构指标；返回 `EVIDENCE_BLOCKED` 或改成匿名示例 | 否 | 事实边界语义演练 | pass |
-| IC08 | PPT 运行依赖缺失 | 请求 PPTX，但 `@oai/artifact-tool` 不可用 | 保留已验证提示词包；返回 `PPT_RENDERING_BLOCKED` | 否 | `check_environment.py` 降级契约 | pass |
+| IC01 | Complete input | The audience, conclusion, real data, and units are complete, as long as the prompt words | Use `SOURCE_ONLY`;Does not add synthetic content | No | `test_source_only_package_passes` | pass |
+| IC02 | sparse natural language | "Explain why the approval of grassroots managers is slow. The lack of information can be supplemented and it can be done directly. PPT” | Derivation of approval stage×Time-consuming; filling in anonymous examples; labeling sources item by item; generating one page PPTX | No | `qa_runs/sparse-ppt-draft-v1` | pass |
+| IC03 | Missing key themes | "Do a one-page consultation for me PPT” | There are no themes or reader tasks to derive; just ask, “What does this page primarily want readers to understand or decide?” | Yes, threshold reached | Contract Semantics Walkthrough | pass |
+| IC04 | Ambiguous or conflicting goals | Same page calls for pay inversion, organizational hierarchy and full action plan | Return `SINGLE_SLIDE_SCOPE_OVERLOAD`;Recommend the strongest single page focus and do not generate multiple pages. | Yes, threshold reached | Contract Semantics Walkthrough | pass |
+| IC05 | Missing non-blocking preference | The theme and data are complete, but there are no colors, modules, coordinates and templates | Use a neutral professional style; choose graphics from primary relationships | No | OneSlide contract with Builder Default rules | pass |
+| IC06 | exception file | The attachment is damaged, but the user text already explains the topic | Mark attachment as unreadable; continue with readable text only and do not pretend extraction was successful | No | B Level exception input semantic drill | pass |
+| IC07 | No data for real companies | Request to generate factual turnover rates for a real company, but without evidence | Do not generate fictitious indicators under real company names; return `EVIDENCE_BLOCKED` Or change to anonymous example | No | Fact Boundary Semantics Walkthrough | pass |
+| IC08 | PPT Running dependencies are missing | Request PPTX, but `@oai/artifact-tool` Not available | Keep the verified prompt word package; return `PPT_RENDERING_BLOCKED` | No | `check_environment.py` downgrade contract | pass |
 
-## 状态
+## Status
 
 ```text
 INPUT_CONTRACT_DECLARED
@@ -23,30 +23,30 @@ INPUT_CONTRACT_TESTED
 INPUT_CONTRACT_PASS
 ```
 
-该状态证明本轮覆盖了完整、稀疏、关键缺失、方向冲突、非阻塞偏好、异常文件、真实公司事实边界和运行依赖场景。它不代表所有主题和全部 Builder 模块已经通过真实用户测试。
+This status proves that this round covers complete, sparse, critical missing, direction conflicts, non-blocking preferences, exception files, real company fact boundaries and operational dependency scenarios. It does not represent all topics and all Builder The module has been tested with real users.
 
-## 2026-08-09 histogram 模块追加验证
+## 2026-08-09 histogram Module additional verification
 
-| test_id | 场景 | 实际行为 | 是否追问 | 证据 | 结果 |
+| test_id | scene | actual behavior | Do you want to ask? | evidence | result |
 | --- | --- | --- | --- | --- | --- |
-| HIC01 | 完整输入 | 复算 8 个区间、48 个有效观测和 2 个缺失值，生成一页计划 | 否 | `histogram_contracts.test.mjs` | pass |
-| HIC02 | 稀疏自然语言 | 从连续观测与“集中、偏斜、长尾”关系自动路由，不要求模块名或图表名 | 否 | 同上 | pass |
-| HIC03 | 缺少关键观测 | 停止正式分布页，不编造样本 | 否 | 同上 | pass |
-| HIC04 | 单位冲突 | 阻断来源不一致的正式载荷 | 否 | 同上 | pass |
-| HIC05 | 非阻塞样式与预计算分箱缺失 | 使用默认样式，从原始观测复算后继续 | 否 | 同上 | pass |
-| HIC06 | 异常格式 | 带单位的数字字符串、坏边界、样本不对平和声明频数不一致分别阻断 | 否 | 同上 | pass |
+| HIC01 | Complete input | Recalculation 8 intervals,48 valid observations and 2 missing values, generate a one-page plan | No | `histogram_contracts.test.mjs` | pass |
+| HIC02 | sparse natural language | Automatic routing from continuous observations to "lumped, skewed, long-tailed" relationships, no module name or chart name required | No | Same as above | pass |
+| HIC03 | Missing key observations | No official distribution page, no fabricated samples | No | Same as above | pass |
+| HIC04 | unit conflict | Block formal payloads from inconsistent sources | No | Same as above | pass |
+| HIC05 | Non-blocking styles and missing precomputed binning | Use the default style and continue after recalculating from the original observations | No | Same as above | pass |
+| HIC06 | Exception format | Numeric strings with units, bad boundaries, incorrect samples, and inconsistent statement frequencies are blocked respectively. | No | Same as above | pass |
 
-`INPUT_CONTRACT_PASS` 仅覆盖本模块声明与已执行场景，不等于真实用户验收。
+`INPUT_CONTRACT_PASS` Only covering the declaration and executed scenarios of this module does not mean acceptance by real users.
 
-## 2026-08-09 scatter-regression 模块追加验证
+## 2026-08-09 scatter-regression Module additional verification
 
-| test_id | 场景 | 实际行为 | 是否追问 | 证据 | 结果 |
+| test_id | scene | actual behavior | Do you want to ask? | evidence | result |
 | --- | --- | --- | --- | --- | --- |
-| SRIC01 | 完整输入 | 从逐条 x/y 复算斜率、截距、R²、有效/缺失/重复样本和绝对残差异常点 | 否 | `scatter_regression_contracts.test.mjs` | pass |
-| SRIC02 | 稀疏自然语言 | 从两个连续指标、方向/强度/偏离趋势任务和成对观测自动路由，不要求模块名或图表名 | 否 | 同上 | pass |
-| SRIC03 | 缺少关键观测 | 停止正式拟合，不编造数据 | 否 | 同上 | pass |
-| SRIC04 | 单位冲突 | 阻断不同单位的成对记录，不暗自换算或合并 | 否 | 同上 | pass |
-| SRIC05 | 非阻塞样式缺失 | 使用默认布局继续，不追问颜色和版式 | 否 | 同上 | pass |
-| SRIC06 | 异常格式与统计冲突 | 损坏 JSON、零方差、样本不足、统计不对平和异常点排序不一致分别阻断 | 否 | 同上 | pass |
+| SRIC01 | Complete input | From item to item x/y Complex calculation of slope, intercept,R², valid/Missing/Repeated samples and absolute residual anomalies | No | `scatter_regression_contracts.test.mjs` | pass |
+| SRIC02 | sparse natural language | From two continuous indicators, directions/intensity/Off-trend tasks and paired observations are automatically routed and do not require module or chart names. | No | Same as above | pass |
+| SRIC03 | Missing key observations | Formal fitting, no fabrication of data | No | Same as above | pass |
+| SRIC04 | unit conflict | Block pairs of records from different units and do not convert or merge them implicitly | No | Same as above | pass |
+| SRIC05 | Missing non-blocking style | Continue using the default layout without asking about colors and formatting. | No | Same as above | pass |
+| SRIC06 | Exception format conflicts with statistics | damaged JSON, zero variance, insufficient samples, statistical imbalance, and inconsistent ordering of outliers are blocked respectively. | No | Same as above | pass |
 
-`INPUT_CONTRACT_PASS` 仅覆盖本模块声明与已执行场景，不等于真实用户验收。
+`INPUT_CONTRACT_PASS` Only covering the declaration and executed scenarios of this module does not mean acceptance by real users.

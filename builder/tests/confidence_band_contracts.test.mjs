@@ -54,19 +54,19 @@ test("confidence interval is not relabelled as prediction or risk", async () => 
 });
 
 test("anonymous natural language routes without module or chart names", async () => {
-  const text = "请比较连续八个季度的中心估计、上下界和区间宽度，数据是季度独立抽样比例及95%的重抽样范围；重点看哪些季度不确定性扩大、整个范围越过6%的关注线，以及回落时方向是否稳定。";
-  assert.doesNotMatch(text, /confidence|band|置信带|折线|图表|模块/i);
+  const text = "Please compare the center estimates, upper and lower bounds, and interval widths for eight consecutive quarters using independently sampled quarterly proportions and95%resampling range; focus on which quarters the uncertainty expands and the entire range is crossed6%line of concern, and whether the direction is stable when it falls back.";
+  assert.doesNotMatch(text, /confidence|band|confidence band|Polyline|chart|module/i);
   const result = await routeInput({ input_mode: "text", text });
   assert.equal(result.decision, "selected"); assert.equal(result.module.module_id, "confidence-band");
 });
 
 test("aligned estimate lower upper arrays infer the relationship", async () => {
-  const result = await routeInput({ input_mode: "mixed", text: "比较各季度中心估计、上下界和范围宽度，识别不确定性扩大与越过关注线的时期。", data: { periods: ["Q1","Q2","Q3","Q4","Q5"], estimate: [1,2,3,4,5], lower: [0,1,2,3,4], upper: [2,3,4,5,6], metric: "比例", unit: "%", interval_definition: "95%重抽样范围" } });
+  const result = await routeInput({ input_mode: "mixed", text: "Compare center estimates, upper and lower bounds, and range widths from quarter to quarter to identify periods when uncertainty expands and lines of concern are crossed.", data: { periods: ["Q1","Q2","Q3","Q4","Q5"], estimate: [1,2,3,4,5], lower: [0,1,2,3,4], upper: [2,3,4,5,6], metric: "Proportion", unit: "%", interval_definition: "95%resampling range" } });
   assert.equal(result.module.module_id, "confidence-band");
 });
 
 test("Producer executable handoff keeps module fields aligned", async () => {
-  const data = await fixture(); const result = await routeV3({ subject: "季度估计", story: data.title.text, source_ids: ["S01"], requested_module: "confidence-band", structure: { primary_exhibit: "confidence-band" }, module_payload: data });
+  const data = await fixture(); const result = await routeV3({ subject: "quarterly estimates", story: data.title.text, source_ids: ["S01"], requested_module: "confidence-band", structure: { primary_exhibit: "confidence-band" }, module_payload: data });
   assert.equal(result.route, "deterministic_module"); assert.equal(result.module_input, "module_payload");
 });
 

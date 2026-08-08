@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "八个部门 62% 的协作集中在三条链路，其中两条缺少正式接口人"
+      "text": "eight departments 62% collaboration is concentrated on three links, two of which lack formal interfaces"
     },
     {
       "id": "S02",
-      "text": "销售；客户群；交付；产品；产品群；研发；财务；支持群；法务；人力；采购；销售→交付为最高频链路：92 次/月；产品→研发单向流量是反向的 2.1 倍；法务与人力处于协作网络边缘；设立 2 个跨部门接口岗，目标减少 25% 沟通往返；全部示例数值与口径"
+      "text": "Sales; customer base; delivery; products; product group; R&D; finance; support group; legal affairs; human resources; purchasing; sales→Delivered as the highest frequency link:92 times/month; product→R&D one-way traffic is reversed 2.1 times; legal affairs and human resources are at the edge of the collaboration network; establishment 2 cross-department interface positions, the target is reduced 25% Communication back and forth; all sample values and calibers; Delivery; Products; Finance; manpower; Procurement; Products→R&D one-way traffic is reversed 2.1 times; Legal affairs and human resources are at the edge of the collaboration network; Establish 2 cross-department interface positions, the target is reduced 25% Communication back and forth"
     }
   ],
   "title": {
-    "text": "八个部门 62% 的协作集中在三条链路，其中两条缺少正式接口人",
+    "text": "eight departments 62% collaboration is concentrated on three links, two of which lack formal interfaces",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -24,13 +24,13 @@
       {
         "id": "n1",
         "label": {
-          "text": "销售",
+          "text": "sales",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "客户群",
+          "text": "customer base",
           "source_ids": [
             "S02"
           ]
@@ -43,13 +43,13 @@
       {
         "id": "n2",
         "label": {
-          "text": "交付",
+          "text": "Delivery",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "客户群",
+          "text": "customer base",
           "source_ids": [
             "S02"
           ]
@@ -62,13 +62,13 @@
       {
         "id": "n3",
         "label": {
-          "text": "产品",
+          "text": "Products",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "产品群",
+          "text": "product group",
           "source_ids": [
             "S02"
           ]
@@ -81,13 +81,13 @@
       {
         "id": "n4",
         "label": {
-          "text": "研发",
+          "text": "R&D",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "产品群",
+          "text": "product group",
           "source_ids": [
             "S02"
           ]
@@ -100,13 +100,13 @@
       {
         "id": "n5",
         "label": {
-          "text": "财务",
+          "text": "Finance",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "支持群",
+          "text": "support group",
           "source_ids": [
             "S02"
           ]
@@ -119,13 +119,13 @@
       {
         "id": "n6",
         "label": {
-          "text": "法务",
+          "text": "legal affairs",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "支持群",
+          "text": "support group",
           "source_ids": [
             "S02"
           ]
@@ -138,13 +138,13 @@
       {
         "id": "n7",
         "label": {
-          "text": "人力",
+          "text": "manpower",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "支持群",
+          "text": "support group",
           "source_ids": [
             "S02"
           ]
@@ -157,13 +157,13 @@
       {
         "id": "n8",
         "label": {
-          "text": "采购",
+          "text": "Procurement",
           "source_ids": [
             "S02"
           ]
         },
         "group": {
-          "text": "支持群",
+          "text": "support group",
           "source_ids": [
             "S02"
           ]
@@ -274,26 +274,26 @@
     ],
     "insights": [
       {
-        "text": "销售→交付为最高频链路：92 次/月",
+        "text": "sales→Delivered as the highest frequency link:92 times/month",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "产品→研发单向流量是反向的 2.1 倍",
+        "text": "Products→R&D one-way traffic is reversed 2.1 times",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "法务与人力处于协作网络边缘",
+        "text": "Legal affairs and human resources are at the edge of the collaboration network",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "设立 2 个跨部门接口岗，目标减少 25% 沟通往返",
+      "text": "Establish 2 cross-department interface positions, the target is reduced 25% Communication back and forth",
       "source_ids": [
         "S02"
       ]

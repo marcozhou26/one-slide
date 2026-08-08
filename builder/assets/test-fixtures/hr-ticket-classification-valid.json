@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "分类准确率 86.5%、改判率 13.5%，其他标签把工单推向二次分派"
+      "text": "Classification accuracy 86.5%, modification rate 13.5%, other tags push the work order to secondary dispatch"
     },
     {
       "id": "S02",
-      "text": "分类准确率；86.5%；目标 92%；改判率；13.5%；目标 <8%；其他标签占比；9.2%；目标 <5%；薪资；福利；休假；证明；其他；其他；建议拆成 3 个末级标签；其他标签接收了最多错误流入；薪资与证明之间存在稳定混淆；新增末级标签并补充训练样本；每万件工单减少 550 次改判，目标准确率提升至 92%；全部示例数值与口径"
+      "text": "Classification accuracy;86.5%; target 92%;Change rate;13.5%; target <8%;Proportion of other tags;9.2%; target <5%;Salary;Benefits;Leave;Certificate;Others;Others;Recommended to split into 3 last-level labels; other labels received the most error inflows; stable confusion between salary and certification; new last-level labels and supplemented training samples; fewer work orders per 10,000 550 The judgment was revised once, and the target accuracy rate increased to 92%;All example values and calibers; Correction rate; Other tags received the most error inflows; Stable confusion between salary and certification; Add final labels and supplement training samples; welfare; vacation; prove; Reduction in work orders per 10,000 pieces 550 The judgment was revised once, and the target accuracy rate increased to 92%; Others; it is recommended to split into 3 last-level tags"
     }
   ],
   "title": {
-    "text": "分类准确率 86.5%、改判率 13.5%，其他标签把工单推向二次分派",
+    "text": "Classification accuracy 86.5%, modification rate 13.5%, other tags push the work order to secondary dispatch",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "metrics": [
       {
         "label": {
-          "text": "分类准确率",
+          "text": "Classification accuracy",
           "source_ids": [
             "S02"
           ]
@@ -35,7 +35,7 @@
           ]
         },
         "target": {
-          "text": "目标 92%",
+          "text": "target 92%",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       },
       {
         "label": {
-          "text": "改判率",
+          "text": "Correction rate",
           "source_ids": [
             "S02"
           ]
@@ -58,7 +58,7 @@
           ]
         },
         "target": {
-          "text": "目标 <8%",
+          "text": "target <8%",
           "source_ids": [
             "S02"
           ]
@@ -69,7 +69,7 @@
       },
       {
         "label": {
-          "text": "其他标签占比",
+          "text": "Proportion of other tags",
           "source_ids": [
             "S02"
           ]
@@ -81,7 +81,7 @@
           ]
         },
         "target": {
-          "text": "目标 <5%",
+          "text": "target <5%",
           "source_ids": [
             "S02"
           ]
@@ -94,7 +94,7 @@
     "categories": [
       {
         "label": {
-          "text": "薪资",
+          "text": "salary",
           "source_ids": [
             "S02"
           ]
@@ -109,7 +109,7 @@
       },
       {
         "label": {
-          "text": "福利",
+          "text": "welfare",
           "source_ids": [
             "S02"
           ]
@@ -124,7 +124,7 @@
       },
       {
         "label": {
-          "text": "休假",
+          "text": "vacation",
           "source_ids": [
             "S02"
           ]
@@ -139,7 +139,7 @@
       },
       {
         "label": {
-          "text": "证明",
+          "text": "prove",
           "source_ids": [
             "S02"
           ]
@@ -154,7 +154,7 @@
       },
       {
         "label": {
-          "text": "其他",
+          "text": "Others",
           "source_ids": [
             "S02"
           ]
@@ -169,33 +169,33 @@
       }
     ],
     "other_label": {
-      "text": "其他；建议拆成 3 个末级标签",
+      "text": "Others; it is recommended to split into 3 last-level tags",
       "source_ids": [
         "S02"
       ]
     },
     "insights": [
       {
-        "text": "其他标签接收了最多错误流入",
+        "text": "Other tags received the most error inflows",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "薪资与证明之间存在稳定混淆",
+        "text": "Stable confusion between salary and certification",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "新增末级标签并补充训练样本",
+        "text": "Add final labels and supplement training samples",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "每万件工单减少 550 次改判，目标准确率提升至 92%",
+      "text": "Reduction in work orders per 10,000 pieces 550 The judgment was revised once, and the target accuracy rate increased to 92%",
       "source_ids": [
         "S02"
       ]

@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "内部转岗率仅 6.3%，74% 的跨部门流动集中在销售与产品两条方向"
+      "text": "The internal transfer rate is only 6.3%, 74% The cross-department flows are concentrated in the two directions of sales and products."
     },
     {
       "id": "S02",
-      "text": "销售；产品；研发；交付；运营；职能；销售与产品之间形成主要人才通道；研发与交付存在单向输出；职能部门几乎没有跨部门流动；打通研发→产品通道并设立内部人才市场，目标转岗率提升至 12%；全部示例数值与口径"
+      "text": "Sales; products; R&D; delivery; operations; functions; the main talent channel is formed between sales and products; there is one-way output between R&D and delivery; there is almost no cross-department flow between functional departments; R&D is connected→product channel and establish an internal talent market, with the target job transfer rate increased to 12%;All example values and calibers; Form a main talent channel between sales and products; There is one-way output between R&D and delivery; There is almost no cross-functional mobility; Open up research and development→product channel and establish an internal talent market, with the target job transfer rate increased to 12%; Products; Delivery; Operation; Function"
     }
   ],
   "title": {
-    "text": "内部转岗率仅 6.3%，74% 的跨部门流动集中在销售与产品两条方向",
+    "text": "The internal transfer rate is only 6.3%, 74% The cross-department flows are concentrated in the two directions of sales and products.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -22,37 +22,37 @@
     "type": "hr-from-to-mobility",
     "departments": [
       {
-        "text": "销售",
+        "text": "sales",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "产品",
+        "text": "Products",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "研发",
+        "text": "R&D",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "交付",
+        "text": "Delivery",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "运营",
+        "text": "Operation",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "职能",
+        "text": "Function",
         "source_ids": [
           "S02"
         ]
@@ -271,26 +271,26 @@
     ],
     "insights": [
       {
-        "text": "销售与产品之间形成主要人才通道",
+        "text": "Form a main talent channel between sales and products",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "研发与交付存在单向输出",
+        "text": "There is one-way output between R&D and delivery",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "职能部门几乎没有跨部门流动",
+        "text": "There is almost no cross-functional mobility",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "打通研发→产品通道并设立内部人才市场，目标转岗率提升至 12%",
+      "text": "Open up research and development→product channel and establish an internal talent market, with the target job transfer rate increased to 12%",
       "source_ids": [
         "S02"
       ]

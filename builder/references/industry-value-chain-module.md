@@ -1,8 +1,8 @@
 # Industry value chain
 
-- 用于：4–7 个价值环节及不同玩家的覆盖、空白和拟进入位置。
-- 不用于：没有统一环节定义，或玩家覆盖信息不可核验。
-- 必填：环节、利润率、规模、集中度、价值指数、壁垒、玩家覆盖与来源。
-- 冲突：玩家引用不存在的环节时停止。
-- 输出：横向价值链、壁垒卡、玩家覆盖矩阵和我方拟进入框。
-- QA：各行同列对齐，我方现状与计划分开，未进入环节不得填实。
+- Used for:4–7 coverage, gaps, and intended entry positions for each value link and different players.
+- Not used for: There is no unified link definition, or player coverage information cannot be verified.
+- Required: links, profit margins, scale, concentration, value index, barriers, player coverage and sources.
+- Conflict: Stop when player refers to a link that does not exist.
+- Output: Horizontal value chain, barrier cards, player coverage matrix and our intended entry box.
+- QA: Align each row in the same column, separate our current situation from our plan, and do not fill in the form before entering the link.

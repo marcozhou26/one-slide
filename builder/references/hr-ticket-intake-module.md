@@ -1,6 +1,6 @@
 # HR ticket intake
 
-- 用于：五类服务与四类受理意图的一次命中、澄清和转人工诊断。
-- 必填：三项核心指标、5×4 受理矩阵和每格工单量与命中率。
-- 阻塞：服务或意图数量、矩阵尺寸不符。
-- QA：行列含义固定，热力只表达工单量，命中率以数字呈现。
+- Used for: one-hit, clarification and manual diagnosis of five types of services and four types of acceptance intentions.
+- Required: three core indicators,5×4 Acceptance matrix, number of work orders per grid, and hit rate.
+- Blocking: The number of services or intentions and the matrix size do not match.
+- QA: The row and column meanings are fixed, the heat only expresses the work order volume, and the hit rate is presented in numbers.

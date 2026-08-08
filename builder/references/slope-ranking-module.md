@@ -1,9 +1,9 @@
-# 坡度排名模块（兼容旧版）
+# Slope ranking module (compatible with older versions)
 
-该两期契约仅用于兼容旧输入和回归测试。新请求应使用 [`bump-ranking-module.md`](./bump-ranking-module.md)，当前正式模块 ID 为 `bump-ranking`。
+This two-phase contract is for compatibility with legacy input and regression testing only. New requests should use [`bump-ranking-module.md`](./bump-ranking-module.md), the current official module ID for `bump-ranking`.
 
-适用：5–12 个对象在两个时点均有唯一排名和数值，用斜率表达迁移。
+Applicable:5–12 Each object has a unique ranking and value at two time points, and the slope is used to express the migration.
 
-必需输入：左右时点、对象名称、两期排名与数值、移动原因及来源。
+Required input: left and right time points, object name, two period rankings and values, reason for movement and source.
 
-阻塞：同一时点排名重复、时点口径变化未说明或只给名次变化未给两端排名时停止。禁止补写上升原因。
+Blocking: Stopping when the ranking is repeated at the same time point, the change in caliber at the time point is not explained, or only the ranking change is given without ranking at both ends. It is prohibited to rewrite the reason for the increase.

@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "管理岗占比 14%、平均管理跨度 4.2 人，八层结构使决策链比同行长两级"
+      "text": "Proportion of management positions 14%, average management span 4.2 People, the eight-layer structure makes the decision-making chain two levels longer than its peers"
     },
     {
       "id": "S02",
-      "text": "管理；技术；营销；职能支持；操作；L8；L7；L6；L5；L4；L3；L2；L1；八层结构比同行多两层；中层管理跨度低于 4 人，存在层级冗余；技术序列在中高职级出现断层；压缩至 6 层、管理岗占比降至 10%、技术序列增编 36 人；全部示例数值与口径"
+      "text": "Management; Technology; Marketing; Functional Support; Operations;L8; L7; L6; L5; L4; L3; L2; L1;The eight-layer structure has two more layers than its peers; the middle management span is lower than 4 People, there is hierarchical redundancy; the technical sequence is broken at the middle and high levels; it is compressed to 6 The proportion of senior and management positions has dropped to 10%, technical sequence addendum 36 People; All example values and calibers; The eight-story structure has two more floors than its peers. Middle management span is less than 4 People, there is hierarchical redundancy; There is a gap in the technical sequence at the middle and high levels; Compressed to 6 The proportion of senior and management positions has dropped to 10%, technical sequence addendum 36 people; functional support"
     }
   ],
   "title": {
-    "text": "管理岗占比 14%、平均管理跨度 4.2 人，八层结构使决策链比同行长两级",
+    "text": "Proportion of management positions 14%, average management span 4.2 People, the eight-layer structure makes the decision-making chain two levels longer than its peers",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -22,31 +22,31 @@
     "type": "hr-level-function-matrix",
     "functions": [
       {
-        "text": "管理",
+        "text": "management",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "技术",
+        "text": "Technology",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "营销",
+        "text": "Marketing",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "职能支持",
+        "text": "functional support",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "操作",
+        "text": "Operation",
         "source_ids": [
           "S02"
         ]
@@ -488,26 +488,26 @@
     ],
     "insights": [
       {
-        "text": "八层结构比同行多两层",
+        "text": "The eight-story structure has two more floors than its peers.",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "中层管理跨度低于 4 人，存在层级冗余",
+        "text": "Middle management span is less than 4 People, there is hierarchical redundancy",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "技术序列在中高职级出现断层",
+        "text": "There is a gap in the technical sequence at the middle and high levels",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "压缩至 6 层、管理岗占比降至 10%、技术序列增编 36 人",
+      "text": "Compressed to 6 The proportion of senior and management positions has dropped to 10%, technical sequence addendum 36 people",
       "source_ids": [
         "S02"
       ]

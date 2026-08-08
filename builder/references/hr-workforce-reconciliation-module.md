@@ -1,6 +1,6 @@
 # HR workforce reconciliation
 
-- 用于：逐月核对期初、招聘、离职、调动、期末和编制预算。
-- 必填：十二个月和完整加减项；本月期末必须等于下月期初。
-- 阻塞：任一月不满足 `期初+入职-离职-转出+转入=期末`。
-- QA：月度链连续，招聘与离职分色，折线与对账单元不混淆。
+- Used for: Month-by-month reconciliation of openings, hiring, separations, transfers, closings and budgeting.
+- Required: Twelve months and complete additions and subtractions; the end of this month must equal the beginning of the next month.
+- Blocking: Not satisfied in any month `Beginning of period+Onboarding-Resign-transfer out+transfer in=End of term`.
+- QA: The monthly chain is continuous, recruitment and resignation are in separate colors, and the polyline and statement unit are not confused.

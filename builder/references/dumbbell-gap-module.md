@@ -1,7 +1,7 @@
-# 哑铃差距模块
+# Dumbbell Gap Module
 
-适用：5–12 项指标比较现状与目标或标杆，并按绝对差距降序。
+Applicable:5–12 Each indicator compares the current situation with the target or benchmark, in descending order of absolute difference.
 
-必需输入：指标、能力域、现状、目标、正反向、改善难度及来源；反向指标必须显式标记。
+Required input: indicators, capability areas, current situation, goals, positive and negative directions, improvement difficulty and source; negative indicators must be explicitly marked.
 
-阻塞：端点缺失、排序错误或方向不明时停止。禁止用轴缩放夸大差距。
+Blocking: Stops when endpoint is missing, wrongly sequenced, or direction unknown. Exaggerating gaps with axis scaling is prohibited.

@@ -1,24 +1,24 @@
-# 因果链模块
+# Causal chain module
 
-## 进入条件
+## Entry conditions
 
-原文必须明确使用“导致、造成、驱动、增加、拉长、推迟”等因果表达。仅有相关、并列、同时发生或时间先后，不能进入因果链模块。
+The original text must clearly use causal expressions such as "causing, causing, driving, increasing, elongating, delaying". Only related, parallel, simultaneous or temporal sequence cannot enter the causal chain module.
 
-## 建模规则
+## modeling rules
 
-- 原因指向结果。
-- 每条箭头都保存原文依据。
-- 同一原因可以影响多个结果，同一结果可以有多个原因。
-- 不增加中间机制；中间节点必须在原文出现。
-- 图必须无环。
-- 缺失但客户需要补充的原因可以使用 `待客户补充` 节点。
-- 因果方向存在两种合理理解时返回 `LOGIC_AMBIGUITY_BLOCKED`。
+- Cause points to effect.
+- Each arrow saves the original text basis.
+- The same cause can affect multiple outcomes, and the same outcome can have multiple causes.
+- No intermediate mechanism is added; intermediate nodes must appear in the original text.
+- The graph must be cycle-free.
+- It can be used if it is missing but needs to be supplemented by the customer. `To be supplemented by customers` node.
+- Return when there are two reasonable understandings of the causal direction `LOGIC_AMBIGUITY_BLOCKED`.
 
-## 页面规则
+## Page rules
 
-- 采用从左到右的阅读方向。
-- 原因位于左侧，最终结果位于右侧。
-- 连接线先创建，节点后创建。
-- 节点保留原文，不改成新标签。
-- 标题不得强制断行。
-- 客户页面不显示锚点和内部状态。
+- Use a left-to-right reading direction.
+- The cause is on the left and the end result is on the right.
+- The connection lines are created first, and the nodes are created later.
+- The node retains its original text and is not changed to a new label.
+- Titles must not be forced to break.
+- Customer pages do not show anchors and internal state.

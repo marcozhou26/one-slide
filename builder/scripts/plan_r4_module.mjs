@@ -46,7 +46,7 @@ function planGantt(data, base) {
   const layerSteps = extractGanttLayerSteps(data.diagram, timeAxis);
   const dependencies = normalizeGanttDependencies(data.diagram);
   const sideMetrics = (data.diagram.side_metrics ?? []).filter(
-    (item) => !item.text?.startsWith("阶段层级"),
+    (item) => !item.text?.startsWith("Stage level"),
   );
   const orderedTasks=data.diagram.lanes.flatMap(lane=>data.diagram.tasks.filter(task=>task.lane===lane.text).sort((left,right)=>left.start-right.start));
   return {
@@ -60,7 +60,7 @@ function planGantt(data, base) {
       dependencies,
       tasks: orderedTasks,
       side_metrics: sideMetrics,
-      side_title: data.diagram.tasks.some((task) => task.critical) ? "关键路径" : "核验要点",
+      side_title: data.diagram.tasks.some((task) => task.critical) ? "critical path" : "Verification points",
     },
   };
 }

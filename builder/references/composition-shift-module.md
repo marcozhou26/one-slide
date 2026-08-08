@@ -1,29 +1,29 @@
-# 多期构成变化模块
+# Multi-phase composition change module
 
-适用：回答“整体由哪些部分构成，以及构成在多个时期如何变化”。正式模块 ID 为 `composition-shift`，`diagram.type` 必须同名。它使用 100% 堆积柱表达 3–8 个有序时期和 2–6 个稳定构成项，不处理横向宽度还代表规模的 Marimekko，也不替代一般趋势图。
+Applicable: Answers "What parts does a whole consist of, and how does the composition change over time?" formal module ID for `composition-shift`, `diagram.type` Must have the same name. it uses 100% stacked column expression 3–8 an ordered period and 2–6 A stable component, which does not deal with the horizontal width but also represents the scale. Marimekko, nor does it replace general trend charts.
 
-## 输入契约
+## Enter the contract
 
-- `periods`：3–8 个有序时期，每个时期是带 `source_ids` 的可见文本；
-- `components`：2–6 个构成项，`id` 唯一，包含标签、与时期等长的 `shares`，以及构成数据的 `source_ids`；
-- `basis`：`share` 或 `absolute`；
-- `denominator`：明确分母和统计口径；
-- `unit`：绝对值模式的单位，纯占比模式仍写明百分比口径；
-- `insights`：1–3 条能锚定到数据的洞察；
-- 可选 `focus_component_id`、`conclusion` 和合成数据 `disclosure`。
+- `periods`: 3–8 an orderly period, each period is with `source_ids` visible text;
+- `components`: 2–6 components,`id` Unique, containing label, equal to period `shares`, and what constitutes the data `source_ids`;
+- `basis`: `share` or `absolute`;
+- `denominator`: Clarify the denominator and statistical caliber;
+- `unit`: The unit of absolute value mode, the pure percentage mode still indicates the percentage caliber;
+- `insights`: 1–3 Bars can be anchored to data insights;
+- Optional `focus_component_id`, `conclusion` and synthetic data `disclosure`.
 
-当 `basis=absolute` 时，每个构成项还必须提供与时期等长的 `values`，并提供每期 `totals` 和 `total_source_ids`。各构成绝对值之和必须等于当期总量，`share` 必须由同一分母计算并与绝对值一致。
+when `basis=absolute` , each component must also provide a period equal to the `values`, and provide each issue `totals` and `total_source_ids`. The sum of the absolute values of each component must equal the current total,`share` Must be calculated from the same denominator and consistent with the absolute value.
 
-## 门禁
+## access control
 
-- 每期占比合计必须为 100%，容差不超过 0.05 个百分点；
-- 不接受负数、数组长度不一致、重复构成 ID、未知重点构成或缺失分母；
-- 新增、退出或缺失构成必须在来源数据中显式表示为 0 或独立状态，不得靠颜色猜测；
-- 来源冲突、分母不一致或绝对值无法对平时返回 `COMPOSITION_RECONCILIATION_FAIL`，不得补差偷平；
-- 如果同一页还必须同时表达不同宽度的市场规模、第二个独立主图或超过三个支持主题，省略模块字段并进入 `direct_composition` 或返回单页范围超载。
+- The total proportion of each period must be 100%, the tolerance does not exceed 0.05 percentage points;
+- Negative numbers, inconsistent array lengths, and repeated formations are not accepted. ID, unknown key components or missing denominator;
+- New, exiting or missing components must be explicitly represented in the source data as 0 or independent status, no guessing based on color is allowed;
+- Source conflict, denominator inconsistency or absolute value cannot be returned to normal `COMPOSITION_RECONCILIATION_FAIL`, it is not allowed to make up for the difference;
+- If the same page must also express different widths of market size, a second independent main image, or more than three supporting topics, omit the Modules field and enter `direct_composition` Or return a single page range overload.
 
-## 页面与编辑性
+## Pages and editability
 
-主图为原生矩形堆积柱、文本标签、轴线和网格线；右侧最多三条来源支持的洞察，底部最多一条结论。用户可以在 PowerPoint 中编辑时期、构成名称、占比、绝对值、柱块、颜色和洞察文字。合成数据必须在主图附近显示“合成示例数据，非真实客户数据”。
+The main image is a native rectangular stacked column, text label, axis line and grid line; there are up to three insights supported by sources on the right side and up to one conclusion at the bottom. Users can PowerPoint Edit period, component name, proportion, absolute value, column, color and insight text. Synthetic data must display "Synthetic example data, not real customer data" near the main image.
 
-验收：完整占比案例、绝对值对平案例、占比不等于 100%、数组长度异常、稀疏自然语言路由和缺少样式字段均须测试；生成参考 PPTX 后检查渲染、溢出、原生对象和 Microsoft PowerPoint 打开结果。
+Acceptance: complete proportion case, absolute value equalization case, proportion not equal to 100%, array length anomalies, sparse natural language routing, and missing style fields must all be tested; generate reference PPTX Post-check rendering, overflow, native objects and Microsoft PowerPoint Open the result.

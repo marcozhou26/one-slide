@@ -2,35 +2,35 @@
   "version": "1.0",
   "module_id": "composition-shift",
   "source_anchors": [
-    {"id":"S01","text":"收入结构持续向核心产品集中，2022—2025年占比提升15个百分点"},
-    {"id":"S02","text":"2022；2023；2024；2025"},
-    {"id":"S03","text":"收入占比（%）；分母为当年确认收入；核心产品42 46 51 57；增值服务28 29 28 26；实施服务20 17 14 11；其他10 8 7 6"},
-    {"id":"S04","text":"核心产品占比连续三个年度提升，是结构变化的主要来源"},
-    {"id":"S05","text":"实施服务占比由20%降至11%，人力交付依赖下降"},
-    {"id":"S06","text":"结论：继续提高产品化收入，同时监控增值服务的增长质量"},
-    {"id":"S07","text":"合成示例数据，非真实客户数据"}
+    {"id":"S01","text":"The revenue structure continues to focus on core products.2022—2025Increase in annual share15percentage points"},
+    {"id":"S02","text":"2022; 2023; 2024; 2025"},
+    {"id":"S03","text":"Revenue proportion (%); the denominator is the revenue recognized in the year; core products42 46 51 57;Value-added services28 29 28 26;Implementation services20 17 14 11;Others10 8 7 6; value-added services; Revenue proportion (%); Revenue recognized during the year"},
+    {"id":"S04","text":"The proportion of core products has increased for three consecutive years, which is the main source of structural changes."},
+    {"id":"S05","text":"The proportion of implementation services is composed of20%down to11%, dependence on human delivery decreases"},
+    {"id":"S06","text":"Conclusion: Continue to increase productization revenue while monitoring the quality of growth in value-added services"},
+    {"id":"S07","text":"Synthetic sample data, not real customer data"}
   ],
-  "title":{"text":"收入结构持续向核心产品集中，2022—2025年占比提升15个百分点","origin":"source","source_ids":["S01"]},
+  "title":{"text":"The revenue structure continues to focus on core products.2022—2025Increase in annual share15percentage points","origin":"source","source_ids":["S01"]},
   "diagram":{
     "type":"composition-shift",
     "basis":"share",
-    "denominator":{"text":"当年确认收入","source_ids":["S03"]},
-    "unit":{"text":"收入占比（%）","source_ids":["S03"]},
+    "denominator":{"text":"Revenue recognized during the year","source_ids":["S03"]},
+    "unit":{"text":"Revenue proportion (%)","source_ids":["S03"]},
     "periods":[
       {"text":"2022","source_ids":["S02"]},{"text":"2023","source_ids":["S02"]},{"text":"2024","source_ids":["S02"]},{"text":"2025","source_ids":["S02"]}
     ],
     "components":[
-      {"id":"core","label":{"text":"核心产品","source_ids":["S03"]},"shares":[42,46,51,57],"source_ids":["S03"]},
-      {"id":"value_added","label":{"text":"增值服务","source_ids":["S03"]},"shares":[28,29,28,26],"source_ids":["S03"]},
-      {"id":"implementation","label":{"text":"实施服务","source_ids":["S03"]},"shares":[20,17,14,11],"source_ids":["S03"]},
-      {"id":"other","label":{"text":"其他","source_ids":["S03"]},"shares":[10,8,7,6],"source_ids":["S03"]}
+      {"id":"core","label":{"text":"core products","source_ids":["S03"]},"shares":[42,46,51,57],"source_ids":["S03"]},
+      {"id":"value_added","label":{"text":"value-added services","source_ids":["S03"]},"shares":[28,29,28,26],"source_ids":["S03"]},
+      {"id":"implementation","label":{"text":"Implementation services","source_ids":["S03"]},"shares":[20,17,14,11],"source_ids":["S03"]},
+      {"id":"other","label":{"text":"Others","source_ids":["S03"]},"shares":[10,8,7,6],"source_ids":["S03"]}
     ],
     "focus_component_id":"core",
     "insights":[
-      {"text":"核心产品占比连续三个年度提升，是结构变化的主要来源","source_ids":["S04"]},
-      {"text":"实施服务占比由20%降至11%，人力交付依赖下降","source_ids":["S05"]}
+      {"text":"The proportion of core products has increased for three consecutive years, which is the main source of structural changes.","source_ids":["S04"]},
+      {"text":"The proportion of implementation services is composed of20%down to11%, dependence on human delivery decreases","source_ids":["S05"]}
     ],
-    "conclusion":{"text":"结论：继续提高产品化收入，同时监控增值服务的增长质量","source_ids":["S06"]},
-    "disclosure":{"text":"合成示例数据，非真实客户数据","source_ids":["S07"]}
+    "conclusion":{"text":"Conclusion: Continue to increase productization revenue while monitoring the quality of growth in value-added services","source_ids":["S06"]},
+    "disclosure":{"text":"Synthetic sample data, not real customer data","source_ids":["S07"]}
   }
 }

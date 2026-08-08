@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "总体市场 50 亿中，可实际触达 12 亿，三年可获取 6 亿"
+      "text": "overall market 50 100 million, can be actually reached 12 billion, available in three years 6 billion"
     },
     {
       "id": "S02",
-      "text": "TAM；总体市场；剔除非目标行业；SAM；可服务市场；剔除不适配产品场景；SOM；可获取市场；受渠道与交付能力约束；三年目标；按现实渗透速度收敛；目标客户数；2,000 家；行业名录；敏感度 中；渗透率；15%；试点转化；敏感度 高；年客单价；160 万；合同样本；复购率；80%；续约数据；第 1/2/3 年收入目标：1.2 / 3.2 / 6.0 亿元；客户名录每半年更新一次；渗透率以已签约客户为准；测算日期：2026 年 8 月；优先验证渗透率和客单价，两项决定 78% 的结果波动；全部示例数值与口径"
+      "text": "TAM;Overall market;Excluding non-target industries;SAM;Can serve the market; eliminate unsuitable product scenarios;SOM; Accessible market; Constrained by channels and delivery capabilities; Three-year target; Convergence based on realistic penetration rate; Number of target customers;2,000 Home; Industry Directory; Sensitivity medium; permeability;15%; Pilot transformation; Sensitivity High; annual customer unit price;160 million; contract sample; repurchase rate;80%;Renewal data;No. 1/2/3 Annual income target:1.2 / 3.2 / 6.0 billion; the customer list is updated every six months; the penetration rate is based on signed customers; calculation date:2026 year 8 Month; Prioritize verification of penetration rate and customer unit price, two decisions 78% The results fluctuate; all sample values and calibers; sensitivity in; 2,000 home; sensitivity high; Penetration; Contract sample; Annual customer unit price; Repurchase rate; Eliminate non-target industries; TAM; overall market; Eliminate unsuitable product scenarios; SAM; Market that can be served; SOM;Available market; Convergence according to realistic penetration speed; Three-year goals; The customer list is updated every six months; Penetration rate is based on signed customers; Calculation date:2026 year 8 month"
     }
   ],
   "title": {
-    "text": "总体市场 50 亿中，可实际触达 12 亿，三年可获取 6 亿",
+    "text": "overall market 50 100 million, can be actually reached 12 billion, available in three years 6 billion",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,14 +23,14 @@
     "layers": [
       {
         "label": {
-          "text": "TAM；总体市场",
+          "text": "TAM; overall market",
           "source_ids": [
             "S02"
           ]
         },
         "value": 50,
         "reason": {
-          "text": "剔除非目标行业",
+          "text": "Eliminate non-target industries",
           "source_ids": [
             "S02"
           ]
@@ -41,14 +41,14 @@
       },
       {
         "label": {
-          "text": "SAM；可服务市场",
+          "text": "SAM; Market that can be served",
           "source_ids": [
             "S02"
           ]
         },
         "value": 24,
         "reason": {
-          "text": "剔除不适配产品场景",
+          "text": "Eliminate unsuitable product scenarios",
           "source_ids": [
             "S02"
           ]
@@ -59,14 +59,14 @@
       },
       {
         "label": {
-          "text": "SOM；可获取市场",
+          "text": "SOM;Available market",
           "source_ids": [
             "S02"
           ]
         },
         "value": 12,
         "reason": {
-          "text": "受渠道与交付能力约束",
+          "text": "Constrained by channels and delivery capabilities",
           "source_ids": [
             "S02"
           ]
@@ -77,14 +77,14 @@
       },
       {
         "label": {
-          "text": "三年目标",
+          "text": "Three-year goals",
           "source_ids": [
             "S02"
           ]
         },
         "value": 6,
         "reason": {
-          "text": "按现实渗透速度收敛",
+          "text": "Convergence according to realistic penetration speed",
           "source_ids": [
             "S02"
           ]
@@ -97,25 +97,25 @@
     "factors": [
       {
         "label": {
-          "text": "目标客户数",
+          "text": "Number of target customers",
           "source_ids": [
             "S02"
           ]
         },
         "value": {
-          "text": "2,000 家",
+          "text": "2,000 home",
           "source_ids": [
             "S02"
           ]
         },
         "source": {
-          "text": "行业名录",
+          "text": "Industry Directory",
           "source_ids": [
             "S02"
           ]
         },
         "sensitivity": {
-          "text": "敏感度 中",
+          "text": "sensitivity in",
           "source_ids": [
             "S02"
           ]
@@ -123,7 +123,7 @@
       },
       {
         "label": {
-          "text": "渗透率",
+          "text": "Penetration",
           "source_ids": [
             "S02"
           ]
@@ -135,13 +135,13 @@
           ]
         },
         "source": {
-          "text": "试点转化",
+          "text": "Pilot transformation",
           "source_ids": [
             "S02"
           ]
         },
         "sensitivity": {
-          "text": "敏感度 高",
+          "text": "sensitivity high",
           "source_ids": [
             "S02"
           ]
@@ -149,25 +149,25 @@
       },
       {
         "label": {
-          "text": "年客单价",
+          "text": "Annual customer unit price",
           "source_ids": [
             "S02"
           ]
         },
         "value": {
-          "text": "160 万",
+          "text": "160 million",
           "source_ids": [
             "S02"
           ]
         },
         "source": {
-          "text": "合同样本",
+          "text": "Contract sample",
           "source_ids": [
             "S02"
           ]
         },
         "sensitivity": {
-          "text": "敏感度 高",
+          "text": "sensitivity high",
           "source_ids": [
             "S02"
           ]
@@ -175,7 +175,7 @@
       },
       {
         "label": {
-          "text": "复购率",
+          "text": "Repurchase rate",
           "source_ids": [
             "S02"
           ]
@@ -187,13 +187,13 @@
           ]
         },
         "source": {
-          "text": "续约数据",
+          "text": "Renewal data",
           "source_ids": [
             "S02"
           ]
         },
         "sensitivity": {
-          "text": "敏感度 中",
+          "text": "sensitivity in",
           "source_ids": [
             "S02"
           ]
@@ -201,33 +201,33 @@
       }
     ],
     "milestone": {
-      "text": "第 1/2/3 年收入目标：1.2 / 3.2 / 6.0 亿元",
+      "text": "No. 1/2/3 Annual income target:1.2 / 3.2 / 6.0 billion",
       "source_ids": [
         "S02"
       ]
     },
     "assumptions": [
       {
-        "text": "客户名录每半年更新一次",
+        "text": "The customer list is updated every six months",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "渗透率以已签约客户为准",
+        "text": "Penetration rate is based on signed customers",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "测算日期：2026 年 8 月",
+        "text": "Calculation date:2026 year 8 month",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "优先验证渗透率和客单价，两项决定 78% 的结果波动",
+      "text": "Prioritize verification of penetration rate and customer unit price, two decisions 78% The results fluctuate",
       "source_ids": [
         "S02"
       ]

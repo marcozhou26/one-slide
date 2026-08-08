@@ -23,7 +23,7 @@ function renderHeader(slide, plan) {
 
 function renderRail(slide, plan, d, calculated) {
   panel(slide, "regression-rail", plan.rail, COLORS.soft);
-  addTextBox(slide, { name: "model-title", text: "线性拟合结果", position: { left: plan.rail.left + 16, top: plan.rail.top + 14, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
+  addTextBox(slide, { name: "model-title", text: "Linear fitting results", position: { left: plan.rail.left + 16, top: plan.rail.top + 14, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
   const sign = calculated.intercept < 0 ? "−" : "+";
   addTextBox(slide, { name: "model-equation", text: `y = ${calculated.slope.toFixed(2)}x ${sign} ${Math.abs(calculated.intercept).toFixed(2)}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 54, width: plan.rail.width - 32, height: 36 }, fontSize: 18, bold: true, color: COLORS.blue, alignment: "center", singleLine: true });
   addTextBox(slide, { name: "model-r2", text: `R²=${calculated.r_squared.toFixed(3)} · n=${calculated.valid.length}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 92, width: plan.rail.width - 32, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
@@ -73,12 +73,12 @@ export async function renderScatterRegression(data, output) {
       addTextBox(slide, { name: `highlight-label-${item.id}`, text: source.label.text, position: { left: labelLeft, top: labelTop, width: 174, height: 36 }, fontSize: 12, bold: true, color: COLORS.orange, fill: COLORS.white, line: { style: "solid", fill: COLORS.orange, width: 1 }, maxLines: 2 });
     }
   });
-  addTextBox(slide, { name: "x-axis-title", text: `${d.x_metric.text}（${d.x_unit.text}）`, position: { left: plot.left, top: plot.top + plot.height + 31, width: plot.width, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
-  addTextBox(slide, { name: "y-axis-title", text: `${d.y_metric.text}（${d.y_unit.text}）`, position: { left: plan.chart.left + 16, top: plan.chart.top + 14, width: 320, height: 26 }, fontSize: 14, bold: true, color: COLORS.navy, singleLine: true });
-  addTextBox(slide, { name: "sample-meta", text: `${d.population.text} · ${d.period.text} · n=${d.sample.valid}/${d.sample.total} · 缺失${d.sample.missing} · 重复${d.sample.duplicate_pairs}`, position: { left: plan.chart.left + 326, top: plan.chart.top + 14, width: plan.chart.width - 342, height: 26 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
+  addTextBox(slide, { name: "x-axis-title", text: `${d.x_metric.text}(${d.x_unit.text})`, position: { left: plot.left, top: plot.top + plot.height + 31, width: plot.width, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
+  addTextBox(slide, { name: "y-axis-title", text: `${d.y_metric.text}(${d.y_unit.text})`, position: { left: plan.chart.left + 16, top: plan.chart.top + 14, width: 320, height: 26 }, fontSize: 14, bold: true, color: COLORS.navy, singleLine: true });
+  addTextBox(slide, { name: "sample-meta", text: `${d.population.text} · ${d.period.text} · n=${d.sample.valid}/${d.sample.total} · Missing${d.sample.missing} · Repeat${d.sample.duplicate_pairs}`, position: { left: plan.chart.left + 326, top: plan.chart.top + 14, width: plan.chart.width - 342, height: 26 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
   addTextBox(slide, { name: "outlier-rule", text: d.outlier_rule.text, position: { left: plan.chart.left + 18, top: plan.chart.top + plan.chart.height - 34, width: plan.chart.width - 36, height: 22 }, fontSize: 12, color: COLORS.muted, singleLine: true });
   renderRail(slide, plan, d, calculated);
-  const footer = [`样本：${d.sample_definition.text}`, d.source_note.text, d.disclosure?.text].filter(Boolean).join("；");
+  const footer = [`Sample:${d.sample_definition.text}`, d.source_note.text, d.disclosure?.text].filter(Boolean).join("; ");
   addTextBox(slide, { name: "source-note", text: footer, position: { left: plan.footer.left, top: plan.footer.top, width: plan.footer.width, height: 20 }, fontSize: 12, color: d.disclosure ? COLORS.orange : COLORS.muted, singleLine: true });
   addTextBox(slide, { name: "reconciliation-note", text: d.reconciliation_rule.text, position: { left: plan.footer.left, top: plan.footer.top + 19, width: plan.footer.width, height: 18 }, fontSize: 12, color: COLORS.muted, singleLine: true });
   if (d.conclusion) addTextBox(slide, { name: "conclusion", text: d.conclusion.text, position: { left: plan.footer.left, top: plan.footer.top + 38, width: plan.footer.width, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy, fill: COLORS.orangeLight, line: { style: "solid", fill: COLORS.orange, width: 1 }, alignment: "center", singleLine: true });

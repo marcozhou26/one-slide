@@ -1,9 +1,9 @@
-# 三情景规划模块
+# Three-scenario planning module
 
-适用：悲观、基准、乐观三种互斥情景，概率合计 100%，且三栏使用同一组指标。
+Applicable: Three mutually exclusive scenarios: pessimistic, baseline, and optimistic, with total probabilities 100%, and the three columns use the same set of indicators.
 
-必需输入：每栏名称、概率、假设、三项指标、业务影响、领先指标、应对；无悔举措；全部来源。
+Required input: Column name, probability, hypothesis, three indicators, business impact, leading indicator, response; no-regret actions; all sources.
 
-缺失或冲突：概率不等于 100%、指标口径不一致或触发条件冲突时停止正式生成。
+Missing or conflicting: probability not equal to 100%, stop formal generation when the indicator caliber is inconsistent or the triggering conditions conflict.
 
-禁止：自动重估概率、把预测当事实、补写无悔举措或触发阈值。
+Prohibited: Automatically reassessing probabilities, treating predictions as facts, making up no-regret actions, or triggering thresholds.

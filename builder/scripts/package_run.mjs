@@ -3,7 +3,7 @@ import path from "node:path";
 import { validateLogicStructure } from "./validate_logic_structure.mjs";
 
 const CONTAMINATION_PATTERN =
-  /(?:^|[_\-\s])(qa|mapping|internal|test|prompt|review|待审)(?:[_\-\s.]|$)/iu;
+  /(?:^|[_\-\s])(qa|mapping|internal|test|prompt|review|Pending trial)(?:[_\-\s.]|$)/iu;
 
 function csvCell(value) {
   const text = String(value ?? "");
@@ -38,14 +38,14 @@ function sourceBaseline(data) {
 
 function contentMapping(data, customerFileName) {
   const header = [
-    "原文锚点",
-    "原文内容",
-    "目标文件",
-    "目标页/字段",
-    "正文或备注",
-    "处理动作",
-    "差异理由",
-    "审核结果",
+    "Original anchor point",
+    "Original content",
+    "object file",
+    "target page/Field",
+    "Text or notes",
+    "processing action",
+    "Reason for difference",
+    "Review results",
   ];
   const rows = [header.map(csvCell).join(",")];
   for (const anchor of data.source_anchors) {
@@ -55,11 +55,11 @@ function contentMapping(data, customerFileName) {
           anchor.id,
           anchor.text,
           customerFileName,
-          `第1页/${target}`,
-          "正文",
-          "拆分保留",
-          "仅拆分为标题、节点或关系，未改写原文",
-          "待视觉与人工复核",
+          `No.1page/${target}`,
+          "Text",
+          "split retention",
+          "Only split into titles, nodes or relationships, without rewriting the original text",
+          "Pending visual and manual review",
         ]
           .map(csvCell)
           .join(","),

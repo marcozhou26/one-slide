@@ -1,78 +1,78 @@
-# OneSlide 编排契约
+# OneSlide orchestration contract
 
-## 对外只有一个入口
+## There is only one entrance to the outside world
 
-顶层 `SKILL.md` 是唯一可发现入口。`producer/ENGINE.md` 与 `builder/ENGINE.md` 是内部执行说明，不得作为需要用户分别安装或调用的 Skill。
+top layer `SKILL.md` It is the only discoverable entrance.`producer/ENGINE.md` with `builder/ENGINE.md` It is an internal execution description and must not be used as a separate installation or call by the user. Skill.
 
-## 职责边界
+## Boundaries of responsibility
 
-### 顶层 OneSlide
+### top layer OneSlide
 
-- 判断是否为单页任务；
-- 推导输出模式；
-- 控制低负担互动；
-- 编排内容引擎和绘制引擎；
-- 汇总分层状态。
+- Determine whether it is a single-page task;
+- Derive output patterns;
+- control low-burden interactions;
+- Orchestration content engine and rendering engine;
+- Summary tier status.
 
-### Producer 引擎
+### Producer engine
 
-- 建立来源基线；
-- 锁定页面问题、关系、结论和信息预算；
-- 定向补全并进行逐项来源标注；
-- 生成 Brief、Builder Prompt、结构化 handoff 和内容确认清单。
+- Establish a source baseline;
+- Lock page questions, relationships, conclusions, and information budget;
+- Targeted completion and item-by-item source annotation;
+- generate Brief, Builder Prompt, structured handoff and content confirmation checklist.
 
-Producer 不绘制 PowerPoint。
+Producer Not drawn PowerPoint.
 
-### Builder 引擎
+### Builder engine
 
-- 消费已验证 handoff；
-- 选择一个确定性模块或直接构图路径；
-- 创建原生可编辑 PowerPoint 对象；
-- 完成语义、渲染、可读性和真实 PowerPoint 检查。
+- Consumption verified handoff;
+- Choose a deterministic module or a direct composition path;
+- Create native editable PowerPoint object;
+- Complete semantics, rendering, readability and realism PowerPoint Check.
 
-Builder 不重新决定页面目标，不重写用户事实，不增加新的合成业务内容。
+Builder Do not re-determine page goals, do not rewrite user facts, and do not add new synthetic business content.
 
-## 模式路由
+## pattern routing
 
 ```text
 PROMPT_ONLY
   → Producer
   → validate_package.py
-  → 交付 Prompt + handoff + content review
+  → Delivery Prompt + handoff + content review
 
 PPT_DRAFT
   → Producer
   → validate_package.py
-  → Builder 路由
-  → 命中模块或 direct composition
-  → 生成一页 PPTX
-  → 语义审计 + 整页渲染 + PowerPoint 检查
+  → Builder routing
+  → hit module or direct composition
+  → Generate a page PPTX
+  → Semantic audit + Full page rendering + PowerPoint Check
 ```
 
-## 降级规则
+## Downgrade rules
 
-以下情况保留 Producer 结果，并返回 `PPT_RENDERING_BLOCKED`：
+Reserved in the following cases Producer result and return `PPT_RENDERING_BLOCKED`:
 
-- Builder 文件缺失；
-- Node.js 或 `@oai/artifact-tool` 等运行依赖不可用；
-- Builder 无法表达所需主要关系；
-- 路由冲突或模块验证失败；
-- 无法生成原生可编辑对象；
-- 当前环境不能完成要求的 PPT 检查。
+- Builder missing files;
+- Node.js or `@oai/artifact-tool` Wait for the running dependency to be unavailable;
+- Builder Inability to express the required primary relationships;
+- Routing conflict or module verification failure;
+- Unable to generate native editable objects;
+- The current environment cannot complete the requirements PPT Check.
 
-降级后不得在 `delivery/` 中放伪 PPTX，也不得把提示词包称为 PPT 成品。
+After downgrading, you are not allowed to `delivery/` fake PPTX, and the prompt word package must not be called PPT Finished product.
 
-## 对外与内部文件隔离
+## Isolate external and internal files
 
-- 最终读者只看到一页 PPT 的业务内容及必要来源/合成披露。
-- 内容确认清单面向任务委托人，不进入客户 PPTX。
-- 路由、提示词、来源台账、模型决策、预览和 QA 面向制作与审校人员，留在内部目录。
-- `delivery/` 只放版本化 PPTX；发布 ZIP 不带真实客户材料、运行产物或本机路径。
+- Ultimately the reader only sees one page PPT business content and necessary sources/Synthetic Disclosure.
+- The content confirmation list is for the task client and does not enter the customer PPTX.
+- Routing, prompt words, source ledger, model decision, preview and QA For production and reviewers, stay in the internal directory.
+- `delivery/` Only put versioning PPTX;Publish ZIP No real customer data, running products or native paths.
 
-## 兼容性原则
+## Compatibility principle
 
-- 套件内两个引擎使用相对路径通信。
-- 不依赖外部安装的同名 Producer 或 Builder。
-- 不在运行时读取包外的个人目录或历史测试夹具。
-- 新增 Builder 模块不得改变 Producer 的来源语义和单页预算。
-- 新增 provenance 类型时必须同时更新 Producer 契约、验证器和测试。
+- The two engines within the suite communicate using relative paths.
+- Does not depend on external installation of the same name Producer or Builder.
+- Do not read personal directories or history test fixtures outside the package at runtime.
+- New Builder Modules must not be changed Producer Source semantics and per-page budget.
+- New provenance The type must be updated at the same time Producer Contracts, validators and tests.

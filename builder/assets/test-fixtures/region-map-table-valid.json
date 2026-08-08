@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "70% 的人力成本集中在三个高成本区域，但产出贡献仅占 49%"
+      "text": "70% The labor costs are concentrated in three high-cost areas, but the output contribution only accounts for 49%"
     },
     {
       "id": "S02",
-      "text": "华东；华北；华南；华中；西部；东北；沿海高成本集群；中西部承接集群；华东、华北、华南成本占比合计 70%；三地人效指数均低于全国均值 100；中西部人效高且仍有承接空间；新增产能优先投向华中与西部，沿海三区实行结构性控编；全部示例数值与口径"
+      "text": "East China; North China; South China; Central China; West China; Northeast China; Coastal high-cost clusters; Central and western undertaking clusters; Total cost proportions of East China, North China, and South China 70%; The human efficiency index of the three places is lower than the national average. 100; The central and western regions are highly efficient and still have room to undertake; new production capacity will be given priority to central and western China, and structural control will be implemented in the three coastal areas; all example values and calibers; Coastal high cost cluster; Midwest undertaking cluster; Total cost proportion of East China, North China, and South China 70%; The human efficiency index of the three places is lower than the national average 100; The central and western regions are highly efficient and there is still room for undertaking; New production capacity will be given priority to central and western China, and structural control will be implemented in the three coastal areas."
     }
   ],
   "title": {
-    "text": "70% 的人力成本集中在三个高成本区域，但产出贡献仅占 49%",
+    "text": "70% The labor costs are concentrated in three high-cost areas, but the output contribution only accounts for 49%",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -24,7 +24,7 @@
       {
         "id": "east",
         "label": {
-          "text": "华东",
+          "text": "East China",
           "source_ids": [
             "S02"
           ]
@@ -44,7 +44,7 @@
       {
         "id": "north",
         "label": {
-          "text": "华北",
+          "text": "North China",
           "source_ids": [
             "S02"
           ]
@@ -64,7 +64,7 @@
       {
         "id": "south",
         "label": {
-          "text": "华南",
+          "text": "South China",
           "source_ids": [
             "S02"
           ]
@@ -84,7 +84,7 @@
       {
         "id": "central",
         "label": {
-          "text": "华中",
+          "text": "Central China",
           "source_ids": [
             "S02"
           ]
@@ -104,7 +104,7 @@
       {
         "id": "west",
         "label": {
-          "text": "西部",
+          "text": "west",
           "source_ids": [
             "S02"
           ]
@@ -124,7 +124,7 @@
       {
         "id": "northeast",
         "label": {
-          "text": "东北",
+          "text": "Northeast",
           "source_ids": [
             "S02"
           ]
@@ -144,13 +144,13 @@
     ],
     "clusters": [
       {
-        "text": "沿海高成本集群",
+        "text": "Coastal high cost cluster",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "中西部承接集群",
+        "text": "Midwest undertaking cluster",
         "source_ids": [
           "S02"
         ]
@@ -158,26 +158,26 @@
     ],
     "insights": [
       {
-        "text": "华东、华北、华南成本占比合计 70%",
+        "text": "Total cost proportion of East China, North China, and South China 70%",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "三地人效指数均低于全国均值 100",
+        "text": "The human efficiency index of the three places is lower than the national average 100",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "中西部人效高且仍有承接空间",
+        "text": "The central and western regions are highly efficient and there is still room for undertaking",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "新增产能优先投向华中与西部，沿海三区实行结构性控编",
+      "text": "New production capacity will be given priority to central and western China, and structural control will be implemented in the three coastal areas.",
       "source_ids": [
         "S02"
       ]

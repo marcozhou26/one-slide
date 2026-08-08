@@ -1,20 +1,20 @@
 # Logic Structure Schema
 
-`logic-structure.json` 使用以下结构：
+`logic-structure.json` Use the following structure:
 
 ```json
 {
   "version": "0.1",
   "audience_mode": "analysis",
   "title": {
-    "text": "交付周期延长",
+    "text": "Extended lead time",
     "source_ids": ["S01"],
     "origin": "source"
   },
   "source_anchors": [
     {
       "id": "S01",
-      "text": "交付周期延长，主要由需求频繁变更、关键岗位资源不足和跨部门确认时间过长共同造成。"
+      "text": "The extended delivery cycle is mainly caused by frequent changes in requirements, insufficient resources in key positions, and long cross-department confirmation times."
     }
   ],
   "diagram": {
@@ -22,13 +22,13 @@
     "nodes": [
       {
         "id": "n-demand",
-        "text": "需求频繁变更",
+        "text": "Requirements change frequently",
         "source_ids": ["S01"],
         "kind": "cause"
       },
       {
         "id": "n-delay",
-        "text": "交付周期延长",
+        "text": "Extended lead time",
         "source_ids": ["S01"],
         "kind": "effect"
       }
@@ -45,16 +45,16 @@
 }
 ```
 
-## 字段规则
+## Field rules
 
-- `version` 固定为 `0.1`。
-- `audience_mode` 为 `decision` 或 `analysis`。
-- `title.origin` 为 `source` 或 `placeholder`。
-- `title.origin=source` 时，标题必须是指定原文锚点的连续子串。
-- `title.origin=placeholder` 时，标题必须等于 `待客户补充`。
-- `source_anchors` 的 ID 唯一，文字保持原样。
-- `diagram.type` 当前固定为 `causal-chain`。
-- 每个节点文字必须是其 `source_ids` 指向原文的连续子串，或等于 `待客户补充`。
-- 每条边的 `relation` 固定为 `causes`，并且必须有原文证据锚点。
-- 图必须是有向无环图。
-- 每个原文锚点至少映射到一个可见节点。
+- `version` fixed to `0.1`.
+- `audience_mode` for `decision` or `analysis`.
+- `title.origin` for `source` or `placeholder`.
+- `title.origin=source` , the title must be a contiguous substring of the specified original text anchor.
+- `title.origin=placeholder` , the title must be equal to `To be supplemented by customers`.
+- `source_anchors` of ID Only, the text remains the same.
+- `diagram.type` Currently fixed to `causal-chain`.
+- Each node literal must be its `source_ids` A contiguous substring pointing to the original text, or equal to `To be supplemented by customers`.
+- of each side `relation` fixed to `causes`, and must have an original evidence anchor.
+- The graph must be a directed acyclic graph.
+- Each text anchor is mapped to at least one visible node.

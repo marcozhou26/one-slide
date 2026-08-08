@@ -82,10 +82,10 @@ export function auditLayoutObject(layout, { textPolicies = {}, alignmentContract
     for (let index = 1; index < lines.length; index += 1) {
       const previous = lines[index - 1].trim();
       const current = lines[index].trim();
-      if (/^[，。；：、,.!?！？）)】》]/u.test(current)) {
+      if (/^[,.;:!?)]/u.test(current)) {
         findings.push({ code: "BAD_LINE_START_PUNCTUATION", name, text, lines, line: index + 1 });
       }
-      if (/\d$/u.test(previous) && /^(?:%|％|个|个月|年|月|日|人|万|亿|元|分|项|小时|天)/u.test(current)) {
+      if (/\d$/u.test(previous) && /^(?:%|%|a|months|year|month|day|people|million|billion|Yuan|points|item|hours|day)/u.test(current)) {
         findings.push({ code: "NUMBER_UNIT_SPLIT", name, text, lines, line: index + 1 });
       }
     }

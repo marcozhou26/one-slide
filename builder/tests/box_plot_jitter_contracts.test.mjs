@@ -24,13 +24,13 @@ test("complete grouped observations validate and plan without style input", asyn
 test("sparse natural language with raw groups routes without module or chart names", async () => {
   const result = await routeInput({
     input_mode: "mixed",
-    text: "请用一页比较四个班组每位员工的处理时长分布，让读者同时看到典型水平、样本密度和异常值。",
+    text: "Please use one page to compare the processing time distribution of each employee in the four work groups so that readers can see the typical levels, sample density and outliers at the same time.",
     data: {
       groups: [
-        { name: "甲组", observations: [42,44,45,46,47,48,49,50,52,54,58,72] },
-        { name: "乙组", observations: [38,40,41,42,43,44,45,46,47,49,51,53] },
-        { name: "丙组", observations: [45,46,47,48,49,50,51,52,54,56,59,61] },
-        { name: "丁组", observations: [35,37,39,40,41,42,43,44,46,48,50,65] }
+        { name: "Group A", observations: [42,44,45,46,47,48,49,50,52,54,58,72] },
+        { name: "Group B", observations: [38,40,41,42,43,44,45,46,47,49,51,53] },
+        { name: "Group C", observations: [45,46,47,48,49,50,51,52,54,56,59,61] },
+        { name: "Group D", observations: [35,37,39,40,41,42,43,44,46,48,50,65] }
       ]
     }
   });
@@ -50,7 +50,7 @@ test("declared sample size must equal raw observation count", async () => {
 });
 
 test("ambiguous group statistics without raw observations do not masquerade as a supported distribution", async () => {
-  await assert.rejects(() => routeInput({ input_mode: "mixed", text: "比较各组分布", data: { groups: [{ name: "甲", median: 10 }, { name: "乙", median: 12 }] } }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
+  await assert.rejects(() => routeInput({ input_mode: "mixed", text: "Compare the distribution of each group", data: { groups: [{ name: "A", median: 10 }, { name: "B", median: 12 }] } }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
 });
 
 test("missing non-blocking visual preferences still validates", async () => {

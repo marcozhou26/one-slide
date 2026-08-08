@@ -1,6 +1,6 @@
 {
   "version":"1.0","module_id":"box-plot-jitter",
-  "source_anchors":[{"id":"S01","text":"分布比较；2026年；每人观测；全体样本；1.5倍IQR；横向位移不改变数值"}],
-  "title":{"text":"分布比较","origin":"source","source_ids":["S01"]},
-  "diagram":{"type":"box-plot-jitter","period":{"text":"2026年","source_ids":["S01"]},"observation_definition":{"text":"每人观测","source_ids":["S01"]},"sample_definition":{"text":"全体样本","source_ids":["S01"]},"statistics_rule":"tukey_hinges_1_5_iqr","statistics_note":{"text":"1.5倍IQR","source_ids":["S01"]},"jitter_note":{"text":"横向位移不改变数值","source_ids":["S01"]},"groups":[],"insights":[]}
+  "source_anchors":[{"id":"S01","text":"distribution comparison;2026year; observation per person; entire sample;1.5timesIQR;Lateral displacement does not change the value; Observation per person; Distribution comparison"}],
+  "title":{"text":"Distribution comparison","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"box-plot-jitter","period":{"text":"2026year","source_ids":["S01"]},"observation_definition":{"text":"Observation per person","source_ids":["S01"]},"sample_definition":{"text":"entire sample","source_ids":["S01"]},"statistics_rule":"tukey_hinges_1_5_iqr","statistics_note":{"text":"1.5timesIQR","source_ids":["S01"]},"jitter_note":{"text":"Lateral displacement does not change the value","source_ids":["S01"]},"groups":[],"insights":[]}
 }

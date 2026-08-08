@@ -1,17 +1,17 @@
-# 九张历史问题页回归契约
+# Nine Historical Question Pages Return Contract
 
-本文件把 PRD 中的九类问题转为回归目标，不替代原始 Deck 和实际页面测试。
+This document puts PRD The nine types of problems in are converted into regression targets and do not replace the original Deck and actual page testing.
 
-| 案例 | 必须证明 | 失败信号 |
+| Case | must prove | failure signal |
 | --- | --- | --- |
-| Deck 1 Slide 16 | 负责人、工时为真实两列 | 竖线或换行模拟字段 |
-| Deck 1 Slide 20 | 副标题自然可读；数值和百分比有独立层级 | 机械分隔符；单文本框拼接指标 |
-| Deck 1 Slide 22 | 空间和重心服从主体 | 无关系的强调线或重复标记 |
-| Deck 1 Slide 24 | 排名、业务线、收入、位次、增幅有真实字段轴 | 重复端点排名；字段拼接 |
-| Deck 1 Slide 25 | 部门、交互量、净流、等待时间分层 | Markdown 字符串模拟字段 |
-| Deck 2 Slide 02 | 层级、管理岗、人数、跨度、薪酬为真实多列 | 多字段挤在单文本框 |
-| Deck 2 Slide 19 | 合计和占比服从实际行列关系 | 字符串换行模拟结构 |
-| Deck 2 Slide 26 | 同一分值同图形、尺寸、中心和映射 | 星形、半圆、圆点混用 |
-| Deck 2 Slide 30 | 漏斗指标为真实字段 | 穿过漏斗的装饰线；洞察卡指向行动条 |
+| Deck 1 Slide 16 | The person in charge and working hours are two real columns. | Vertical bar or newline simulated field |
+| Deck 1 Slide 20 | Subtitles are naturally readable; values and percentages have separate levels | Mechanical separator; single text box splicing indicator |
+| Deck 1 Slide 22 | Space and center of gravity obey the subject | Unrelated emphasis lines or repeat marks |
+| Deck 1 Slide 24 | Ranking, business line, revenue, position, and growth have real field axes | Duplicate endpoint ranking; field splicing |
+| Deck 1 Slide 25 | Stratified by department, interaction volume, net flow, and waiting time | Markdown String simulated field |
+| Deck 2 Slide 02 | Level, management position, number of people, span, salary are real multiple columns | Multiple fields squeezed into a single text box |
+| Deck 2 Slide 19 | Totals and proportions obey the actual rank and file relationship | String newline simulation structure |
+| Deck 2 Slide 26 | Same score, same shape, size, center, and mapping | Mixed use of stars, semicircles, and dots |
+| Deck 2 Slide 30 | Funnel metrics are real fields | Decorative line through funnel; Insight card points to action bar |
 
-获得原始 Deck 后，逐页建立来源基线、内容映射、可编辑 PPTX、全尺寸渲染和 PowerPoint 实开证据，再更新发布门槛。
+get original Deck Afterwards, establish source baselines, content mapping, editable PPTX, full size rendering and PowerPoint Once actual evidence is obtained, the release threshold will be updated.

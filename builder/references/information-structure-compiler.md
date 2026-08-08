@@ -1,71 +1,71 @@
-# 信息结构编译器
+# information structure compiler
 
-## 目的
+## purpose
 
-把来源内容编译为可编辑 PPT 对象系统。编译器先识别事实、字段和关系，再决定视觉语法；不得根据分隔符、段落数量或历史页面坐标直接套模板。
+Compile source content to be editable PPT object system. The compiler identifies facts, fields, and relationships before determining the visual syntax; it is not allowed to directly apply templates based on separators, number of paragraphs, or historical page coordinates.
 
-## 编译顺序
+## Compilation order
 
 ```text
-来源锚点
-→ 读者任务
-→ 主体与来源支持的故事
-→ 实体、字段、单位、时间和关系
-→ 共同轴与重复单元
-→ 视觉语法
-→ 区域、空间权重和图层
-→ PowerPoint 对象
+source anchor
+→ reader tasks
+→ Stories supported by subjects and sources
+→ Entities, fields, units, times and relationships
+→ Common Axis and Repeating Units
+→ visual grammar
+→ Regions, spatial weights, and layers
+→ PowerPoint object
 ```
 
-## 五项页面模型
+## Five page models
 
-| 项目 | 必答问题 | 证据边界 |
+| Project | Must-answer questions | evidence boundaries |
 | --- | --- | --- |
-| `subject` | 这页本质上讲哪个对象？ | 来自来源内容，不使用文件章节名代替判断 |
-| `story` | 读者看完应理解什么？ | 必须有来源锚点；证据不足时只写描述性结果 |
-| `expression_method` | 用什么方式证明？ | 由字段与关系决定，不由符号触发 |
-| `information_skeleton` | 有哪些实体、字段、单位、时间、关系和共同轴？ | 每项绑定来源锚点或显式计算公式 |
-| `visual_consequence` | 主证据、解释、空间、轴线和图层如何分配？ | 由信息权重推导，不追求机械对称 |
+| `subject` | What object is this page essentially about? | From source content, do not use file chapter names instead of judgment |
+| `story` | What should readers understand after reading it? | Must have source anchor; only write descriptive results when evidence is insufficient |
+| `expression_method` | In what way? | Determined by fields and relationships, not triggered by symbols |
+| `information_skeleton` | What entities, fields, units, times, relationships, and common axes are there? | Each binding source anchor point or explicit calculation formula |
+| `visual_consequence` | How are primary evidence, explanations, space, axes, and layers allocated? | Derived from information weight and does not pursue mechanical symmetry |
 
-## 字段编译
+## Field compilation
 
-以下任一条件成立时，必须建立真实字段槽位：
+When any of the following conditions is true, a real field slot must be created:
 
-- 三行以上重复同一字段模式；
-- 两个以上指标需要跨实体比较；
-- 数字、单位、期间或状态需要独立对齐；
-- 字符串分隔后各部分仍可独立排序、计算或筛选。
+- Repeat the same field pattern in more than three lines;
+- Two or more indicators need to be compared across entities;
+- Numbers, units, periods, or states need to be independently aligned;
+- After the string is separated, each part can still be sorted, calculated or filtered independently.
 
-字段槽位必须记录 `field_id`、`label`、`value_type`、`alignment`、`axis_id` 和 `source_ids`。文本通常左对齐，数字通常右对齐；具体选择服从阅读任务。
+Field slot must be recorded `field_id`, `label`, `value_type`, `alignment`, `axis_id` and `source_ids`. Text is usually left-justified and numbers are usually right-justified; specific choices are subject to the reading task.
 
-## 表达方法选择
+## Choice of expression method
 
-| 信息关系 | 首选视觉语法 |
+| information relationship | Preferred visual grammar |
 | --- | --- |
-| 同字段横向比较 | 真实列、表格、哑铃、分组条形 |
-| 两期或多期排名迁移 | `bump-ranking`；两期可呈现 slope-style，三期及以上呈现 Bump Chart |
-| 多期构成占比变化 | `composition-shift`；固定分母、稳定构成项、每期对平到 100% |
-| 连续数值分布 | `histogram`；保留原始观测、样本与缺失值，使用可复现分箱边界表达频数或频率 |
-| 组间分布与个体观测 | `box-plot-jitter`；同一单位与期间、原始观测、样本量、Tukey 统计规则及仅用于避让的视觉抖动 |
-| 双连续变量关系 | `scatter-regression`；逐条 x/y 原始观测、两轴单位、样本/期间/总体、带截距的一元 OLS、缺失/重复/异常处理和斜率/截距/R² 复算 |
-| 有序中心估计与区间 | `confidence-band`；保留 estimate/lower/upper、区间类型与定义、估计方法、样本/总体、阈值语义和缺失值 |
-| 时间变化 | 折线、小倍数、阶段时间轴 |
-| 明确先后与阶段门 | 流程或甘特 |
-| 明确因果方向 | 因果链 |
-| 分类与从属 | 议题树、矩阵或分层表 |
-| 流量守恒 | 桑基或 From-To |
-| 关键数字与解释 | 指标区加证据区，不使用装饰卡片堆叠 |
+| Horizontal comparison of same fields | Real columns, tables, dumbbells, grouped bars |
+| Ranking migration between two or more periods | `bump-ranking`;Can be presented in two phases slope-style, three issues and above presented Bump Chart |
+| Changes in the proportion of multi-period composition | `composition-shift`;Fixed denominator, stable components, balanced to 100% |
+| continuous numerical distribution | `histogram`;Keep original observations, samples and missing values, and use reproducible binning boundaries to express frequency or frequency |
+| Distribution between groups and individual observations | `box-plot-jitter`;Same unit and period, original observations, sample size,Tukey Statistical rules and visual jitter for avoidance only |
+| bicontinuous variable relationship | `scatter-regression`; item by item x/y Raw observations, two-axis units, samples/period/Overall, unary with intercept OLS, missing/Repeat/Exception handling and slope/intercept/R² Recalculation |
+| Ordered central estimates and intervals | `confidence-band`;reserved estimate/lower/upper, interval types and definitions, estimation methods, samples/Population, threshold semantics and missing values |
+| time changes | Polyline, small multiple, stage timeline |
+| Clear sequence and stage gates | Process or Gantt |
+| Clarify the direction of cause and effect | causal chain |
+| Classification and Subordination | Issue tree, matrix or hierarchical table |
+| Flow conservation | Sankey or From-To |
+| Key Figures and Explanations | Indicator area plus evidence area, no decorative card stacking is used |
 
-两个语法都合理但阅读路径不同，才返回两个候选。只存在样式差异时不要求用户选择。
+Both grammars are reasonable but the reading paths are different, so two candidates are returned. User selection is not required when there are only style differences.
 
-## 去重边界
+## Deduplication boundaries
 
-可以删除生成器额外制造的重复标记，例如排名同时在端点、角标和结论中重复。不得删除来源中的独有事实、限定、口径、例外、来源或不同语境中的重复出现。所有保留、拆分和用户授权压缩都写入内容映射。
+Additional duplicate markers made by the generator can be removed, such as rankings that are repeated simultaneously in endpoints, subscripts, and conclusions. Unique facts in the source, qualifications, claims, exceptions, sources, or repetitions in different contexts may not be deleted. All retention, splitting, and user-authorized compression are written to the content map.
 
-## 自然语言边界
+## natural language boundaries
 
-默认保留原文事实和措辞强度。可把同一句中承担不同字段职责的部分拆为独立对象；不得为“更自然”自行补主语、因果或建议。只有用户明确授权润色时，才能做语义等价改写，并保留原文到改写后的映射。
+The original facts and wording strength are retained by default. Parts in the same sentence that bear different field responsibilities can be split into independent objects; no subject, cause and effect or suggestion can be added to make it "more natural". Only when the user explicitly authorizes polishing, can semantically equivalent rewriting be done, and the mapping from the original text to the rewritten version can be retained.
 
-## 视觉元素判定
+## Judgment of visual elements
 
-删除某元素后，如果读者不会失去事实、关系、尺度、分组线索、阅读路径或结论，该元素默认不生成。健康的不对称可以保留；空间权重由主证据、解释和结论的重要性决定。
+By deleting an element, if the reader does not lose facts, relationships, scale, grouping clues, reading paths, or conclusions, the element is not generated by default. Healthy asymmetry can be preserved; spatial weighting is determined by the importance of primary evidence, explanations, and conclusions.

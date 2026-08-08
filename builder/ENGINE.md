@@ -5,69 +5,69 @@ description: Build one native-editable 16:9 consulting PowerPoint slide from an 
 
 # Single Consulting Slide Builder V3.3.5
 
-一次只生成一页咨询型 PowerPoint。优先消费已确认的结构化输入包；只加载命中的一个模块。不得调用通用 Presentations Skill 代替本 Skill。
+Only one page of consultation is generated at a time PowerPoint. Prioritize consumption of confirmed structured input packages; only load a hit module. Do not call the general Presentations Skill Replace this Skill.
 
-## 核心结果
+## core results
 
-- 一页、16:9、PowerPoint 原生可编辑。
-- 来源事实、数字、口径和结论强度可追溯。
-- 数据图形使用方角；字段使用真实对象、表格或分块，不用竖线字符模拟列。
-- 默认只做一个候选和一次整页渲染；发现确定性缺陷后允许一次修复渲染。
+- one page,16:9, PowerPoint Natively editable.
+- Source facts, figures, caliber and strength of conclusions are traceable.
+- Data graphics use square corners; fields use real objects, tables, or blocks, and vertical characters are not used to simulate columns.
+- Only one candidate and one full-page rendering are done by default; one repair rendering is allowed after a deterministic defect is discovered.
 
-## 输入
+## input
 
-接受三种入口：Prompt Architect 包、其他结构化 handoff、简单且无歧义的原始内容。Prompt Architect 包按 `references/prompt-architect-handoff.md` 检查；结构化输入直接路由，不重复生成 page model。复杂、歧义或明显超过一页的原始材料返回 `BRIEF_REQUIRED`。异常时读取 `references/input-contract.md`。
+Three types of entrances are accepted:Prompt Architect Packages, other structures handoff, simple and unambiguous original content.Prompt Architect Press included `references/prompt-architect-handoff.md` Check; structured input is routed directly without repeated generation page model. Original material that is complex, ambiguous, or significantly longer than one page is returned `BRIEF_REQUIRED`. Read on exception `references/input-contract.md`.
 
-## 执行
+## execute
 
-### 1. 一次路由
+### 1. one route
 
-输入保存为 JSON 后运行：
+Input is saved as JSON After running:
 
 ```bash
 node scripts/route_v3.mjs input.json
 ```
 
-按结果继续：
+Continue by result:
 
-- `deterministic_module`：只读取返回的单个 `reference`。若路由返回 `module_input=module_payload`，把 handoff 中的 `module_payload` 原样写入运行目录的 `internal/module-input.json`，直接运行 validator、planner 和 renderer；不得重新解释或改写。不要读取完整注册表或渲染器源码。
-- `direct_composition`：只读取 `references/visual-grammar.md` 和 `references/direct-composition.md`，使用 `scripts/pptx_core.mjs` 的语义组件生成一页。`preferred_module` 只是视觉家族提示，不等于已有可执行模块载荷；不得假装命中确定性模块。
-- `BRIEF_REQUIRED`：复杂或歧义原始材料交给 Prompt Architect。
-- `SOURCE_BASELINE_FAIL` 或 `ROUTE_CONFLICT`：按返回的阻塞原因处理，不猜测。
+- `deterministic_module`: Only read the returned single `reference`. If the route returns `module_input=module_payload`, put handoff in `module_payload` Write it to the running directory as it is `internal/module-input.json`, run directly validator, planner and renderer; May not be reinterpreted or rewritten. Do not read the full registry or renderer source code.
+- `direct_composition`: read only `references/visual-grammar.md` and `references/direct-composition.md`, use `scripts/pptx_core.mjs` The semantic component generates a page.`preferred_module` It is just a visual family reminder, which does not mean that there is an executable module load; you must not pretend to hit a deterministic module.
+- `BRIEF_REQUIRED`:Complex or ambiguous original material handed to Prompt Architect.
+- `SOURCE_BASELINE_FAIL` or `ROUTE_CONFLICT`: Process according to the returned blocking reason without guessing.
 
-脚本正常时，不得打开渲染器源码、完整注册表或其他模块 reference。
+When the script is normal, the renderer source code, complete registry or other modules must not be opened reference.
 
-### 2. 来源与受众
+### 2. Source and Audience
 
-- 已确认 handoff 保持中心思想、内容边界和字段映射，不做第二轮内容判断。
-- 简单原始输入执行 `LOSSLESS_TRANSFORMATION`，不新增或删改来源内容。
-- 标题和故事必须有来源支持；证据只支持描述时，不补因果或建议。
-- 明确最终读者及其任务；页面模型、提示词、QA 和内部路径不得进入客户 PPTX。
-- 数据单位、期间、范围、合计和计算关系冲突时停止正式生成。
+- Confirmed handoff Keep the central idea, content boundaries and field mapping, and do not make a second round of content judgment.
+- Simple raw input execution `LOSSLESS_TRANSFORMATION`, do not add or delete source content.
+- Titles and stories must be supported by sources; evidence only supports description, not causality or suggestion.
+- Identify the final audience and their tasks; page models, prompt words,QA and internal paths must not enter the customer PPTX.
+- Stop formal generation when data unit, period, range, total and calculation relationships conflict.
 
-### 3. 绘制
+### 3. draw
 
-- 先确定主要信息关系和主证据区，再绘制对象。
-- 数据条、图表柱、瀑布柱、表格单元格和普通容器必须方角。
-- 连续数值分布必须保留原始观测、单位、期间、分母、样本与缺失值，使用可复现的显式分箱边界和相邻原生矩形；不得用带间距的分类柱状图冒充。
-- 圆角只允许显式状态标签；不得用于数据编码、趋势、层级、流程节点或结论带。
-- 桑基图使用封闭的原生贝塞尔流带；节点使用直角、无边框矩形。不得退回粗直线、白色节点描边或圆角节点。
-- 三行以上共享字段必须使用真实列、表格单元格或稳定槽位。
-- 连接线只表达方向、因果、依赖、跨阶段同一对象或唯一注释指向；先画关系线，再画节点。
-- 标题使用 `addPageHeading` 和完整容器宽度。一行标题可以带副标题；两行标题不得再堆副标题。常规正文 14/16 pt；局部小标题 16/18 pt；12 pt 仅用于密集局部、次要标签、来源和图注。
-- 内容不删字仍放不下一页时返回 `SINGLE_SLIDE_FIT_FAIL`。
-- 不用缩字号、删证据或改中心思想修复上游 Brief；内容范围问题退回 Prompt Architect。
-- `position` 只使用 `1280×720 px` 坐标；不得混入英寸或 960×540 坐标。
-- 编号、短列名、状态标签和数据标签必须单行，分别使用 `addIndexBadge`、`addStatusTag` 或显式 `singleLine: true`。
-- 合成定性内容在 PPT 可见面写 `模型补全，待确认`；英文来源 key 留在内部 handoff，不放进窄标签。
-- 横向行动带使用 `addActionBand`，不得自行把标签和长句塞入两个未经测量的窄文本框。
-- 标题组件的实际下边缘之后至少保留 16 px 安全间距。主图、图例、里程碑标签、注释、数据标签和行动区都属于正文，任何一个都不得伸入标题安全区。不能只检查主图外框。
-- 先分配标题区、正文区、行动/结论区和来源区，再在正文区内做纵向布局。若标题附近发生拥挤而页面底部仍有 56 px 以上可移动余量，必须整体下移正文框架；不得把空白留在页底却向上压标题。
-- 组织架构图必须把同层普通部门放在同一水平线上；一对一直属关系的父子节点水平中心误差不得超过 1 px，否则标记 `ORG_DIRECT_REPORT_DOGLEG`。为两条以上职能指导提供共同来源的部门可以放在较低的来源行；虚线从该节点朝目标的一侧出发，经下方空白通道，从目标底部进入。虚线穿越无关节点、把相反方向关系合并成同一来源，或同层节点高低不齐，分别按 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` 或 `ORG_PEER_ROW_MISALIGNMENT` 阻断交付。
+- First determine the main information relationship and main evidence area, and then draw the object.
+- Data bars, chart columns, waterfall columns, table cells, and general containers must have square corners.
+- Continuous numeric distributions must preserve original observations, units, periods, denominators, samples, and missing values, using reproducible explicit binning boundaries and adjacent native rectangles; they must not be passed off as spaced categorical histograms.
+- Rounded corners are only allowed for explicit status labels; they may not be used for data coding, trends, hierarchies, process nodes, or conclusion bands.
+- Sankey diagrams use closed native Bezier flow strips; nodes use right-angled, borderless rectangles. Thick straight lines, white node strokes, or rounded nodes are not allowed to be returned.
+- Shared fields with more than three rows must use real columns, table cells, or stable slots.
+- Connection lines only express direction, cause and effect, dependence, the same object across stages, or unique annotation pointing; draw relationship lines first, and then draw nodes.
+- Title usage `addPageHeading` and full container width. A one-line title can have subtitles; a two-line title cannot have subtitles. Regular text 14/16 pt;Local subtitle 16/18 pt; 12 pt Use only for intensive local, secondary labels, sources, and legends.
+- Return when the content cannot be moved to the next page without deleting words. `SINGLE_SLIDE_FIT_FAIL`.
+- No need to abbreviate fonts, delete evidence or change the central idea to repair the upstream Brief;Return for content scope issues Prompt Architect.
+- `position` only use `1280×720 px` Coordinates; must not be mixed with inches or 960×540 coordinates.
+- Numbers, short column names, status labels, and data labels must be on a single line and used separately. `addIndexBadge`, `addStatusTag` or explicitly `singleLine: true`.
+- Synthesize qualitative content in PPT Can be written in person `Model-generated completion, pending confirmation`;English source key stay inside handoff, do not put narrow tags.
+- Lateral action belt use `addActionBand`, don't cram labels and long sentences into two narrow, unmeasured text boxes.
+- The actual lower edge of the title component is retained after at least 16 px Safe distance. The main figure, legend, milestone labels, notes, data labels, and action areas all belong to the main text, and none of them may extend into the title safe area. You cannot just check the outer frame of the main image.
+- First allocate title area, text area, action/The conclusion area and source area are then arranged vertically in the text area. If crowding occurs near the title but there is still space at the bottom of the page 56 px The above movable margin must be moved downwards as a whole; the title must not be pushed upward while leaving the blank space at the bottom of the page.
+- The organizational chart must place ordinary departments at the same level on the same horizontal line; the horizontal center error of the parent-child node in a one-to-one subordinate relationship must not exceed 1 px, otherwise mark `ORG_DIRECT_REPORT_DOGLEG`. Departments that provide a common source for more than two functional guidance can be placed in the lower source row; the dotted line starts from the node toward the side of the target, passes through the blank channel below, and enters from the bottom of the target. If the dotted line crosses irrelevant nodes, merges opposite-direction relationships into the same source, or nodes on the same layer are unevenly high, press `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` or `ORG_PEER_ROW_MISALIGNMENT` Block delivery.
 
 ### 4. QA
 
-生成后运行：
+After building run:
 
 ```bash
 python3 scripts/audit_pptx_semantics.py final.pptx
@@ -75,23 +75,23 @@ node scripts/audit_visual_source.mjs
 node scripts/layout_quality.mjs internal/verify/layout.json
 ```
 
-`exportPresentation` 已内置 layout 质量门禁；`SHORT_LABEL_WRAP`、`ORPHAN_LINE`、`UNBREAKABLE_TOKEN_WRAP`、`BAD_LINE_START_PUNCTUATION`、`NUMBER_UNIT_SPLIT`、`TWO_LINE_TITLE_WITH_SUBTITLE`、`HEADING_SAFE_ZONE_INTRUSION`、`CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`、`EDGE_ALIGNMENT_MISMATCH`、`CANVAS_WIDTH_UNDERUSED`、`CANVAS_HEIGHT_UNDERUSED` 和越界均必须阻断交付。直接编排还必须用 `registerEdgeAlignment` 声明主要纵向区块的共线边缘。渲染整页要人工检查标题换行、标题安全区、上下留白平衡、遮挡、连接线、数据编码、字段分块和可读性。已知确定性缺陷必须修复，不受候选预算限制；不得为无明确收益的美化反复迭代。
+`exportPresentation` Already built in layout Quality access control;`SHORT_LABEL_WRAP`, `ORPHAN_LINE`, `UNBREAKABLE_TOKEN_WRAP`, `BAD_LINE_START_PUNCTUATION`, `NUMBER_UNIT_SPLIT`, `TWO_LINE_TITLE_WITH_SUBTITLE`, `HEADING_SAFE_ZONE_INTRUSION`, `CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`, `EDGE_ALIGNMENT_MISMATCH`, `CANVAS_WIDTH_UNDERUSED`, `CANVAS_HEIGHT_UNDERUSED` and cross-border must block delivery. Direct arrangement must also use `registerEdgeAlignment` Declare the collinear edges of the main longitudinal blocks. Rendering a full page requires manual checking of title wrapping, title safe areas, upper and lower white balance, occlusion, connecting lines, data encoding, field blocking and readability. Known deterministic flaws must be fixed regardless of candidate budget; no iterations are allowed for beautification that has no clear benefit.
 
-组织架构模块额外阻断 `ORG_PEER_ROW_MISALIGNMENT`、`ORG_DIRECT_REPORT_DOGLEG` 和 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS`。这些状态必须来自实际节点坐标与关系方向检查，不能只扫描提示词或依赖 PowerPoint 自动路由。
+Organizational structure module additional blocking `ORG_PEER_ROW_MISALIGNMENT`, `ORG_DIRECT_REPORT_DOGLEG` and `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS`. These states must come from actual node coordinates and relationship direction checks, not just scans for prompt words or dependencies PowerPoint Automatic routing.
 
-## Token 纪律
+## Token discipline
 
-- 不读取 `references/module-registry.json`；路由脚本内部读取。
-- 不读取未命中的模块 reference。
-- 不读取正常执行的脚本源码。
-- 结构化输入不重复生成 page model、content mapping 或第二套数据说明。
-- 中间计划保存在内部工作区；正常交付只返回最终 PPTX。
+- Do not read `references/module-registry.json`;Read internally in routing script.
+- Do not read missed modules reference.
+- The script source code for normal execution is not read.
+- Structured input is not generated repeatedly page model, content mapping or a second set of data descriptions.
+- Intermediate plans are kept in the internal workspace; normal delivery only returns the final PPTX.
 
-## 交付边界
+## delivery boundary
 
-客户目录只放版本化 PPTX。来源、提示词、路由结果、预览和 QA 放内部目录。
+The customer directory only contains versions PPTX. source, prompt words, routing results, preview and QA Put the internal directory.
 
-分别报告：
+Report separately:
 
 ```text
 BASIC_OUTPUT_PASS
@@ -104,8 +104,8 @@ PRODUCT_VALUE_PASS
 USER_REQUIREMENT_PASS
 ```
 
-未执行的层级写 `not_tested`。技术测试和 ZIP 完整不能替代真实 PowerPoint 视觉检查或用户验收。
+Unexecuted level write `not_tested`. technical testing and ZIP Wholeness cannot replace reality PowerPoint Visual inspection or user acceptance.
 
-## 扩展
+## Expand
 
-新增模块必须提供一个 reference、validator、planner、renderer、完整输入测试和异常输入测试。新增代码不得扩大常驻上下文；路由结果只返回命中模块的信息。
+New modules must provide a reference, validator, planner, renderer, complete input test and abnormal input test. New code must not expand the resident context; routing results only return information about hit modules.

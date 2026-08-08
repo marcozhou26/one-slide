@@ -1,7 +1,7 @@
-# Marimekko 模块
+# Marimekko module
 
-适用：3–6 个细分同时表达横向规模占比和内部 2–5 类构成。
+Applicable:3–6 Each segment expresses both horizontal scale proportion and internal 2–5 Class composition.
 
-必需输入：细分名称、规模占比、绝对规模、增速、各构成份额与来源。细分宽度合计 100%，每列构成合计 100%。
+Required input: segment name, scale proportion, absolute scale, growth rate, share of each component and source. Total segment width 100%, each column constitutes the total 100%.
 
-阻塞：任一层不对平时 `MEKKO_RECONCILIATION_FAIL`。禁止用补差项偷平、按视觉调整真实面积或编写主战场结论。
+Blocking: Any layer is not normal `MEKKO_RECONCILIATION_FAIL`. It is prohibited to use compensation items to steal a draw, adjust the real area based on vision, or write conclusions on the main battlefield.

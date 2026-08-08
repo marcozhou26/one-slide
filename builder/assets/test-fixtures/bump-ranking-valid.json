@@ -2,10 +2,10 @@
   "version": "1.0",
   "module_id": "bump-ranking",
   "source_anchors": [
-    { "id": "S01", "text": "2021—2025 年五个业务线排名发生持续迁移" },
-    { "id": "S02", "text": "2021；2022；2023；2024；2025；业务 A；业务 B；业务 C；业务 D；业务 E；业务 A 连续四年上升；业务 E 在第二年进入第一名；业务 D 排名持续走低；优先复制业务 A 的增长机制，并复盘业务 D 的下滑原因；全部示例排名、指标、对象名称和阶段口径" }
+    { "id": "S01", "text": "2021—2025 The rankings of five business lines continued to shift in 2016" },
+    { "id": "S02", "text": "2021; 2022; 2023; 2024; 2025;Business A;Business B;Business C;Business D;Business E;Business A Rising for four consecutive years; business E Entering No. 1 in Year 2; Business D Ranking continues to decline; priority is given to copying business A growth mechanism and review the business D Reasons for the decline; all sample rankings, indicators, object names and stage calibers; business A Rising for four consecutive years; business E Ranked first in the second year; business D Ranking continues to decline; Prioritize copy business A growth mechanism and review the business D Reasons for the decline; business B; business C" }
   ],
-  "title": { "text": "2021—2025 年五个业务线排名发生持续迁移", "origin": "source", "source_ids": ["S01"] },
+  "title": { "text": "2021—2025 The rankings of five business lines continued to shift in 2016", "origin": "source", "source_ids": ["S01"] },
   "diagram": {
     "type": "bump-ranking",
     "periods": [
@@ -16,17 +16,17 @@
       { "text": "2025", "source_ids": ["S02"] }
     ],
     "objects": [
-      { "label": { "text": "业务 A", "source_ids": ["S02"] }, "ranks": [5, 4, 3, 2, 1], "values": [80, 88, 96, 108, 121], "states": ["active", "active", "active", "active", "active"], "priority": true, "source_ids": ["S02"] },
-      { "label": { "text": "业务 B", "source_ids": ["S02"] }, "ranks": [1, 2, 2, 3, 4], "values": [120, 116, 118, 113, 109], "states": ["active", "active", "active", "active", "active"], "priority": true, "source_ids": ["S02"] },
-      { "label": { "text": "业务 C", "source_ids": ["S02"] }, "ranks": [2, 3, 4, 4, 3], "values": [110, 104, 99, 102, 115], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] },
-      { "label": { "text": "业务 D", "source_ids": ["S02"] }, "ranks": [3, 5, 5, 5, 5], "values": [102, 91, 86, 82, 78], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] },
-      { "label": { "text": "业务 E", "source_ids": ["S02"] }, "ranks": [4, 1, 1, 1, 2], "values": [94, 122, 130, 138, 142], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] }
+      { "label": { "text": "business A", "source_ids": ["S02"] }, "ranks": [5, 4, 3, 2, 1], "values": [80, 88, 96, 108, 121], "states": ["active", "active", "active", "active", "active"], "priority": true, "source_ids": ["S02"] },
+      { "label": { "text": "business B", "source_ids": ["S02"] }, "ranks": [1, 2, 2, 3, 4], "values": [120, 116, 118, 113, 109], "states": ["active", "active", "active", "active", "active"], "priority": true, "source_ids": ["S02"] },
+      { "label": { "text": "business C", "source_ids": ["S02"] }, "ranks": [2, 3, 4, 4, 3], "values": [110, 104, 99, 102, 115], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] },
+      { "label": { "text": "business D", "source_ids": ["S02"] }, "ranks": [3, 5, 5, 5, 5], "values": [102, 91, 86, 82, 78], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] },
+      { "label": { "text": "business E", "source_ids": ["S02"] }, "ranks": [4, 1, 1, 1, 2], "values": [94, 122, 130, 138, 142], "states": ["active", "active", "active", "active", "active"], "source_ids": ["S02"] }
     ],
     "insights": [
-      { "text": "业务 A 连续四年上升", "source_ids": ["S02"] },
-      { "text": "业务 E 在第二年进入第一名", "source_ids": ["S02"] },
-      { "text": "业务 D 排名持续走低", "source_ids": ["S02"] }
+      { "text": "business A Rising for four consecutive years", "source_ids": ["S02"] },
+      { "text": "business E Ranked first in the second year", "source_ids": ["S02"] },
+      { "text": "business D Ranking continues to decline", "source_ids": ["S02"] }
     ],
-    "conclusion": { "text": "优先复制业务 A 的增长机制，并复盘业务 D 的下滑原因", "source_ids": ["S02"] }
+    "conclusion": { "text": "Prioritize copy business A growth mechanism and review the business D Reasons for the decline", "source_ids": ["S02"] }
   }
 }

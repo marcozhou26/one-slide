@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "能力通过四圈迭代升级，每一圈都跑完设计、执行、度量、沉淀"
+      "text": "Capabilities are upgraded through four rounds of iteration, with each round completing design, execution, measurement, and precipitation."
     },
     {
       "id": "S02",
-      "text": "L1 试点；单场景验证；首个可用案例；ROI 达到 1.2；0–3 个月；G1；ROI 达到 1.2；设计；定义试点；执行；跑通首例；度量；测算 ROI；沉淀；记录经验；L2 复制；跨团队复用；三个团队采用；复用率达到 60%；4–6 个月；G2；复用率达到 60%；设计；复制标准；执行；部署团队；度量；比较成效；沉淀；修订模板；L3 标准化；统一规则运行；流程与指标固化；偏差率低于 10%；7–9 个月；G3；偏差率低于 10%；设计；固化流程；执行；自动校验；度量；监控偏差；沉淀；发布标准；L4 自我优化；数据持续反哺；季度自动迭代；效果连续两季提升；10–12 个月；设计；优化规则；执行；自主运行；度量；预测影响；沉淀；数据回灌；不变内核；业务价值可验证；经验回灌，抬高下一轮起点；全部示例数值与口径"
+      "text": "L1 Pilot; single scenario verification; first available case;ROI reach 1.2; 0–3 months;G1; ROI reach 1.2;Design; Define the pilot; Execute; Run through the first case; Measure; Calculate ROI; Precipitation; Recording experience;L2 Copied; reused across teams; adopted by three teams; reuse rate reached 60%; 4–6 months;G2;The reuse rate reaches 60%;Design; Copy standards; Execute; Deploy team; Measure; Compare effectiveness; Precipitate; Revise template;L3 Standardization; unified rule operation; solidification of processes and indicators; deviation rate below 10%; 7–9 months;G3;The deviation rate is lower than 10%; Design; Solidification process; Execution; Automatic verification; Measurement; Monitoring deviations; Precipitation; Release standards;L4 Self-optimization; continuous data feedback; quarterly automatic iterations; performance improvement for two consecutive quarters;10–12 Months; Design; Optimization rules; Execution; Autonomous operation; Measurement; Forecast impact; Precipitation; Data feedback; Invariant kernel; Verifiable business value; Experience feedback, raising the starting point for the next round; All example values and calibers; L1 pilot; Design; define pilot; Execute; run through the first case; measure; measure ROI; Precipitate; record experience; Single scene verification; First available case; L2 Copy; design; copy standard; Execution; Deployment Team; measure; compare effectiveness; Precipitation; revised template; Reuse across teams; Three teams adopted; design; solidification process; Execution; automatic verification; measure; monitor deviations; Precipitate; publish standards; Unified rule operation; Solidification of processes and indicators; 10–12 months; L4 self-optimization; Effect improved for two consecutive seasons; design; optimization rules; Execution; autonomous operation; measure; predict impact; Precipitation; data reinfusion; Data continues to feed back; Quarterly automatic iteration; Feed back experience and raise the starting point for the next round; Unchanging core; business value can be verified"
     }
   ],
   "title": {
-    "text": "能力通过四圈迭代升级，每一圈都跑完设计、执行、度量、沉淀",
+    "text": "Capabilities are upgraded through four rounds of iteration, with each round completing design, execution, measurement, and precipitation.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -24,37 +24,37 @@
     "levels": [
       {
         "label": {
-          "text": "L1 试点",
+          "text": "L1 pilot",
           "source_ids": [
             "S02"
           ]
         },
         "feature": {
-          "text": "单场景验证",
+          "text": "Single scene verification",
           "source_ids": [
             "S02"
           ]
         },
         "evidence": {
-          "text": "首个可用案例",
+          "text": "First available case",
           "source_ids": [
             "S02"
           ]
         },
         "exit": {
-          "text": "ROI 达到 1.2",
+          "text": "ROI reach 1.2",
           "source_ids": [
             "S02"
           ]
         },
         "duration": {
-          "text": "0–3 个月",
+          "text": "0–3 months",
           "source_ids": [
             "S02"
           ]
         },
         "gate": {
-          "text": "G1；ROI 达到 1.2",
+          "text": "G1; ROI reach 1.2",
           "source_ids": [
             "S02"
           ]
@@ -63,7 +63,7 @@
           {
             "id": "design",
             "text": {
-              "text": "设计；定义试点",
+              "text": "Design; define pilot",
               "source_ids": [
                 "S02"
               ]
@@ -72,7 +72,7 @@
           {
             "id": "execute",
             "text": {
-              "text": "执行；跑通首例",
+              "text": "Execute; run through the first case",
               "source_ids": [
                 "S02"
               ]
@@ -81,7 +81,7 @@
           {
             "id": "measure",
             "text": {
-              "text": "度量；测算 ROI",
+              "text": "measure; measure ROI",
               "source_ids": [
                 "S02"
               ]
@@ -90,7 +90,7 @@
           {
             "id": "codify",
             "text": {
-              "text": "沉淀；记录经验",
+              "text": "Precipitate; record experience",
               "source_ids": [
                 "S02"
               ]
@@ -100,37 +100,37 @@
       },
       {
         "label": {
-          "text": "L2 复制",
+          "text": "L2 Copy",
           "source_ids": [
             "S02"
           ]
         },
         "feature": {
-          "text": "跨团队复用",
+          "text": "Reuse across teams",
           "source_ids": [
             "S02"
           ]
         },
         "evidence": {
-          "text": "三个团队采用",
+          "text": "Three teams adopted",
           "source_ids": [
             "S02"
           ]
         },
         "exit": {
-          "text": "复用率达到 60%",
+          "text": "The reuse rate reaches 60%",
           "source_ids": [
             "S02"
           ]
         },
         "duration": {
-          "text": "4–6 个月",
+          "text": "4–6 months",
           "source_ids": [
             "S02"
           ]
         },
         "gate": {
-          "text": "G2；复用率达到 60%",
+          "text": "G2;The reuse rate reaches 60%",
           "source_ids": [
             "S02"
           ]
@@ -139,7 +139,7 @@
           {
             "id": "design",
             "text": {
-              "text": "设计；复制标准",
+              "text": "design; copy standard",
               "source_ids": [
                 "S02"
               ]
@@ -148,7 +148,7 @@
           {
             "id": "execute",
             "text": {
-              "text": "执行；部署团队",
+              "text": "Execution; Deployment Team",
               "source_ids": [
                 "S02"
               ]
@@ -157,7 +157,7 @@
           {
             "id": "measure",
             "text": {
-              "text": "度量；比较成效",
+              "text": "measure; compare effectiveness",
               "source_ids": [
                 "S02"
               ]
@@ -166,7 +166,7 @@
           {
             "id": "codify",
             "text": {
-              "text": "沉淀；修订模板",
+              "text": "Precipitation; revised template",
               "source_ids": [
                 "S02"
               ]
@@ -176,37 +176,37 @@
       },
       {
         "label": {
-          "text": "L3 标准化",
+          "text": "L3 Standardization",
           "source_ids": [
             "S02"
           ]
         },
         "feature": {
-          "text": "统一规则运行",
+          "text": "Unified rule operation",
           "source_ids": [
             "S02"
           ]
         },
         "evidence": {
-          "text": "流程与指标固化",
+          "text": "Solidification of processes and indicators",
           "source_ids": [
             "S02"
           ]
         },
         "exit": {
-          "text": "偏差率低于 10%",
+          "text": "The deviation rate is lower than 10%",
           "source_ids": [
             "S02"
           ]
         },
         "duration": {
-          "text": "7–9 个月",
+          "text": "7–9 months",
           "source_ids": [
             "S02"
           ]
         },
         "gate": {
-          "text": "G3；偏差率低于 10%",
+          "text": "G3;The deviation rate is lower than 10%",
           "source_ids": [
             "S02"
           ]
@@ -215,7 +215,7 @@
           {
             "id": "design",
             "text": {
-              "text": "设计；固化流程",
+              "text": "design; solidification process",
               "source_ids": [
                 "S02"
               ]
@@ -224,7 +224,7 @@
           {
             "id": "execute",
             "text": {
-              "text": "执行；自动校验",
+              "text": "Execution; automatic verification",
               "source_ids": [
                 "S02"
               ]
@@ -233,7 +233,7 @@
           {
             "id": "measure",
             "text": {
-              "text": "度量；监控偏差",
+              "text": "measure; monitor deviations",
               "source_ids": [
                 "S02"
               ]
@@ -242,7 +242,7 @@
           {
             "id": "codify",
             "text": {
-              "text": "沉淀；发布标准",
+              "text": "Precipitate; publish standards",
               "source_ids": [
                 "S02"
               ]
@@ -252,31 +252,31 @@
       },
       {
         "label": {
-          "text": "L4 自我优化",
+          "text": "L4 self-optimization",
           "source_ids": [
             "S02"
           ]
         },
         "feature": {
-          "text": "数据持续反哺",
+          "text": "Data continues to feed back",
           "source_ids": [
             "S02"
           ]
         },
         "evidence": {
-          "text": "季度自动迭代",
+          "text": "Quarterly automatic iteration",
           "source_ids": [
             "S02"
           ]
         },
         "exit": {
-          "text": "效果连续两季提升",
+          "text": "Effect improved for two consecutive seasons",
           "source_ids": [
             "S02"
           ]
         },
         "duration": {
-          "text": "10–12 个月",
+          "text": "10–12 months",
           "source_ids": [
             "S02"
           ]
@@ -285,7 +285,7 @@
           {
             "id": "design",
             "text": {
-              "text": "设计；优化规则",
+              "text": "design; optimization rules",
               "source_ids": [
                 "S02"
               ]
@@ -294,7 +294,7 @@
           {
             "id": "execute",
             "text": {
-              "text": "执行；自主运行",
+              "text": "Execution; autonomous operation",
               "source_ids": [
                 "S02"
               ]
@@ -303,7 +303,7 @@
           {
             "id": "measure",
             "text": {
-              "text": "度量；预测影响",
+              "text": "measure; predict impact",
               "source_ids": [
                 "S02"
               ]
@@ -312,7 +312,7 @@
           {
             "id": "codify",
             "text": {
-              "text": "沉淀；数据回灌",
+              "text": "Precipitation; data reinfusion",
               "source_ids": [
                 "S02"
               ]
@@ -322,13 +322,13 @@
       }
     ],
     "core": {
-      "text": "不变内核；业务价值可验证",
+      "text": "Unchanging core; business value can be verified",
       "source_ids": [
         "S02"
       ]
     },
     "feedback": {
-      "text": "经验回灌，抬高下一轮起点",
+      "text": "Feed back experience and raise the starting point for the next round",
       "source_ids": [
         "S02"
       ]

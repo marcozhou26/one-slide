@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "价值向上游数据与下游运营迁移，我方应从交付向运营延伸"
+      "text": "Value migrates to upstream data and downstream operations, and we should extend from delivery to operations"
     },
     {
       "id": "S02",
-      "text": "数据与资源；高；数据稀缺；平台工具；高；规模效应；方案设计；中；专业能力；交付实施；低；人员密集；运营增值；中；客户触点；大厂平台；垂直 SaaS；传统咨询；独立顾问；我方；我方定位：以咨询设计为入口，合作进入持续运营与增值服务；全部示例数值与口径"
+      "text": "Data and resources; high; data scarcity; platform tools; high; scale effect; solution design; medium; professional capabilities; delivery and implementation; low; personnel intensive; operational value-added; medium; customer touch points; large factory platforms; vertical SaaS;Traditional consulting;Independent consultant;Our side;Our positioning: Taking consulting design as the entrance, cooperation into continuous operation and value-added services;All example values and calibers; Our positioning: Taking consulting and design as the entrance, cooperation enters into continuous operation and value-added services; High; data scarce; High; scale effect; Platform tools; Medium; professional ability; Scheme design; Low; densely populated; Deliver implementation; Medium; Customer Touchpoints; Operational value added; Dachang platform; traditional consulting; independent consultant"
     }
   ],
   "title": {
-    "text": "价值向上游数据与下游运营迁移，我方应从交付向运营延伸",
+    "text": "Value migrates to upstream data and downstream operations, and we should extend from delivery to operations",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -24,7 +24,7 @@
       {
         "id": "data",
         "label": {
-          "text": "数据与资源",
+          "text": "Data and resources",
           "source_ids": [
             "S02"
           ]
@@ -34,7 +34,7 @@
         "concentration": 58,
         "value_index": 92,
         "barrier": {
-          "text": "高；数据稀缺",
+          "text": "High; data scarce",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       {
         "id": "platform",
         "label": {
-          "text": "平台工具",
+          "text": "Platform tools",
           "source_ids": [
             "S02"
           ]
@@ -56,7 +56,7 @@
         "concentration": 64,
         "value_index": 76,
         "barrier": {
-          "text": "高；规模效应",
+          "text": "High; scale effect",
           "source_ids": [
             "S02"
           ]
@@ -68,7 +68,7 @@
       {
         "id": "design",
         "label": {
-          "text": "方案设计",
+          "text": "Scheme design",
           "source_ids": [
             "S02"
           ]
@@ -78,7 +78,7 @@
         "concentration": 42,
         "value_index": 45,
         "barrier": {
-          "text": "中；专业能力",
+          "text": "Medium; professional ability",
           "source_ids": [
             "S02"
           ]
@@ -90,7 +90,7 @@
       {
         "id": "delivery",
         "label": {
-          "text": "交付实施",
+          "text": "Deliver implementation",
           "source_ids": [
             "S02"
           ]
@@ -100,7 +100,7 @@
         "concentration": 35,
         "value_index": 31,
         "barrier": {
-          "text": "低；人员密集",
+          "text": "Low; densely populated",
           "source_ids": [
             "S02"
           ]
@@ -112,7 +112,7 @@
       {
         "id": "operations",
         "label": {
-          "text": "运营增值",
+          "text": "Operational value added",
           "source_ids": [
             "S02"
           ]
@@ -122,7 +122,7 @@
         "concentration": 27,
         "value_index": 88,
         "barrier": {
-          "text": "中；客户触点",
+          "text": "Medium; Customer Touchpoints",
           "source_ids": [
             "S02"
           ]
@@ -135,7 +135,7 @@
     "players": [
       {
         "label": {
-          "text": "大厂平台",
+          "text": "Dachang platform",
           "source_ids": [
             "S02"
           ]
@@ -149,7 +149,7 @@
       },
       {
         "label": {
-          "text": "垂直 SaaS",
+          "text": "vertical SaaS",
           "source_ids": [
             "S02"
           ]
@@ -164,7 +164,7 @@
       },
       {
         "label": {
-          "text": "传统咨询",
+          "text": "traditional consulting",
           "source_ids": [
             "S02"
           ]
@@ -178,7 +178,7 @@
       },
       {
         "label": {
-          "text": "独立顾问",
+          "text": "independent consultant",
           "source_ids": [
             "S02"
           ]
@@ -192,7 +192,7 @@
       },
       {
         "label": {
-          "text": "我方",
+          "text": "Our side",
           "source_ids": [
             "S02"
           ]
@@ -208,7 +208,7 @@
       }
     ],
     "positioning": {
-      "text": "我方定位：以咨询设计为入口，合作进入持续运营与增值服务",
+      "text": "Our positioning: Taking consulting and design as the entrance, cooperation enters into continuous operation and value-added services",
       "source_ids": [
         "S02"
       ]

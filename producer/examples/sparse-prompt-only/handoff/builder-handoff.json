@@ -4,17 +4,17 @@
   "output_mode": "PROMPT_ONLY",
   "generation_mode": "SYNTHETIC_AUGMENTATION",
   "single_slide": true,
-  "subject": "基层管理者每周管理活动时间分配",
-  "story": "在合成示例中，审批与重复会议合计占所列管理活动时间的 69%",
-  "audience_task": "识别最值得进一步核实和减少的低价值管理活动",
+  "subject": "Weekly allocation of time for frontline managers’ management activities",
+  "story": "In the composite example, approval and recurring meetings combined account for 10% of the listed management activity time. 69%",
+  "audience_task": "Identify low-value management activities most worthy of further verification and reduction",
   "source_ids": ["U01", "G01", "C01"],
   "content": {
     "title": {
-      "text": "审批与重复会议占所列管理活动时间的 69%",
+      "text": "Approval and recurring meetings account for the time listed for management activities 69%",
       "source_ids": ["C01"]
     },
     "subtitle": {
-      "text": "合成示例数据，非真实客户数据",
+      "text": "Synthetic sample data, not real customer data",
       "source_ids": ["G01"]
     },
     "insights": [],
@@ -22,10 +22,10 @@
     "footnotes": []
   },
   "structure": {
-    "primary_question": "基层管理者的管理时间主要消耗在哪里",
+    "primary_question": "Where do lower-level managers mainly spend their management time?",
     "primary_relationship": "activity x hours_per_week",
     "primary_exhibit": "ranking-chart",
-    "visual_intent": "四类管理活动的横向排序条形图",
+    "visual_intent": "Horizontal sorted bar chart of four categories of management activities",
     "layout_intent": "full-canvas"
   },
   "information_budget": {
@@ -39,13 +39,13 @@
       "block_id": "B01",
       "budget_role": "primary_exhibit",
       "display_intent": "ranking",
-      "relationship": "管理活动与每周耗时",
+      "relationship": "Manage activities and weekly time",
       "source_ids": ["G01"],
       "items": [
-        {"item_id": "M01", "label": "审批", "value": "9.2", "unit": "小时/周", "source_ids": ["G01"]},
-        {"item_id": "M02", "label": "重复会议", "value": "7.4", "unit": "小时/周", "source_ids": ["G01"]},
-        {"item_id": "M03", "label": "团队辅导", "value": "4.1", "unit": "小时/周", "source_ids": ["G01"]},
-        {"item_id": "M04", "label": "跨部门协调", "value": "3.3", "unit": "小时/周", "source_ids": ["G01"]}
+        {"item_id": "M01", "label": "Approval", "value": "9.2", "unit": "hours/week", "source_ids": ["G01"]},
+        {"item_id": "M02", "label": "Repeat meeting", "value": "7.4", "unit": "hours/week", "source_ids": ["G01"]},
+        {"item_id": "M03", "label": "Team coaching", "value": "4.1", "unit": "hours/week", "source_ids": ["G01"]},
+        {"item_id": "M04", "label": "Cross-department coordination", "value": "3.3", "unit": "hours/week", "source_ids": ["G01"]}
       ]
     }
   ],
@@ -63,12 +63,12 @@
   ],
   "review_marking": {
     "required": true,
-    "synthetic_data_disclosure": "合成示例数据，非真实客户数据",
-    "qualitative_marker": "待确认"
+    "synthetic_data_disclosure": "Synthetic sample data, not real customer data",
+    "qualitative_marker": "Pending confirmation"
   },
   "constraints": {
-    "must_include": ["基层管理者被审批和会议占用"],
-    "must_avoid": ["真实客户数据表述", "行业基准", "原因判断", "行动建议"],
+    "must_include": ["Lower-level managers are occupied by approvals and meetings"],
+    "must_avoid": ["Real customer data representation", "Industry Benchmark", "Reason judgment", "Suggestions for action"],
     "slide_count": 1
   }
 }

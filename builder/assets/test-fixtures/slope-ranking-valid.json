@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "三年间前十榜单换位明显，上升者都完成了产品标准化"
+      "text": "The top ten lists have changed significantly in the past three years, and those who have risen have completed product standardization."
     },
     {
       "id": "S02",
-      "text": "2023 年；2026 年；业务 A；产品标准化推动增长；业务 B；业务 C；业务 D；业务 E；业务 F；业务 G；业务 H；业务 I；业务 J；业务 A 上升七个位次；前三名均完成产品标准化；原头部业务排名普遍回落；启示：复制产品标准化与渠道协同两项动作；全部示例数值与口径"
+      "text": "2023 years;2026 year; business A;Product standardization drives growth;Business B;Business C;Business D;Business E;Business F;Business G;Business H;Business I;Business J;Business A Up seven places; the top three have all completed product standardization; the original top business rankings have generally fallen; inspiration: copy the two actions of product standardization and channel coordination; all example values and calibers; business A Up seven places; The top three have all completed product standardization; The original top business rankings generally fell back; Enlightenment: Copy the two actions of product standardization and channel collaboration; business B; business C; business D; business E; business F; business G; business H; business I; business J"
     }
   ],
   "title": {
-    "text": "三年间前十榜单换位明显，上升者都完成了产品标准化",
+    "text": "The top ten lists have changed significantly in the past three years, and those who have risen have completed product standardization.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -21,13 +21,13 @@
   "diagram": {
     "type": "slope-ranking",
     "left_period": {
-      "text": "2023 年",
+      "text": "2023 year",
       "source_ids": [
         "S02"
       ]
     },
     "right_period": {
-      "text": "2026 年",
+      "text": "2026 year",
       "source_ids": [
         "S02"
       ]
@@ -35,7 +35,7 @@
     "objects": [
       {
         "label": {
-          "text": "业务 A",
+          "text": "business A",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
         "right_value": 150,
         "priority": true,
         "reason": {
-          "text": "产品标准化推动增长",
+          "text": "Product standardization drives growth",
           "source_ids": [
             "S02"
           ]
@@ -57,7 +57,7 @@
       },
       {
         "label": {
-          "text": "业务 B",
+          "text": "business B",
           "source_ids": [
             "S02"
           ]
@@ -68,7 +68,7 @@
         "right_value": 147,
         "priority": true,
         "reason": {
-          "text": "产品标准化推动增长",
+          "text": "Product standardization drives growth",
           "source_ids": [
             "S02"
           ]
@@ -79,7 +79,7 @@
       },
       {
         "label": {
-          "text": "业务 C",
+          "text": "business C",
           "source_ids": [
             "S02"
           ]
@@ -90,7 +90,7 @@
         "right_value": 144,
         "priority": true,
         "reason": {
-          "text": "产品标准化推动增长",
+          "text": "Product standardization drives growth",
           "source_ids": [
             "S02"
           ]
@@ -101,7 +101,7 @@
       },
       {
         "label": {
-          "text": "业务 D",
+          "text": "business D",
           "source_ids": [
             "S02"
           ]
@@ -117,7 +117,7 @@
       },
       {
         "label": {
-          "text": "业务 E",
+          "text": "business E",
           "source_ids": [
             "S02"
           ]
@@ -133,7 +133,7 @@
       },
       {
         "label": {
-          "text": "业务 F",
+          "text": "business F",
           "source_ids": [
             "S02"
           ]
@@ -149,7 +149,7 @@
       },
       {
         "label": {
-          "text": "业务 G",
+          "text": "business G",
           "source_ids": [
             "S02"
           ]
@@ -165,7 +165,7 @@
       },
       {
         "label": {
-          "text": "业务 H",
+          "text": "business H",
           "source_ids": [
             "S02"
           ]
@@ -181,7 +181,7 @@
       },
       {
         "label": {
-          "text": "业务 I",
+          "text": "business I",
           "source_ids": [
             "S02"
           ]
@@ -197,7 +197,7 @@
       },
       {
         "label": {
-          "text": "业务 J",
+          "text": "business J",
           "source_ids": [
             "S02"
           ]
@@ -214,26 +214,26 @@
     ],
     "insights": [
       {
-        "text": "业务 A 上升七个位次",
+        "text": "business A Up seven places",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "前三名均完成产品标准化",
+        "text": "The top three have all completed product standardization",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "原头部业务排名普遍回落",
+        "text": "The original top business rankings generally fell back",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "启示：复制产品标准化与渠道协同两项动作",
+      "text": "Enlightenment: Copy the two actions of product standardization and channel collaboration",
       "source_ids": [
         "S02"
       ]

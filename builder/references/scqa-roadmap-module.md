@@ -1,9 +1,9 @@
-# SCQA＋阶段路径模块
+# SCQA+stage path module
 
-适用：原文同时具备 S/C/Q/A 叙事和 2–4 个有顺序依据的落地阶段。
+Applicable: both original text and S/C/Q/A narrative and 2–4 A sequential landing stage.
 
-必需输入：S/C/Q/A 四段；阶段名称与 Gate；2–4 条稳定泳道；每个阶段与泳道交叉格的行动；全部 `source_ids`。
+Required input:S/C/Q/A Four paragraphs; the stage name is the same as Gate; 2–4 Stable lanes; actions intersecting lanes in each stage; all `source_ids`.
 
-缺失或冲突：S/C/Q/A 任一项缺失时返回缺口；阶段没有明确顺序时不得生成路径；泳道在不同阶段不一致时停止。
+Missing or conflicting:S/C/Q/A A gap is returned when any item is missing; a path must not be generated if the stages are not in a clear order; swimlanes stop when different stages are inconsistent.
 
-禁止：为凑 SCQA 改写客户结论，或把并列工作强行变成时间顺序。
+Prohibited: for the sake of gathering SCQA Rewrite the client's conclusions, or force parallel work into chronological order.

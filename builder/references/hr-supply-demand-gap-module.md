@@ -1,6 +1,6 @@
 # HR supply-demand gap
 
-- 用于：六个半年时点的需求、内部供给、缺口与补充组合。
-- 必填：需求带、存量加减项、供给、缺口、外补和三项策略。
-- 阻塞：供给算式、缺口或最终策略组合不能对平。
-- QA：需求与供给线共享人数坐标；缺口柱数字横向可读；表格可纵向复核。
+- Used for: demand, internal supply, gap and replenishment combinations at six half-year points.
+- Required: demand band, stock addition and subtraction items, supply, gap, external supplement and three strategies.
+- Blockage: The supply equation, gap, or final strategy combination does not square.
+- QA: The demand and supply lines share the coordinates of the number of people; the gap column numbers are readable horizontally; the table can be reviewed vertically.

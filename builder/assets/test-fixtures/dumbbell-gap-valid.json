@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "十项指标中三项差距达 16 个百分点以上，且均为客户敏感指标"
+      "text": "Three of the ten indicators have a gap of 16 percentage points or above, and they are all customer-sensitive indicators."
     },
     {
       "id": "S02",
-      "text": "效率类；招聘周期；改善难度 ★★☆；审批链过长；质量类；关键岗位到岗率；改善难度 ★★★；人才池不足；体验类；员工净推荐值；反馈闭环慢；服务响应率；改善难度 ★☆☆；绩优人才留存；经理满意度；自动化覆盖率；数据准确率；培训完成率；预算偏差；招聘周期差距最大；前三项均直接影响客户体验；补齐前三项可显著提升整体指数；若补齐前三项，整体指数可从 68 提升至 82；全部示例数值与口径"
+      "text": "Efficiency category; recruitment cycle; improvement difficulty ★★☆; Approval chain is too long; Quality category; Key position arrival rate; Improvement difficulty ★★★; Insufficient talent pool; Experience category; Employee Net Promoter Score; Slow feedback loop; Service response rate; Difficulty of improvement ★☆☆; Retention of high-quality talents; manager satisfaction; automation coverage; data accuracy; training completion rate; budget deviation; the largest gap in recruitment cycles; the first three items directly affect customer experience; completing the first three items can significantly improve the overall index; if the first three items are completed, the overall index can be from 68 promoted to 82;All example values and calibers; The approval chain is too long; Improve difficulty ★★☆; Improve difficulty ★★★; Arrival rate of key positions; Feedback closed loop is slow; Improve difficulty ★☆☆; service response rate; Retaining high-quality talents; Automation coverage; Data accuracy; Budget deviation; If the first three items are completed, the overall index can be calculated from 68 promoted to 82; The biggest difference in recruitment cycle; The first three items all directly affect customer experience; Completing the first three items can significantly improve the overall index"
     }
   ],
   "title": {
-    "text": "十项指标中三项差距达 16 个百分点以上，且均为客户敏感指标",
+    "text": "Three of the ten indicators have a gap of 16 percentage points or above, and they are all customer-sensitive indicators.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,13 +23,13 @@
     "metrics": [
       {
         "domain": {
-          "text": "效率类",
+          "text": "Efficiency",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "招聘周期",
+          "text": "recruitment cycle",
           "source_ids": [
             "S02"
           ]
@@ -38,13 +38,13 @@
         "target": 25,
         "direction": "lower",
         "difficulty": {
-          "text": "改善难度 ★★☆",
+          "text": "Improve difficulty ★★☆",
           "source_ids": [
             "S02"
           ]
         },
         "root_cause": {
-          "text": "审批链过长",
+          "text": "The approval chain is too long",
           "source_ids": [
             "S02"
           ]
@@ -55,13 +55,13 @@
       },
       {
         "domain": {
-          "text": "质量类",
+          "text": "Quality category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "关键岗位到岗率",
+          "text": "Arrival rate of key positions",
           "source_ids": [
             "S02"
           ]
@@ -70,13 +70,13 @@
         "target": 78,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★★★",
+          "text": "Improve difficulty ★★★",
           "source_ids": [
             "S02"
           ]
         },
         "root_cause": {
-          "text": "人才池不足",
+          "text": "Insufficient talent pool",
           "source_ids": [
             "S02"
           ]
@@ -87,13 +87,13 @@
       },
       {
         "domain": {
-          "text": "体验类",
+          "text": "Experience category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "员工净推荐值",
+          "text": "Employee Net Promoter Score",
           "source_ids": [
             "S02"
           ]
@@ -102,13 +102,13 @@
         "target": 64,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★★☆",
+          "text": "Improve difficulty ★★☆",
           "source_ids": [
             "S02"
           ]
         },
         "root_cause": {
-          "text": "反馈闭环慢",
+          "text": "Feedback closed loop is slow",
           "source_ids": [
             "S02"
           ]
@@ -119,13 +119,13 @@
       },
       {
         "domain": {
-          "text": "效率类",
+          "text": "Efficiency",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "服务响应率",
+          "text": "service response rate",
           "source_ids": [
             "S02"
           ]
@@ -134,7 +134,7 @@
         "target": 84,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★☆☆",
+          "text": "Improve difficulty ★☆☆",
           "source_ids": [
             "S02"
           ]
@@ -145,13 +145,13 @@
       },
       {
         "domain": {
-          "text": "质量类",
+          "text": "Quality category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "绩优人才留存",
+          "text": "Retaining high-quality talents",
           "source_ids": [
             "S02"
           ]
@@ -160,7 +160,7 @@
         "target": 85,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★★★",
+          "text": "Improve difficulty ★★★",
           "source_ids": [
             "S02"
           ]
@@ -171,13 +171,13 @@
       },
       {
         "domain": {
-          "text": "体验类",
+          "text": "Experience category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "经理满意度",
+          "text": "manager satisfaction",
           "source_ids": [
             "S02"
           ]
@@ -186,7 +186,7 @@
         "target": 80,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★★☆",
+          "text": "Improve difficulty ★★☆",
           "source_ids": [
             "S02"
           ]
@@ -197,13 +197,13 @@
       },
       {
         "domain": {
-          "text": "效率类",
+          "text": "Efficiency",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "自动化覆盖率",
+          "text": "Automation coverage",
           "source_ids": [
             "S02"
           ]
@@ -212,7 +212,7 @@
         "target": 66,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★★☆",
+          "text": "Improve difficulty ★★☆",
           "source_ids": [
             "S02"
           ]
@@ -223,13 +223,13 @@
       },
       {
         "domain": {
-          "text": "质量类",
+          "text": "Quality category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "数据准确率",
+          "text": "Data accuracy",
           "source_ids": [
             "S02"
           ]
@@ -238,7 +238,7 @@
         "target": 95,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★☆☆",
+          "text": "Improve difficulty ★☆☆",
           "source_ids": [
             "S02"
           ]
@@ -249,13 +249,13 @@
       },
       {
         "domain": {
-          "text": "体验类",
+          "text": "Experience category",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "培训完成率",
+          "text": "training completion rate",
           "source_ids": [
             "S02"
           ]
@@ -264,7 +264,7 @@
         "target": 90,
         "direction": "higher",
         "difficulty": {
-          "text": "改善难度 ★☆☆",
+          "text": "Improve difficulty ★☆☆",
           "source_ids": [
             "S02"
           ]
@@ -275,13 +275,13 @@
       },
       {
         "domain": {
-          "text": "效率类",
+          "text": "Efficiency",
           "source_ids": [
             "S02"
           ]
         },
         "label": {
-          "text": "预算偏差",
+          "text": "Budget deviation",
           "source_ids": [
             "S02"
           ]
@@ -290,7 +290,7 @@
         "target": 4,
         "direction": "lower",
         "difficulty": {
-          "text": "改善难度 ★★☆",
+          "text": "Improve difficulty ★★☆",
           "source_ids": [
             "S02"
           ]
@@ -302,26 +302,26 @@
     ],
     "insights": [
       {
-        "text": "招聘周期差距最大",
+        "text": "The biggest difference in recruitment cycle",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "前三项均直接影响客户体验",
+        "text": "The first three items all directly affect customer experience",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "补齐前三项可显著提升整体指数",
+        "text": "Completing the first three items can significantly improve the overall index",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "若补齐前三项，整体指数可从 68 提升至 82",
+      "text": "If the first three items are completed, the overall index can be calculated from 68 promoted to 82",
       "source_ids": [
         "S02"
       ]

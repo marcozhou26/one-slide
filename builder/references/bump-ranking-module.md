@@ -1,20 +1,20 @@
-# 排名迁移图模块（Bump Chart）
+# Ranking Migration Graph Module (Bump Chart)
 
-适用：5–12 个对象在 2–8 个有序时点的排名迁移。两个时点呈现经典 slope chart，三个及以上时点呈现 Bump Chart。
+Applicable:5–12 objects in 2–8 Ranking migration at an ordered time point. Classics presented at two points in time slope chart, presented at three or more time points Bump Chart.
 
-必需输入：有序时点、对象名称、每个时点的排名槽位、对象来源；对象可选提供每个时点的数值。排名可用 `states` 明确标记为 `active`、`new`、`exited` 或 `not_ranked`。
+Required input: ordered time points, object name, ranking slot at each time point, object source; the object can optionally provide the value of each time point. Ranking available `states` clearly marked as `active`, `new`, `exited` or `not_ranked`.
 
-兼容输入：旧版 `slope-ranking` 的 `left_period`、`right_period`、`left_rank`、`right_rank`、`left_value` 和 `right_value` 会在加载时转换为新版 `periods`、`ranks` 和 `values`。
+Compatible input: legacy version `slope-ranking` of `left_period`, `right_period`, `left_rank`, `right_rank`, `left_value` and `right_value` will be converted to the new version on load `periods`, `ranks` and `values`.
 
-阻塞：时点少于 2 个或多于 8 个、对象少于 5 个或多于 12 个、每个对象的数组长度与时点不一致、同一时点排名重复、活动对象缺少正整数排名、退出/未入榜对象仍有排名或数值时停止。不得根据排名变化补写原因；原因必须有来源。
+Blocking: The time point is less than 2 one or more 8 , objects less than 5 one or more 12 , the array length of each object is inconsistent with the time point, the ranking at the same time point is repeated, the active object lacks a positive integer ranking, exit/Stop when the unlisted objects still have rankings or numerical values. Reasons may not be added based on ranking changes; reasons must be sourced.
 
-视觉规则：
+Visual rules:
 
-- 每个时点使用同一排名坐标轴；排名 1 位于上方。
-- 线、节点、标签和数值均使用 PowerPoint 原生对象，不用图片承载主图。
-- 优先对象可用品牌橙或蓝色加粗；其他对象保持中性线色，不能用颜色代替未提供的业务含义。
-- 新进入或退出对象通过明确状态和断开的线段表达，不把缺失数据画成零。
-- 只在首个和最后一个有效时点放对象标签和数值，避免中间标签墙。
+- Use the same ranking axis at each time point; ranking 1 Located above.
+- Lines, nodes, labels, and values all use PowerPoint Native object, no image is needed to carry the main image.
+- Priority objects can be bolded in brand orange or blue; other objects remain neutral, and color cannot be used to replace unprovided business meaning.
+- Newly entered or exited objects are represented by explicit states and broken line segments, and missing data are not drawn as zeros.
+- Only click the object label and value when the first and last ones are valid to avoid the middle label wall.
 
-验收：运行 `validate_r3_module.mjs`、`plan_r3_module.mjs` 和 `render_r3_module.mjs`；至少覆盖两期兼容、五期迁移和新进入/退出三个案例，并检查 PowerPoint 原生对象与页面可读性。
+Acceptance: Run `validate_r3_module.mjs`, `plan_r3_module.mjs` and `render_r3_module.mjs`; Covering at least two phases of compatibility, five phases of migration and new entry/Exit three cases and check PowerPoint Native objects and page readability.
 

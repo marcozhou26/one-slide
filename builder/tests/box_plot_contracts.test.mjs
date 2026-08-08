@@ -27,7 +27,7 @@ test("box-plot keeps sample size, missing values, period, unit, quartile method 
   assert.match(data.diagram.quartile_method.text, /PERCENTILE\.INC/);
   assert.match(data.diagram.whisker_rule.text, /1\.5×IQR/);
   assert.match(data.diagram.period.text, /2026/);
-  assert.match(data.diagram.unit.text, /自然日/);
+  assert.match(data.diagram.unit.text, /natural day/);
   assert.equal(validateR3Module(data).ok, true);
 });
 
@@ -51,11 +51,11 @@ test("box-plot blocks abnormal group format", async () => {
 test("box-plot stops conflicting group units instead of silently normalizing them", async () => {
   await assert.rejects(() => routeInput({
     input_mode: "mixed",
-    text: "比较三个区域的交付周期分布和异常记录",
+    text: "Compare lead time distribution and exception records across three regions",
     data: { groups: [
-      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "天" },
-      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "小时" },
-      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "天" },
+      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "day" },
+      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "hours" },
+      { q1: 2, median: 3, q3: 4, whisker_low: 1, whisker_high: 5, sample_size: 20, missing_count: 0, unit: "day" },
     ] },
   }), (error) => error.code === "SOURCE_BASELINE_FAIL");
 });
@@ -63,7 +63,7 @@ test("box-plot stops conflicting group units instead of silently normalizing the
 test("box-plot routes a sparse natural request without a module or chart name", async () => {
   const result = await routeInput({
     input_mode: "text",
-    text: "把五个区域的订单交付周期放到同一刻度比较，读者需要看典型水平、中间50%范围、离散程度和异常长周期记录，并注明样本数和缺失值。",
+    text: "To compare the order delivery cycles of the five regions on the same scale, readers need to look at the typical level, middle level50%Range, dispersion, and abnormally long periods are recorded, with the number of samples and missing values noted.",
   });
   assert.equal(result.decision, "selected");
   assert.equal(result.module.module_id, "box-plot");
@@ -72,7 +72,7 @@ test("box-plot routes a sparse natural request without a module or chart name", 
 test("box-plot infers structured distribution summaries without visual hints", async () => {
   const result = await routeInput({
     input_mode: "mixed",
-    text: "比较各区域交付周期分布、波动和异常记录。",
+    text: "Compare lead time distribution, fluctuations and abnormal records across regions.",
     data: {
       groups: ["A", "B", "C"].map((name, index) => ({ name, q1: 2 + index, median: 3 + index, q3: 4 + index, whisker_low: 1 + index, whisker_high: 5 + index, sample_size: 30, missing_count: index })),
     },
@@ -82,5 +82,5 @@ test("box-plot infers structured distribution summaries without visual hints", a
 });
 
 test("generic group comparison does not masquerade as a distribution summary", async () => {
-  await assert.rejects(() => routeInput({ input_mode: "text", text: "比较五个区域的平均交付周期" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
+  await assert.rejects(() => routeInput({ input_mode: "text", text: "Compare average lead times across five regions" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
 });

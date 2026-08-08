@@ -28,12 +28,12 @@ test("complete input reproduces OLS statistics, sample handling and one-page pla
 });
 
 test("representative natural language and paired values route without a module or chart name", async () => {
-  const text = "请让项目负责人判断投入工时与按期交付完成度的关系方向和强弱，找出明显偏离总体趋势的项目，并说明结论能解释到什么范围。";
-  assert.doesNotMatch(text, /scatter|regression|散点|回归|图表|模块/i);
+  const text = "Please ask the project leader to judge the direction and strength of the relationship between input time and on-time delivery completion, identify projects that obviously deviate from the overall trend, and explain to what extent the conclusion can be explained.";
+  assert.doesNotMatch(text, /scatter|regression|Scatter|Return|chart|module/i);
   const observations = [
     [20,48],[24,51],[28,54],[32,58],[36,59],[40,64],[44,66],[48,68],[52,73],[56,74],[60,78],[64,81]
   ].map(([x,y], index) => ({ id: `p${index + 1}`, x, y }));
-  const result = await routeInput({ input_mode: "mixed", text, data: { x_metric: "投入工时", x_unit: "小时", y_metric: "按期交付完成度", y_unit: "%", period: "2026年上半年", observations } });
+  const result = await routeInput({ input_mode: "mixed", text, data: { x_metric: "hours invested", x_unit: "hours", y_metric: "On-time delivery completion", y_unit: "%", period: "2026first half of year", observations } });
   assert.equal(result.decision, "selected");
   assert.equal(result.module.module_id, "scatter-regression");
   assert.match(result.evidence.join(" "), /paired_continuous_observations/);
@@ -41,15 +41,15 @@ test("representative natural language and paired values route without a module o
 
 test("missing paired observations blocks without inventing a fitted relationship", async () => {
   await assert.rejects(
-    () => routeInput({ input_mode: "mixed", text: "判断两个指标的关系方向和强弱", data: { x_metric: "投入", x_unit: "小时", y_metric: "完成度", y_unit: "%", period: "2026年" } }),
+    () => routeInput({ input_mode: "mixed", text: "Determine the direction and strength of the relationship between two indicators", data: { x_metric: "invest", x_unit: "hours", y_metric: "Completeness", y_unit: "%", period: "2026year" } }),
     (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
   );
 });
 
 test("conflicting units in paired records stop routing instead of silently merging", async () => {
-  const observations = Array.from({ length: 8 }, (_, index) => ({ id: String(index), x: index + 1, y: index * 2 + 3, x_unit: index === 7 ? "天" : "小时", y_unit: "%", period: "2026年" }));
+  const observations = Array.from({ length: 8 }, (_, index) => ({ id: String(index), x: index + 1, y: index * 2 + 3, x_unit: index === 7 ? "day" : "hours", y_unit: "%", period: "2026year" }));
   await assert.rejects(
-    () => routeInput({ input_mode: "mixed", text: "判断两个连续指标的关系方向和偏离趋势", data: { x_metric: "投入", x_unit: "小时", y_metric: "完成度", y_unit: "%", period: "2026年", observations } }),
+    () => routeInput({ input_mode: "mixed", text: "Determine the relationship direction and deviation trend of two continuous indicators", data: { x_metric: "invest", x_unit: "hours", y_metric: "Completeness", y_unit: "%", period: "2026year", observations } }),
     (error) => error.code === "SOURCE_BASELINE_FAIL",
   );
 });
@@ -92,7 +92,7 @@ test("malformed JSON is rejected as an abnormal input file", async () => {
 
 test("executable Producer handoff keeps requested module, primary exhibit and payload aligned", async () => {
   const payload = await fixture("scatter-regression-valid.json");
-  const routed = await routeV3({ subject: "两个连续指标的关系", story: payload.title.text, source_ids: ["S01", "C01", "G01"], display_blocks: [{ block_id: "B01" }], requested_module: "scatter-regression", structure: { primary_exhibit: "scatter-regression" }, module_payload: payload });
+  const routed = await routeV3({ subject: "The relationship between two continuous indicators", story: payload.title.text, source_ids: ["S01", "C01", "G01"], display_blocks: [{ block_id: "B01" }], requested_module: "scatter-regression", structure: { primary_exhibit: "scatter-regression" }, module_payload: payload });
   assert.equal(routed.route, "deterministic_module");
   assert.equal(routed.module_id, "scatter-regression");
   assert.equal(routed.module_input, "module_payload");
@@ -109,7 +109,7 @@ test("renderer loader directly consumes a formal Producer handoff and keeps dire
     product: "single-consulting-slide-producer",
     output_mode: "PPT_DRAFT",
     single_slide: true,
-    subject: "匿名项目投入与交付关系",
+    subject: "Anonymous project investment and delivery relationship",
     story: payload.title.text,
     source_ids: ["G01", "G02", "C01"],
     structure: { primary_exhibit: "scatter-regression" },

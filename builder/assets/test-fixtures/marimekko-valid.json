@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "56% 的市场集中在两个细分，但我方份额不足 8%"
+      "text": "56% The market is concentrated in two segments, but our share is insufficient 8%"
     },
     {
       "id": "S02",
-      "text": "大型企业；¥38 亿；CAGR +12%；我方；对手 A；对手 B；其他；中型企业；¥29 亿；CAGR +9%；小微企业；¥22 亿；CAGR +5%；政企；¥18 亿；CAGR +7%；个人；¥13 亿；CAGR +3%；★ 优先进攻；大型与中型企业占市场 56%；我方在两大细分份额均低于 8%；优先投入两大细分可覆盖主要增长空间；资源优先转向大型与中型企业细分；全部示例数值与口径"
+      "text": "large enterprises;¥38 billion;CAGR +12%; our side; opponent A;opponent B;Others;Medium-sized enterprises;¥29 billion;CAGR +9%;Small and micro enterprises;¥22 billion;CAGR +5%;Government and enterprise;¥18 billion;CAGR +7%;Personal;¥13 billion;CAGR +3%; ★ Prioritize attack; large and medium-sized enterprises occupy the market 56%;Our share in both major segments is lower than 8%; Prioritize investment in two major segments to cover the main growth space; Prioritize resources to large and medium-sized enterprise segments; All example values and calibers; Large and medium-sized enterprises occupy the market 56%; Prioritizing investment in two major segments can cover the main growth space; Our side; personal; Resource priority is shifted to the segmentation of large and medium-sized enterprises"
     }
   ],
   "title": {
-    "text": "56% 的市场集中在两个细分，但我方份额不足 8%",
+    "text": "56% The market is concentrated in two segments, but our share is insufficient 8%",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,14 +23,14 @@
     "segments": [
       {
         "label": {
-          "text": "大型企业",
+          "text": "large enterprise",
           "source_ids": [
             "S02"
           ]
         },
         "size_share": 32,
         "absolute_size": {
-          "text": "¥38 亿",
+          "text": "¥38 billion",
           "source_ids": [
             "S02"
           ]
@@ -49,7 +49,7 @@
           {
             "id": "s1",
             "label": {
-              "text": "我方",
+              "text": "Our side",
               "source_ids": [
                 "S02"
               ]
@@ -62,7 +62,7 @@
           {
             "id": "s2",
             "label": {
-              "text": "对手 A",
+              "text": "opponent A",
               "source_ids": [
                 "S02"
               ]
@@ -75,7 +75,7 @@
           {
             "id": "s3",
             "label": {
-              "text": "对手 B",
+              "text": "opponent B",
               "source_ids": [
                 "S02"
               ]
@@ -88,7 +88,7 @@
           {
             "id": "s4",
             "label": {
-              "text": "其他",
+              "text": "Others",
               "source_ids": [
                 "S02"
               ]
@@ -102,14 +102,14 @@
       },
       {
         "label": {
-          "text": "中型企业",
+          "text": "medium-sized enterprise",
           "source_ids": [
             "S02"
           ]
         },
         "size_share": 24,
         "absolute_size": {
-          "text": "¥29 亿",
+          "text": "¥29 billion",
           "source_ids": [
             "S02"
           ]
@@ -128,7 +128,7 @@
           {
             "id": "s1",
             "label": {
-              "text": "我方",
+              "text": "Our side",
               "source_ids": [
                 "S02"
               ]
@@ -141,7 +141,7 @@
           {
             "id": "s2",
             "label": {
-              "text": "对手 A",
+              "text": "opponent A",
               "source_ids": [
                 "S02"
               ]
@@ -154,7 +154,7 @@
           {
             "id": "s3",
             "label": {
-              "text": "对手 B",
+              "text": "opponent B",
               "source_ids": [
                 "S02"
               ]
@@ -167,7 +167,7 @@
           {
             "id": "s4",
             "label": {
-              "text": "其他",
+              "text": "Others",
               "source_ids": [
                 "S02"
               ]
@@ -181,14 +181,14 @@
       },
       {
         "label": {
-          "text": "小微企业",
+          "text": "Small and micro enterprises",
           "source_ids": [
             "S02"
           ]
         },
         "size_share": 18,
         "absolute_size": {
-          "text": "¥22 亿",
+          "text": "¥22 billion",
           "source_ids": [
             "S02"
           ]
@@ -207,7 +207,7 @@
           {
             "id": "s1",
             "label": {
-              "text": "我方",
+              "text": "Our side",
               "source_ids": [
                 "S02"
               ]
@@ -220,7 +220,7 @@
           {
             "id": "s2",
             "label": {
-              "text": "对手 A",
+              "text": "opponent A",
               "source_ids": [
                 "S02"
               ]
@@ -233,7 +233,7 @@
           {
             "id": "s3",
             "label": {
-              "text": "对手 B",
+              "text": "opponent B",
               "source_ids": [
                 "S02"
               ]
@@ -246,7 +246,7 @@
           {
             "id": "s4",
             "label": {
-              "text": "其他",
+              "text": "Others",
               "source_ids": [
                 "S02"
               ]
@@ -260,14 +260,14 @@
       },
       {
         "label": {
-          "text": "政企",
+          "text": "Government and enterprise",
           "source_ids": [
             "S02"
           ]
         },
         "size_share": 15,
         "absolute_size": {
-          "text": "¥18 亿",
+          "text": "¥18 billion",
           "source_ids": [
             "S02"
           ]
@@ -286,7 +286,7 @@
           {
             "id": "s1",
             "label": {
-              "text": "我方",
+              "text": "Our side",
               "source_ids": [
                 "S02"
               ]
@@ -299,7 +299,7 @@
           {
             "id": "s2",
             "label": {
-              "text": "对手 A",
+              "text": "opponent A",
               "source_ids": [
                 "S02"
               ]
@@ -312,7 +312,7 @@
           {
             "id": "s3",
             "label": {
-              "text": "对手 B",
+              "text": "opponent B",
               "source_ids": [
                 "S02"
               ]
@@ -325,7 +325,7 @@
           {
             "id": "s4",
             "label": {
-              "text": "其他",
+              "text": "Others",
               "source_ids": [
                 "S02"
               ]
@@ -339,14 +339,14 @@
       },
       {
         "label": {
-          "text": "个人",
+          "text": "personal",
           "source_ids": [
             "S02"
           ]
         },
         "size_share": 11,
         "absolute_size": {
-          "text": "¥13 亿",
+          "text": "¥13 billion",
           "source_ids": [
             "S02"
           ]
@@ -365,7 +365,7 @@
           {
             "id": "s1",
             "label": {
-              "text": "我方",
+              "text": "Our side",
               "source_ids": [
                 "S02"
               ]
@@ -378,7 +378,7 @@
           {
             "id": "s2",
             "label": {
-              "text": "对手 A",
+              "text": "opponent A",
               "source_ids": [
                 "S02"
               ]
@@ -391,7 +391,7 @@
           {
             "id": "s3",
             "label": {
-              "text": "对手 B",
+              "text": "opponent B",
               "source_ids": [
                 "S02"
               ]
@@ -404,7 +404,7 @@
           {
             "id": "s4",
             "label": {
-              "text": "其他",
+              "text": "Others",
               "source_ids": [
                 "S02"
               ]
@@ -418,33 +418,33 @@
       }
     ],
     "priority_label": {
-      "text": "★ 优先进攻",
+      "text": "★ Prioritize attack",
       "source_ids": [
         "S02"
       ]
     },
     "insights": [
       {
-        "text": "大型与中型企业占市场 56%",
+        "text": "Large and medium-sized enterprises occupy the market 56%",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "我方在两大细分份额均低于 8%",
+        "text": "Our share in both major segments is lower than 8%",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "优先投入两大细分可覆盖主要增长空间",
+        "text": "Prioritizing investment in two major segments can cover the main growth space",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "资源优先转向大型与中型企业细分",
+      "text": "Resource priority is shifted to the segmentation of large and medium-sized enterprises",
       "source_ids": [
         "S02"
       ]

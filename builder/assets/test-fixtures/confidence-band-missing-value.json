@@ -4,26 +4,26 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "中心估计总体上行，但2025年四季度和2026年三季度的不确定性明显扩大"
+      "text": "The center estimate is generally upward, but2025fourth quarter of the year and2026Uncertainty expanded significantly in the third quarter of 2020"
     },
     {
       "id": "S02",
-      "text": "匿名服务完成率；%；95% bootstrap置信区间；95% bootstrap置信区间；重复抽样覆盖含义，不表示单期结果有95%概率落入该区间；按季度独立估计样本比例，并使用2000次bootstrap重抽样；当季匿名有效样本；目标总体为同口径服务申请；来源：匿名合成季度样本，期间为2025年一季度至2026年四季度；2025Q1；2025Q2；2025Q3；2025Q4；2026Q1；2026Q2；2026Q3；2026Q4；关注阈值；阈值仅作业务关注线，不代表统计显著性或因果界限；2025年四季度区间宽度扩大至1.6个百分点；2026年二季度区间首次整体高于6.0%；2026年三季度回落且区间变宽，方向不稳；在区间明显收窄并持续高于关注线前，不宜把单季上行解释为稳定改善；该期缺失，不插值、不补0"
+      "text": "Anonymous service completion rate;%; 95% bootstrapconfidence interval;95% bootstrapConfidence interval; the meaning of repeated sampling coverage does not mean that the results of a single period have95%probability of falling within this interval; estimate the sample proportion independently by quarter and use2000timesbootstrapResampling; anonymous valid sample for the quarter; target population is service applications of the same caliber; source: anonymous synthetic quarterly sample, period2025to the first quarter of the year2026fourth quarter of the year;2025Q1; 2025Q2; 2025Q3; 2025Q4; 2026Q1; 2026Q2; 2026Q3; 2026Q4;Attention threshold; The threshold is only a line of business concern and does not represent statistical significance or causal limits;2025In the fourth quarter of the year, the range width expanded to1.6percentage points;2026For the first time in the second quarter of the year, the range was overall higher than6.0%; 2026It fell back in the third quarter of the year and the range widened, and the direction was unstable; before the range narrowed significantly and continued to be above the line of concern, it is not appropriate to interpret the single-quarter upward trend as a stable improvement; if this period is missing, no interpolation or supplementation will be made0; Independently estimate sample proportions by quarter and use2000timesbootstrapResampling; The threshold is only a line of business concern and does not represent statistical significance or causal limits. attention threshold; 2026It fell back in the third quarter of the year and the range widened, and the direction was unstable. Anonymous valid samples of the season; Before the range narrows significantly and continues to be above the concern line, it is not appropriate to interpret the single-quarter upward trend as a stable improvement. Source: Anonymous synthetic quarterly sample, period2025to the first quarter of the year2026fourth quarter of year; The overall target is to apply for services of the same caliber; This period is missing, no interpolation, no complement0; 95% bootstrapConfidence interval; the meaning of repeated sampling coverage does not mean that the results of a single period have95%The probability of falling into this interval"
     },
     {
       "id": "G01",
-      "text": "合成示例数据，非真实客户数据"
+      "text": "Synthetic sample data, not real customer data"
     }
   ],
   "title": {
-    "text": "中心估计总体上行，但2025年四季度和2026年三季度的不确定性明显扩大",
+    "text": "The center estimate is generally upward, but2025fourth quarter of the year and2026Uncertainty expanded significantly in the third quarter of 2020",
     "origin": "source",
     "source_ids": [
       "S01"
     ]
   },
   "subtitle": {
-    "text": "合成示例数据，非真实客户数据",
+    "text": "Synthetic sample data, not real customer data",
     "source_ids": [
       "G01"
     ]
@@ -31,7 +31,7 @@
   "diagram": {
     "type": "confidence-band",
     "metric": {
-      "text": "匿名服务完成率",
+      "text": "Anonymous service completion rate",
       "source_ids": [
         "S02"
       ]
@@ -45,31 +45,31 @@
     "interval_type": "confidence_interval",
     "confidence_level": 95,
     "interval_label": {
-      "text": "95% bootstrap置信区间",
+      "text": "95% bootstrapconfidence interval",
       "source_ids": [
         "S02"
       ]
     },
     "interval_definition": {
-      "text": "95% bootstrap置信区间；重复抽样覆盖含义，不表示单期结果有95%概率落入该区间",
+      "text": "95% bootstrapConfidence interval; the meaning of repeated sampling coverage does not mean that the results of a single period have95%The probability of falling into this interval",
       "source_ids": [
         "S02"
       ]
     },
     "estimation_method": {
-      "text": "按季度独立估计样本比例，并使用2000次bootstrap重抽样",
+      "text": "Independently estimate sample proportions by quarter and use2000timesbootstrapResampling",
       "source_ids": [
         "S02"
       ]
     },
     "sample_definition": {
-      "text": "当季匿名有效样本",
+      "text": "Anonymous valid samples of the season",
       "source_ids": [
         "S02"
       ]
     },
     "population_definition": {
-      "text": "目标总体为同口径服务申请",
+      "text": "The overall target is to apply for services of the same caliber",
       "source_ids": [
         "S02"
       ]
@@ -207,13 +207,13 @@
     "threshold": {
       "value": 6,
       "label": {
-        "text": "关注阈值",
+        "text": "attention threshold",
         "source_ids": [
           "S02"
         ]
       },
       "semantics": {
-        "text": "阈值仅作业务关注线，不代表统计显著性或因果界限",
+        "text": "The threshold is only a line of business concern and does not represent statistical significance or causal limits.",
         "source_ids": [
           "S02"
         ]
@@ -224,44 +224,44 @@
     },
     "insights": [
       {
-        "text": "2025年四季度区间宽度扩大至1.6个百分点",
+        "text": "2025In the fourth quarter of the year, the range width expanded to1.6percentage points",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "2026年二季度区间首次整体高于6.0%",
+        "text": "2026For the first time in the second quarter of the year, the range was overall higher than6.0%",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "2026年三季度回落且区间变宽，方向不稳",
+        "text": "2026It fell back in the third quarter of the year and the range widened, and the direction was unstable.",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "source_note": {
-      "text": "来源：匿名合成季度样本，期间为2025年一季度至2026年四季度",
+      "text": "Source: Anonymous synthetic quarterly sample, period2025to the first quarter of the year2026fourth quarter of year",
       "source_ids": [
         "S02"
       ]
     },
     "conclusion": {
-      "text": "在区间明显收窄并持续高于关注线前，不宜把单季上行解释为稳定改善",
+      "text": "Before the range narrows significantly and continues to be above the concern line, it is not appropriate to interpret the single-quarter upward trend as a stable improvement.",
       "source_ids": [
         "S02"
       ]
     },
     "disclosure": {
-      "text": "合成示例数据，非真实客户数据",
+      "text": "Synthetic sample data, not real customer data",
       "source_ids": [
         "G01"
       ]
     },
     "missing_value_note": {
-      "text": "该期缺失，不插值、不补0",
+      "text": "This period is missing, no interpolation, no complement0",
       "source_ids": [
         "S02"
       ]

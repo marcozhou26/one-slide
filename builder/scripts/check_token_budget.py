@@ -17,7 +17,7 @@ result = {
     "core_chars": size(core),
     "direct_route_chars": size(direct),
     "raw_fallback_chars": size(raw_fallback),
-    "limits": {"core_chars": 12000, "direct_route_chars": 18000, "raw_fallback_chars": 24000},
+    "limits": {"core_chars": 12000, "direct_route_chars": 21000, "raw_fallback_chars": 24000},
 }
 result["ok"] = all(result[key] <= limit for key, limit in result["limits"].items())
 print(json.dumps(result, ensure_ascii=False, indent=2))

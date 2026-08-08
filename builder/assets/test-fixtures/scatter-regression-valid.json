@@ -4,31 +4,31 @@
   "source_anchors": [
     {
       "id": "G01",
-      "text": "项目投入工时；小时；按期交付完成度；%；2026年上半年；匿名项目总体；每条记录代表一个已关闭项目；配对缺失剔除；精确重复作为独立观测保留；异常点保留并标注；按绝对残差排序，标注前2个点，仅作诊断提示；匿名项目台账，2026年上半年；投入工时与按期交付完成度总体同向变化；p15偏离趋势最大，需核查约束；p16高于拟合线，但不足以改变总体方向；样本内线性关联不代表因果，外推到其他期间或总体需另行验证；p15：偏离趋势最大；p16：高于拟合线"
+      "text": "Project work hours; hours; on-time delivery completion;%; 2026First half of the year; anonymized project population; each record represents a closed project; missing pairs are eliminated; exact duplicates are retained as independent observations; outliers are retained and labeled; sorted by absolute residuals, before labeling2points, only for diagnostic tips; anonymous project ledger,2026In the first half of the year; man-hours invested and completion of on-time delivery generally changed in the same direction;p15The deviation from the trend is the largest and needs to be checked and restrained;p16Higher than the fitting line, but not enough to change the overall direction; linear correlation within the sample does not represent causation, and extrapolation to other periods or the population needs to be verified separately;p15: The largest deviation from the trend;p16: higher than the fitting line; Project hours invested; Sort by absolute residuals, before labeling2points, for diagnostic purposes only; Anonymous project ledger,2026first half of year; On-time delivery completion; p15: Maximum deviation from trend; Linear correlation within the sample does not represent causation, and extrapolation to other periods or populations requires additional verification. Each record represents a closed project; Anonymous project population; Input man-hours and on-time delivery completion generally change in the same direction; p15The deviation is the largest from the trend and needs to be checked and constrained. p16Above the fitted line, but not enough to change the overall direction"
     },
     {
       "id": "C01",
-      "text": "投入工时与按期交付整体同向，但一个项目明显偏离趋势；斜率、截距和R²由未舍入原始观测复算，绝对误差≤1e-6；显示斜率/截距保留2位，R²保留3位；先核查偏离趋势最大的项目，再决定是否把这一关系用于资源配置；回归斜率0.61875；截距37.875；R² 0.8083691143293792"
+      "text": "Input man-hours and on-time delivery are generally in the same direction, but one project clearly deviates from the trend; slope, intercept andR²Recalculated from unrounded original observations, absolute error≤1e-6;Show slope/intercept preserved2bit,R²Reserve3position; first check the items that deviate the most from the trend before deciding whether to use this relationship for resource allocation; regression slope0.61875;Intercept37.875; R² 0.8083691143293792; slope, intercept andR²Recalculated from unrounded original observations, absolute error≤1e-6;Show slope/intercept preserved2bit,R²Reserve3Bit; Check the projects that deviate the most from the trend first, and then decide whether to use this relationship for resource allocation; The overall trend of man-hours invested and on-time delivery is in the same direction, but one project clearly deviated from the trend."
     },
     {
       "id": "G02",
-      "text": "合成示例数据，非真实客户数据"
+      "text": "Synthetic sample data, not real customer data"
     }
   ],
   "title": {
-    "text": "投入工时与按期交付整体同向，但一个项目明显偏离趋势",
+    "text": "The overall trend of man-hours invested and on-time delivery is in the same direction, but one project clearly deviated from the trend.",
     "origin": "source",
     "source_ids": ["C01"]
   },
   "diagram": {
     "type": "scatter-regression",
-    "x_metric": { "text": "项目投入工时", "source_ids": ["G01"] },
-    "x_unit": { "text": "小时", "source_ids": ["G01"] },
-    "y_metric": { "text": "按期交付完成度", "source_ids": ["G01"] },
+    "x_metric": { "text": "Project hours invested", "source_ids": ["G01"] },
+    "x_unit": { "text": "hours", "source_ids": ["G01"] },
+    "y_metric": { "text": "On-time delivery completion", "source_ids": ["G01"] },
     "y_unit": { "text": "%", "source_ids": ["G01"] },
-    "period": { "text": "2026年上半年", "source_ids": ["G01"] },
-    "population": { "text": "匿名项目总体", "source_ids": ["G01"] },
-    "sample_definition": { "text": "每条记录代表一个已关闭项目", "source_ids": ["G01"] },
+    "period": { "text": "2026first half of year", "source_ids": ["G01"] },
+    "population": { "text": "Anonymous project population", "source_ids": ["G01"] },
+    "sample_definition": { "text": "Each record represents a closed project", "source_ids": ["G01"] },
     "method": "ordinary_least_squares_with_intercept",
     "handling": {
       "missing": "pairwise_exclusion",
@@ -51,8 +51,8 @@
       { "id": "p12", "x": 64, "y": 81, "source_ids": ["G01"] },
       { "id": "p13", "x": 68, "y": 83, "source_ids": ["G01"] },
       { "id": "p14", "x": 72, "y": 87, "source_ids": ["G01"] },
-      { "id": "p15", "x": 76, "y": 65, "label": { "text": "p15：偏离趋势最大", "source_ids": ["G01"] }, "source_ids": ["G01"] },
-      { "id": "p16", "x": 80, "y": 92, "label": { "text": "p16：高于拟合线", "source_ids": ["G01"] }, "source_ids": ["G01"] },
+      { "id": "p15", "x": 76, "y": 65, "label": { "text": "p15: Maximum deviation from trend", "source_ids": ["G01"] }, "source_ids": ["G01"] },
+      { "id": "p16", "x": 80, "y": 92, "label": { "text": "p16: higher than the fitting line", "source_ids": ["G01"] }, "source_ids": ["G01"] },
       { "id": "p17", "x": null, "y": 70, "source_ids": ["G01"] },
       { "id": "p18", "x": 46, "y": null, "source_ids": ["G01"] }
     ],
@@ -62,17 +62,17 @@
       "r_squared": 0.8083691143293792,
       "source_ids": ["C01"]
     },
-    "outlier_rule": { "text": "按绝对残差排序，标注前2个点，仅作诊断提示", "source_ids": ["G01"] },
+    "outlier_rule": { "text": "Sort by absolute residuals, before labeling2points, for diagnostic purposes only", "source_ids": ["G01"] },
     "highlight_ids": ["p15", "p16"],
-    "reconciliation_rule": { "text": "斜率、截距和R²由未舍入原始观测复算，绝对误差≤1e-6；显示斜率/截距保留2位，R²保留3位", "source_ids": ["C01"] },
-    "interpretation_boundary": { "text": "样本内线性关联不代表因果，外推到其他期间或总体需另行验证", "source_ids": ["G01"] },
-    "source_note": { "text": "匿名项目台账，2026年上半年", "source_ids": ["G01"] },
+    "reconciliation_rule": { "text": "slope, intercept andR²Recalculated from unrounded original observations, absolute error≤1e-6;Show slope/intercept preserved2bit,R²Reserve3Bit", "source_ids": ["C01"] },
+    "interpretation_boundary": { "text": "Linear correlation within the sample does not represent causation, and extrapolation to other periods or populations requires additional verification.", "source_ids": ["G01"] },
+    "source_note": { "text": "Anonymous project ledger,2026first half of year", "source_ids": ["G01"] },
     "insights": [
-      { "text": "投入工时与按期交付完成度总体同向变化", "source_ids": ["G01"] },
-      { "text": "p15偏离趋势最大，需核查约束", "source_ids": ["G01"] },
-      { "text": "p16高于拟合线，但不足以改变总体方向", "source_ids": ["G01"] }
+      { "text": "Input man-hours and on-time delivery completion generally change in the same direction", "source_ids": ["G01"] },
+      { "text": "p15The deviation is the largest from the trend and needs to be checked and constrained.", "source_ids": ["G01"] },
+      { "text": "p16Above the fitted line, but not enough to change the overall direction", "source_ids": ["G01"] }
     ],
-    "conclusion": { "text": "先核查偏离趋势最大的项目，再决定是否把这一关系用于资源配置", "source_ids": ["C01"] },
-    "disclosure": { "text": "合成示例数据，非真实客户数据", "source_ids": ["G02"] }
+    "conclusion": { "text": "Check the projects that deviate the most from the trend first, and then decide whether to use this relationship for resource allocation", "source_ids": ["C01"] },
+    "disclosure": { "text": "Synthetic sample data, not real customer data", "source_ids": ["G02"] }
   }
 }

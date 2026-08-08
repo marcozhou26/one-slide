@@ -1,8 +1,8 @@
 # Market funnel
 
-- 用于：TAM、SAM、SOM、阶段目标的逐层收敛和收入测算。
-- 不用于：四层无法单调收敛，或测算因子没有数值与来源。
-- 必填：四层值、每层筛除理由、3–6 个测算因子及敏感度。
-- 冲突：下层大于上层时返回 `FUNNEL_ORDER_FAIL`；不得改数。
-- 输出：四层倒梯形与右侧计算链；所有形状和文本可编辑。
-- QA：层间比例、测算口径、里程碑与假设逐项核对。
+- Used for:TAM, SAM, SOM, layer-by-layer convergence of stage goals and income calculation.
+- Not used for: The four layers cannot converge monotonically, or the measurement factor has no value or source.
+- Required: four levels of values, reasons for filtering out each level,3–6 calculation factors and sensitivities.
+- Conflict: Returned when the lower layer is larger than the upper layer `FUNNEL_ORDER_FAIL`;Do not change the number.
+- Output: Four layers of inverted trapezoids with right-side calculation chains; all shapes and text editable.
+- QA: The inter-layer ratio, calculation caliber, milestones and assumptions are checked one by one.

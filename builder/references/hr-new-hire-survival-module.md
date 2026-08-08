@@ -1,6 +1,6 @@
 # HR new-hire survival
 
-- 用于：四个 cohort 在入职后 0–24 月的阶梯式留存曲线。
-- 必填：四条非递增曲线、行业基准、四个风险因子和五个司龄区间。
-- 阻塞：曲线不是从 100% 开始、出现回升或长度不等于 25。
-- QA：3 月与 13 月风险带清楚；四组 12/24 月标签完整；共享坐标轴。
+- Used for: Four cohort after joining 0–24 Monthly stepped retention curve.
+- Required: four non-increasing curves, industry benchmarks, four risk factors and five company age ranges.
+- Blocking: the curve does not start from 100% Begins, has a recovery, or has a length not equal to 25.
+- QA: 3 Yueyi 13 The monthly risk zone is clear; four groups 12/24 Month labels intact; shared axes.

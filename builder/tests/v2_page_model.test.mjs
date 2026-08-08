@@ -6,9 +6,9 @@ import { routeInput } from "../scripts/route_input.mjs";
 function validModel() {
   return {
     version: "2.0",
-    audience: { reader: "业务负责人", task: "判断哪些业务线的增长路径值得复制" },
-    subject: { text: "2023—2026 年业务线收入排名迁移", source_ids: ["S01"] },
-    story: { text: "两条业务线排名上升", source_ids: ["S02"] },
+    audience: { reader: "Business leader", task: "Determine which business lines have growth paths worth copying" },
+    subject: { text: "2023—2026 Annual business line revenue ranking migration", source_ids: ["S01"] },
+    story: { text: "Two business lines rose in rankings", source_ids: ["S02"] },
     expression_method: "two_period_rank_migration",
     information_skeleton: {
       entities: [
@@ -16,15 +16,15 @@ function validModel() {
         { id: "beta", label: "Beta", source_ids: ["S04"] },
       ],
       fields: [
-        { field_id: "business", label: "业务线", value_type: "text", alignment: "left", axis_id: "business_axis", source_ids: ["S03", "S04"] },
-        { field_id: "revenue", label: "收入", value_type: "currency", alignment: "right", axis_id: "revenue_axis", source_ids: ["S03", "S04"] },
+        { field_id: "business", label: "business line", value_type: "text", alignment: "left", axis_id: "business_axis", source_ids: ["S03", "S04"] },
+        { field_id: "revenue", label: "income", value_type: "currency", alignment: "right", axis_id: "revenue_axis", source_ids: ["S03", "S04"] },
       ],
       relationships: [
         { type: "same_entity_across_time", from: "alpha_2023", to: "alpha_2026", source_ids: ["S03"] },
       ],
     },
     visual_consequence: {
-      primary_evidence: "两期排名迁移",
+      primary_evidence: "Two periods of ranking migration",
       regions: [{ id: "ranking", role: "primary_evidence", weight: 0.78 }, { id: "insight", role: "interpretation", weight: 0.22 }],
       alignment_axes: ["business_axis", "revenue_axis"],
       layers: ["background", "relationship", "text"],

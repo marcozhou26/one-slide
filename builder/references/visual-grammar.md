@@ -1,51 +1,51 @@
-# 咨询页视觉语法
+# Consultation Page Visual Grammar
 
-仅在 `direct_composition` 或修复视觉缺陷时读取。
+only in `direct_composition` Or read when visual defects are fixed.
 
-## 几何
+## Geometry
 
-| 语义 | 组件 | 几何 |
+| semantics | components | Geometry |
 | --- | --- | --- |
-| 数据条、图表柱、瀑布柱 | `addDataBar`、`addChartColumn` | 方角矩形 |
-| 普通容器、结论带、表格单元格 | `addContainer`、`addTableCell` | 方角矩形 |
-| 流程节点、因果节点、层级节点 | `addNode` | 方角矩形 |
-| 状态标签 | `addStatusTag` | 允许小圆角 |
+| Data bars, chart columns, waterfall columns | `addDataBar`, `addChartColumn` | square corner rectangle |
+| Ordinary containers, conclusion bands, table cells | `addContainer`, `addTableCell` | square corner rectangle |
+| Process nodes, cause and effect nodes, hierarchical nodes | `addNode` | square corner rectangle |
+| status label | `addStatusTag` | Allow small rounded corners |
 
-不得用圆角表达长度、规模、趋势、层级或阶段。不得给核心数据图形、结论带和大面积面板加圆角。
+Rounded corners may not be used to express length, scale, trend, hierarchy, or phase. Core data graphics, conclusion strips, and large panels must not be rounded.
 
-## 字段
+## Field
 
-- 两个字段：标签和值分成两个对象，或使用 `addFieldGroup`。
-- 三行以上重复字段：建立真实列、表格单元格或稳定槽位。
-- 禁止在可见文字中使用 `｜` 或 ` | ` 分隔字段。
-- 冒号只用于一句话中的标签和值，不用于三列以上结构。
+- Two fields: label and value split into two objects, or use `addFieldGroup`.
+- Repeating fields in more than three rows: Create real columns, table cells, or stable slots.
+- Not allowed in visible text `｜` or ` | ` Separate fields.
+- Colons are only used for labels and values within a sentence, not for structures with more than three columns.
 
-## 颜色与层级
+## Color and level
 
-- 主色不超过三种；异常暖色、达标冷色、中性灰。
-- 主证据占最大空间；解释和动作不得抢占主证据权重。
-- 通过位置、字号、字重、留白和少量色彩建立层级，不使用装饰图标、阴影、渐变和网页式组件。
+- There should be no more than three main colors; unusually warm, standard cool, and neutral gray.
+- The main evidence occupies the largest space; explanations and actions must not preempt the weight of the main evidence.
+- Establish hierarchy through position, font size, weight, white space and a small amount of color, without using decorative icons, shadows, gradients and web-style components.
 
-## 字体与线
+## Fonts and lines
 
-- 字号：标题 24–34 pt，按内容适配；只有长结论标题可降至 24 pt；局部小标题 16/18 pt；常规正文 14/16 pt；来源与图注 12 pt。
-- 12 pt 仅限密集局部和次要标签，不作全页默认。核心数字可用 24 pt；全页最多五档。
-- 编号、短列名、状态标签和数据标签不得换行。短编号使用 `addIndexBadge`；标签与行动正文组合使用 `addActionBand`。
-- 标题区使用 `addPageHeading`：一行标题可以配副标题；两行标题不得再堆副标题。
-- 对外页面使用中文来源标签：`模型补全，待确认`。英文 provenance key 只用于内部追踪。
-- 关系线先于节点创建；分隔使用留白或底纹。
-- 仅用连接线表达关系；不得把竖线当作字段边界。
+- Font size: title 24–34 pt, adapted by content; only long conclusion titles can be reduced to 24 pt;Local subtitle 16/18 pt;Regular text 14/16 pt;Source and legend 12 pt.
+- 12 pt Only dense local and secondary labels, not full page default. Core numbers available 24 pt;Maximum five files for the whole page.
+- Numbers, short column names, status labels, and data labels must not wrap. Use short numbers `addIndexBadge`; Use tags in combination with action text `addActionBand`.
+- Title area usage `addPageHeading`: A one-line title can be accompanied by a subtitle; a two-line title cannot be accompanied by a subtitle.
+- Use Chinese source tags for external pages:`Model-generated completion, pending confirmation`. English provenance key For internal tracking only.
+- Relationship lines are created before nodes; use whitespace or shading to separate them.
+- Use connecting lines only to express relationships; vertical bars must not be treated as field boundaries.
 
-## 画布
+## canvas
 
-- `position` 统一使用 `1280×720 px` 坐标。若输入以英寸描述，先显式换算后再调用组件；不得混用单位。
-- 不能只在左上角完成一张 960×540 页面后留出大片空白。主证据区应使用完整内容宽度，并把主体延伸到页面下半区。
-- 空白服务于分组和阅读，不服务于错误坐标。布局审计报告画布宽度或高度利用不足时必须修复。
-- 同一内容框架内上下堆叠的表格、结论带和行动面板必须共用左右边缘；禁止分别手写近似坐标。用 `registerEdgeAlignment` 声明并检查跨区块边缘。
+- `position` Use uniformly `1280×720 px` coordinates. If the input is described in inches, explicitly convert before calling the component; do not mix units.
+- You can’t just complete one in the upper left corner 960×540 Leave a large amount of white space behind the page. The main evidence area should use the full content width and extend the body into the lower half of the page.
+- Whitespace serves grouping and reading, not error coordinates. Layout audit reporting canvas width or height underutilization must be fixed.
+- Tables, conclusion strips, and action panels stacked one above another within the same content frame must share the left and right edges; separate handwritten approximate coordinates are prohibited. use `registerEdgeAlignment` Declare and check cross-block edges.
 
-## 纵向节奏
+## vertical rhythm
 
-- 标题区是完整安全区，不只包含文字墨迹。标题或副标题组件的实际下边缘之后至少留 16 px，再开始任何正文对象。
-- 主图外框、图例、里程碑标签、注释、数据标签、关系说明和行动区都按正文对象处理；不得把漂浮标签放进标题安全区。
-- 先锁定标题区和来源区，再把主证据、支持区和结论区放进二者之间的正文画布。正文较密时优先使用下方可用空间，不得让页底保持大块空白而把内容顶到标题下方。
-- 若正文侵入标题安全区，且全部可见内容下方仍有至少 56 px 空间，标记 `CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`；下方没有足够空间时标记 `HEADING_SAFE_ZONE_INTRUSION`。两者都阻断交付。
+- The title area is a complete safe area, not just text and ink. Leave at least 16 px, before starting any text object.
+- The outer frame of the main figure, legend, milestone labels, comments, data labels, relationship descriptions and action areas are all treated as text objects; floating labels are not allowed to be placed in the title safe area.
+- First lock the title area and source area, and then put the main evidence, support area and conclusion area into the text canvas between them. When the text is dense, give priority to using the available space at the bottom. Do not leave a large blank space at the bottom of the page and push the content below the title.
+- If the text invades the title safe area and there is at least 56 px space, mark `CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`; Mark when there is not enough space below `HEADING_SAFE_ZONE_INTRUSION`. Both block delivery.

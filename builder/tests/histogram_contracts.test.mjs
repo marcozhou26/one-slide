@@ -26,8 +26,8 @@ test("complete input validates and reproduces every bin, sample count, and one-s
 test("sparse natural language plus observations routes without asking for module or chart names", async () => {
   const result = await routeInput({
     input_mode: "mixed",
-    text: "请帮管理者看清这批处理时长主要集中在哪些区间，是否偏斜、有没有长尾。",
-    data: { metric: "处理时长", unit: "分钟", period: "2026年7月", values: [4,7,11,12,14,17,20,22,24,25,27,29,31,34,36,39,42,48,54,64,73] },
+    text: "Please help managers see clearly which range the batch processing time is mainly concentrated in, whether it is skewed, and whether there is a long tail.",
+    data: { metric: "Processing time", unit: "minutes", period: "2026year7month", values: [4,7,11,12,14,17,20,22,24,25,27,29,31,34,36,39,42,48,54,64,73] },
   });
   assert.equal(result.decision, "selected");
   assert.equal(result.module.module_id, "histogram");
@@ -36,15 +36,15 @@ test("sparse natural language plus observations routes without asking for module
 
 test("missing critical observations blocks instead of inventing a distribution", async () => {
   await assert.rejects(
-    () => routeInput({ input_mode: "mixed", text: "判断处理时长的集中区间和长尾", data: { metric: "处理时长", unit: "分钟", period: "2026年7月" } }),
+    () => routeInput({ input_mode: "mixed", text: "Determine the concentration range and long tail of processing time", data: { metric: "Processing time", unit: "minutes", period: "2026year7month" } }),
     (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
   );
 });
 
 test("ambiguous conflicting units do not silently merge into a formal payload", async () => {
   const data = await fixture("histogram-valid.json");
-  data.source_anchors[0].text += "；另一版本单位为秒";
-  data.diagram.unit = { text: "分钟与秒冲突", source_ids: ["G01"] };
+  data.source_anchors[0].text += ";The unit of another version is seconds";
+  data.diagram.unit = { text: "Minutes and seconds conflict", source_ids: ["G01"] };
   assert.throws(() => validateR3Module(data), (error) => error.code === "SOURCE_FIDELITY_FAIL");
 });
 
@@ -78,7 +78,7 @@ test("declared bin counts must be exactly reproducible from raw observations", a
 
 test("categorical labels do not masquerade as a continuous distribution", async () => {
   await assert.rejects(
-    () => routeInput({ input_mode: "mixed", text: "看看不同部门分布", data: { metric: "部门", unit: "人", period: "2026年7月", values: ["销售", "交付", "财务", "销售"] } }),
+    () => routeInput({ input_mode: "mixed", text: "Look at the distribution of different departments", data: { metric: "Department", unit: "people", period: "2026year7month", values: ["sales", "Delivery", "Finance", "sales"] } }),
     (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
   );
 });
@@ -86,7 +86,7 @@ test("categorical labels do not masquerade as a continuous distribution", async 
 test("structured handoff keeps requested module, primary exhibit, and payload aligned", async () => {
   const payload = await fixture("histogram-valid.json");
   const routed = await routeV3({
-    schema_version: "1.0", subject: "处理时长", story: "分布集中且存在长尾", source_ids: ["G01", "C01"],
+    schema_version: "1.0", subject: "Processing time", story: "The distribution is concentrated and there is a long tail", source_ids: ["G01", "C01"],
     display_blocks: [{ block_id: "B01" }], structure: { primary_exhibit: "histogram" },
     requested_module: "histogram", module_payload: payload,
   });

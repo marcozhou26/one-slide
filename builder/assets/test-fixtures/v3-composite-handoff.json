@@ -1,14 +1,14 @@
 {
   "schema_version": "1.1",
-  "subject": "组织层级诊断",
-  "story": "最长管理链达到11层，两个纯传导层应被撤并。",
-  "audience_task": "判断组织层级是否过深以及如何压层。",
+  "subject": "Organizational level diagnostics",
+  "story": "The longest management chain reaches11layer, the two purely conductive layers should be merged.",
+  "audience_task": "Determine whether the organizational hierarchy is too deep and how to compress it.",
   "source_ids": ["S01", "S02"],
   "requested_module": "chart",
   "display_blocks": [
-    {"block_id": "B01", "display_intent": "comparison", "items": [{"label": "最长链", "value": 11}]},
-    {"block_id": "B02", "display_intent": "sequence", "items": [{"label": "发现", "value": "L5为纯传导层"}]},
-    {"block_id": "B03", "display_intent": "aligned_metrics", "items": [{"label": "年化释放", "value": 1480, "unit": "万元"}]}
+    {"block_id": "B01", "display_intent": "comparison", "items": [{"label": "longest chain", "value": 11}]},
+    {"block_id": "B02", "display_intent": "sequence", "items": [{"label": "discover", "value": "L5is a purely conductive layer"}]},
+    {"block_id": "B03", "display_intent": "aligned_metrics", "items": [{"label": "annualized release", "value": 1480, "unit": "Ten thousand yuan"}]}
   ],
   "structure": {
     "family": "chart",

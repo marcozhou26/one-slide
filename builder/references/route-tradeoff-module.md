@@ -1,9 +1,9 @@
-# 双路线比较与取舍模块
+# Dual route comparison and choice module
 
-适用：两个互斥路线使用同一组 3–6 个维度正面对比，并有原文支持的权衡或收敛方案。
+Applicable: Two mutually exclusive routes use the same group 3–6 Compare each dimension head-on, with trade-offs or convergence solutions supported by the original text.
 
-必需输入：两条路线名称；完全相同且顺序一致的维度；每格判断、量化证据、0–3 分；所有可见文本的 `source_ids`。
+Required input: two route names; dimensions that are identical and in the same order; judgment, quantitative evidence,0–3 points; of all visible text `source_ids`.
 
-缺失或冲突：缺少量化证据时保留“待客户补充”，不编造；维度不一致、路线超过两条或所谓推荐没有原文依据时停止正式生成。
+Missing or conflicting: If there is a lack of quantitative evidence, keep it as "to be added by the customer" and do not make it up; if the dimensions are inconsistent, there are more than two routes, or the so-called recommendation has no original basis, the formal generation will be stopped.
 
-禁止：暗自改变评分、补写混合方案、把两个可并行方案说成互斥路线。
+Forbidden: Secretly changing the score, writing mixed solutions, and describing two parallel solutions as mutually exclusive routes.

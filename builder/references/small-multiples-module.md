@@ -1,7 +1,7 @@
-# 小倍数矩阵模块
+# Small multiple matrix module
 
-适用：4、6 或 9 个对象使用完全相同的时点、标杆和 Y 轴范围重复比较。
+Applicable:4, 6 or 9 objects use exactly the same time points, benchmarks, and Y Axis ranges are compared repeatedly.
 
-必需输入：统一时点、统一标杆、每个对象等长数列、期末摘要、分类及来源。
+Required input: unified time point, unified benchmark, equal-length sequence for each object, end-of-term summary, classification and source.
 
-阻塞：时点或数列长度不一致、标杆口径不同或分类没有原文依据时停止。各格不得独立缩放。
+Blocking: Stop when the time point or length of the sequence is inconsistent, the caliber of the benchmark is different, or the classification is not based on the original text. Each grid may not be scaled independently.

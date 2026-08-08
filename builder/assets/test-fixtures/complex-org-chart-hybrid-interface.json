@@ -2,23 +2,23 @@
   "schema_version":"1.0",
   "type":"hybrid_interface_overlay",
   "formal_relationship_source":"data/org-model.json",
-  "relationship_boundary":"只定义形态分区元数据和非汇报性质的治理接口覆盖层",
-  "disclosure":"合成示例数据，非真实客户数据",
+  "relationship_boundary":"Only define morphological partition metadata and non-reporting governance interface overlays",
+  "disclosure":"Synthetic sample data, not real customer data",
   "zones":[
-    {"zone_id":"Z01","label":"职能制区","form":"functional","unit_count":19,"unit_label":"一级部门","headcount":1124,"headcount_scope":"区内人数","member_node_ids":["N10"]},
-    {"zone_id":"Z02","label":"事业部制区","form":"divisional","unit_count":4,"unit_label":"事业部","headcount":687,"headcount_scope":"区内人数","member_node_ids":["N20"]},
-    {"zone_id":"Z03","label":"矩阵制区","form":"matrix","unit_count":null,"unit_label":"双线覆盖","headcount":412,"headcount_scope":"跨区双线覆盖人数，不与其他形态区相加","member_node_ids":["N31","N32"]},
-    {"zone_id":"Z04","label":"平台化区","form":"platform","unit_count":2,"unit_label":"新业务单元","headcount":63,"headcount_scope":"区内人数","member_node_ids":["N40"]},
-    {"zone_id":"Z05","label":"独立法人区","form":"legal_entity","unit_count":1,"unit_label":"独立法人","headcount":42,"headcount_scope":"区内人数","member_node_ids":["N50"]}
+    {"zone_id":"Z01","label":"functional area","form":"functional","unit_count":19,"unit_label":"First level department","headcount":1124,"headcount_scope":"Number of people in the area","member_node_ids":["N10"]},
+    {"zone_id":"Z02","label":"Business unit area","form":"divisional","unit_count":4,"unit_label":"Business unit","headcount":687,"headcount_scope":"Number of people in the area","member_node_ids":["N20"]},
+    {"zone_id":"Z03","label":"matrix area","form":"matrix","unit_count":null,"unit_label":"Double line coverage","headcount":412,"headcount_scope":"The number of people covered by cross-district double lines is not added to other areas.","member_node_ids":["N31","N32"]},
+    {"zone_id":"Z04","label":"Platform area","form":"platform","unit_count":2,"unit_label":"new business unit","headcount":63,"headcount_scope":"Number of people in the area","member_node_ids":["N40"]},
+    {"zone_id":"Z05","label":"Independent legal area","form":"legal_entity","unit_count":1,"unit_label":"independent legal person","headcount":42,"headcount_scope":"Number of people in the area","member_node_ids":["N50"]}
   ],
   "interfaces":[
-    {"interface_id":"I01","from_node":"N10","to_node":"N40","conflict_type":"逐项审批","annual_events":34,"rule_status":"missing","marker":"warm_triangle"},
-    {"interface_id":"I02","from_node":"N20","to_node":"N31","conflict_type":"资源争夺","annual_events":29,"rule_status":"missing","marker":"warm_triangle"},
-    {"interface_id":"I03","from_node":"N10","to_node":"N50","conflict_type":"合规口径不一","annual_events":11,"rule_status":"missing","marker":"warm_triangle"},
-    {"interface_id":"I04","from_node":"N10","to_node":"N20","conflict_type":"预算与用人例外","annual_events":18,"rule_status":"missing","marker":"warm_triangle"},
-    {"interface_id":"I05","from_node":"N31","to_node":"N40","conflict_type":"技术排期冲突","annual_events":15,"rule_status":"missing","marker":"warm_triangle"},
-    {"interface_id":"I06","from_node":"N20","to_node":"N50","conflict_type":"结算与资金边界","annual_events":9,"rule_status":"documented","marker":"diamond"},
-    {"interface_id":"I07","from_node":"N20","to_node":"N40","conflict_type":"客户与数据归属","annual_events":7,"rule_status":"documented","marker":"diamond"}
+    {"interface_id":"I01","from_node":"N10","to_node":"N40","conflict_type":"Approval item by item","annual_events":34,"rule_status":"missing","marker":"warm_triangle"},
+    {"interface_id":"I02","from_node":"N20","to_node":"N31","conflict_type":"Competition for resources","annual_events":29,"rule_status":"missing","marker":"warm_triangle"},
+    {"interface_id":"I03","from_node":"N10","to_node":"N50","conflict_type":"Different compliance standards","annual_events":11,"rule_status":"missing","marker":"warm_triangle"},
+    {"interface_id":"I04","from_node":"N10","to_node":"N20","conflict_type":"Budget and Staffing Exceptions","annual_events":18,"rule_status":"missing","marker":"warm_triangle"},
+    {"interface_id":"I05","from_node":"N31","to_node":"N40","conflict_type":"Technical scheduling conflict","annual_events":15,"rule_status":"missing","marker":"warm_triangle"},
+    {"interface_id":"I06","from_node":"N20","to_node":"N50","conflict_type":"Settlement and Funding Boundaries","annual_events":9,"rule_status":"documented","marker":"diamond"},
+    {"interface_id":"I07","from_node":"N20","to_node":"N40","conflict_type":"Customer and data ownership","annual_events":7,"rule_status":"documented","marker":"diamond"}
   ],
   "reconciliation":{"interface_count":7,"documented_rule_count":2,"missing_rule_count":5,"coverage_fraction":"2/7"}
 }

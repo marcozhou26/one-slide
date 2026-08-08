@@ -30,7 +30,7 @@ test("legacy slope-ranking fixture normalizes to bump-ranking", async () => {
   const data = await loadR3ModuleInput(path.join(skillRoot, "assets/test-fixtures/slope-ranking-valid.json"));
   assert.equal(data.module_id, "bump-ranking");
   assert.equal(data.diagram.type, "bump-ranking");
-  assert.deepEqual(data.diagram.periods.map((item) => item.text), ["2023 年", "2026 年"]);
+  assert.deepEqual(data.diagram.periods.map((item) => item.text), ["2023 year", "2026 year"]);
   assert.equal(validateR3Module(data).ok, true);
   assert.deepEqual(validateR3Module(data).unmappedSourceIds, []);
 });
@@ -48,7 +48,7 @@ test("rank arrays must match the period count", async () => {
 });
 
 test("bump and slope names route to the upgraded module", async () => {
-  const bump = await routeInput({ input_mode: "text", text: "做一张五个时点的排名迁移 Bump Chart" });
+  const bump = await routeInput({ input_mode: "text", text: "Make a ranking migration at five points in time Bump Chart" });
   assert.equal(bump.module.module_id, "bump-ranking");
   const legacy = await routeModule({ requested_module: "slope-ranking" });
   assert.equal(legacy.module.module_id, "bump-ranking");

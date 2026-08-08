@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "九条业务线中只有三条持续跑赢公司均值"
+      "text": "Only three of the nine business lines consistently outperformed the company average."
     },
     {
       "id": "S02",
-      "text": "2022；2023；2024；2025；2026；业务 A；期末 90；CAGR +高；加大投入；业务 B；期末 84；CAGR +高；业务 C；期末 82；CAGR +低；维持；业务 D；期末 70；CAGR +低；退出或收缩；业务 E；期末 73；CAGR +高；业务 F；期末 76；CAGR +低；业务 G；期末 86；CAGR +高；业务 H；期末 77；CAGR +低；业务 I；期末 64；CAGR +低；三条业务线持续跑赢公司均值；三条业务线期末低于基准；高增长业务共同具备标准化能力；分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项；全部示例数值与口径"
+      "text": "2022; 2023; 2024; 2025; 2026;Business A;End of term 90; CAGR +high; increase investment; business B;End of term 84; CAGR +high; business C;End of term 82; CAGR +low; maintain; business D;End of term 70; CAGR +low; exit or shrink; business E;End of term 73; CAGR +high; business F;End of term 76; CAGR +low; business G;End of term 86; CAGR +high; business H;End of term 77; CAGR +low; business I;End of term 64; CAGR +Low; three business lines continue to outperform the company's average; three business lines are lower than the benchmark at the end of the period; high-growth businesses share standardization capabilities; classified disposal: increase investment 3 item, maintain 3 item, exit or shrink 3 items; all example values and calibers; business A; Increase investment; Exit or shrink; End of term 64; CAGR +low; Three business lines continue to outperform the company’s average; Three business lines ended the period lower than the benchmark; High-growth businesses share standardization capabilities; Classified disposal: increase investment 3 item, maintain 3 item, exit or shrink 3 item"
     }
   ],
   "title": {
-    "text": "九条业务线中只有三条持续跑赢公司均值",
+    "text": "Only three of the nine business lines consistently outperformed the company average.",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -65,19 +65,19 @@
     "panels": [
       {
         "label": {
-          "text": "业务 A",
+          "text": "business A",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 90；CAGR +高",
+          "text": "End of term 90; CAGR +high",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "加大投入",
+          "text": "Increase investment",
           "source_ids": [
             "S02"
           ]
@@ -95,19 +95,19 @@
       },
       {
         "label": {
-          "text": "业务 B",
+          "text": "business B",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 84；CAGR +高",
+          "text": "End of term 84; CAGR +high",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "加大投入",
+          "text": "Increase investment",
           "source_ids": [
             "S02"
           ]
@@ -125,19 +125,19 @@
       },
       {
         "label": {
-          "text": "业务 C",
+          "text": "business C",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 82；CAGR +低",
+          "text": "End of term 82; CAGR +low",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "维持",
+          "text": "maintain",
           "source_ids": [
             "S02"
           ]
@@ -155,19 +155,19 @@
       },
       {
         "label": {
-          "text": "业务 D",
+          "text": "business D",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 70；CAGR +低",
+          "text": "End of term 70; CAGR +low",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "退出或收缩",
+          "text": "Exit or shrink",
           "source_ids": [
             "S02"
           ]
@@ -185,19 +185,19 @@
       },
       {
         "label": {
-          "text": "业务 E",
+          "text": "business E",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 73；CAGR +高",
+          "text": "End of term 73; CAGR +high",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "维持",
+          "text": "maintain",
           "source_ids": [
             "S02"
           ]
@@ -215,19 +215,19 @@
       },
       {
         "label": {
-          "text": "业务 F",
+          "text": "business F",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 76；CAGR +低",
+          "text": "End of term 76; CAGR +low",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "退出或收缩",
+          "text": "Exit or shrink",
           "source_ids": [
             "S02"
           ]
@@ -245,19 +245,19 @@
       },
       {
         "label": {
-          "text": "业务 G",
+          "text": "business G",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 86；CAGR +高",
+          "text": "End of term 86; CAGR +high",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "加大投入",
+          "text": "Increase investment",
           "source_ids": [
             "S02"
           ]
@@ -275,19 +275,19 @@
       },
       {
         "label": {
-          "text": "业务 H",
+          "text": "business H",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 77；CAGR +低",
+          "text": "End of term 77; CAGR +low",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "维持",
+          "text": "maintain",
           "source_ids": [
             "S02"
           ]
@@ -305,19 +305,19 @@
       },
       {
         "label": {
-          "text": "业务 I",
+          "text": "business I",
           "source_ids": [
             "S02"
           ]
         },
         "summary": {
-          "text": "期末 64；CAGR +低",
+          "text": "End of term 64; CAGR +low",
           "source_ids": [
             "S02"
           ]
         },
         "classification": {
-          "text": "退出或收缩",
+          "text": "Exit or shrink",
           "source_ids": [
             "S02"
           ]
@@ -336,26 +336,26 @@
     ],
     "insights": [
       {
-        "text": "三条业务线持续跑赢公司均值",
+        "text": "Three business lines continue to outperform the company’s average",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "三条业务线期末低于基准",
+        "text": "Three business lines ended the period lower than the benchmark",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "高增长业务共同具备标准化能力",
+        "text": "High-growth businesses share standardization capabilities",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项",
+      "text": "Classified disposal: increase investment 3 item, maintain 3 item, exit or shrink 3 item",
       "source_ids": [
         "S02"
       ]

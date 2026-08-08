@@ -4,15 +4,15 @@
   "source_anchors": [
     {
       "id": "S01",
-      "text": "资格判断准确率 94.6%，但人工复核率 11.8%，异地新员工仍是主要兜底场景"
+      "text": "Qualification Judgment Accuracy 94.6%, but the manual review rate 11.8%, new employees from different places are still the main scenario"
     },
     {
       "id": "S02",
-      "text": "判断准确率；94.6%；目标 98%；人工复核率；11.8%；目标 <5%；首次解决率；89.3%；目标 95%；福利；休假；薪酬；培训；证明；异地政策；司龄 <1 年；P1–P3；异地员工；管理人员；派遣员工；低准确率集中在异地政策与新员工；规则不足和资料缺口解释多数人工复核；优先补齐异地与司龄相关规则；HR COE 统一规则口径，HRSSC 建立人工兜底与时限；全部示例数值与口径"
+      "text": "Judgment accuracy;94.6%; target 98%;Manual review rate;11.8%; target <5%;First time resolution rate;89.3%; target 95%;Benefits;Leave;Salary;Training;Certification;Relocation policy;Seniority <1 years;P1–P3; Off-site employees; managers; dispatched employees; low accuracy rates are concentrated on off-site policies and new employees; most of the explanations for insufficient rules and data gaps are manual review; priority is given to completing rules related to off-site and company age;HR COE Unify the rules and caliber,HRSSC Establish artificial margins and time limits; all sample values and calibers; first time resolution rate; Low accuracy rates focus on off-site policies and new hires; Insufficient rules and data gaps explained by mostly manual review; Prioritize the completion of rules related to different places and seniority; welfare; vacation; training; prove; Off-site policy; Si Ling <1 year; Remote employees; Dispatch employees; HR COE Unify the rules and caliber,HRSSC Establish manual guarantees and time limits"
     }
   ],
   "title": {
-    "text": "资格判断准确率 94.6%，但人工复核率 11.8%，异地新员工仍是主要兜底场景",
+    "text": "Qualification Judgment Accuracy 94.6%, but the manual review rate 11.8%, new employees from different places are still the main scenario",
     "origin": "source",
     "source_ids": [
       "S01"
@@ -23,7 +23,7 @@
     "metrics": [
       {
         "label": {
-          "text": "判断准确率",
+          "text": "Judgment accuracy",
           "source_ids": [
             "S02"
           ]
@@ -35,7 +35,7 @@
           ]
         },
         "target": {
-          "text": "目标 98%",
+          "text": "target 98%",
           "source_ids": [
             "S02"
           ]
@@ -46,7 +46,7 @@
       },
       {
         "label": {
-          "text": "人工复核率",
+          "text": "Manual review rate",
           "source_ids": [
             "S02"
           ]
@@ -58,7 +58,7 @@
           ]
         },
         "target": {
-          "text": "目标 <5%",
+          "text": "target <5%",
           "source_ids": [
             "S02"
           ]
@@ -69,7 +69,7 @@
       },
       {
         "label": {
-          "text": "首次解决率",
+          "text": "first time resolution rate",
           "source_ids": [
             "S02"
           ]
@@ -81,7 +81,7 @@
           ]
         },
         "target": {
-          "text": "目标 95%",
+          "text": "target 95%",
           "source_ids": [
             "S02"
           ]
@@ -93,37 +93,37 @@
     ],
     "policies": [
       {
-        "text": "福利",
+        "text": "welfare",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "休假",
+        "text": "vacation",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "薪酬",
+        "text": "Salary",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "培训",
+        "text": "training",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "证明",
+        "text": "prove",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "异地政策",
+        "text": "Off-site policy",
         "source_ids": [
           "S02"
         ]
@@ -132,7 +132,7 @@
     "segments": [
       {
         "label": {
-          "text": "司龄 <1 年",
+          "text": "Si Ling <1 year",
           "source_ids": [
             "S02"
           ]
@@ -170,7 +170,7 @@
       },
       {
         "label": {
-          "text": "异地员工",
+          "text": "Remote employees",
           "source_ids": [
             "S02"
           ]
@@ -189,7 +189,7 @@
       },
       {
         "label": {
-          "text": "管理人员",
+          "text": "managers",
           "source_ids": [
             "S02"
           ]
@@ -208,7 +208,7 @@
       },
       {
         "label": {
-          "text": "派遣员工",
+          "text": "Dispatch employees",
           "source_ids": [
             "S02"
           ]
@@ -228,26 +228,26 @@
     ],
     "insights": [
       {
-        "text": "低准确率集中在异地政策与新员工",
+        "text": "Low accuracy rates focus on off-site policies and new hires",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "规则不足和资料缺口解释多数人工复核",
+        "text": "Insufficient rules and data gaps explained by mostly manual review",
         "source_ids": [
           "S02"
         ]
       },
       {
-        "text": "优先补齐异地与司龄相关规则",
+        "text": "Prioritize the completion of rules related to different places and seniority",
         "source_ids": [
           "S02"
         ]
       }
     ],
     "conclusion": {
-      "text": "HR COE 统一规则口径，HRSSC 建立人工兜底与时限",
+      "text": "HR COE Unify the rules and caliber,HRSSC Establish manual guarantees and time limits",
       "source_ids": [
         "S02"
       ]

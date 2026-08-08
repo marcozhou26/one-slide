@@ -35,7 +35,7 @@ export function buildAnchorMap(sourceAnchors) {
 }
 
 export function isExactSourceSubstring(text, sourceIds, anchors) {
-  if (text === "待客户补充") return true;
+  if (text === "To be supplemented by customers") return true;
   return (sourceIds ?? []).some((id) => anchors.get(id)?.includes(text));
 }
 
@@ -60,9 +60,9 @@ export function validateTitle(title, anchors) {
   );
   if (title.origin === "placeholder") {
     requireCondition(
-      title.text === "待客户补充",
+      title.text === "To be supplemented by customers",
       "SOURCE_FIDELITY_FAIL",
-      "Placeholder title must use 待客户补充",
+      "Placeholder title must use To be supplemented by customers",
     );
   } else {
     validateVisibleText(title, anchors, "Title");

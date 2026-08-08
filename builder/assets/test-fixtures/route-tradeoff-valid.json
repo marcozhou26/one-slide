@@ -2,22 +2,22 @@
   "version": "1.0",
   "module_id": "route-tradeoff",
   "source_anchors": [
-    {"id":"S01","text":"不做全面自建，先以外采平台＋内建数据资产的混合路线破局"},
-    {"id":"S02","text":"路线 A：自建 AI 中台；投入成本高；首年约 900 万；见效周期长；约需 15 个月；能力沉淀强；核心资产留在内部"},
-    {"id":"S03","text":"路线 B：外采成熟平台；投入成本低；首年约 400 万；见效周期短；约需 5 个月；能力沉淀弱；产品能力主要在外部"},
-    {"id":"S04","text":"投入成本"}, {"id":"S05","text":"见效周期"}, {"id":"S06","text":"能力沉淀"},
-    {"id":"S07","text":"控制权 vs 速度"}, {"id":"S08","text":"长期资产 vs 短期 ROI"}, {"id":"S09","text":"推荐路线：外采平台承接通用能力，内部建设数据资产"}
+    {"id":"S01","text":"Instead of building a comprehensive self-built platform, first source the platform from outside+The hybrid route of built-in data assets breaks the news"},
+    {"id":"S02","text":"route A:Self-built AI Middle stage; high investment cost; approx. 900 10,000; long effective period; approx. 15 months; strong ability accumulation; core assets remain internal; High investment cost; First year appointment 900 million; Long effective period; Approximately required 15 months; Strong ability accumulation; Core assets stay in-house; route A:Self-built AI Zhongtai"},
+    {"id":"S03","text":"route B: Mature platform for outsourced procurement; low investment cost; approx. 400 10,000; short effective period; approx. 5 months; capacity accumulation is weak; product capabilities are mainly external; Low investment cost; First year appointment 400 million; Short effective period; Approximately required 5 months; Weak ability accumulation; Product capabilities are mainly external; route B: Mature platform for outsourced procurement"},
+    {"id":"S04","text":"input cost"}, {"id":"S05","text":"Effective cycle"}, {"id":"S06","text":"Ability accumulation"},
+    {"id":"S07","text":"control vs speed"}, {"id":"S08","text":"long term assets vs short term ROI"}, {"id":"S09","text":"Recommended route: External procurement platform undertakes general capabilities and builds data assets internally"}
   ],
-  "title":{"text":"不做全面自建，先以外采平台＋内建数据资产的混合路线破局","origin":"source","source_ids":["S01"]},
+  "title":{"text":"Instead of building a comprehensive self-built platform, first source the platform from outside+The hybrid route of built-in data assets breaks the news","origin":"source","source_ids":["S01"]},
   "diagram":{"type":"route-tradeoff","routes":[
-    {"label":{"text":"路线 A：自建 AI 中台","source_ids":["S02"]},"rows":[
-      {"dimension_id":"cost","dimension":{"text":"投入成本","source_ids":["S04"]},"judgment":{"text":"投入成本高","source_ids":["S02"]},"evidence":{"text":"首年约 900 万","source_ids":["S02"]},"score":1},
-      {"dimension_id":"speed","dimension":{"text":"见效周期","source_ids":["S05"]},"judgment":{"text":"见效周期长","source_ids":["S02"]},"evidence":{"text":"约需 15 个月","source_ids":["S02"]},"score":1},
-      {"dimension_id":"asset","dimension":{"text":"能力沉淀","source_ids":["S06"]},"judgment":{"text":"能力沉淀强","source_ids":["S02"]},"evidence":{"text":"核心资产留在内部","source_ids":["S02"]},"score":3}
+    {"label":{"text":"route A:Self-built AI Zhongtai","source_ids":["S02"]},"rows":[
+      {"dimension_id":"cost","dimension":{"text":"input cost","source_ids":["S04"]},"judgment":{"text":"High investment cost","source_ids":["S02"]},"evidence":{"text":"First year appointment 900 million","source_ids":["S02"]},"score":1},
+      {"dimension_id":"speed","dimension":{"text":"Effective cycle","source_ids":["S05"]},"judgment":{"text":"Long effective period","source_ids":["S02"]},"evidence":{"text":"Approximately required 15 months","source_ids":["S02"]},"score":1},
+      {"dimension_id":"asset","dimension":{"text":"Ability accumulation","source_ids":["S06"]},"judgment":{"text":"Strong ability accumulation","source_ids":["S02"]},"evidence":{"text":"Core assets stay in-house","source_ids":["S02"]},"score":3}
     ]},
-    {"label":{"text":"路线 B：外采成熟平台","source_ids":["S03"]},"rows":[
-      {"dimension_id":"cost","dimension":{"text":"投入成本","source_ids":["S04"]},"judgment":{"text":"投入成本低","source_ids":["S03"]},"evidence":{"text":"首年约 400 万","source_ids":["S03"]},"score":3},
-      {"dimension_id":"speed","dimension":{"text":"见效周期","source_ids":["S05"]},"judgment":{"text":"见效周期短","source_ids":["S03"]},"evidence":{"text":"约需 5 个月","source_ids":["S03"]},"score":3},
-      {"dimension_id":"asset","dimension":{"text":"能力沉淀","source_ids":["S06"]},"judgment":{"text":"能力沉淀弱","source_ids":["S03"]},"evidence":{"text":"产品能力主要在外部","source_ids":["S03"]},"score":1}
-    ]}],"conflicts":[{"text":"控制权 vs 速度","source_ids":["S07"]},{"text":"长期资产 vs 短期 ROI","source_ids":["S08"]}],"recommendation":{"text":"推荐路线：外采平台承接通用能力，内部建设数据资产","source_ids":["S09"]}}
+    {"label":{"text":"route B: Mature platform for outsourced procurement","source_ids":["S03"]},"rows":[
+      {"dimension_id":"cost","dimension":{"text":"input cost","source_ids":["S04"]},"judgment":{"text":"Low investment cost","source_ids":["S03"]},"evidence":{"text":"First year appointment 400 million","source_ids":["S03"]},"score":3},
+      {"dimension_id":"speed","dimension":{"text":"Effective cycle","source_ids":["S05"]},"judgment":{"text":"Short effective period","source_ids":["S03"]},"evidence":{"text":"Approximately required 5 months","source_ids":["S03"]},"score":3},
+      {"dimension_id":"asset","dimension":{"text":"Ability accumulation","source_ids":["S06"]},"judgment":{"text":"Weak ability accumulation","source_ids":["S03"]},"evidence":{"text":"Product capabilities are mainly external","source_ids":["S03"]},"score":1}
+    ]}],"conflicts":[{"text":"control vs speed","source_ids":["S07"]},{"text":"long term assets vs short term ROI","source_ids":["S08"]}],"recommendation":{"text":"Recommended route: External procurement platform undertakes general capabilities and builds data assets internally","source_ids":["S09"]}}
 }

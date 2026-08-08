@@ -1,30 +1,30 @@
-# 连续数值分布模块
+# Continuous Numerical Distribution Module
 
-适用：回答“一个连续数值指标集中在哪些区间，是否存在偏态、长尾或多峰”。正式模块 ID 为 `histogram`，`diagram.type` 必须同名。它使用相邻、等宽或明确不等宽的原生矩形表达连续区间，不处理分类频数，也不能以有间距的分类柱冒充。
+Applicable: Answer "Which range does a continuous numerical indicator concentrate in, and whether there is skewness, long tail or multiple peaks". formal module ID for `histogram`, `diagram.type` Must have the same name. It uses adjacent, equal-width or clearly unequal-width native rectangles to express continuous intervals. It does not deal with classification frequencies, nor can it be pretended to be spaced classification columns.
 
-## 低负担输入契约
+## low burden input contract
 
-- `metric`、`unit`、`period`、`denominator`：带 `source_ids` 的测量对象、单位、期间、分母/样本口径；
-- `observations`：10–500 个原始观测，数值保留精度，缺失值显式使用 `null` 或空字符串；
-- `sample`：`total`、`valid`、`missing`，必须与原始观测对平；
-- `frequency_basis`：`count` 或 `frequency`；
-- `binning`：`method=explicit_edges`、4–12 个区间的严格递增 `edges`、`include_left=true` 和明确的 `last_bin_inclusive`；
-- `data_source_ids`：原始观测、样本与分箱规则的来源；
-- `insights`：1–3 条由复算结果支持的集中、偏态、长尾或多峰判断；
-- 可选 `bins`、`conclusion` 与合成数据 `disclosure`。
+- `metric`, `unit`, `period`, `denominator`: with `source_ids` Measurement object, unit, period, denominator/Sample diameter;
+- `observations`: 10–500 original observations, numerical precision is preserved, missing values are used explicitly `null` or empty string;
+- `sample`: `total`, `valid`, `missing`, must be aligned with the original observation;
+- `frequency_basis`: `count` or `frequency`;
+- `binning`: `method=explicit_edges`, 4–12 Strictly increasing intervals `edges`, `include_left=true` and clear `last_bin_inclusive`;
+- `data_source_ids`: Source of original observations, samples and binning rules;
+- `insights`: 1–3 The bars are concentrated, skewed, long-tailed or multimodal, supported by complex calculation results;
+- Optional `bins`, `conclusion` with synthetic data `disclosure`.
 
-Producer 可以从自然语言、唯一数据文件和稳定测量元数据推导指标与期间，并在分箱偏好缺失时使用可撤销、已披露的显式边界；不得要求用户填写模块名或坐标。缺少原始观测、单位/期间冲突或无法诚实确定分母时，停止正式载荷或降级，不编造。
+Producer Metrics and periods can be derived from natural language, unique data files, and stable measurement metadata, with revocable, disclosed explicit boundaries used when binning preferences are missing; users must not be required to fill in module names or coordinates. Missing original observations, units/When there is a period conflict or the denominator cannot be determined honestly, the formal load will be stopped or downgraded, and no fabrication will be made.
 
-## 复算与阻断
+## Recalculation and blocking
 
-- 每个有效观测必须落入且只落入一个区间；默认左闭右开，末箱是否包含上界必须显式；
-- 如果提供 `bins`，Builder 从 `observations + edges` 复算并逐箱核对下界、上界和频数；
-- `total = valid + missing = observations.length`；频率分母为 `valid`，缺失值不进入柱高但必须在页内报告；
-- 边界重复或倒序、样本不对平、声明频数不可复现、有效值落在边界之外分别阻断；
-- 分类标签、多个互不相同单位或时期、多个独立指标不能强制命中本模块。
+- Each valid observation must fall into and only fall into one interval; the left is closed and the right is open by default, and whether the last box contains an upper bound must be explicit;
+- If provided `bins`, Builder from `observations + edges` Recalculate and check the lower bound, upper bound and frequency box by box;
+- `total = valid + missing = observations.length`;The frequency denominator is `valid`, missing values do not enter the bar height but must be reported within the page;
+- Boundaries are repeated or in reverse order, samples are not flat, statement frequencies are not reproducible, and valid values fall outside the boundaries and are blocked respectively;
+- Classification labels, multiple different units or periods, and multiple independent indicators cannot be forced to hit this module.
 
-## 页面与编辑性
+## Pages and editability
 
-主图使用相邻的 PowerPoint 原生矩形、网格线、轴标签和数据标签；右侧最多三条来源支持的分布解读，底部最多一条结论。读者可编辑分箱边界、柱块、频数/频率标签、样本说明和洞察文字。合成数据必须显示“合成示例数据，非真实客户数据”。
+The main image uses adjacent PowerPoint Native rectangles, grid lines, axis labels and data labels; distribution interpretation supported by up to three sources on the right and one conclusion at the bottom. Readers can edit binning boundaries, columns, and frequencies/Frequency labels, sample descriptions, and insight text. Synthetic data must show "synthetic sample data, not real customer data."
 
-验收覆盖完整、稀疏、关键缺失、模糊/冲突、非阻塞优化缺失、异常格式与声明频数不可复现案例，并检查一页 16:9、渲染可读性、溢出、原生对象、图片对象和 Microsoft PowerPoint 实际打开。
+Acceptance coverage is complete, sparse, key missing, fuzzy/Conflicts, lack of non-blocking optimization, non-reproducible cases of abnormal format and declaration frequency, and check one page 16:9, rendering readability, overflow, native objects, image objects and Microsoft PowerPoint actually open.
