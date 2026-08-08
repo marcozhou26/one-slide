@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateScatterRegression, calculateLinearRegression, loadScatterRegressionInput } from "../scripts/validate_scatter_regression.mjs";
@@ -95,4 +96,35 @@ test("executable Producer handoff keeps requested module, primary exhibit and pa
   assert.equal(routed.route, "deterministic_module");
   assert.equal(routed.module_id, "scatter-regression");
   assert.equal(routed.module_input, "module_payload");
+});
+
+test("renderer loader directly consumes a formal Producer handoff and keeps direct payload compatibility", async (t) => {
+  const payload = await fixture("scatter-regression-valid.json");
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "scatter-regression-loader-"));
+  t.after(() => fs.rm(tempDir, { recursive: true, force: true }));
+  const handoffPath = path.join(tempDir, "builder-handoff.json");
+  const payloadPath = path.join(tempDir, "module-payload.json");
+  const handoff = {
+    schema_version: "1.0",
+    product: "single-consulting-slide-producer",
+    output_mode: "PPT_DRAFT",
+    single_slide: true,
+    subject: "匿名项目投入与交付关系",
+    story: payload.title.text,
+    source_ids: ["G01", "G02", "C01"],
+    structure: { primary_exhibit: "scatter-regression" },
+    requested_module: "scatter-regression",
+    module_payload: payload,
+  };
+  await Promise.all([
+    fs.writeFile(handoffPath, JSON.stringify(handoff), "utf8"),
+    fs.writeFile(payloadPath, JSON.stringify(payload), "utf8"),
+  ]);
+  const [loadedHandoff, loadedPayload] = await Promise.all([
+    loadScatterRegressionInput(handoffPath),
+    loadScatterRegressionInput(payloadPath),
+  ]);
+  assert.equal(loadedHandoff.module_id, "scatter-regression");
+  assert.deepEqual(loadedHandoff, payload);
+  assert.deepEqual(loadedPayload, payload);
 });
