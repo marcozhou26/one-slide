@@ -98,7 +98,10 @@ export function validateScatterRegression(data) {
 }
 
 export async function loadScatterRegressionInput(inputPath) {
-  const data = JSON.parse(await fs.readFile(inputPath, "utf8"));
+  const parsed = JSON.parse(await fs.readFile(inputPath, "utf8"));
+  const data = parsed?.schema_version === "1.0" && parsed?.module_payload?.module_id === "scatter-regression"
+    ? parsed.module_payload
+    : parsed;
   validateScatterRegression(data);
   return data;
 }
