@@ -16,6 +16,7 @@ import {
   parseCliArgs,
 } from "./pptx_core.mjs";
 import { planR4Module } from "./plan_r4_module.mjs";
+import { buildSankeyRibbonPath, computeSankeyGeometry } from "./sankey_geometry.mjs";
 const PALE_ORANGE = COLORS.orangeLight, PALE_BLUE = COLORS.blueLight;
 function header(slide, p) {
   addTextBox(slide, {
@@ -127,6 +128,10 @@ function formatNumber(value) {
   return Number.isInteger(value) ? value.toLocaleString("en-US") : value.toLocaleString("en-US", { maximumFractionDigits: 1 });
 }
 
+function keepNumberUnitTogether(text) {
+  return String(text ?? "").replace(/(\d)\s+(?=(?:个月|人|个|年|月|周|天|小时|分钟|%))/gu, "$1");
+}
+
 function sankeyEvidenceRail(slide, p, rows, insights) {
   panel(slide, "sankey-evidence-rail", p.rail, COLORS.soft);
   addTextBox(slide, {
@@ -182,61 +187,65 @@ function renderSankey(slide, data, p) {
   const layers = data.diagram.layers;
   const flows = data.diagram.flows.map((flow, index) => ({ ...flow, __index: index }));
   const plot = {
-    left: p.main.left + 34,
+    left: p.main.left + 112,
     top: p.main.top + 62,
-    width: p.main.width - 68,
+    width: p.main.width - 224,
     height: p.main.height - 86,
   };
-  const nodeWidth = 130;
-  const colGap = (plot.width - nodeWidth) / (layers.length - 1);
+  const maxNodes = Math.max(...layers.map((layer) => layer.nodes.length));
+  const nodeGap = maxNodes >= 7 ? 6 : maxNodes >= 5 ? 10 : 14;
+  const geometry = computeSankeyGeometry(layers, flows, plot, { nodeWidth: 20, gap: nodeGap });
   const shapes = new Map();
-  const nodeLayout = new Map();
-  layers.forEach((layer, li) => {
-    const totalGap = 6 * (layer.nodes.length - 1);
-    const usable = plot.height - totalGap;
-    const sum = layer.nodes.reduce((s, n) => s + (n.value ?? 1), 0);
-    const minimumHeight = layer.nodes.length >= 6 ? 38 : layer.nodes.length >= 5 ? 44 : 50;
-    const distributable = Math.max(0, usable - minimumHeight * layer.nodes.length);
-    let y = plot.top;
-    layer.nodes.forEach((n) => {
-      const h = minimumHeight + distributable * (n.value ?? 1) / sum;
-      const x = plot.left + li * colGap;
-      const hasEmbeddedMetrics = n.label.text.includes("；");
-      const shape = addTextBox(slide, {
-        name: `node-${n.id}`,
-        text: hasEmbeddedMetrics ? n.label.text.replaceAll("；", "\n") : `${n.label.text}\n${formatNumber(n.value)}`,
-        position: { left: x, top: y, width: nodeWidth, height: h },
-        fontSize: hasEmbeddedMetrics || layer.nodes.length >= 5 ? 12 : 16,
-        bold: true,
-        color: COLORS.white,
-        alignment: "center",
-        fill:
-          li === layers.length - 1 && /流失|损耗|未入职|淘汰|未按时/.test(n.label.text)
-            ? COLORS.orange
-            : COLORS.navy,
-        line: { style: "solid", fill: COLORS.white, width: 1 },
+  const semanticFor = (flow) => p.sankey.flow_semantics[flow.__index];
+  const toneColor = (semantic) => semantic.tone === "exception"
+    ? "#D96F16"
+    : semantic.tone === "neutral"
+    ? "#52677F"
+    : "#1F66AD";
+  const incidentFlows = (nodeId) => flows.filter((flow) => flow.from === nodeId || flow.to === nodeId);
+  const nodeColor = (nodeId) => {
+    const totals = new Map();
+    for (const flow of incidentFlows(nodeId)) {
+      const color = toneColor(semanticFor(flow));
+      totals.set(color, (totals.get(color) ?? 0) + flow.value);
+    }
+    return [...totals.entries()].sort((left, right) => right[1] - left[1])[0]?.[0] ?? COLORS.navy;
+  };
+
+  geometry.flows
+    .slice()
+    .sort((left, right) => right.thickness - left.thickness || left.index - right.index)
+    .forEach((flow) => {
+      const pathGeometry = buildSankeyRibbonPath(flow);
+      const color = toneColor(semanticFor(flow));
+      slide.shapes.add({
+        name: `sankey-ribbon-${flow.index + 1}-${flow.from}-${flow.to}`,
+        geometry: "custom",
+        position: pathGeometry.position,
+        customPaths: pathGeometry.customPaths,
+        fill: {
+          type: "gradient",
+          gradientKind: "linear",
+          angleDeg: 0,
+          stops: [
+            { offset: 0, color: `${color}/78` },
+            { offset: 100000, color: `${color}/62` },
+          ],
+        },
+        line: { style: "solid", fill: "none", width: 0 },
       });
-      shapes.set(n.id, shape);
-      nodeLayout.set(n.id, {
-        layer: li,
-        index: layer.nodes.indexOf(n),
-        count: layer.nodes.length,
-        left: x,
-        top: y,
-        width: nodeWidth,
-        height: h,
-      });
-      y += h + 6;
     });
-    const titleWidth = li === 0 || li === layers.length - 1
-      ? (colGap + nodeWidth) / 2
-      : colGap;
-    const titleLeft = li === 0
-      ? plot.left
-      : plot.left + li * colGap - (colGap - nodeWidth) / 2;
+
+  layers.forEach((layer, layerIndex) => {
+    const titleLeft = layerIndex === 0
+      ? p.main.left + 10
+      : geometry.nodes[layer.nodes[0].id].left - geometry.columnGap / 2 + 10;
+    const titleWidth = layerIndex === 0 || layerIndex === layers.length - 1
+      ? geometry.columnGap / 2 + 92
+      : geometry.columnGap;
     addTextBox(slide, {
-      name: `layer-${li + 1}`,
-      text: layer.label?.text ?? `第 ${li + 1} 层`,
+      name: `layer-${layerIndex + 1}`,
+      text: layer.label?.text ?? `第 ${layerIndex + 1} 层`,
       position: {
         left: titleLeft,
         top: p.main.top + 8,
@@ -248,109 +257,75 @@ function renderSankey(slide, data, p) {
       color: COLORS.navy,
       alignment: "center",
     });
-  });
-  const maxFlow = Math.max(...flows.map((f) => f.value));
-  const orderedFlows = flows.slice().sort((a, b) => b.value - a.value);
-  const flowSemantic = (f) => p.sankey.flow_semantics[f.__index];
-  const flowStyle = (f) => {
-    const semantic = flowSemantic(f);
-    const normalized = Math.sqrt(f.value / maxFlow);
-    return {
-      style: semantic.line_style,
-      fill: semantic.tone === "exception"
-        ? "#D96F16"
-        : semantic.tone === "neutral"
-        ? "#52677F"
-        : "#1F66AD",
-      width: Math.max(2.4, 10.5 * normalized),
-    };
-  };
-  const endpoints = (f) => {
-    const source = nodeLayout.get(f.from);
-    const target = nodeLayout.get(f.to);
-    return {
-      source,
-      target,
-      sx: source.left + source.width,
-      sy: source.top + source.height / 2,
-      tx: target.left,
-      ty: target.top + target.height / 2,
-    };
-  };
-  orderedFlows.forEach((f) =>
-    connectNative(slide, shapes.get(f.from), shapes.get(f.to), {
-      kind: "straight",
-      fromSide: "right",
-      toSide: "left",
-      arrow: false,
-      placement: "front",
-      line: flowStyle(f),
-    })
-  );
-  shapes.forEach(shape=>shape.bringToFront());
 
-  // When two adjacent-layer flows have inverted vertical order, a crossing is
-  // mathematically unavoidable inside the column gap. Render an explicit
-  // underpass: mask a short section of the loss/smaller flow and redraw the
-  // success/larger flow above it. The paths remain native editable objects and
-  // PowerPoint no longer shows two colors visually fused at the intersection.
-  const bridges = [];
-  if (orderedFlows.length <= 20) for (let i = 0; i < orderedFlows.length; i++) {
-    for (let j = i + 1; j < orderedFlows.length; j++) {
-      const a = orderedFlows[i], b = orderedFlows[j];
-      const ea = endpoints(a), eb = endpoints(b);
-      if (ea.source.layer !== eb.source.layer || ea.target.layer !== eb.target.layer) continue;
-      if (ea.source.layer + 1 !== ea.target.layer) continue;
-      const sourceDelta = ea.source.index - eb.source.index;
-      const targetDelta = ea.target.index - eb.target.index;
-      if (sourceDelta * targetDelta >= 0) continue;
-      const denominator = (ea.ty - ea.sy) - (eb.ty - eb.sy);
-      if (Math.abs(denominator) < 1e-6) continue;
-      const t = (eb.sy - ea.sy) / denominator;
-      if (t <= .08 || t >= .92) continue;
-      const point = {
-        x: ea.sx + (ea.tx - ea.sx) * t,
-        y: ea.sy + (ea.ty - ea.sy) * t,
-      };
-      const aException = flowSemantic(a).tone === "exception";
-      const bException = flowSemantic(b).tone === "exception";
-      const topFlow = aException !== bException
-        ? (aException ? b : a)
-        : (a.value >= b.value ? a : b);
-      bridges.push({ point, topFlow });
-    }
-  }
-  bridges.forEach(({ point, topFlow }, i) => {
-    const bridgeSize = Math.max(14, flowStyle(topFlow).width + 8);
-    slide.shapes.add({
-      name: `sankey-crossing-underpass-${i + 1}`,
-      geometry: "ellipse",
-      position: {
-        left: point.x - bridgeSize / 2,
-        top: point.y - bridgeSize / 2,
-        width: bridgeSize,
-        height: bridgeSize,
-      },
-      fill: COLORS.white,
-      line: { style: "solid", fill: COLORS.white, width: 0 },
-    });
-    connectNative(slide, shapes.get(topFlow.from), shapes.get(topFlow.to), {
-      kind: "straight",
-      fromSide: "right",
-      toSide: "left",
-      arrow: false,
-      placement: "front",
-      line: flowStyle(topFlow),
+    layer.nodes.forEach((node) => {
+      const nodePosition = geometry.nodes[node.id];
+      const fill = nodeColor(node.id);
+      const shape = slide.shapes.add({
+        name: `node-${node.id}`,
+        geometry: "rect",
+        position: {
+          left: nodePosition.left,
+          top: nodePosition.top,
+          width: nodePosition.width,
+          height: nodePosition.height,
+        },
+        fill,
+        line: { style: "solid", fill: "none", width: 0 },
+      });
+      shapes.set(node.id, shape);
+
+      const firstLayer = layerIndex === 0;
+      const labelWidth = firstLayer
+        ? 90
+        : Math.max(72, Math.min(108, geometry.columnGap - nodePosition.width - 14));
+      const labelLeft = firstLayer
+        ? nodePosition.left - labelWidth - 10
+        : nodePosition.left + nodePosition.width + 10;
+      const compact = layer.nodes.length >= 5;
+      addTextBox(slide, {
+        name: `node-label-${node.id}`,
+        text: node.label.text.replaceAll("；", "\n"),
+        position: {
+          left: labelLeft,
+          top: nodePosition.top + nodePosition.height / 2 - (compact ? 18 : 22),
+          width: labelWidth,
+          height: compact ? 22 : 26,
+        },
+        fontSize: 12,
+        bold: true,
+        color: COLORS.text,
+        alignment: firstLayer ? "right" : "left",
+      });
+      addTextBox(slide, {
+        name: `node-value-${node.id}`,
+        text: formatNumber(node.value),
+        position: {
+          left: labelLeft,
+          top: nodePosition.top + nodePosition.height / 2 + (compact ? 2 : 5),
+          width: labelWidth,
+          height: 18,
+        },
+        fontSize: 12,
+        color: COLORS.muted,
+        alignment: firstLayer ? "right" : "left",
+        singleLine: true,
+      });
     });
   });
   if (p.sankey.sla_rows.length) sankeyEvidenceRail(slide, p, p.sankey.sla_rows, data.diagram.insights ?? []);
   else {
-    const cards = rail(slide, p.rail, data.diagram.insights ?? []);
+    const cards = rail(slide, p.rail, (data.diagram.insights ?? []).map((item) => ({
+      ...item,
+      text: keepNumberUnitTogether(item.text),
+    })));
     ["turnover", "not_hired", "screened_out"].forEach((id, i) => {
       if (shapes.get(id) && cards[i]) connectNative(slide, shapes.get(id), cards[i], { kind: "elbow", role: "leader", fromSide: "right", toSide: "left", line: { style: "solid", fill: COLORS.line, width: .8 } });
     });
   }
-  bottom(slide, p.bottom, data.diagram.conclusion);
+  bottom(slide, p.bottom, data.diagram.conclusion
+    ? { ...data.diagram.conclusion, text: keepNumberUnitTogether(data.diagram.conclusion.text) }
+    : null);
 }
 
 function renderChord(slide, data, p) {

@@ -4,7 +4,7 @@
 
 OneSlide 面向不会写复杂提示词、又希望获得专业单页 PPT 的普通用户。你可以只给一句需求，也可以提供完整材料；信息不足时，它会在不改写原意的前提下定向补全，并明确标出模型补全、计算结果和外部来源。
 
-[下载 OneSlide v1.2.1](../../releases/latest/download/one-slide-v1.2.1.zip) · [查看使用方法](#3-分钟上手) · [提交问题](../../issues)
+[下载 OneSlide v1.2.2](../../releases/latest/download/one-slide-v1.2.2.zip) · [查看使用方法](#3-分钟上手) · [提交问题](../../issues)
 
 ## 一页，也能把复杂逻辑讲清楚
 
@@ -21,7 +21,7 @@ OneSlide 面向不会写复杂提示词、又希望获得专业单页 PPT 的普
   </tr>
   <tr>
     <td width="50%"><img src="showcase/05-waterfall.png" alt="EBITDA 瀑布图"><br><b>瀑布图：</b>预算与实际差异归因</td>
-    <td width="50%"><img src="showcase/06-sankey.png" alt="服务工单桑基图"><br><b>流向分析：</b>工单入口、处理路径与结果</td>
+    <td width="50%"><img src="showcase/06-sankey.png" alt="候选人转化桑基图"><br><b>流向分析：</b>候选人来源、筛选、入职与留任</td>
   </tr>
   <tr>
     <td width="50%"><img src="showcase/07-project-gantt.png" alt="项目甘特图"><br><b>项目甘特图：</b>进度、依赖与放行条件</td>
@@ -42,7 +42,7 @@ OneSlide 面向不会写复杂提示词、又希望获得专业单页 PPT 的普
 
 ## 3 分钟上手
 
-1. 下载并解压 [one-slide-v1.2.1.zip](../../releases/latest/download/one-slide-v1.2.1.zip)。
+1. 下载并解压 [one-slide-v1.2.2.zip](../../releases/latest/download/one-slide-v1.2.2.zip)。
 2. 把顶层 `one-slide` 文件夹复制到支持 Agent Skills 的 Skills 目录。
 3. 刷新客户端，调用 `$one-slide`。
 
@@ -121,4 +121,4 @@ python3 -m unittest discover -s tests -v
 
 ## 版本状态
 
-当前版本：v1.2.1。该版本新增组织架构图同层对齐、直属竖线和职能虚线通道门禁。公开许可证和本机回归测试已经配置；不同客户端和不同 PowerPoint 版本仍可能产生字体或连接线差异。
+当前版本：v1.2.2。该版本将桑基图升级为原生可编辑的贝塞尔流带，流带宽度与流量成比例，并改用直角无边框节点，消除白色缺口。公开许可证和本机回归测试已经配置；不同客户端和不同 PowerPoint 版本仍可能产生字体或布局差异。
