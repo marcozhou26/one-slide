@@ -300,3 +300,17 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - `builder/assets/test-fixtures/correlation-matrix-valid.json`
 - `builder/tests/correlation_matrix_contracts.test.mjs`
 - `builder/assets/reference-pages/correlation-matrix.pptx`
+
+## 15. scatter-regression 纵向切片
+
+`scatter-regression` 作为第 39 个正式模块，用于两个连续变量在同一明确样本中的方向、线性强度、偏离趋势观测和可解释边界判断。V1 仅支持带截距的一元普通最小二乘拟合，保留逐条 x/y 原始观测、两轴单位、样本定义、期间、总体、来源以及缺失/重复/异常处理规则。Builder 复算斜率、截距和 R²，拒绝有效配对不足与任一轴零方差，不把关联写成因果，也不生成没有来源的显著性结论。
+
+关键文件：
+
+- `builder/references/scatter-regression-module.md`
+- `builder/scripts/validate_scatter_regression.mjs`
+- `builder/scripts/plan_scatter_regression.mjs`
+- `builder/scripts/render_scatter_regression.mjs`
+- `builder/assets/test-fixtures/scatter-regression-valid.json`
+- `builder/tests/scatter_regression_contracts.test.mjs`
+- `builder/assets/reference-pages/scatter-regression.pptx`

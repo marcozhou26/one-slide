@@ -16,6 +16,7 @@ const pageModelMethodMap = new Map([
   ["continuous_distribution", "histogram"],
   ["raw_observation_distribution", "box-plot-jitter"],
   ["correlation_analysis", "correlation-matrix"],
+  ["bivariate_linear_relationship", "scatter-regression"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -48,6 +49,7 @@ const definitions = {
   histogram: { aliases: ["直方图", "histogram"], cues: [["连续数值", "分箱", "区间", "集中", "偏态", "长尾", "多峰", "缺失值", "样本"]] },
   "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
   "correlation-matrix": { aliases: ["相关矩阵", "相关性矩阵", "correlation matrix"], cues: [["一起变化", "方向相反", "关系较弱", "最强正", "最强负", "系数", "pearson", "spearman"]] },
+  "scatter-regression": { aliases: ["散点回归", "线性回归", "scatter regression"], cues: [["两个连续指标", "关系方向", "关系强度", "偏离趋势", "离群", "可解释范围", "样本内关联"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -195,6 +197,30 @@ function conflictingCorrelationScope(data) {
   return null;
 }
 
+function inferScatterRegression(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const observations = Array.isArray(data.observations) ? data.observations : [];
+  const valid = observations.filter((item) => item && typeof item === "object" && Number.isFinite(Number(item.x)) && Number.isFinite(Number(item.y)));
+  if (valid.length < 8 || valid.length > 200) return null;
+  const xValues = new Set(valid.map((item) => Number(item.x)));
+  const yValues = new Set(valid.map((item) => Number(item.y)));
+  if (xValues.size < 2 || yValues.size < 2) return null;
+  const metadataReady = Boolean(data.x_metric && data.y_metric && data.x_unit && data.y_unit && data.period);
+  const relationshipCue = ["关系", "方向", "强度", "偏离", "离群", "关联", "一起变化", "外推"].some((cue) => text.includes(cue));
+  if (!metadataReady || !relationshipCue) return null;
+  return ["inferred:paired_continuous_observations", "inferred:nonzero_bivariate_variance", "cue:bivariate_relationship"];
+}
+
+function conflictingScatterScope(data) {
+  const observations = Array.isArray(data?.observations) ? data.observations : [];
+  if (!observations.length) return null;
+  for (const field of ["x_unit", "y_unit", "period"]) {
+    const values = [...new Set(observations.map((item) => normalizeText(item?.[field])).filter(Boolean))];
+    if (values.length > 1) return field;
+  }
+  return null;
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -224,6 +250,8 @@ export async function routeInput(input) {
   if (distributionScopeConflict) throw Object.assign(new Error(`Group distribution ${distributionScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
   const correlationScopeConflict = conflictingCorrelationScope(input.data);
   if (correlationScopeConflict) throw Object.assign(new Error(`Correlation ${correlationScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
+  const scatterScopeConflict = conflictingScatterScope(input.data);
+  if (scatterScopeConflict) throw Object.assign(new Error(`Paired observations ${scatterScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
@@ -232,6 +260,7 @@ export async function routeInput(input) {
   const inferredHistogram = inferHistogram(input.data, text);
   const inferredJitter = inferGroupDistribution(input.data, text);
   const inferredCorrelation = inferCorrelationMatrix(input.data, text);
+  const inferredScatter = inferScatterRegression(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -257,6 +286,9 @@ export async function routeInput(input) {
       : item)
     .map((item) => item.moduleId === "correlation-matrix" && !inferredCorrelation && !item.evidence.some((evidence) => evidence.startsWith("explicit:"))
       ? { ...item, score: 0 }
+      : item)
+    .map((item) => inferredScatter && item.moduleId === "scatter-regression"
+      ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredScatter] }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));

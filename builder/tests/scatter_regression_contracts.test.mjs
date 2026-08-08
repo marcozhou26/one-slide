@@ -1,0 +1,98 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { validateScatterRegression, calculateLinearRegression, loadScatterRegressionInput } from "../scripts/validate_scatter_regression.mjs";
+import { planScatterRegression } from "../scripts/plan_scatter_regression.mjs";
+import { routeInput } from "../scripts/route_input.mjs";
+import { routeV3 } from "../scripts/route_v3.mjs";
+
+const skillRoot = fileURLToPath(new URL("../", import.meta.url));
+const fixture = async (name) => JSON.parse(await fs.readFile(path.join(skillRoot, "assets/test-fixtures", name), "utf8"));
+
+test("complete input reproduces OLS statistics, sample handling and one-page plan", async () => {
+  const data = await fixture("scatter-regression-valid.json");
+  const result = validateScatterRegression(data);
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.unmappedSourceIds, []);
+  assert.equal(result.calculated.valid.length, 16);
+  assert.equal(result.calculated.duplicate_pairs, 0);
+  assert.ok(Math.abs(result.calculated.slope - 0.61875) < 1e-10);
+  assert.ok(Math.abs(result.calculated.intercept - 37.875) < 1e-10);
+  assert.ok(Math.abs(result.calculated.r_squared - 0.8083691143293792) < 1e-10);
+  const plan = planScatterRegression(data);
+  assert.deepEqual(plan.slide, { width: 1280, height: 720 });
+  assert.ok(plan.chart.width > plan.rail.width);
+});
+
+test("representative natural language and paired values route without a module or chart name", async () => {
+  const text = "请让项目负责人判断投入工时与按期交付完成度的关系方向和强弱，找出明显偏离总体趋势的项目，并说明结论能解释到什么范围。";
+  assert.doesNotMatch(text, /scatter|regression|散点|回归|图表|模块/i);
+  const observations = [
+    [20,48],[24,51],[28,54],[32,58],[36,59],[40,64],[44,66],[48,68],[52,73],[56,74],[60,78],[64,81]
+  ].map(([x,y], index) => ({ id: `p${index + 1}`, x, y }));
+  const result = await routeInput({ input_mode: "mixed", text, data: { x_metric: "投入工时", x_unit: "小时", y_metric: "按期交付完成度", y_unit: "%", period: "2026年上半年", observations } });
+  assert.equal(result.decision, "selected");
+  assert.equal(result.module.module_id, "scatter-regression");
+  assert.match(result.evidence.join(" "), /paired_continuous_observations/);
+});
+
+test("missing paired observations blocks without inventing a fitted relationship", async () => {
+  await assert.rejects(
+    () => routeInput({ input_mode: "mixed", text: "判断两个指标的关系方向和强弱", data: { x_metric: "投入", x_unit: "小时", y_metric: "完成度", y_unit: "%", period: "2026年" } }),
+    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+  );
+});
+
+test("conflicting units in paired records stop routing instead of silently merging", async () => {
+  const observations = Array.from({ length: 8 }, (_, index) => ({ id: String(index), x: index + 1, y: index * 2 + 3, x_unit: index === 7 ? "天" : "小时", y_unit: "%", period: "2026年" }));
+  await assert.rejects(
+    () => routeInput({ input_mode: "mixed", text: "判断两个连续指标的关系方向和偏离趋势", data: { x_metric: "投入", x_unit: "小时", y_metric: "完成度", y_unit: "%", period: "2026年", observations } }),
+    (error) => error.code === "SOURCE_BASELINE_FAIL",
+  );
+});
+
+test("missing non-blocking style does not block a valid statistical payload", async () => {
+  const data = await fixture("scatter-regression-valid.json");
+  delete data.style;
+  assert.equal(validateScatterRegression(data).ok, true);
+});
+
+test("zero variance is rejected before producing a misleading line", async () => {
+  const data = await fixture("scatter-regression-zero-variance.json");
+  assert.throws(() => validateScatterRegression(data), (error) => error.code === "REGRESSION_ZERO_VARIANCE");
+});
+
+test("fewer than eight formal valid pairs is rejected", async () => {
+  const data = await fixture("scatter-regression-valid.json");
+  data.diagram.observations = data.diagram.observations.slice(0, 7);
+  data.diagram.sample = { total: 7, valid: 7, missing: 0, duplicate_pairs: 0 };
+  const calculated = calculateLinearRegression(data.diagram.observations);
+  data.diagram.statistics = { slope: calculated.slope, intercept: calculated.intercept, r_squared: calculated.r_squared, source_ids: ["C01"] };
+  assert.throws(() => validateScatterRegression(data), (error) => ["DATA_CONTRACT_FAIL", "REGRESSION_SAMPLE_TOO_SMALL"].includes(error.code));
+});
+
+test("declared slope, intercept and R-squared must reconcile from unrounded pairs", async () => {
+  const data = await fixture("scatter-regression-valid.json");
+  data.diagram.statistics.r_squared = 0.91;
+  assert.throws(() => validateScatterRegression(data), (error) => error.code === "REGRESSION_STATISTICS_RECONCILIATION_FAIL");
+});
+
+test("highlighted observations must follow the declared absolute-residual rule", async () => {
+  const data = await fixture("scatter-regression-valid.json");
+  data.diagram.highlight_ids = ["p01", "p02"];
+  assert.throws(() => validateScatterRegression(data), (error) => error.code === "REGRESSION_OUTLIER_RECONCILIATION_FAIL");
+});
+
+test("malformed JSON is rejected as an abnormal input file", async () => {
+  await assert.rejects(() => loadScatterRegressionInput(path.join(skillRoot, "assets/test-fixtures/scatter-regression-abnormal-format.json")), SyntaxError);
+});
+
+test("executable Producer handoff keeps requested module, primary exhibit and payload aligned", async () => {
+  const payload = await fixture("scatter-regression-valid.json");
+  const routed = await routeV3({ subject: "两个连续指标的关系", story: payload.title.text, source_ids: ["S01", "C01", "G01"], display_blocks: [{ block_id: "B01" }], requested_module: "scatter-regression", structure: { primary_exhibit: "scatter-regression" }, module_payload: payload });
+  assert.equal(routed.route, "deterministic_module");
+  assert.equal(routed.module_id, "scatter-regression");
+  assert.equal(routed.module_input, "module_payload");
+});

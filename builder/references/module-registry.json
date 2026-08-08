@@ -2,7 +2,7 @@
   "schema_version": "3.0",
   "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 39,
+  "productized_module_count": 40,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -165,6 +165,15 @@
       "planner": "scripts/plan_correlation_matrix.mjs",
       "renderer": "scripts/render_correlation_matrix.mjs",
       "reference": "references/correlation-matrix-module.md"
+    },
+    {
+      "module_id": "scatter-regression",
+      "status": "productized",
+      "signals": ["has_paired_continuous_observations", "has_linear_relationship_question"],
+      "validator": "scripts/validate_scatter_regression.mjs",
+      "planner": "scripts/plan_scatter_regression.mjs",
+      "renderer": "scripts/render_scatter_regression.mjs",
+      "reference": "references/scatter-regression-module.md"
     },
     {
       "module_id": "small-multiples",

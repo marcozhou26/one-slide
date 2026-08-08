@@ -1,0 +1,1 @@
+{"version":"1.0","module_id":"scatter-regression","source_anchors":[{"id":"S01","text":"损坏格式"}],"title":{"text":"损坏格式","source_ids":["S01"]},"diagram":{"type":"scatter-regression","observations":[{"id":"a","x":"三十小时","y":80,"source_ids":["S01"]}]}

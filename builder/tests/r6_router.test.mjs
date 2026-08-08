@@ -22,6 +22,7 @@ const blindCases = [
   ["box-plot", { input_mode: "text", text: "比较五个区域订单周期的中位数、中间50%范围、离散程度和异常值" }],
   ["histogram", { input_mode: "mixed", text: "查看一批连续测量值集中在哪些区间，是否偏斜并有长尾", data: { metric: "处理时长", unit: "分钟", period: "2026年7月", values: [4, 7, 11, 14, 18, 22, 25, 29, 33, 39, 45, 58, 72] } }],
   ["box-plot-jitter", { input_mode: "text", text: "比较四个班组每位员工的处理时长分布，同时标出中位数、四分位、样本量和异常值" }],
+  ["scatter-regression", { input_mode: "text", text: "判断两个连续指标的关系方向和关系强度，找出偏离趋势的离群记录，并说明样本内关联的可解释范围" }],
   ["small-multiples", { input_mode: "text", text: "九条业务线放进3×3矩阵，每格重复同一迷你折线并统一刻度和公司基准" }],
   ["sankey-flow", { input_mode: "text", text: "展示获客渠道到筛选再到成交和续约的四层分流，流带宽度按人数，损耗流向下方" }],
   ["chord-dependency", { input_mode: "data", data: { 圆周: ["销售", "产品", "交付", "财务", "人力"], 双向依赖: [], 交互强度: [] } }],
