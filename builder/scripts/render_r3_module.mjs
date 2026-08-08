@@ -191,21 +191,41 @@ function renderDumbbell(slide, data, plan) {
   bottom(slide, plan.bottom, data.diagram.conclusion);
 }
 
-function renderSlope(slide, data, plan) {
-  panel(slide, "slope-frame", plan.chart);
-  const objects = data.diagram.objects; const top = plan.chart.top + 58; const bottomY = plan.chart.top + plan.chart.height - 30; const x1 = plan.chart.left + 250; const x2 = plan.chart.left + plan.chart.width - 280; const y = (rank) => top + (rank - 1) / Math.max(1, objects.length - 1) * (bottomY - top);
-  addTextBox(slide, { name: "period-left", text: data.diagram.left_period.text, position: { left: x1 - 100, top: plan.chart.top + 12, width: 200, height: 32 }, fontSize: 18, bold: true, color: COLORS.navy, alignment: "center" });
-  addTextBox(slide, { name: "period-right", text: data.diagram.right_period.text, position: { left: x2 - 100, top: plan.chart.top + 12, width: 200, height: 32 }, fontSize: 18, bold: true, color: COLORS.navy, alignment: "center" });
-  objects.forEach((o, index) => {
-    const y1 = y(o.left_rank); const y2 = y(o.right_rank); const change = o.left_rank - o.right_rank; const color = change > 0 ? COLORS.blue : change < 0 ? COLORS.orange : COLORS.muted;
-    line(slide, `slope-${index + 1}`, x1, y1, x2, y2, o.exit ? "dashed" : "solid", color, o.priority ? 3.5 : 1.8);
-    addTextBox(slide, { name: `slope-left-rank-${index + 1}`, text: String(o.left_rank), position: { left: plan.chart.left + 8, top: y1 - 14, width: 28, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
-    addTextBox(slide, { name: `slope-left-label-${index + 1}`, text: o.label.text, position: { left: plan.chart.left + 42, top: y1 - 14, width: 130, height: 28 }, fontSize: 16, bold: o.priority, color, alignment: "left" });
-    addTextBox(slide, { name: `slope-left-value-${index + 1}`, text: String(o.left_value), position: { left: plan.chart.left + 176, top: y1 - 14, width: 66, height: 28 }, fontSize: 16, bold: o.priority, color, alignment: "right" });
-    addTextBox(slide, { name: `slope-right-rank-${index + 1}`, text: String(o.right_rank), position: { left: x2 + 4, top: y2 - 14, width: 24, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
-    addTextBox(slide, { name: `slope-right-label-${index + 1}`, text: o.label.text, position: { left: x2 + 32, top: y2 - 14, width: 128, height: 28 }, fontSize: 16, bold: o.priority, color, alignment: "left" });
-    addTextBox(slide, { name: `slope-right-value-${index + 1}`, text: String(o.right_value), position: { left: x2 + 164, top: y2 - 14, width: 64, height: 28 }, fontSize: 16, bold: o.priority, color, alignment: "right" });
-    addTextBox(slide, { name: `slope-right-change-${index + 1}`, text: change > 0 ? `+${change}` : String(change), position: { left: x2 + 232, top: y2 - 14, width: 48, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
+function renderBump(slide, data, plan) {
+  panel(slide, "bump-frame", plan.chart);
+  const periods = data.diagram.periods; const objects = data.diagram.objects;
+  const top = plan.chart.top + 66; const bottomY = plan.chart.top + plan.chart.height - 30;
+  const x1 = plan.chart.left + 250; const x2 = plan.chart.left + plan.chart.width - 280;
+  const maxRank = Math.max(...objects.flatMap((object) => object.ranks.filter(Number.isInteger)));
+  const x = (index) => x1 + index / Math.max(1, periods.length - 1) * (x2 - x1);
+  const y = (rank) => top + (rank - 1) / Math.max(1, maxRank - 1) * (bottomY - top);
+  periods.forEach((period, index) => addTextBox(slide, { name: `bump-period-${index + 1}`, text: period.text, position: { left: x(index) - 70, top: plan.chart.top + 12, width: 140, height: 32 }, fontSize: 18, bold: true, color: COLORS.navy, alignment: "center" }));
+  objects.forEach((object, objectIndex) => {
+    const ranks = object.ranks; const states = object.states ?? ranks.map((rank) => Number.isInteger(rank) ? "active" : "not_ranked");
+    const active = ranks.map((rank, index) => Number.isInteger(rank) && ["active", "new"].includes(states[index]));
+    const first = active.findIndex(Boolean); const last = active.length - 1 - [...active].reverse().findIndex(Boolean);
+    const change = first >= 0 && last >= 0 ? ranks[first] - ranks[last] : 0;
+    const color = change > 0 ? COLORS.blue : change < 0 ? COLORS.orange : COLORS.muted;
+    for (let index = 1; index < ranks.length; index += 1) {
+      if (active[index - 1] && active[index]) line(slide, `bump-${objectIndex + 1}-${index}`, x(index - 1), y(ranks[index - 1]), x(index), y(ranks[index]), "solid", color, object.priority ? 3.5 : 1.8);
+    }
+    ranks.forEach((rank, index) => {
+      if (!active[index]) return;
+      addTextBox(slide, { name: `bump-node-${objectIndex + 1}-${index + 1}`, text: String(rank), position: { left: x(index) - 14, top: y(rank) - 14, width: 28, height: 28 }, fontSize: 14, bold: true, geometry: "ellipse", fill: color, line: { style: "solid", fill: COLORS.white, width: 1.3 }, color: COLORS.white, alignment: "center" });
+    });
+    if (first >= 0) {
+      const firstValue = object.values?.[first];
+      addTextBox(slide, { name: `bump-left-rank-${objectIndex + 1}`, text: String(ranks[first]), position: { left: plan.chart.left + 8, top: y(ranks[first]) - 14, width: 28, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
+      addTextBox(slide, { name: `bump-left-label-${objectIndex + 1}`, text: object.label.text, position: { left: plan.chart.left + 42, top: y(ranks[first]) - 14, width: 130, height: 28 }, fontSize: 16, bold: object.priority, color, alignment: "left" });
+      if (firstValue !== null && firstValue !== undefined) addTextBox(slide, { name: `bump-left-value-${objectIndex + 1}`, text: String(firstValue), position: { left: plan.chart.left + 176, top: y(ranks[first]) - 14, width: 66, height: 28 }, fontSize: 16, bold: object.priority, color, alignment: "right" });
+    }
+    if (last >= 0 && last !== first) {
+      const lastValue = object.values?.[last];
+      addTextBox(slide, { name: `bump-right-rank-${objectIndex + 1}`, text: String(ranks[last]), position: { left: x2 + 4, top: y(ranks[last]) - 14, width: 24, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
+      addTextBox(slide, { name: `bump-right-label-${objectIndex + 1}`, text: object.label.text, position: { left: x2 + 32, top: y(ranks[last]) - 14, width: 128, height: 28 }, fontSize: 16, bold: object.priority, color, alignment: "left" });
+      if (lastValue !== null && lastValue !== undefined) addTextBox(slide, { name: `bump-right-value-${objectIndex + 1}`, text: String(lastValue), position: { left: x2 + 164, top: y(ranks[last]) - 14, width: 64, height: 28 }, fontSize: 16, bold: object.priority, color, alignment: "right" });
+      addTextBox(slide, { name: `bump-right-change-${objectIndex + 1}`, text: change > 0 ? `+${change}` : String(change), position: { left: x2 + 232, top: y(ranks[last]) - 14, width: 48, height: 28 }, fontSize: 16, bold: true, color, alignment: "right" });
+    }
   });
   insights(slide, plan.rail, data.diagram.insights ?? []);
   bottom(slide, plan.bottom, data.diagram.conclusion);
@@ -231,7 +251,7 @@ function renderSmallMultiples(slide, data, plan) {
 
 export async function renderR3Module(data, output) {
   const plan = planR3Module(data); const { presentation, slide } = createPresentation(output.background); header(slide, plan);
-  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "slope-ranking": renderSlope, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
+  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output); return plan;
 }
 async function main() { const options = parseCliArgs(process.argv.slice(2)); const data = await loadR3ModuleInput(options.input); const plan = await renderR3Module(data, options); process.stdout.write(`${JSON.stringify({ ok: true, module: data.module_id, input_kind: data.input_kind ?? "module-fixture", slide: plan.slide })}\n`); }

@@ -9,7 +9,8 @@ export async function routeModule(profile) {
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = registry.modules.filter((module) => module.status === "productized");
   if (profile.requested_module) {
-    const selected = productized.find((module) => module.module_id === profile.requested_module);
+    const requestedModule = profile.requested_module === "slope-ranking" ? "bump-ranking" : profile.requested_module;
+    const selected = productized.find((module) => module.module_id === requestedModule);
     if (!selected) {
       const error = new Error(`Requested module is not productized: ${profile.requested_module}`);
       error.code = "MODULE_NOT_PRODUCTIZED";

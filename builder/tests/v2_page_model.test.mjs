@@ -55,7 +55,7 @@ test("ambiguous sparse request cannot pass as a page model", () => {
 test("compiled expression method routes without Markdown tokens or template cues", async () => {
   const result = await routeInput({ page_model: validModel() });
   assert.equal(result.decision, "selected");
-  assert.equal(result.module.module_id, "slope-ranking");
+  assert.equal(result.module.module_id, "bump-ranking");
   assert.equal(result.confidence, "compiled_structure");
 });
 

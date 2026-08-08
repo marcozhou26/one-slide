@@ -138,6 +138,8 @@ The Builder prompt must describe information relationships and visible requireme
 
 If one productized Builder module can express every must-include item, read only that module reference and include a complete executable `module_payload` as defined by `references/output-contract.md`. Do not emit a module name without its validator-ready payload. Hybrid pages keep the generic structured handoff and let Builder use guarded direct composition.
 
+For rank-migration pages, treat `bump-ranking` as the canonical module. Prefer it when the evidence contains an ordered ranking across two or more periods; two periods may render as a slope-style view, while three or more periods must be handed off as a bump chart. A complete payload must preserve the ordered `periods`, one `ranks`/`values`/`states` slot per period for each object, explicit `source_ids`, and `new`/`exited`/`not_ranked` states where applicable. Do not generate the legacy `left_period`/`right_period` payload for new work; Builder keeps that shape only as a compatibility input.
+
 ### 7. Validate the package
 
 Run:

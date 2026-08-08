@@ -16,7 +16,7 @@ const blindCases = [
   ["tornado-sensitivity", { input_mode: "mixed", text: "八个参数分别取低值和高值", data: { 基准情形: 100, 变量: [], 单变量: true } }],
   ["radar-capability", { input_mode: "text", text: "九个能力维度比较当前水平、行业中位和十二个月目标，并按成熟度分组" }],
   ["dumbbell-gap", { input_mode: "text", text: "十项指标分别列现状、目标和标杆，按差距绝对值排序并标明改善难度" }],
-  ["slope-ranking", { input_mode: "text", text: "比较两个时点的前十榜单排名，标出上升、下降、新进入与退出" }],
+  ["bump-ranking", { input_mode: "text", text: "比较两个时点的前十榜单排名，标出上升、下降、新进入与退出" }],
   ["small-multiples", { input_mode: "text", text: "九条业务线放进3×3矩阵，每格重复同一迷你折线并统一刻度和公司基准" }],
   ["sankey-flow", { input_mode: "text", text: "展示获客渠道到筛选再到成交和续约的四层分流，流带宽度按人数，损耗流向下方" }],
   ["chord-dependency", { input_mode: "data", data: { 圆周: ["销售", "产品", "交付", "财务", "人力"], 双向依赖: [], 交互强度: [] } }],

@@ -125,6 +125,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 `requested_module`、`structure.primary_exhibit` 和 `module_payload.module_id` 必须一致。`module_payload` 必须包含该模块 validator 所需的全部字段和全部可见内容；不得只放模块名或半成品骨架。混合页面或模块无法容纳全部必含内容时，三项都省略，由 Builder 进入 `direct_composition`，不得硬塞模块。
 
+排名迁移页使用正式模块 ID `bump-ranking`。Producer 交接时应使用 `diagram.periods` 和每个对象的 `ranks`、`values`、`states` 数组；数组长度必须与时期数一致，时期保持原始顺序。两期数据可以由 Builder 呈现为 slope-style 视觉，三期及以上数据呈现为 Bump Chart。新进入、退出或暂未上榜必须显式写入 `states`，不能靠颜色或文案猜测。旧版 `slope-ranking` 的左右字段只用于兼容已有运行包，不作为新提示词的生成目标。
+
 ## builder-prompt.md
 
 Include, when applicable:
