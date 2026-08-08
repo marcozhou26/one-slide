@@ -119,10 +119,10 @@
       "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/dumbbell-gap-module.md"
     },
     {
-      "module_id": "slope-ranking",
+      "module_id": "bump-ranking",
       "status": "productized",
-      "signals": ["has_two_period_ranks", "has_rank_migration"],
-      "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/slope-ranking-module.md"
+      "signals": ["has_multi_period_ranks", "has_rank_migration"],
+      "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/bump-ranking-module.md"
     },
     {
       "module_id": "small-multiples",

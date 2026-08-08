@@ -9,7 +9,24 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "slope-ranking", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "small-multiples"]);
+
+function normalizeRankMigration(data) {
+  if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
+  const diagram = data.diagram ?? {};
+  const periods = [diagram.left_period, diagram.right_period];
+  const objects = (diagram.objects ?? []).map((object) => ({
+    ...object,
+    ranks: [object.left_rank, object.right_rank],
+    values: [object.left_value, object.right_value],
+    states: ["active", object.exit ? "exited" : "active"],
+  }));
+  return {
+    ...data,
+    module_id: "bump-ranking",
+    diagram: { ...diagram, type: "bump-ranking", periods, objects },
+  };
+}
 
 function context(data) {
   const anchors = buildAnchorMap(data.source_anchors);
@@ -150,7 +167,7 @@ function normalizeRadarHandoff(data, radarRows, rankingRows) {
 }
 
 export async function loadR3ModuleInput(inputPath) {
-  const data = JSON.parse(await fs.readFile(inputPath, "utf8"));
+  const data = normalizeRankMigration(JSON.parse(await fs.readFile(inputPath, "utf8")));
   if (data?.version === "1.0" && data?.module_id) return data;
   if (data?.schema_version === "1.0" && data?.requested_module === "radar-capability") {
     const base = path.dirname(inputPath);
@@ -269,20 +286,36 @@ function validateDumbbell(data, c) {
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
 }
 
-function validateSlope(data, c) {
+function validateBump(data, c) {
+  const periods = data.diagram.periods;
   const objects = data.diagram.objects;
-  requireCondition(Array.isArray(objects) && objects.length >= 5 && objects.length <= 12, "DATA_CONTRACT_FAIL", "Slope chart requires 5–12 objects");
-  const left = new Set(); const right = new Set();
+  requireCondition(Array.isArray(periods) && periods.length >= 2 && periods.length <= 8, "DATA_CONTRACT_FAIL", "Bump chart requires 2–8 periods");
+  periods.forEach((period) => c.text(period, "Rank period"));
+  requireCondition(Array.isArray(objects) && objects.length >= 5 && objects.length <= 12, "DATA_CONTRACT_FAIL", "Bump chart requires 5–12 objects");
+  const ranksByPeriod = periods.map(() => new Set());
   for (const object of objects) {
     c.text(object.label, "Object label");
-    requireCondition(Number.isInteger(object.left_rank) && Number.isInteger(object.right_rank), "DATA_CONTRACT_FAIL", "Both ranks are required");
-    requireCondition(!left.has(object.left_rank) && !right.has(object.right_rank), "SLOPE_RANK_CONFLICT", "Ranks must be unique at each timepoint");
-    left.add(object.left_rank); right.add(object.right_rank);
-    requireCondition(Number.isFinite(object.left_value) && Number.isFinite(object.right_value), "DATA_CONTRACT_FAIL", "Slope values must be numeric");
-    c.source(object.source_ids, "Slope values");
+    requireCondition(Array.isArray(object.ranks) && object.ranks.length === periods.length, "DATA_CONTRACT_FAIL", "Every object needs one rank slot per period");
+    const values = object.values ?? object.ranks.map(() => null);
+    requireCondition(Array.isArray(values) && values.length === periods.length, "DATA_CONTRACT_FAIL", "Every object needs one value slot per period");
+    const states = object.states ?? object.ranks.map((rank) => Number.isInteger(rank) ? "active" : "not_ranked");
+    requireCondition(Array.isArray(states) && states.length === periods.length, "DATA_CONTRACT_FAIL", "Every object needs one state slot per period");
+    for (let index = 0; index < periods.length; index += 1) {
+      const state = states[index]; const rank = object.ranks[index]; const value = values[index];
+      requireCondition(["active", "new", "exited", "not_ranked"].includes(state), "DATA_CONTRACT_FAIL", `Unsupported rank state: ${state}`);
+      if (["active", "new"].includes(state)) {
+        requireCondition(Number.isInteger(rank) && rank >= 1, "DATA_CONTRACT_FAIL", "Active rank must be a positive integer");
+        requireCondition(!ranksByPeriod[index].has(rank), "BUMP_RANK_CONFLICT", `Ranks must be unique at period ${index + 1}`);
+        ranksByPeriod[index].add(rank);
+        if (value !== null && value !== undefined) requireCondition(Number.isFinite(value), "DATA_CONTRACT_FAIL", "Rank values must be numeric when supplied");
+      } else {
+        requireCondition(rank === null || rank === undefined, "DATA_CONTRACT_FAIL", "Exited or unranked objects must use a null rank");
+        requireCondition(value === null || value === undefined, "DATA_CONTRACT_FAIL", "Exited or unranked objects must use a null value");
+      }
+    }
+    c.source(object.source_ids, "Rank migration data");
     if (object.reason) c.text(object.reason, "Movement reason");
   }
-  c.text(data.diagram.left_period, "Left period"); c.text(data.diagram.right_period, "Right period");
   (data.diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
 }
@@ -306,12 +339,13 @@ function validateSmallMultiples(data, c) {
 }
 
 export function validateR3Module(data) {
+  data = normalizeRankMigration(data);
   requireCondition(data?.version === "1.0", "LOGIC_STRUCTURE_FAIL", "Unsupported version");
   requireCondition(MODULES.has(data?.module_id), "LOGIC_STRUCTURE_FAIL", "Expected an R3 module_id");
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "slope-ranking": validateSlope, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 

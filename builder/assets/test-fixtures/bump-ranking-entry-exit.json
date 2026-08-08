@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "module_id": "bump-ranking",
+  "source_anchors": [
+    { "id": "S01", "text": "新进入和退出对象必须显式标记" },
+    { "id": "S02", "text": "2023；2024；2025；业务 A；业务 B；业务 C；业务 D；业务 E；业务 D 在 2025 年新进入前五；新进入与退出必须和真实榜单口径一起解释；全部示例排名、指标、对象名称和阶段口径" }
+  ],
+  "title": { "text": "新进入和退出对象必须显式标记", "origin": "source", "source_ids": ["S01"] },
+  "diagram": {
+    "type": "bump-ranking",
+    "periods": [
+      { "text": "2023", "source_ids": ["S02"] },
+      { "text": "2024", "source_ids": ["S02"] },
+      { "text": "2025", "source_ids": ["S02"] }
+    ],
+    "objects": [
+      { "label": { "text": "业务 A", "source_ids": ["S02"] }, "ranks": [1, 1, 2], "values": [120, 125, 118], "states": ["active", "active", "active"], "source_ids": ["S02"] },
+      { "label": { "text": "业务 B", "source_ids": ["S02"] }, "ranks": [2, 3, 3], "values": [110, 102, 106], "states": ["active", "active", "active"], "source_ids": ["S02"] },
+      { "label": { "text": "业务 C", "source_ids": ["S02"] }, "ranks": [3, 4, null], "values": [98, 90, null], "states": ["active", "active", "exited"], "source_ids": ["S02"] },
+      { "label": { "text": "业务 D", "source_ids": ["S02"] }, "ranks": [4, null, 4], "values": [86, null, 92], "states": ["active", "not_ranked", "new"], "source_ids": ["S02"] },
+      { "label": { "text": "业务 E", "source_ids": ["S02"] }, "ranks": [5, 2, 1], "values": [80, 115, 130], "states": ["active", "active", "active"], "source_ids": ["S02"] }
+    ],
+    "insights": [{ "text": "业务 D 在 2025 年新进入前五", "source_ids": ["S02"] }],
+    "conclusion": { "text": "新进入与退出必须和真实榜单口径一起解释", "source_ids": ["S02"] }
+  }
+}
