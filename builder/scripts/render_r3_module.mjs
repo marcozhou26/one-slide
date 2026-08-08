@@ -367,6 +367,75 @@ function renderHistogram(slide, data, plan) {
   slide.speakerNotes.textFrame.setText(`[Sources]\n- ${diagram.disclosure?.text ?? "用户提供数据"}\n- 指标：${diagram.metric.text}；单位：${diagram.unit.text}；期间：${diagram.period.text}；分箱边界：${edges.join(", ")}。`);
 }
 
+function median(values) {
+  const middle = Math.floor(values.length / 2);
+  return values.length % 2 ? values[middle] : (values[middle - 1] + values[middle]) / 2;
+}
+
+function tukeySummary(observations) {
+  const sorted = [...observations].sort((left, right) => left - right);
+  const middle = Math.floor(sorted.length / 2);
+  const lowerHalf = sorted.slice(0, middle);
+  const upperHalf = sorted.slice(sorted.length % 2 ? middle + 1 : middle);
+  const q1 = median(lowerHalf);
+  const q2 = median(sorted);
+  const q3 = median(upperHalf);
+  const iqr = q3 - q1;
+  const lowerFence = q1 - 1.5 * iqr;
+  const upperFence = q3 + 1.5 * iqr;
+  const inliers = sorted.filter((value) => value >= lowerFence && value <= upperFence);
+  return { q1, q2, q3, low: inliers[0], high: inliers[inliers.length - 1], lowerFence, upperFence };
+}
+
+function renderBoxPlotJitter(slide, data, plan) {
+  panel(slide, "distribution-frame", plan.chart);
+  const groups = data.diagram.groups;
+  const allValues = groups.flatMap((group) => group.observations);
+  const rawMin = Math.min(...allValues);
+  const rawMax = Math.max(...allValues);
+  const padding = Math.max((rawMax - rawMin) * .12, 1);
+  const axisMin = rawMin - padding;
+  const axisMax = rawMax + padding;
+  const plot = { left: plan.chart.left + 82, top: plan.chart.top + 54, width: plan.chart.width - 118, height: plan.chart.height - 150 };
+  const y = (value) => plot.top + (axisMax - value) / Math.max(1e-6, axisMax - axisMin) * plot.height;
+  for (let tick = 0; tick <= 4; tick += 1) {
+    const value = axisMax - tick / 4 * (axisMax - axisMin);
+    const tickY = y(value);
+    line(slide, `distribution-grid-${tick}`, plot.left, tickY, plot.left + plot.width, tickY, "solid", COLORS.border, .7);
+    addTextBox(slide, { name: `distribution-tick-${tick}`, text: Number.isInteger(value) ? String(value) : value.toFixed(1), position: { left: plan.chart.left + 4, top: tickY - 12, width: 66, height: 24 }, fontSize: 14, color: COLORS.muted, alignment: "right" });
+  }
+  addTextBox(slide, { name: "distribution-unit", text: data.diagram.unit.text, position: { left: plan.chart.left + 14, top: plan.chart.top + 14, width: 180, height: 26 }, fontSize: 14, bold: true, color: COLORS.navy });
+  addTextBox(slide, { name: "distribution-sample-definition", text: `样本：${data.diagram.sample_definition.text}`, position: { left: plan.chart.left + 156, top: plan.chart.top + 14, width: plan.chart.width - 174, height: 26 }, fontSize: 14, color: COLORS.muted, alignment: "right", singleLine: true });
+  const slot = plot.width / groups.length;
+  groups.forEach((group, groupIndex) => {
+    const center = plot.left + slot * (groupIndex + .5);
+    const summary = tukeySummary(group.observations);
+    const boxWidth = Math.min(58, slot * .34);
+    line(slide, `distribution-whisker-${groupIndex + 1}`, center, y(summary.low), center, y(summary.high), "solid", COLORS.navy, 1.8);
+    line(slide, `distribution-cap-low-${groupIndex + 1}`, center - boxWidth * .34, y(summary.low), center + boxWidth * .34, y(summary.low), "solid", COLORS.navy, 1.8);
+    line(slide, `distribution-cap-high-${groupIndex + 1}`, center - boxWidth * .34, y(summary.high), center + boxWidth * .34, y(summary.high), "solid", COLORS.navy, 1.8);
+    slide.shapes.add({ name: `distribution-box-${groupIndex + 1}`, geometry: "rect", position: { left: center - boxWidth / 2, top: y(summary.q3), width: boxWidth, height: Math.max(2, y(summary.q1) - y(summary.q3)) }, fill: PALE_BLUE, line: { style: "solid", fill: COLORS.navy, width: 1.8 } });
+    line(slide, `distribution-median-${groupIndex + 1}`, center - boxWidth / 2, y(summary.q2), center + boxWidth / 2, y(summary.q2), "solid", COLORS.orange, 2.8);
+    group.observations.forEach((value, observationIndex) => {
+      const normalizedOffset = (((observationIndex * 7 + groupIndex * 3) % 17) / 16 - .5) * Math.min(slot * .42, 58);
+      const isOutlier = value < summary.lowerFence || value > summary.upperFence;
+      const radius = isOutlier ? 5.5 : 4.2;
+      slide.shapes.add({
+        name: `distribution-point-${groupIndex + 1}-${observationIndex + 1}`,
+        geometry: "ellipse",
+        position: { left: center + normalizedOffset - radius, top: y(value) - radius, width: radius * 2, height: radius * 2 },
+        fill: isOutlier ? COLORS.orange : COLORS.blue,
+        line: { style: "solid", fill: COLORS.white, width: .8 },
+      });
+    });
+    addTextBox(slide, { name: `distribution-group-${groupIndex + 1}`, text: group.label.text, position: { left: center - slot * .42, top: plot.top + plot.height + 8, width: slot * .84, height: 26 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
+    addTextBox(slide, { name: `distribution-n-${groupIndex + 1}`, text: `n=${group.n}`, position: { left: center - slot * .42, top: plot.top + plot.height + 34, width: slot * .84, height: 22 }, fontSize: 14, color: COLORS.muted, alignment: "center", singleLine: true });
+  });
+  addTextBox(slide, { name: "distribution-statistics-note", text: data.diagram.statistics_note.text, position: { left: plan.chart.left + 18, top: plan.chart.top + plan.chart.height - 36, width: 510, height: 24 }, fontSize: 12, color: COLORS.muted });
+  addTextBox(slide, { name: "distribution-jitter-note", text: data.diagram.jitter_note.text, position: { left: plan.chart.left + 532, top: plan.chart.top + plan.chart.height - 36, width: plan.chart.width - 550, height: 24 }, fontSize: 12, bold: true, color: COLORS.orange, alignment: "right" });
+  insights(slide, plan.rail, data.diagram.insights);
+  bottom(slide, plan.bottom, data.diagram.conclusion);
+}
 function renderSmallMultiples(slide, data, plan) {
   const panels = data.diagram.panels; const cols = panels.length === 4 ? 2 : 3; const rows = Math.ceil(panels.length / cols); const gap = 12; const w = (plan.grid.width - gap * (cols - 1)) / cols; const h = (plan.grid.height - gap * (rows - 1)) / rows; const all = panels.flatMap((p) => p.values).concat(data.diagram.benchmark); const min = Math.min(...all); const max = Math.max(...all);
   const classColor = (text) => /加大|增长|领先/.test(text) ? COLORS.blue : /退出|落后|收缩/.test(text) ? COLORS.orange : COLORS.muted;
@@ -387,7 +456,7 @@ function renderSmallMultiples(slide, data, plan) {
 
 export async function renderR3Module(data, output) {
   const plan = planR3Module(data); const { presentation, slide } = createPresentation(output.background); header(slide, plan);
-  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "box-plot": renderBoxPlot, histogram: renderHistogram, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
+  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "box-plot": renderBoxPlot, histogram: renderHistogram, "box-plot-jitter": renderBoxPlotJitter, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output); return plan;
 }
 async function main() { const options = parseCliArgs(process.argv.slice(2)); const data = await loadR3ModuleInput(options.input); const plan = await renderR3Module(data, options); process.stdout.write(`${JSON.stringify({ ok: true, module: data.module_id, input_kind: data.input_kind ?? "module-fixture", slide: plan.slide })}\n`); }

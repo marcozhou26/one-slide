@@ -127,6 +127,8 @@ Builder 不可用、运行依赖缺失或返回 `MODULE_COVERAGE_GAP` 时，保�
 
 Producer 只有在一个已产品化模块能覆盖全部必含内容时，才同时写入 `requested_module` 和完整、可通过该模块 validator 的 `module_payload`。只有模块名没有可执行载荷时不得强制命中；混合页面使用带 layout 门禁的直接编排。
 
+组间分布任务只有在原始观测、组别、样本量、共同期间、单位和样本口径齐全时才使用 `box-plot-jitter`。Producer 必须保留全部观测，Builder 依据 Tukey hinges 与 1.5×IQR 规则计算箱线统计，并把每个点绘制为原生对象；横向抖动只用于避免遮挡，页面必须明确说明它不改变观测值。
+
 ### 6. 检查 PPTX
 
 `PPT_DRAFT` 必须满足：

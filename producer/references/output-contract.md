@@ -135,6 +135,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 连续数值分布页使用 `histogram`。`diagram` 必须包含一个指标、单位、期间、分母、原始 `observations`（缺失值用 `null` 或空字符串显式保留）、`sample.total/valid/missing`、`frequency_basis=count|frequency`、`binning.method=explicit_edges`、严格递增的 `edges`、左右边界包含规则，以及 1–3 条来源支持的分布洞察。Producer 可以计算 `bins`，但 Builder 必须从原始观测和边界复算并逐箱核对。缺少原始观测、样本无法对平、单位或期间冲突、分箱不能覆盖全部有效值时不得强制命中模块；分类数据使用其他模块，不能用分类柱状图冒充。
 
+组间分布页使用 `box-plot-jitter`。`diagram` 必须包含 2–6 个带唯一 `id` 的 `groups`、每组 5–60 个原始 `observations`、与观测数量一致的 `n`、共同 `period`、`unit`、`observation_definition`、`sample_definition`、`statistics_rule=tukey_hinges_1_5_iqr`、可见 `statistics_note`、可见 `jitter_note` 和 1–3 条来源支持的 `insights`；整页原始观测不超过 240 个。横向抖动只能由 Builder 作为确定性视觉避让执行，不得写回数值。只有汇总统计、组间口径冲突、缺少单位/期间/样本定义、或页面还要求第二个主图时，不得强制命中模块。
+
 ## builder-prompt.md
 
 Include, when applicable:

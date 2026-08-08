@@ -2,7 +2,7 @@
   "schema_version": "3.0",
   "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 37,
+  "productized_module_count": 38,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -150,6 +150,12 @@
       "status": "productized",
       "signals": ["has_continuous_distribution", "has_reproducible_bins"],
       "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/histogram-module.md"
+    },
+    {
+      "module_id": "box-plot-jitter",
+      "status": "productized",
+      "signals": ["has_grouped_raw_observations", "has_distribution_statistics"],
+      "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/box-plot-jitter-module.md"
     },
     {
       "module_id": "small-multiples",

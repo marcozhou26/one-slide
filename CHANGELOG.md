@@ -9,6 +9,7 @@
 ## Unreleased — chart module upgrades
 
 - Added the productized `box-plot` module for 3–8 comparable groups, with explicit sample size, missing count, period, unit, denominator, Type 7 quartiles, 1.5×IQR whiskers, labelled outliers, Producer handoff rules, natural-language routing, abnormal fixtures, and native-editable rendering.
+- Added the productized `box-plot-jitter` module for 2–6 groups and up to 240 raw observations, with Tukey hinges, 1.5×IQR whiskers, explicit sample sizes, native editable observation points, deterministic visual-only jitter, Producer handoff rules, natural-language routing and abnormal-input fixtures.
 
 - Upgraded the public rank-migration module from the two-period `slope-ranking` contract to the multi-period `bump-ranking` contract.
 - Added explicit period arrays, rank/value/state tracks, new-entry and exit handling, duplicate-rank blocking, and source-fidelity fixtures.
