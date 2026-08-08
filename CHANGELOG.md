@@ -17,6 +17,9 @@
 - Added the productized `composition-shift` module for 3–8 periods and 2–6 stable components, with strict 100% reconciliation, optional absolute-value denominator checks, Producer handoff rules, routing regressions, abnormal fixtures, and a native-editable reference page.
 - Added guarded inference for generic reconciled multi-period component series with totals, so source material can route to `composition-shift` without naming a module or chart; parallel trend series without totals remain blocked from this route.
 - Completed a Case Factory end-to-end representative run from no-module-hint input to a one-slide native-editable PowerPoint, including full regression, package, semantic, overflow, and Microsoft PowerPoint checks.
+- Added the productized `histogram` module for one continuous numeric metric and period, preserving raw observations, units, denominator, total/valid/missing sample counts, explicit reproducible bin edges, count/frequency basis, and source-backed distribution findings.
+- Added no-module-name/no-chart-name routing from continuous observations plus concentration/skew/tail language, while blocking categorical values, missing observations, unit/period conflicts, abnormal numeric strings, unreconciled samples, and irreproducible bins.
+- Added a native-editable one-page reference with adjacent PowerPoint rectangles, source notes, 11 module contract tests, full Builder and Producer regression, overflow/semantic/media audits, and Microsoft PowerPoint 1/1-slide open evidence.
 
 ## 1.2.2 — 2026-08-08
 

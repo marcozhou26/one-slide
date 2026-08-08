@@ -1,0 +1,6 @@
+{
+  "version":"1.0","module_id":"histogram",
+  "source_anchors":[{"id":"S01","text":"样本，分钟，2026年7月，有效样本；缺失值单独报告，洞察"}],
+  "title":{"text":"样本","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"histogram","metric":{"text":"样本","source_ids":["S01"]},"unit":{"text":"分钟","source_ids":["S01"]},"period":{"text":"2026年7月","source_ids":["S01"]},"denominator":{"text":"有效样本；缺失值单独报告","source_ids":["S01"]},"frequency_basis":"count","observations":[1,2,3,4,5,6,7,8,9,"12分钟"],"sample":{"total":10,"valid":10,"missing":0},"binning":{"method":"explicit_edges","edges":[0,3,6,9,12,15],"include_left":true,"last_bin_inclusive":true},"data_source_ids":["S01"],"insights":[{"text":"洞察","source_ids":["S01"]}]}
+}

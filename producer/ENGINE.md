@@ -146,6 +146,8 @@ For cohort retention or survival pages, use `cohort-retention` when 3–8 joinin
 
 For comparable group distributions, use `box-plot` only when 3–8 groups share one metric, period, unit, denominator, sample definition, missing-value rule, quartile algorithm, and whisker rule. The payload must include effective `sample_size`, `missing_count`, `whisker_low`, `q1`, `median`, `q3`, `whisker_high`, and explicit numeric `outliers` for every group. Version 1.0 uses `PERCENTILE.INC` linear interpolation (Type 7) and whisker endpoints at the most extreme observations inside the 1.5×IQR fences. Missing statistical definitions, conflicting group scopes, or a second independent primary exhibit must not be forced into this module. Outliers must be explicitly labelled in the visible page, not inferred from color alone.
 
+For continuous numeric distributions, use `histogram` only when the reader needs to understand concentration, skew, tails, or multiple peaks for one metric and one period. Preserve the raw numeric observations with explicit nulls, metric, unit, period, denominator, total/valid/missing sample counts, `frequency_basis`, and reproducible `explicit_edges` binning. Producer may calculate bins but must also hand off the original observations and declared inclusion rules so Builder can reproduce every count. Do not use a categorical column chart, silently drop missing values, or merge conflicting units or periods. Sparse natural language may use a declared reversible binning default only when the observations and measurement metadata are present; missing observations or conflicting unit/period is blocking for the formal module payload.
+
 ### 7. Validate the package
 
 Run:
