@@ -91,6 +91,8 @@ Producer 不绘制 PowerPoint，也不负责精确坐标。Builder 不重新决�
 - 原生 PowerPoint 堆积矩形、文字、轴线和洞察区；
 - 参考文件：`builder/assets/reference-pages/composition-shift.pptx`；
 - Artifact Tool 渲染、溢出、原生对象和 Microsoft PowerPoint 实际打开检查通过。
+- 已用 Case Factory 生成不含模块名和图表名的匿名收入结构案例；OneSlide 现在可依据 3–8 期、2–6 个稳定构成项、逐期分项与总额对平，以及“结构/构成/占比/组合”关系词，自动识别 `composition-shift`；缺少总额的一般多序列趋势不会被误判。
+- 该代表性案例已从原始输入贯通到一页 PPT，并通过数据对平、来源映射、渲染、溢出、原生对象和 Microsoft PowerPoint 实机检查。
 
 关键文件：
 
@@ -210,13 +212,14 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 
 - Producer 契约测试：18/18 通过；
 - bump-ranking 相关测试：22/22 通过；
-- Builder 全量测试：使用 bundled `@oai/artifact-tool` 运行 78/78 通过；
+- Builder 全量测试：使用 bundled `@oai/artifact-tool` 运行 80/80 通过；
 - bump-ranking 已使用 bundled `@oai/artifact-tool` 成功生成 PPTX；
 - bump-ranking 的布局审计和溢出检查通过；
 - PPTX 内部确认使用原生文本框、椭圆、线条和矩形，没有整页图片；
 - bump-ranking 已在 Microsoft PowerPoint 中实际打开，确认 1/1 页、窗口正常渲染并暴露 94 个可独立编辑的布局对象；
 - composition-shift 的 validator、planner、路由、异常输入、渲染和溢出测试通过；参考 PPTX 在 Microsoft PowerPoint 中实际打开，确认 1/1 页、60 个原生形状、0 个图片对象；
-- Producer 套件测试 18/18 通过，发布源目录校验通过；`PRODUCT_VALUE_PASS` 与 `USER_REQUIREMENT_PASS` 仍为 `not_tested`。
+- Case Factory 代表性运行包已通过 handoff/final 契约，生成的一页 PPT 在 Microsoft PowerPoint 中确认 1/1 页、120 个可独立选择的原生布局对象、0 个图片对象；
+- Producer 套件测试 18/18 通过，发布源目录校验通过；`PRODUCT_VALUE_PASS: pass`（代表性 Case Factory 任务）；此前 composition-shift 模块结果已获用户验收，`USER_REQUIREMENT_PASS: pass`。本次新生成的具体案例页仍需与模块验收分开记录，当前为 `not_tested`。
 
 ## 10. 建议的新工作空间启动顺序
 

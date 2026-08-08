@@ -80,6 +80,25 @@ function scoreDefinition(definition, text, tokens) {
   return { score: explicit * 100 + cues * 10, evidence };
 }
 
+function inferCompositionShift(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const periods = Array.isArray(data.periods) ? data.periods : [];
+  const series = Array.isArray(data.series) ? data.series : [];
+  const totals = Array.isArray(data.totals) ? data.totals : [];
+  if (periods.length < 3 || periods.length > 8 || series.length < 2 || series.length > 6 || totals.length !== periods.length) return null;
+  if (!totals.every((value) => Number.isFinite(Number(value)) && Number(value) > 0)) return null;
+  if (!series.every((item) => item && typeof item === "object" && typeof item.name === "string" && Array.isArray(item.values) && item.values.length === periods.length && item.values.every((value) => Number.isFinite(Number(value)) && Number(value) >= 0))) return null;
+  const reconciles = periods.every((_, index) => {
+    const sum = series.reduce((total, item) => total + Number(item.values[index]), 0);
+    const expected = Number(totals[index]);
+    return Math.abs(sum - expected) <= Math.max(0.01, expected * 0.001);
+  });
+  if (!reconciles) return null;
+  const relationshipCue = ["结构", "构成", "占比", "组合", "mix", "share", "composition"].some((cue) => text.includes(cue));
+  if (!relationshipCue) return null;
+  return ["inferred:reconciled_component_series", "inferred:multi_period_totals", "cue:structure_relationship"];
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -107,8 +126,12 @@ export async function routeInput(input) {
   const tokens = dataTokens(input.data ?? {});
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
+  const inferredComposition = inferCompositionShift(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
+    .map((item) => inferredComposition && item.moduleId === "composition-shift"
+      ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredComposition] }
+      : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));
   if (!ranked.length) throw Object.assign(new Error("No productized module has enough explicit evidence"), { code: "ROUTE_EVIDENCE_INSUFFICIENT" });

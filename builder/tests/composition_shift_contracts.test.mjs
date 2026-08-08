@@ -66,3 +66,34 @@ test("composition-shift routes from explicit and sparse natural-language relatio
   const sparse = await routeInput({ input_mode: "text", text: "比较2022到2025年四类收入占比的结构变化，每期合计100%" });
   assert.equal(sparse.module.module_id, "composition-shift");
 });
+
+test("composition-shift infers reconciled multi-period components without module or chart hints", async () => {
+  const result = await routeInput({
+    input_mode: "mixed",
+    text: "请根据附件数据回答过去五年收入结构发生了什么变化，以及下一年资源应优先投向哪里。",
+    data: {
+      periods: ["2021", "2022", "2023", "2024", "2025"],
+      series: [
+        { name: "订阅平台", values: [108, 147, 197.6, 268.8, 366] },
+        { name: "用量与AI增值", values: [36, 54, 83.6, 115.2, 152.5] },
+        { name: "实施服务", values: [72, 72, 72.2, 67.2, 61] },
+        { name: "支持及其他", values: [24, 27, 26.6, 28.8, 30.5] },
+      ],
+      totals: [240, 300, 380, 480, 610],
+    },
+  });
+  assert.equal(result.decision, "selected");
+  assert.equal(result.module.module_id, "composition-shift");
+  assert.match(result.evidence.join(" "), /reconciled_component_series/);
+});
+
+test("generic parallel trends without totals do not masquerade as composition shift", async () => {
+  await assert.rejects(
+    () => routeInput({
+      input_mode: "mixed",
+      text: "比较过去五年的业务趋势",
+      data: { periods: ["2021", "2022", "2023"], series: [{ name: "A", values: [1, 2, 3] }, { name: "B", values: [3, 4, 5] }] },
+    }),
+    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+  );
+});
