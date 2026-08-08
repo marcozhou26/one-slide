@@ -268,3 +268,15 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 ## 12. 迁移时的工作树提醒
 
 `builder/scripts/plan_r4_module.mjs` 的 Sankey SLA 底部说明区修改已独立提交为 `123586f`，没有混入 bump-ranking 或 composition-shift。bump-ranking 基线提交为 `bbdab2b`。后续模块继续保持“一模块一条完整纵向切片”的独立提交边界。
+
+## 13. box-plot 纵向切片
+
+`box-plot` 已作为第 35 个正式模块注册，用于同一指标、期间、单位和统计口径下 3–8 个组的分布比较。Producer 必须交付有效样本量、缺失数、Q1、中位数、Q3、上下须线、逐点异常值，以及页面可见的四分位算法和须线规则。Builder 使用原生矩形、线条、椭圆和文本，异常值同时显示标记和数值，不能只用颜色表达。
+
+关键文件：
+
+- `builder/references/box-plot-module.md`
+- `builder/assets/test-fixtures/box-plot-valid.json`
+- `builder/assets/test-fixtures/box-plot-missing-method.json`
+- `builder/assets/test-fixtures/box-plot-invalid-outlier.json`
+- `builder/tests/box_plot_contracts.test.mjs`

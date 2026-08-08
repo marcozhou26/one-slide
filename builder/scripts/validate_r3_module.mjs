@@ -9,7 +9,7 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "small-multiples"]);
 
 function normalizeRankMigration(data) {
   if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
@@ -368,6 +368,41 @@ function validateCompositionShift(data, c) {
   if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
 }
 
+function validateBoxPlot(data, c) {
+  const groups = data.diagram.groups;
+  requireCondition(Array.isArray(groups) && groups.length >= 3 && groups.length <= 8, "DATA_CONTRACT_FAIL", "Box plot requires 3–8 groups");
+  c.text(data.diagram.period, "Distribution period");
+  c.text(data.diagram.unit, "Distribution unit");
+  c.text(data.diagram.denominator, "Distribution denominator");
+  c.text(data.diagram.sample_definition, "Sample definition");
+  c.text(data.diagram.missing_policy, "Missing-value policy");
+  c.text(data.diagram.quartile_method, "Quartile method");
+  c.text(data.diagram.whisker_rule, "Whisker rule");
+  requireCondition(data.diagram.whisker_multiplier === 1.5, "DATA_CONTRACT_FAIL", "Version 1.0 requires a 1.5×IQR whisker multiplier");
+  const ids = new Set();
+  for (const group of groups) {
+    requireCondition(typeof group.id === "string" && group.id.trim() && !ids.has(group.id), "DATA_CONTRACT_FAIL", "Distribution group ids must be non-empty and unique");
+    ids.add(group.id);
+    c.text(group.label, "Distribution group label");
+    requireCondition(Number.isInteger(group.sample_size) && group.sample_size >= 5, "DATA_CONTRACT_FAIL", "Each group needs an effective sample size of at least 5");
+    requireCondition(Number.isInteger(group.missing_count) && group.missing_count >= 0, "DATA_CONTRACT_FAIL", "Each group needs an explicit non-negative missing count");
+    const values = [group.whisker_low, group.q1, group.median, group.q3, group.whisker_high];
+    requireCondition(values.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Every group needs numeric whisker, quartile, and median values");
+    requireCondition(group.whisker_low <= group.q1 && group.q1 <= group.median && group.median <= group.q3 && group.q3 <= group.whisker_high, "BOX_PLOT_RECONCILIATION_FAIL", "Whiskers, quartiles, and median must be ordered");
+    const iqr = group.q3 - group.q1;
+    requireCondition(iqr > 0, "BOX_PLOT_RECONCILIATION_FAIL", "Each group needs a positive interquartile range");
+    requireCondition(group.whisker_low >= group.q1 - data.diagram.whisker_multiplier * iqr - 1e-6, "BOX_PLOT_RECONCILIATION_FAIL", "Lower whisker must remain inside the declared 1.5×IQR fence");
+    requireCondition(group.whisker_high <= group.q3 + data.diagram.whisker_multiplier * iqr + 1e-6, "BOX_PLOT_RECONCILIATION_FAIL", "Upper whisker must remain inside the declared 1.5×IQR fence");
+    requireCondition(Array.isArray(group.outliers) && group.outliers.length <= 6 && group.outliers.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Outliers must be an explicit numeric array with at most six values per group");
+    requireCondition(group.outliers.every((value) => value < group.whisker_low || value > group.whisker_high), "BOX_PLOT_RECONCILIATION_FAIL", "Every declared outlier must fall outside the whisker endpoints");
+    c.source(group.source_ids, "Distribution summary");
+  }
+  requireCondition(Array.isArray(data.diagram.insights) && data.diagram.insights.length >= 1 && data.diagram.insights.length <= 3, "DATA_CONTRACT_FAIL", "Box plot requires 1–3 source-backed insights");
+  data.diagram.insights.forEach((item) => c.text(item, "Distribution insight"));
+  if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
+}
+
 function validateSmallMultiples(data, c) {
   const panels = data.diagram.panels;
   requireCondition([4, 6, 9].includes(panels?.length), "DATA_CONTRACT_FAIL", "Small multiples requires 4, 6, or 9 panels");
@@ -393,7 +428,7 @@ export function validateR3Module(data) {
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 
