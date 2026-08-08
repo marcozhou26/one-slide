@@ -19,6 +19,7 @@ const blindCases = [
   ["bump-ranking", { input_mode: "text", text: "比较两个时点的前十榜单排名，标出上升、下降、新进入与退出" }],
   ["composition-shift", { input_mode: "text", text: "比较2022到2025年四类收入占比的结构变化，每期合计100%" }],
   ["cohort-retention", { input_mode: "text", text: "按首次激活月份分批，从第0周起比较第1、2、4、8周仍活跃的人数；较新批次后面的周数尚未观察，空白不能当0" }],
+  ["box-plot", { input_mode: "text", text: "比较五个区域订单周期的中位数、中间50%范围、离散程度和异常值" }],
   ["small-multiples", { input_mode: "text", text: "九条业务线放进3×3矩阵，每格重复同一迷你折线并统一刻度和公司基准" }],
   ["sankey-flow", { input_mode: "text", text: "展示获客渠道到筛选再到成交和续约的四层分流，流带宽度按人数，损耗流向下方" }],
   ["chord-dependency", { input_mode: "data", data: { 圆周: ["销售", "产品", "交付", "财务", "人力"], 双向依赖: [], 交互强度: [] } }],

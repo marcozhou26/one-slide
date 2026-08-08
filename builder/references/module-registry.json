@@ -2,7 +2,7 @@
   "schema_version": "3.0",
   "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 35,
+  "productized_module_count": 36,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -138,6 +138,12 @@
       "planner": "scripts/plan_cohort_retention.mjs",
       "renderer": "scripts/render_cohort_retention.mjs",
       "reference": "references/cohort-retention-module.md"
+    },
+    {
+      "module_id": "box-plot",
+      "status": "productized",
+      "signals": ["has_group_distribution_summary", "has_explicit_quartile_whisker_rules"],
+      "validator": "scripts/validate_r3_module.mjs", "planner": "scripts/plan_r3_module.mjs", "renderer": "scripts/render_r3_module.mjs", "reference": "references/box-plot-module.md"
     },
     {
       "module_id": "small-multiples",

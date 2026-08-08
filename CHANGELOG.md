@@ -8,6 +8,8 @@
 
 ## Unreleased — chart module upgrades
 
+- Added the productized `box-plot` module for 3–8 comparable groups, with explicit sample size, missing count, period, unit, denominator, Type 7 quartiles, 1.5×IQR whiskers, labelled outliers, Producer handoff rules, natural-language routing, abnormal fixtures, and native-editable rendering.
+
 - Upgraded the public rank-migration module from the two-period `slope-ranking` contract to the multi-period `bump-ranking` contract.
 - Added explicit period arrays, rank/value/state tracks, new-entry and exit handling, duplicate-rank blocking, and source-fidelity fixtures.
 - Kept legacy `slope-ranking` inputs and routing aliases compatible while the upgraded module becomes the canonical productized ID.

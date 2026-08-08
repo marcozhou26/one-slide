@@ -131,6 +131,8 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 分群留存或存续页使用 `cohort-retention`。`diagram` 必须包含 4–12 个严格递增且从 0 开始的 `relative_periods`、`relative_period_unit`、`cohort_definition`、`denominator`、`measure`、`curve_mode`，以及 3–8 个带唯一 `id`、`initial_count` 和等长 `retained_counts` 或 `retention_rates` 的 cohort。Producer 不要求用户重复填写人数和比例；只提供一种时由 Builder 计算另一种，两者都有时必须对平。未成熟或未观察周期只能作为尾部连续 `null`，并提供页面可见的 `censoring_note`，不得补 0。`survival` 必须非递增；允许真实回升的当期活跃口径使用 `period_retention`。固定四组、0–24 月并同时要求行业基准和风险矩阵的页面继续使用 `hr-new-hire-survival`。存在第二个独立主图时不得强制命中本模块。
 
+分组分布比较页使用 `box-plot`。`diagram` 必须包含 3–8 个同口径组，以及页面可见的 `period`、`unit`、`denominator`、`sample_definition`、`missing_policy`、`quartile_method`、`whisker_multiplier=1.5` 和 `whisker_rule`。每组必须传入有效 `sample_size`、`missing_count`、`whisker_low`、`q1`、`median`、`q3`、`whisker_high`、逐点 `outliers` 和来源。四分位算法使用 `PERCENTILE.INC（线性插值，等同 Type 7）`，须线端点是 1.5×IQR 围栏内的最远观测；围栏外记录必须在页面逐点标为异常值，不能只用颜色暗示。统计口径缺失、组间口径冲突或页面还需第二个主图时，不得强制命中模块。
+
 ## builder-prompt.md
 
 Include, when applicable:

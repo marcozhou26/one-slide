@@ -1,0 +1,12 @@
+{
+  "version":"1.0","module_id":"box-plot",
+  "source_anchors":[
+    {"id":"S01","text":"异常值位置冲突"},{"id":"S02","text":"2026年；天；有效订单；每条观察是一笔订单；缺失记录剔除；PERCENTILE.INC；1.5×IQR；A B C"}
+  ],
+  "title":{"text":"异常值位置冲突","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"box-plot","period":{"text":"2026年","source_ids":["S02"]},"unit":{"text":"天","source_ids":["S02"]},"denominator":{"text":"有效订单","source_ids":["S02"]},"sample_definition":{"text":"每条观察是一笔订单","source_ids":["S02"]},"missing_policy":{"text":"缺失记录剔除","source_ids":["S02"]},"quartile_method":{"text":"PERCENTILE.INC","source_ids":["S02"]},"whisker_multiplier":1.5,"whisker_rule":{"text":"1.5×IQR","source_ids":["S02"]},"groups":[
+    {"id":"a","label":{"text":"A","source_ids":["S02"]},"sample_size":10,"missing_count":0,"whisker_low":1,"q1":2,"median":3,"q3":4,"whisker_high":5,"outliers":[4.5],"source_ids":["S02"]},
+    {"id":"b","label":{"text":"B","source_ids":["S02"]},"sample_size":10,"missing_count":0,"whisker_low":1,"q1":2,"median":3,"q3":4,"whisker_high":5,"outliers":[],"source_ids":["S02"]},
+    {"id":"c","label":{"text":"C","source_ids":["S02"]},"sample_size":10,"missing_count":0,"whisker_low":1,"q1":2,"median":3,"q3":4,"whisker_high":5,"outliers":[],"source_ids":["S02"]}
+  ],"insights":[{"text":"异常值位置冲突","source_ids":["S01"]}]}
+}

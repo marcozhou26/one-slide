@@ -12,6 +12,7 @@ const pageModelMethodMap = new Map([
   ["share_shift", "composition-shift"],
   ["cohort_retention", "cohort-retention"],
   ["survival_curve", "cohort-retention"],
+  ["group_distribution", "box-plot"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
@@ -40,6 +41,7 @@ const definitions = {
   "bump-ranking": { aliases: ["排名迁移图", "坡度图", "bump chart", "slope chart", "slope-ranking"], cues: [["排名", "时点", "上升", "下降", "榜单", "多期"]] },
   "composition-shift": { aliases: ["构成变化图", "百分比堆积柱状图", "100%堆积柱状图", "composition shift"], cues: [["占比", "构成", "时期", "合计100%", "结构变化"]] },
   "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃"], ["第0周", "后面的周数", "空白", "早期流失"]] },
+  "box-plot": { aliases: ["箱线图", "盒须图", "box plot", "boxplot"], cues: [["中位数", "四分位", "中间50%", "离散", "异常值", "须线", "分布"]] },
   "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
@@ -119,6 +121,27 @@ function inferCohortRetention(data, text) {
   return ["inferred:aligned_relative_periods", "inferred:cohort_initial_bases", "cue:cohort_comparison"];
 }
 
+function inferBoxPlot(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const groups = Array.isArray(data.groups) ? data.groups : [];
+  if (groups.length < 3 || groups.length > 8) return null;
+  const complete = groups.every((group) => group && typeof group === "object" && ["q1", "median", "q3", "whisker_low", "whisker_high", "sample_size", "missing_count"].every((key) => Number.isFinite(Number(group[key]))));
+  if (!complete) return null;
+  const relationshipCue = ["分布", "中间50%", "中位数", "四分位", "离散", "波动", "异常值"].some((cue) => text.includes(cue));
+  if (!relationshipCue) return null;
+  return ["inferred:group_distribution_summary", "inferred:quartile_whisker_fields", "cue:distribution_relationship"];
+}
+
+function conflictingDistributionScope(data) {
+  const groups = Array.isArray(data?.groups) ? data.groups : [];
+  if (groups.length < 2) return null;
+  for (const field of ["period", "unit", "denominator"]) {
+    const values = [...new Set(groups.map((group) => normalizeText(group?.[field])).filter(Boolean))];
+    if (values.length > 1) return field;
+  }
+  return null;
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -144,10 +167,13 @@ export async function routeInput(input) {
   const text = normalizeText([input.text, input.title, input.page_claim, input.page_model?.subject?.text, input.page_model?.story?.text, input.page_model?.expression_method, JSON.stringify(input.data ?? {})].filter(Boolean).join(" "));
   if (!text) throw Object.assign(new Error("Text or data is required"), { code: "SOURCE_BASELINE_FAIL" });
   const tokens = dataTokens(input.data ?? {});
+  const distributionScopeConflict = conflictingDistributionScope(input.data);
+  if (distributionScopeConflict) throw Object.assign(new Error(`Group distribution ${distributionScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
   const inferredCohort = inferCohortRetention(input.data, text);
+  const inferredDistribution = inferBoxPlot(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -155,6 +181,9 @@ export async function routeInput(input) {
       : item)
     .map((item) => inferredCohort && item.moduleId === "cohort-retention"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredCohort] }
+      : item)
+    .map((item) => inferredDistribution && item.moduleId === "box-plot"
+      ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredDistribution] }
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));

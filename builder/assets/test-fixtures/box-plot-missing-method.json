@@ -1,0 +1,6 @@
+{
+  "version":"1.0","module_id":"box-plot",
+  "source_anchors":[{"id":"S01","text":"缺少四分位算法的异常输入"}],
+  "title":{"text":"缺少四分位算法的异常输入","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"box-plot","groups":[]}
+}
