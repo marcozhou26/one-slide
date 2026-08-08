@@ -4,7 +4,7 @@ description: "Turn complete or sparse user material into exactly one source-trac
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
-  version: "1.2.1"
+  version: "1.2.2"
 ---
 
 # OneSlide

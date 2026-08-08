@@ -7,9 +7,9 @@ import {
 } from "./validate_r4_module.mjs";
 
 function sankeySemantics(kind) {
-  if (kind === "neutral") return { kind, tone: "neutral", line_style: "solid", arrow: false };
-  if (kind === "on_time" || kind === "success") return { kind, tone: "positive", line_style: "solid", arrow: false };
-  return { kind, tone: "exception", line_style: "dashed", arrow: false };
+  if (kind === "neutral") return { kind, tone: "neutral", ribbon_style: "solid" };
+  if (kind === "on_time" || kind === "success") return { kind, tone: "positive", ribbon_style: "solid" };
+  return { kind, tone: "exception", ribbon_style: "solid" };
 }
 
 function planSankey(data, base) {

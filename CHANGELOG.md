@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2 — 2026-08-08
+
+- Replaced Sankey straight-line strokes with closed native Bezier ribbon shapes whose thickness is proportional to flow value.
+- Changed Sankey nodes to square, borderless native rectangles so ribbons meet node edges without white gaps.
+- Added deterministic ribbon stacking, proportional node geometry, editable OOXML regression checks, and PowerPoint render coverage.
+
 ## 1.2.1 release candidate — 2026-08-07
 
 - Added blocking organization-chart gates for peer-row alignment, one-child vertical reporting lines, and unambiguous functional-guidance routing.
