@@ -2,7 +2,7 @@
   "schema_version": "3.0",
   "skill_version": "3.3.5",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 40,
+  "productized_module_count": 41,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -262,6 +262,15 @@
     {
       "module_id": "hr-ticket-classification", "status": "productized", "signals": ["has_ticket_classification_flow", "has_reclassification_rate"],
       "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-ticket-classification-module.md"
+    },
+    {
+      "module_id": "confidence-band",
+      "status": "productized",
+      "signals": ["has_ordered_estimates", "has_interval_bounds"],
+      "validator": "scripts/validate_confidence_band.mjs",
+      "planner": "scripts/plan_confidence_band.mjs",
+      "renderer": "scripts/render_confidence_band.mjs",
+      "reference": "references/confidence-band-module.md"
     }
   ]
 }

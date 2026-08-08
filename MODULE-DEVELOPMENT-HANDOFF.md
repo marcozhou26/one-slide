@@ -303,7 +303,7 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 
 ## 15. scatter-regression 纵向切片
 
-`scatter-regression` 作为第 39 个正式模块，用于两个连续变量在同一明确样本中的方向、线性强度、偏离趋势观测和可解释边界判断。V1 仅支持带截距的一元普通最小二乘拟合，保留逐条 x/y 原始观测、两轴单位、样本定义、期间、总体、来源以及缺失/重复/异常处理规则。Builder 复算斜率、截距和 R²，拒绝有效配对不足与任一轴零方差，不把关联写成因果，也不生成没有来源的显著性结论。
+`scatter-regression` 作为第 40 个正式模块，用于两个连续变量在同一明确样本中的方向、线性强度、偏离趋势观测和可解释边界判断。V1 仅支持带截距的一元普通最小二乘拟合，保留逐条 x/y 原始观测、两轴单位、样本定义、期间、总体、来源以及缺失/重复/异常处理规则。Builder 复算斜率、截距和 R²，拒绝有效配对不足与任一轴零方差，不把关联写成因果，也不生成没有来源的显著性结论。
 
 关键文件：
 
@@ -314,3 +314,15 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - `builder/assets/test-fixtures/scatter-regression-valid.json`
 - `builder/tests/scatter_regression_contracts.test.mjs`
 - `builder/assets/reference-pages/scatter-regression.pptx`
+
+## 16. confidence-band 纵向切片
+
+`confidence-band` 作为第 41 个正式模块，用于沿 5–12 个有序时期比较中心估计与区间宽度，识别不确定性扩大、收窄、越过业务阈值或方向不稳的时期。Producer 保留 estimate/lower/upper、区间类型和定义、估计方法、样本/总体、来源、缺失值和阈值语义；Builder 使用原生折线、圆点、半透明分段多边形和虚线阈值，且不把置信区间改称预测区间或风险区间。
+
+关键文件：
+
+- `builder/references/confidence-band-module.md`
+- `builder/scripts/validate_confidence_band.mjs`
+- `builder/scripts/plan_confidence_band.mjs`
+- `builder/scripts/render_confidence_band.mjs`
+- `builder/tests/confidence_band_contracts.test.mjs`

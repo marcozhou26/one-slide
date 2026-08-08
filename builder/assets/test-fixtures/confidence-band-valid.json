@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "module_id": "confidence-band",
+  "source_anchors": [
+    {"id": "S01", "text": "中心估计总体上行，但2025年四季度和2026年三季度的不确定性明显扩大"},
+    {"id": "S02", "text": "匿名服务完成率；%；95% bootstrap置信区间；95% bootstrap置信区间；重复抽样覆盖含义，不表示单期结果有95%概率落入该区间；按季度独立估计样本比例，并使用2000次bootstrap重抽样；当季匿名有效样本；目标总体为同口径服务申请；来源：匿名合成季度样本，期间为2025年一季度至2026年四季度；2025Q1；2025Q2；2025Q3；2025Q4；2026Q1；2026Q2；2026Q3；2026Q4；关注阈值；阈值仅作业务关注线，不代表统计显著性或因果界限；2025年四季度区间宽度扩大至1.6个百分点；2026年二季度区间首次整体高于6.0%；2026年三季度回落且区间变宽，方向不稳；在区间明显收窄并持续高于关注线前，不宜把单季上行解释为稳定改善"},
+    {"id": "G01", "text": "合成示例数据，非真实客户数据"}
+  ],
+  "title": {"text": "中心估计总体上行，但2025年四季度和2026年三季度的不确定性明显扩大", "origin": "source", "source_ids": ["S01"]},
+  "subtitle": {"text": "合成示例数据，非真实客户数据", "source_ids": ["G01"]},
+  "diagram": {
+    "type": "confidence-band",
+    "metric": {"text": "匿名服务完成率", "source_ids": ["S02"]},
+    "unit": {"text": "%", "source_ids": ["S02"]},
+    "interval_type": "confidence_interval",
+    "confidence_level": 95,
+    "interval_label": {"text": "95% bootstrap置信区间", "source_ids": ["S02"]},
+    "interval_definition": {"text": "95% bootstrap置信区间；重复抽样覆盖含义，不表示单期结果有95%概率落入该区间", "source_ids": ["S02"]},
+    "estimation_method": {"text": "按季度独立估计样本比例，并使用2000次bootstrap重抽样", "source_ids": ["S02"]},
+    "sample_definition": {"text": "当季匿名有效样本", "source_ids": ["S02"]},
+    "population_definition": {"text": "目标总体为同口径服务申请", "source_ids": ["S02"]},
+    "periods": [
+      {"order": 1, "label": {"text": "2025Q1", "source_ids": ["S02"]}, "estimate": 5.2, "lower": 4.8, "upper": 5.6, "sample_size": 420, "source_ids": ["S02"]},
+      {"order": 2, "label": {"text": "2025Q2", "source_ids": ["S02"]}, "estimate": 5.6, "lower": 5.1, "upper": 6.1, "sample_size": 390, "source_ids": ["S02"]},
+      {"order": 3, "label": {"text": "2025Q3", "source_ids": ["S02"]}, "estimate": 5.9, "lower": 5.3, "upper": 6.5, "sample_size": 355, "source_ids": ["S02"]},
+      {"order": 4, "label": {"text": "2025Q4", "source_ids": ["S02"]}, "estimate": 6.2, "lower": 5.4, "upper": 7.0, "sample_size": 245, "source_ids": ["S02"]},
+      {"order": 5, "label": {"text": "2026Q1", "source_ids": ["S02"]}, "estimate": 6.5, "lower": 5.9, "upper": 7.1, "sample_size": 360, "source_ids": ["S02"]},
+      {"order": 6, "label": {"text": "2026Q2", "source_ids": ["S02"]}, "estimate": 6.7, "lower": 6.1, "upper": 7.3, "sample_size": 372, "source_ids": ["S02"]},
+      {"order": 7, "label": {"text": "2026Q3", "source_ids": ["S02"]}, "estimate": 6.4, "lower": 5.7, "upper": 7.1, "sample_size": 280, "source_ids": ["S02"]},
+      {"order": 8, "label": {"text": "2026Q4", "source_ids": ["S02"]}, "estimate": 6.8, "lower": 6.2, "upper": 7.4, "sample_size": 368, "source_ids": ["S02"]}
+    ],
+    "threshold": {"value": 6.0, "label": {"text": "关注阈值", "source_ids": ["S02"]}, "semantics": {"text": "阈值仅作业务关注线，不代表统计显著性或因果界限", "source_ids": ["S02"]}, "source_ids": ["S02"]},
+    "insights": [
+      {"text": "2025年四季度区间宽度扩大至1.6个百分点", "source_ids": ["S02"]},
+      {"text": "2026年二季度区间首次整体高于6.0%", "source_ids": ["S02"]},
+      {"text": "2026年三季度回落且区间变宽，方向不稳", "source_ids": ["S02"]}
+    ],
+    "source_note": {"text": "来源：匿名合成季度样本，期间为2025年一季度至2026年四季度", "source_ids": ["S02"]},
+    "conclusion": {"text": "在区间明显收窄并持续高于关注线前，不宜把单季上行解释为稳定改善", "source_ids": ["S02"]},
+    "disclosure": {"text": "合成示例数据，非真实客户数据", "source_ids": ["G01"]}
+  }
+}
