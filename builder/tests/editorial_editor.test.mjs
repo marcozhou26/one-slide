@@ -11,6 +11,7 @@ const builderRoot = fileURLToPath(new URL("../", import.meta.url));
 const skillRoot = path.dirname(builderRoot);
 const source = path.join(builderRoot, "assets/reference-pages/composition-shift.pptx");
 const confidenceSource = path.join(builderRoot, "assets/reference-pages/confidence-band.pptx");
+const ganttSource = path.join(builderRoot, "assets/reference-pages/gantt-dependency.pptx");
 const planScript = path.join(skillRoot, "editorial/scripts/plan_editorial_run.py");
 const inspectScript = path.join(skillRoot, "editorial/scripts/inspect_editorial_slide.mjs");
 const patchScript = path.join(skillRoot, "editorial/scripts/apply_editorial_patch.mjs");
@@ -75,7 +76,6 @@ test("editorial patch performs a source-locked grouped native edit", async () =>
     operations: [
       { op: "text-color", target: "name/%E5%85%B3%E9%94%AE%E6%B4%9E%E5%AF%9F-title", expected_bbox: title.bbox, color: "#2F6FB2", reason: "用文字色弱化辅助标题而不改容器" },
       { op: "font-weight", target: "name/%E5%85%B3%E9%94%AE%E6%B4%9E%E5%AF%9F-title", expected_bbox: title.bbox, weight: "normal", reason: "降低辅助标题与主证据的竞争" },
-      { op: "move", target: "name/%E5%85%B3%E9%94%AE%E6%B4%9E%E5%AF%9F-title", expected_bbox: title.bbox, dx: 0, dy: 4, reason: "与侧栏首项建立更稳定间距" },
     ],
   }, null, 2));
   const output = path.join(directory, "edited.pptx");
@@ -83,7 +83,7 @@ test("editorial patch performs a source-locked grouped native edit", async () =>
   const result = spawnSync("node", [patchScript, "--workspace", skillRoot, "--input", source, "--patch", patchPath, "--output", output, "--audit", audit], { encoding: "utf8" });
   assert.equal(result.status, 0, result.stderr || result.stdout);
   const record = JSON.parse(await fs.readFile(audit, "utf8"));
-  assert.equal(record.operations.length, 3);
+  assert.equal(record.operations.length, 2);
   assert.notEqual(record.source_sha256, record.output_sha256);
   assert.equal((await fs.stat(output)).size > 0, true);
   const candidate = path.join(directory, "candidate");
@@ -102,6 +102,56 @@ test("editorial patch performs a source-locked grouped native edit", async () =>
   ], { encoding: "utf8" });
   assert.equal(verification.status, 0, verification.stderr || verification.stdout);
   assert.equal(JSON.parse(await fs.readFile(verificationPath, "utf8")).verification_pass, true);
+});
+
+test("editorial patch protects sidebar geometry and only permits reducing text for a diagnosed fit repair", async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), "oneslide-editorial-sidebar-"));
+  const baseline = path.join(directory, "baseline");
+  const inspected = spawnSync("node", [inspectScript, "--workspace", skillRoot, "--input", source, "--output-dir", baseline], { encoding: "utf8" });
+  assert.equal(inspected.status, 0, inspected.stderr || inspected.stdout);
+  const inventory = (await fs.readFile(path.join(baseline, "inventory.ndjson"), "utf8")).trim().split("\n").map(JSON.parse);
+  const insight = inventory.find((item) => item.name === "关键洞察-item-1");
+  assert.ok(insight);
+
+  for (const [name, operation, message] of [
+    ["move", { op: "move", dx: -120, dy: 0 }, /SIDEBAR_GEOMETRY_PROTECTED/],
+    ["resize", { op: "resize", dw: 30, dh: 0 }, /SIDEBAR_GEOMETRY_PROTECTED/],
+    ["enlarge", { op: "font-size", target_pt: 22, intent: "fit-repair" }, /SIDEBAR_FONT_SIZE_REQUIRES_REDUCTION_FIT_REPAIR/],
+  ]) {
+    const patchPath = path.join(directory, `${name}.json`);
+    await fs.writeFile(patchPath, JSON.stringify({
+      version: 1, source_sha256: await hash(source), primary_issue: "测试", edit_hypothesis: "测试",
+      operations: [{ ...operation, target: `name/${encodeURIComponent(insight.name)}`, expected_bbox: insight.bbox, reason: "保护侧栏秩序的回归测试" }],
+    }));
+    const result = spawnSync("node", [patchScript, "--workspace", skillRoot, "--input", source, "--patch", patchPath, "--output", path.join(directory, `${name}.pptx`), "--audit", path.join(directory, `${name}-audit.json`)], { encoding: "utf8" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, message);
+  }
+});
+
+test("editorial patch permits a focused sidebar font reduction for the actual long Gantt metric", async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), "oneslide-editorial-gantt-fit-"));
+  const baseline = path.join(directory, "baseline");
+  const inspected = spawnSync("node", [inspectScript, "--workspace", skillRoot, "--input", ganttSource, "--output-dir", baseline], { encoding: "utf8" });
+  assert.equal(inspected.status, 0, inspected.stderr || inspected.stdout);
+  const inventory = (await fs.readFile(path.join(baseline, "inventory.ndjson"), "utf8")).trim().split("\n").map(JSON.parse);
+  const metric = inventory.find((item) => item.name === "gantt-metric-3");
+  assert.ok(metric);
+  const patchPath = path.join(directory, "patch.json");
+  await fs.writeFile(patchPath, JSON.stringify({
+    version: 1,
+    source_sha256: await hash(ganttSource),
+    primary_issue: "第三条说明过长且拥挤",
+    edit_hypothesis: "只缩小第三条字号可修复文字适配而不改变板块几何",
+    operations: [{
+      op: "font-size", target: "name/gantt-metric-3", expected_bbox: metric.bbox,
+      target_pt: 13, intent: "fit-repair", reason: "修复长文本拥挤",
+    }],
+  }));
+  const result = spawnSync("node", [patchScript, "--workspace", skillRoot, "--input", ganttSource, "--patch", patchPath, "--output", path.join(directory, "edited.pptx"), "--audit", path.join(directory, "audit.json")], { encoding: "utf8" });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const audit = JSON.parse(await fs.readFile(path.join(directory, "audit.json"), "utf8"));
+  assert.equal(audit.operations[0].after_px < audit.operations[0].before_px, true);
 });
 
 test("editorial verification blocks a render manifest not bound to its PPTX", async () => {

@@ -6,6 +6,8 @@ import { pathToFileURL } from "node:url";
 const ALLOWED = new Set([
   "move", "resize", "font-size", "font-weight", "text-align", "text-color",
 ]);
+const SLIDE_WIDTH = 1280;
+const SIDEBAR_LEFT = SLIDE_WIDTH * 0.74;
 
 function parseArgs(argv) {
   const args = {};
@@ -56,6 +58,7 @@ function validateOperation(op) {
   if (op.op === "move" && (![op.dx, op.dy].every(Number.isFinite))) throw new Error(`${op.target}: move needs dx and dy.`);
   if (op.op === "resize" && (![op.dw, op.dh].every(Number.isFinite))) throw new Error(`${op.target}: resize needs dw and dh.`);
   if (op.op === "font-size" && (!Number.isFinite(op.target_pt) || op.target_pt < 10)) throw new Error(`${op.target}: target_pt must be at least 10.`);
+  if (op.intent && !["fit-repair", "hierarchy", "proximity", "alignment"].includes(op.intent)) throw new Error(`${op.target}: invalid intent.`);
   if (op.op === "font-weight" && !["normal", "bold"].includes(op.weight)) throw new Error(`${op.target}: weight must be normal or bold.`);
   if (op.op === "text-align" && !["left", "center", "right"].includes(op.alignment)) throw new Error(`${op.target}: invalid alignment.`);
   if (op.op === "text-color" && !validColor(op.color)) throw new Error(`${op.target}: invalid color.`);
@@ -125,6 +128,10 @@ async function main() {
     if (["move", "resize"].includes(op.op) && !targetText) {
       throw new Error(`${op.target}: DATA_ENCODING_GEOMETRY_PROTECTED`);
     }
+    const inSidebar = before[0] >= SIDEBAR_LEFT;
+    if (inSidebar && ["move", "resize"].includes(op.op)) {
+      throw new Error(`${op.target}: SIDEBAR_GEOMETRY_PROTECTED`);
+    }
     const record = { ...op, before };
     if (op.op === "move") {
       target.position = { left: before[0] + op.dx, top: before[1] + op.dy, width: before[2], height: before[3] };
@@ -135,7 +142,11 @@ async function main() {
       record.after = bboxOf(target);
     } else if (op.op === "font-size") {
       record.before_px = target.text.fontSize;
-      target.text.fontSize = op.target_pt * (96 / 72);
+      const targetPx = op.target_pt * (96 / 72);
+      if (inSidebar && (op.intent !== "fit-repair" || !Number.isFinite(record.before_px) || targetPx >= record.before_px)) {
+        throw new Error(`${op.target}: SIDEBAR_FONT_SIZE_REQUIRES_REDUCTION_FIT_REPAIR`);
+      }
+      target.text.fontSize = targetPx;
       record.after_px = target.text.fontSize;
     } else if (op.op === "font-weight") {
       record.before_bold = target.text.bold;

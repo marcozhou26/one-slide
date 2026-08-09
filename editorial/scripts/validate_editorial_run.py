@@ -25,6 +25,7 @@ DECISIONS = {
     "EDITORIAL_CANDIDATE_REJECTED",
     "EDITORIAL_EDIT_BLOCKED",
 }
+SEVERITY_ORDER = {"material": 0, "moderate": 1, "minor": 2}
 
 
 def sha256(path: Path) -> str:
@@ -42,6 +43,25 @@ def run_json(command: list[str]) -> tuple[dict, str | None]:
     except json.JSONDecodeError:
         return {}, process.stderr.strip() or process.stdout.strip() or "command returned no JSON"
     return record, None
+
+
+def finding_signatures(record: dict) -> set[str]:
+    return {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in record.get("findings", [])}
+
+
+def baseline_relative_gate(name: str, baseline: dict, candidate: dict) -> bool:
+    if candidate.get("ok"):
+        return True
+    if baseline.get("ok"):
+        return False
+    if name == "layout":
+        return finding_signatures(candidate).issubset(finding_signatures(baseline))
+    if name == "semantic":
+        baseline_warnings = set(baseline.get("field_simulation_warnings", []))
+        candidate_warnings = set(candidate.get("field_simulation_warnings", []))
+        min_font = candidate.get("min_font_pt")
+        return candidate_warnings.issubset(baseline_warnings) and isinstance(min_font, (int, float)) and min_font >= 12
+    return False
 
 
 def main() -> None:
@@ -81,10 +101,40 @@ def main() -> None:
         errors.append("diagnosis context_basis is invalid")
     if not diagnosis.get("source_ids") or not diagnosis.get("central_message"):
         errors.append("diagnosis lacks source_ids or central_message")
+    visible_defects = diagnosis.get("visible_defects")
+    if not isinstance(visible_defects, list):
+        errors.append("diagnosis visible_defects must be a list")
+        visible_defects = []
+    else:
+        severities = []
+        for defect in visible_defects:
+            if not isinstance(defect, dict) or not defect.get("id") or defect.get("severity") not in SEVERITY_ORDER or not defect.get("evidence") or not defect.get("source_ids"):
+                errors.append("visible defect requires id, severity, evidence, and source_ids")
+                continue
+            severities.append(SEVERITY_ORDER[defect["severity"]])
+        if severities != sorted(severities):
+            errors.append("visible_defects must be ordered by severity")
+    region_analysis = diagnosis.get("region_analysis")
+    if not isinstance(region_analysis, list) or not region_analysis:
+        errors.append("diagnosis requires non-empty region_analysis")
+    else:
+        for region in region_analysis:
+            if not isinstance(region, dict) or not region.get("id") or region.get("role") not in {"main_exhibit", "sidebar", "source", "conclusion", "other"} or not region.get("evidence") or not region.get("source_ids"):
+                errors.append("region_analysis entry is incomplete")
+    panel_integrity = diagnosis.get("panel_integrity", {})
+    if panel_integrity.get("status") not in {"pass", "protected"} or not panel_integrity.get("evidence"):
+        errors.append("diagnosis requires panel_integrity status and evidence")
 
     decision = manifest.get("decision")
     if decision not in DECISIONS:
         errors.append("invalid manifest decision")
+    if decision == "EDITORIAL_IMPROVEMENT_PASS":
+        if not visible_defects:
+            errors.append("improvement pass requires at least one visible defect")
+        elif diagnosis.get("primary_issue_id") != visible_defects[0].get("id"):
+            errors.append("primary_issue_id must select the highest-severity visible defect")
+    if decision == "NO_MATERIAL_EDIT" and visible_defects:
+        errors.append("no-material-edit requires an empty visible_defects list")
     source = Path(manifest.get("source_pptx", ""))
     candidate = Path(manifest.get("candidate_pptx", ""))
     if not source.is_file() or not candidate.is_file():
@@ -142,9 +192,11 @@ def main() -> None:
 
     required_json = {
         "baseline/inspect-manifest.json": None,
+        "baseline/layout.audit.json": None,
+        "baseline/semantic-audit.json": None,
         "candidate/inspect-manifest.json": None,
-        "candidate/layout.audit.json": "LAYOUT_QUALITY_PASS",
-        "candidate/semantic-audit.json": "SEMANTIC_AUDIT_PASS",
+        "candidate/layout.audit.json": None,
+        "candidate/semantic-audit.json": None,
         "candidate/contrast-audit.json": "EDITORIAL_CONTRAST_PASS",
         "candidate/powerpoint-open.json": None,
     }
@@ -188,6 +240,8 @@ def main() -> None:
 
     fresh_layout, layout_error = run_json(["node", str(skill_root / "builder/scripts/layout_quality.mjs"), str(root / "candidate/layout.json")]) if (root / "candidate/layout.json").is_file() else ({}, "candidate layout missing")
     fresh_semantic, semantic_error = run_json(["python3", "-B", str(skill_root / "builder/scripts/audit_pptx_semantics.py"), str(candidate)]) if candidate.is_file() else ({}, "candidate missing")
+    fresh_baseline_layout, baseline_layout_error = run_json(["node", str(skill_root / "builder/scripts/layout_quality.mjs"), str(root / "baseline/layout.json")]) if (root / "baseline/layout.json").is_file() else ({}, "baseline layout missing")
+    fresh_baseline_semantic, baseline_semantic_error = run_json(["python3", "-B", str(skill_root / "builder/scripts/audit_pptx_semantics.py"), str(source)]) if source.is_file() else ({}, "source missing")
     with tempfile.TemporaryDirectory(prefix="oneslide-editorial-contrast-") as temporary:
         fresh_contrast_path = Path(temporary) / "contrast.json"
         fresh_contrast, contrast_error = run_json([
@@ -202,7 +256,20 @@ def main() -> None:
         if error or stored.get("ok") != fresh.get("ok") or stored.get("code") != fresh.get("code"):
             errors.append(f"stored {name} audit does not match fresh execution: {error or fresh.get('code')}")
         if decision in {"EDITORIAL_IMPROVEMENT_PASS", "NO_MATERIAL_EDIT"} and not fresh.get("ok"):
-            errors.append(f"fresh hard QA gate failed: {name}")
+            if name == "layout":
+                if baseline_layout_error or not baseline_relative_gate(name, fresh_baseline_layout, fresh):
+                    errors.append(f"fresh hard QA gate failed or regressed: {name}")
+            elif name == "semantic":
+                if baseline_semantic_error or not baseline_relative_gate(name, fresh_baseline_semantic, fresh):
+                    errors.append(f"fresh hard QA gate failed or regressed: {name}")
+            else:
+                errors.append(f"fresh hard QA gate failed: {name}")
+    for name, stored, fresh, error in (
+        ("baseline-layout", evidence.get("baseline/layout.audit.json", {}), fresh_baseline_layout, baseline_layout_error),
+        ("baseline-semantic", evidence.get("baseline/semantic-audit.json", {}), fresh_baseline_semantic, baseline_semantic_error),
+    ):
+        if error or stored.get("ok") != fresh.get("ok") or stored.get("code") != fresh.get("code"):
+            errors.append(f"stored {name} audit does not match fresh execution: {error or fresh.get('code')}")
 
     candidate_layout = root / "candidate/layout.json"
     if candidate_layout.is_file():

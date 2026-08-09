@@ -20,6 +20,14 @@
   "page_subject": "",
   "central_message": "",
   "expression_method": "",
+  "visible_defects": [
+    {"id": "defect-1", "severity": "material|moderate|minor", "evidence": "", "source_ids": []}
+  ],
+  "primary_issue_id": "defect-1",
+  "region_analysis": [
+    {"id": "main-exhibit", "role": "main_exhibit|sidebar|source|conclusion|other", "evidence": "", "source_ids": []}
+  ],
+  "panel_integrity": {"status": "pass|protected", "evidence": ""},
   "rubric": {
     "visual_subject": {"status": "pass|issue", "evidence": ""},
     "title_evidence": {"status": "pass|issue", "evidence": ""},
@@ -36,4 +44,18 @@
 }
 ```
 
+`visible_defects` 必须按 `material → moderate → minor` 排序。发生材料性修改时，`primary_issue_id` 必须等于第一项缺陷；没有可见缺陷时数组为空，并选择 `NO_MATERIAL_EDIT`。
+
 不能用机械总分替代判断。任何来源、事实、可读性或可编辑性硬失败都直接否决候选。
+
+## 诊断先后顺序
+
+六维 rubric 不是六个同时优化的目标。必须依次执行：
+
+1. 只看整页 PNG，记录肉眼可见的缺陷、对象和严重度；
+2. 标出主图、侧栏、结论栏、来源栏及重复板块，确认其内在秩序；
+3. 从最高严重度缺陷中选择一个主问题；
+4. 选择不会破坏其他区域的最小修改；
+5. 再用六维 rubric 检查整页净收益。
+
+以下情况不是改善：解释更靠近证据但原侧栏被抽空；单个卡片变大但板块秩序被破坏；存在明显文字适配问题却转而修改无关颜色或位置。
