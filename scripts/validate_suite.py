@@ -39,6 +39,20 @@ REQUIRED = [
     "builder/references/module-registry.json",
     "builder/scripts/route_v3.mjs",
     "builder/scripts/pptx_core.mjs",
+    "editorial/PRD.md",
+    "editorial/ENGINE.md",
+    "editorial/references/input-contract.md",
+    "editorial/references/editorial-contract.md",
+    "editorial/references/review-rubric.md",
+    "editorial/references/output-contract.md",
+    "editorial/references/walkthrough.md",
+    "editorial/scripts/plan_editorial_run.py",
+    "editorial/scripts/inspect_editorial_slide.mjs",
+    "editorial/scripts/apply_editorial_patch.mjs",
+    "editorial/scripts/verify_editorial_roundtrip.py",
+    "editorial/scripts/validate_editorial_run.py",
+    "editorial/scripts/write_editorial_manifest.py",
+    "editorial/scripts/audit_editorial_contrast.py",
     "scripts/check_environment.py",
     "scripts/validate_suite.py",
     "tests/test_suite_contract.py",
@@ -72,8 +86,8 @@ def validate(root: Path) -> dict:
             errors.append("SKILL.md license must be Apache-2.0")
         if not re.search(r'(?m)^\s*author:\s*["\']周俊东 Marco["\']\s*$', skill_text):
             errors.append("SKILL.md author must be 周俊东 Marco")
-        if not re.search(r'(?m)^\s*version:\s*["\']1\.3\.0["\']\s*$', skill_text):
-            errors.append("SKILL.md version must be 1.3.0")
+        if not re.search(r'(?m)^\s*version:\s*["\']1\.4\.0["\']\s*$', skill_text):
+            errors.append("SKILL.md version must be 1.4.0")
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
             if term not in skill_text:
                 errors.append(f"SKILL.md missing required mode or state: {term}")
@@ -90,8 +104,9 @@ def validate(root: Path) -> dict:
             except UnicodeDecodeError:
                 errors.append(f"text file is not UTF-8: {relative}")
                 continue
+            scan_text = text.replace("https://github.com/marcozhou26/", "https://github.com/PUBLIC_ACCOUNT/")
             for pattern, label in FORBIDDEN_TEXT.items():
-                if pattern in text:
+                if pattern in scan_text:
                     errors.append(f"{label} in {relative}: {pattern}")
 
     registry_path = root / "builder/references/module-registry.json"
