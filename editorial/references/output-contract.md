@@ -18,9 +18,11 @@ editorial-run/
 
 ## editorial-qa.json
 
-必含：`version`、`role=EDITORIAL_QA`、`source_sha256`、`decision`、`page_strengths`、`confidence`。要求修改时另含一个 `primary_issue` 和一个 `builder_brief`。
+必含：`version`、`role=EDITORIAL_QA`、`source_sha256`、`decision`、`page_strengths`、`diagnostic_basis`、`confidence`。`diagnostic_basis.visual_groups` 记录已检查的重复组；每组包含 `group_id`、`source_ids`、`semantic_role`、`uniform_properties`、`content_fit` 和 `container_semantics`。要求修改时另含一个 `primary_issue` 和一个 `builder_brief`。
 
 `builder_brief` 只包含：`mode`、`objective`、`rationale`、`protected_strengths`、`success_criteria`、`forbidden_changes`。不得包含执行参数。
+
+若问题命中重复组，`primary_issue.source_ids` 必须覆盖该组的全部受影响成员，`protected_strengths` 必须明确组级统一属性。不得只点名单个成员后让 Builder 临场猜测其同级关系。
 
 ## 对外隔离
 

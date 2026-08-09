@@ -4,7 +4,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 const ALLOWED = new Set([
-  "move", "resize", "font-size", "font-weight", "text-align", "text-color",
+  "move", "resize", "font-size", "font-weight", "text-align", "text-color", "text-insets",
 ]);
 const SLIDE_WIDTH = 1280;
 const SIDEBAR_LEFT = SLIDE_WIDTH * 0.74;
@@ -58,6 +58,11 @@ function validateOperation(op) {
   if (op.op === "move" && (![op.dx, op.dy].every(Number.isFinite))) throw new Error(`${op.target}: move needs dx and dy.`);
   if (op.op === "resize" && (![op.dw, op.dh].every(Number.isFinite))) throw new Error(`${op.target}: resize needs dw and dh.`);
   if (op.op === "font-size" && (!Number.isFinite(op.target_pt) || op.target_pt < 10)) throw new Error(`${op.target}: target_pt must be at least 10.`);
+  if (op.op === "text-insets") {
+    if (!op.insets || ["left", "right", "top", "bottom"].some((key) => !Number.isFinite(op.insets[key]) || op.insets[key] < 0)) {
+      throw new Error(`${op.target}: text-insets needs non-negative left, right, top, and bottom values.`);
+    }
+  }
   if (op.intent && !["fit-repair", "hierarchy", "proximity", "alignment"].includes(op.intent)) throw new Error(`${op.target}: invalid intent.`);
   if (op.op === "font-weight" && !["normal", "bold"].includes(op.weight)) throw new Error(`${op.target}: weight must be normal or bold.`);
   if (op.op === "text-align" && !["left", "center", "right"].includes(op.alignment)) throw new Error(`${op.target}: invalid alignment.`);
@@ -87,6 +92,45 @@ async function main() {
   if (plan.editorial_qa_sha256 !== await sha256(qaPath)) throw new Error("Builder plan is not bound to the Editorial QA brief.");
   if (!plan.execution_rationale) throw new Error("Builder plan needs execution_rationale.");
   plan.operations.forEach(validateOperation);
+
+  const groupContracts = new Map((plan.group_contracts ?? []).map((contract) => [contract.group_id, contract]));
+  const qaGroups = new Map((qa.diagnostic_basis?.visual_groups ?? []).map((group) => [group.group_id, group]));
+  for (const contract of groupContracts.values()) {
+    if (!contract.group_id || !Array.isArray(contract.members) || contract.members.length < 2) throw new Error("Each group contract needs a group_id and at least two members.");
+    if (!['uniform-typography', 'content-driven-containers'].includes(contract.policy)) throw new Error(`${contract.group_id}: invalid group policy.`);
+    const qaGroup = qaGroups.get(contract.group_id);
+    if (!qaGroup || qaGroup.source_ids.length !== contract.members.length || qaGroup.source_ids.some((member) => !contract.members.includes(member))) {
+      throw new Error(`${contract.group_id}: group contract must match the Editorial QA visual group.`);
+    }
+  }
+  for (const op of plan.operations) {
+    const member = op.target.startsWith("name/") ? decodeURIComponent(op.target.slice(5)) : null;
+    const matchingQaGroups = member ? [...qaGroups.values()].filter((group) => group.source_ids.includes(member)) : [];
+    if (matchingQaGroups.length && !op.group_id) throw new Error(`${op.target}: operation on a declared visual-group member requires group_id.`);
+    if (!op.group_id) continue;
+    const contract = groupContracts.get(op.group_id);
+    if (!contract) throw new Error(`${op.group_id}: operation references an undeclared group contract.`);
+    if (!member || !contract.members.includes(member)) throw new Error(`${op.target}: target is not a declared member of ${op.group_id}.`);
+  }
+  for (const contract of groupContracts.values()) {
+    const groupOperations = plan.operations.filter((op) => op.group_id === contract.group_id);
+    if (contract.policy === "uniform-typography") {
+      for (const operationName of ["font-size", "text-insets"]) {
+        const operations = groupOperations.filter((op) => op.op === operationName);
+        if (!operations.length) continue;
+        const members = new Set(operations.map((op) => decodeURIComponent(op.target.slice(5))));
+        if (members.size !== contract.members.length || contract.members.some((member) => !members.has(member))) {
+          throw new Error(`${contract.group_id}: ${operationName} must be applied to every peer member.`);
+        }
+        if (operationName === "font-size" && new Set(operations.map((op) => op.target_pt)).size !== 1) {
+          throw new Error(`${contract.group_id}: peer members must keep one font size.`);
+        }
+      }
+    }
+    if (contract.policy === "content-driven-containers" && groupOperations.some((op) => op.op === "font-size")) {
+      throw new Error(`${contract.group_id}: expand the content container before changing peer typography.`);
+    }
+  }
 
   const modulePath = path.join(path.resolve(args.workspace), "node_modules/@oai/artifact-tool/dist/artifact_tool.mjs");
   const { FileBlob, PresentationFile } = await import(pathToFileURL(modulePath).href);
@@ -137,7 +181,9 @@ async function main() {
       throw new Error(`${op.target}: DATA_ENCODING_GEOMETRY_PROTECTED`);
     }
     const inSidebar = before[0] >= SIDEBAR_LEFT;
-    if (inSidebar && ["move", "resize"].includes(op.op)) {
+    const groupContract = op.group_id ? groupContracts.get(op.group_id) : null;
+    const sidebarContentExpansion = inSidebar && op.op === "resize" && op.intent === "fit-repair" && groupContract?.policy === "content-driven-containers" && op.dw >= 0 && op.dh >= 0;
+    if (inSidebar && ["move", "resize"].includes(op.op) && !sidebarContentExpansion) {
       throw new Error(`${op.target}: SIDEBAR_GEOMETRY_PROTECTED`);
     }
     const record = { ...op, before };
@@ -167,6 +213,9 @@ async function main() {
     } else if (op.op === "text-color") {
       target.text.color = op.color;
       record.after_color = op.color;
+    } else if (op.op === "text-insets") {
+      target.text.insets = op.insets;
+      record.after_insets = op.insets;
     }
     audit.operations.push(record);
   }

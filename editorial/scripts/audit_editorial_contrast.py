@@ -58,7 +58,7 @@ def main() -> None:
             errors.append(f"changed target unresolved in candidate layout: {operation.get('target')}")
             continue
         target = by_name[name]
-        if operation.get("op") in {"text-color", "font-size", "font-weight", "move", "resize"} and str(target.get("text", "")).strip():
+        if operation.get("op") in {"text-color", "font-size", "font-weight", "text-insets", "move", "resize"} and str(target.get("text", "")).strip():
             affected[name] = operation["op"]
         if operation.get("op") == "shape-fill":
             for item in elements:

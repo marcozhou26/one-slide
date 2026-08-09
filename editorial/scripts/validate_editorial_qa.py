@@ -6,11 +6,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
+import zipfile
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
 
 DECISIONS = {"PASS_AS_IS", "BUILDER_LOCAL_REPAIR", "BUILDER_RECOMPOSE", "EDITORIAL_BLOCKED"}
 EXECUTION_KEYS = {"operations", "op", "target_pt", "dx", "dy", "dw", "dh", "expected_bbox"}
+NS = {"p": "http://schemas.openxmlformats.org/presentationml/2006/main"}
 
 
 def sha256(path: Path) -> str:
@@ -34,6 +38,17 @@ def find_execution_keys(value: object, location: str = "$") -> list[str]:
     return findings
 
 
+def shape_names(path: Path) -> set[str]:
+    names: set[str] = set()
+    with zipfile.ZipFile(path) as archive:
+        for member in archive.namelist():
+            if not re.match(r"ppt/slides/slide\d+\.xml$", member):
+                continue
+            root = ET.fromstring(archive.read(member))
+            names.update(node.get("name", "") for node in root.findall(".//p:cNvPr", NS) if node.get("name"))
+    return names
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
@@ -48,10 +63,16 @@ def main() -> None:
         record = {}
         errors.append(f"invalid Editorial QA JSON: {error}")
 
+    source_names: set[str] = set()
     if not args.source.is_file() or args.source.suffix.lower() != ".pptx":
         errors.append("source must be a readable PPTX")
-    elif record.get("source_sha256") != sha256(args.source):
-        errors.append("source_sha256 does not match source PPTX")
+    else:
+        try:
+            source_names = shape_names(args.source)
+        except (OSError, zipfile.BadZipFile, ET.ParseError):
+            errors.append("source must be a readable PPTX")
+        if record.get("source_sha256") != sha256(args.source):
+            errors.append("source_sha256 does not match source PPTX")
     if record.get("version") != 1 or record.get("role") != "EDITORIAL_QA":
         errors.append("version=1 and role=EDITORIAL_QA are required")
     decision = record.get("decision")
@@ -62,6 +83,25 @@ def main() -> None:
         errors.append("page_strengths requires at least two concrete strengths")
     if record.get("confidence") not in {"high", "medium", "low"}:
         errors.append("confidence must be high, medium, or low")
+    diagnostic = record.get("diagnostic_basis")
+    groups = diagnostic.get("visual_groups") if isinstance(diagnostic, dict) else None
+    if not isinstance(groups, list):
+        errors.append("diagnostic_basis.visual_groups is required")
+        groups = []
+    group_ids: set[str] = set()
+    for index, group in enumerate(groups):
+        if not isinstance(group, dict) or any(not group.get(key) for key in ("group_id", "source_ids", "semantic_role", "uniform_properties", "content_fit", "container_semantics")):
+            errors.append(f"visual_groups[{index}] is incomplete")
+            continue
+        if group["group_id"] in group_ids:
+            errors.append(f"duplicate visual group id: {group['group_id']}")
+        group_ids.add(group["group_id"])
+        if not isinstance(group["source_ids"], list) or len(group["source_ids"]) < 2:
+            errors.append(f"visual group {group['group_id']} needs at least two source_ids")
+        elif source_names and any(source_id not in source_names for source_id in group["source_ids"]):
+            errors.append(f"visual group {group['group_id']} contains source_ids not found in the PPTX")
+        if not isinstance(group["uniform_properties"], list) or not group["uniform_properties"]:
+            errors.append(f"visual group {group['group_id']} needs uniform_properties")
     forbidden = find_execution_keys(record)
     if forbidden:
         errors.append("Editorial QA must not contain execution parameters: " + ", ".join(forbidden))
@@ -81,6 +121,13 @@ def main() -> None:
             errors.append(f"{decision} requires builder_brief.mode={expected_mode}")
         elif any(not brief.get(key) for key in ("objective", "rationale", "protected_strengths", "success_criteria", "forbidden_changes")):
             errors.append("Builder brief lacks objective, rationale, protected strengths, success criteria, or forbidden changes")
+        issue_group = issue.get("group_id") if isinstance(issue, dict) else None
+        if issue_group:
+            matched = next((group for group in groups if isinstance(group, dict) and group.get("group_id") == issue_group), None)
+            if not matched:
+                errors.append("primary_issue.group_id must reference diagnostic_basis.visual_groups")
+            elif set(issue.get("source_ids", [])) != set(matched.get("source_ids", [])):
+                errors.append("a repeated-group issue must cover every declared group member")
     elif decision == "EDITORIAL_BLOCKED" and (brief is not None or not record.get("blocked_reason")):
         errors.append("EDITORIAL_BLOCKED requires blocked_reason and no Builder brief")
 
