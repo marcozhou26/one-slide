@@ -264,7 +264,7 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - 不要把 ECharts 示例直接复制进 OneSlide 作为静态图；它只能作为图形研究参考；
 - 不要只新增 Builder renderer 而不更新 Producer 交接规则；
 - 不要把所有图表都塞进一个万能模块；
-- 不要为了填满页面增加装饰性卡片；
+- 不要为了填满页面增加装饰性卡片；所有可见对象必须通过 `builder/references/information-contribution-gate.md`，顶部装饰色带、eyebrow、标题饰线、空容器和其他纯装饰对象必须阻断；
 - 不要把合成数据写成真实客户事实；
 - 不要把旧模块删除到无法兼容已有运行包；
 - 不要把技术链路通过冒充用户验收通过。
@@ -326,3 +326,32 @@ python3 <presentations-skill>/container_tools/slides_test.py <file.pptx>
 - `builder/scripts/plan_confidence_band.mjs`
 - `builder/scripts/render_confidence_band.mjs`
 - `builder/tests/confidence_band_contracts.test.mjs`
+
+## 17. 信息贡献门槛
+
+OneSlide 已建立跨 Producer、Builder、layout 审计和 PowerPoint 模板的统一信息贡献门槛。每个可见对象必须传递语境、编码证据、表达关系、提供定义来源、说明行动条件或承载用户明确要求的身份；只为美观、填空或制造模板感的对象不得进入页面。
+
+自动阻断包括 `DECORATIVE_ELEMENT_BLOCKED`、`DECORATIVE_TOP_BAND_BLOCKED`、`EYEBROW_BLOCKED` 和 `TEMPLATE_DECORATION_BLOCKED`。结构带、关系线、坐标轴、数据图形和承载真实内容的容器不因“没有文字”而被误杀。
+
+关键文件：
+
+- `builder/references/information-contribution-gate.md`
+- `builder/scripts/layout_quality.mjs`
+- `builder/scripts/apply_powerpoint_template.py`
+- `builder/tests/layout_quality.test.mjs`
+- `builder/tests/r6_template.test.mjs`
+
+## 18. Editorial Editor 后置模块
+
+OneSlide 1.4 的目标链路为 `Producer → Builder 初稿 → Editorial Editor → 完整回归 → delivery`。Editorial Editor 只在真实一页 PPTX 和整页渲染存在后运行，一次选择一个最影响理解的问题，用可回退的成组原生对象补丁改善页面；没有明确收益时记录 `NO_MATERIAL_EDIT`。事实、数字、单位、来源、主关系和结论强度不得改变。
+
+关键文件：
+
+- `editorial/PRD.md`
+- `editorial/ENGINE.md`
+- `editorial/references/input-contract.md`
+- `editorial/references/editorial-contract.md`
+- `editorial/references/review-rubric.md`
+- `editorial/scripts/apply_editorial_patch.mjs`
+- `editorial/scripts/verify_editorial_roundtrip.py`
+- `builder/tests/editorial_editor.test.mjs`
