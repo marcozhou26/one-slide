@@ -1,6 +1,6 @@
 # License status
 
-OneSlide 1.3.0 使用分层授权：
+OneSlide 1.4.0 使用分层授权：
 
 - `SKILL.md`、执行引擎、脚本、配置和测试代码采用 Apache License 2.0，完整条款见 `LICENSE`。
 - 原创使用说明、教程、示例输入、示例输出和自有参考 PPT 采用 Creative Commons Attribution 4.0 International（CC BY 4.0），具体范围见 `CONTENT-LICENSE.md`。

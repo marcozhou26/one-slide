@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const skillRoot = fileURLToPath(new URL("../", import.meta.url));
 const template = path.join(skillRoot, "assets/test-fixtures/r6-brand-template.pptx");
+const decorativeTemplate = path.join(skillRoot, "assets/test-fixtures/r6-decorative-template.pptx");
 const generated = path.join(skillRoot, "assets/reference-pages/tornado-sensitivity.pptx");
 const script = path.join(skillRoot, "scripts/apply_powerpoint_template.py");
 const extract = (pptx, member) => spawnSync("unzip", ["-p", pptx, member], { encoding: null });
@@ -44,4 +45,12 @@ test("missing or corrupt template is blocked with a stable code", async () => {
   const corruptResult = spawnSync("python3", [script, "--template", corrupt, "--generated", generated, "--output", output], { encoding: "utf8" });
   assert.equal(corruptResult.status, 2);
   assert.equal(JSON.parse(corruptResult.stdout).code, "TEMPLATE_COMPATIBILITY_FAIL");
+});
+
+test("template decoration is blocked instead of silently preserved", async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), "consulting-template-decoration-"));
+  const output = path.join(directory, "blocked.pptx");
+  const result = spawnSync("python3", [script, "--template", decorativeTemplate, "--generated", generated, "--output", output], { encoding: "utf8" });
+  assert.equal(result.status, 2, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).code, "TEMPLATE_DECORATION_BLOCKED");
 });
