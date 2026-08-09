@@ -4,7 +4,7 @@
 2. 只选一个主视觉关系；其余放入证据带、解释栏或结论带。
 3. 使用 `scripts/pptx_core.mjs` 的语义组件；正常情况下不读取其源码。坐标统一使用 `1280×720 px`，不得把 960×540、英寸值或其他画布坐标直接写入 `position`。
 4. 为重复字段建立真实列或 `addFieldGroup`。为数据编码使用 `addDataBar` 或 `addChartColumn`。
-5. 一次生成完整候选。`exportPresentation` 会强制输出 layout JSON 并执行换行、画布利用率和越界检查；失败时必须修复当前渲染代码，不得绕过审计或把失败文件放进 `delivery/`。
+5. 一次生成完整候选。`exportPresentation` 会强制输出 layout JSON，并执行 `information-contribution-gate.md`、换行、画布利用率和越界检查；失败时必须修复当前渲染代码，不得绕过审计或把失败文件放进 `delivery/`。
 
 最小调用方式：
 
@@ -43,6 +43,7 @@ await exportPresentation(presentation, { pptx, preview, layout }); // layout 必
 - 页面坐标固定为 `1280×720 px`。主内容通常从左边距 48–64 px 延伸到右侧 1216–1232 px。
 - 信息较完整且对象数不少于 12 时，主内容最右边不得早于 1120 px，主体最下边不得早于 540 px。未达到时先检查是否误用了 960×540 或英寸坐标，再扩大主证据区；不得用装饰物填空。
 - `CANVAS_WIDTH_UNDERUSED`、`CANVAS_HEIGHT_UNDERUSED`、`SHORT_LABEL_WRAP`、`ORPHAN_LINE`、`UNBREAKABLE_TOKEN_WRAP`、`BAD_LINE_START_PUNCTUATION`、`NUMBER_UNIT_SPLIT` 均为阻断项，不是可忽略 warning。
+- `DECORATIVE_ELEMENT_BLOCKED`、`DECORATIVE_TOP_BAND_BLOCKED` 和 `EYEBROW_BLOCKED` 同样是阻断项。画布不足只能重排信息，不能用装饰物补面积。
 - 标题组件之后保留至少 16 px 的完整安全间距。主框上方的图例、里程碑标签、注释和数据标签同样受此限制，不能因为它们不在主框内就越过安全区。
 - 若标题安全区被侵入而页面底部仍有至少 56 px 空间，先整体下移主证据、支持区、结论区和来源区；不得只移动主框，留下漂浮注释继续挤压标题。
 

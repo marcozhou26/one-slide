@@ -94,6 +94,7 @@ python3 -m unittest discover -s tests -v
 - `SKILL.md`: the single user-facing entry point.
 - `producer/`: interprets source material, fills targeted gaps, and records provenance.
 - `builder/`: selects the visual structure, creates native PowerPoint objects, and checks layout.
+- `editorial/`: reviews the actual rendered draft, applies one conservative native-object edit when it clearly improves comprehension, and rolls back unsafe candidates.
 - `showcase/`: public single-slide previews using simulated or synthetic data.
 - `scripts/` and `tests/`: environment checks, package validation, and regression tests.
 

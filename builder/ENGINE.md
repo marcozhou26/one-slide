@@ -3,7 +3,7 @@ name: single-consulting-slide-builder
 description: Build one native-editable 16:9 consulting PowerPoint slide from an approved Consulting Slide Prompt Architect handoff, a structured Synthetic Input Generator package, or a simple unambiguous raw request. Use for consulting comparisons, processes, matrices, trends, rankings, flows, charts, complex organization charts, HR business pages, and composite analytical single slides. Return BRIEF_REQUIRED instead of forcing complex or ambiguous raw material into one page.
 ---
 
-# Single Consulting Slide Builder V3.3.5
+# Single Consulting Slide Builder V3.3.6
 
 > 本文档中的命令均假定当前工作目录为包含顶层 `SKILL.md` 的 OneSlide Skill 根目录；Builder 脚本使用 `builder/` 前缀执行。
 
@@ -33,7 +33,7 @@ node builder/scripts/route_v3.mjs input.json
 按结果继续：
 
 - `deterministic_module`：只读取返回的单个 `reference`。若路由返回 `module_input=module_payload`，把 handoff 中的 `module_payload` 原样写入运行目录的 `internal/module-input.json`，直接运行 validator、planner 和 renderer；不得重新解释或改写。不要读取完整注册表或渲染器源码。
-- `direct_composition`：只读取 `references/visual-grammar.md` 和 `references/direct-composition.md`，使用 `scripts/pptx_core.mjs` 的语义组件生成一页。`preferred_module` 只是视觉家族提示，不等于已有可执行模块载荷；不得假装命中确定性模块。
+- `direct_composition`：只读取 `references/information-contribution-gate.md`、`references/visual-grammar.md` 和 `references/direct-composition.md`，使用 `scripts/pptx_core.mjs` 的语义组件生成一页。`preferred_module` 只是视觉家族提示，不等于已有可执行模块载荷；不得假装命中确定性模块。
 - `BRIEF_REQUIRED`：复杂或歧义原始材料交给 Prompt Architect。
 - `SOURCE_BASELINE_FAIL` 或 `ROUTE_CONFLICT`：按返回的阻塞原因处理，不猜测。
 
@@ -49,6 +49,7 @@ node builder/scripts/route_v3.mjs input.json
 
 ### 3. 绘制
 
+- 完整读取并执行 `references/information-contribution-gate.md`。每个可见对象必须传递信息、编码证据、表达关系、提供定义来源、说明行动条件或承载用户明确要求的身份；纯装饰对象一律删除。
 - 先确定主要信息关系和主证据区，再绘制对象。
 - 数据条、图表柱、瀑布柱、表格单元格和普通容器必须方角。
 - 连续数值分布必须保留原始观测、单位、期间、分母、样本与缺失值，使用可复现的显式分箱边界和相邻原生矩形；不得用带间距的分类柱状图冒充。
@@ -77,7 +78,7 @@ node builder/scripts/audit_visual_source.mjs
 node builder/scripts/layout_quality.mjs internal/verify/layout.json
 ```
 
-`exportPresentation` 已内置 layout 质量门禁；`SHORT_LABEL_WRAP`、`ORPHAN_LINE`、`UNBREAKABLE_TOKEN_WRAP`、`BAD_LINE_START_PUNCTUATION`、`NUMBER_UNIT_SPLIT`、`TWO_LINE_TITLE_WITH_SUBTITLE`、`HEADING_SAFE_ZONE_INTRUSION`、`CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`、`EDGE_ALIGNMENT_MISMATCH`、`CANVAS_WIDTH_UNDERUSED`、`CANVAS_HEIGHT_UNDERUSED` 和越界均必须阻断交付。直接编排还必须用 `registerEdgeAlignment` 声明主要纵向区块的共线边缘。渲染整页要人工检查标题换行、标题安全区、上下留白平衡、遮挡、连接线、数据编码、字段分块和可读性。已知确定性缺陷必须修复，不受候选预算限制；不得为无明确收益的美化反复迭代。
+`exportPresentation` 已内置 layout 质量门禁；`DECORATIVE_ELEMENT_BLOCKED`、`DECORATIVE_TOP_BAND_BLOCKED`、`EYEBROW_BLOCKED`、`SHORT_LABEL_WRAP`、`ORPHAN_LINE`、`UNBREAKABLE_TOKEN_WRAP`、`BAD_LINE_START_PUNCTUATION`、`NUMBER_UNIT_SPLIT`、`TWO_LINE_TITLE_WITH_SUBTITLE`、`HEADING_SAFE_ZONE_INTRUSION`、`CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`、`EDGE_ALIGNMENT_MISMATCH`、`CANVAS_WIDTH_UNDERUSED`、`CANVAS_HEIGHT_UNDERUSED` 和越界均必须阻断交付。模板出现纯装饰形状时以 `TEMPLATE_DECORATION_BLOCKED` 阻断。直接编排还必须用 `registerEdgeAlignment` 声明主要纵向区块的共线边缘。渲染整页要人工检查信息贡献、标题换行、标题安全区、上下留白平衡、遮挡、连接线、数据编码、字段分块和可读性。已知确定性缺陷必须修复，不受候选预算限制；不得为无明确收益的美化反复迭代。
 
 组织架构模块额外阻断 `ORG_PEER_ROW_MISALIGNMENT`、`ORG_DIRECT_REPORT_DOGLEG` 和 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS`。这些状态必须来自实际节点坐标与关系方向检查，不能只扫描提示词或依赖 PowerPoint 自动路由。
 
@@ -91,7 +92,7 @@ node builder/scripts/layout_quality.mjs internal/verify/layout.json
 
 ## 交付边界
 
-客户目录只放版本化 PPTX。来源、提示词、路由结果、预览和 QA 放内部目录。
+Builder 输出先作为内部初稿交给 `../editorial/ENGINE.md`，不得直接视为最终美观度通过。只有 Editorial Editor 返回 `EDITORIAL_IMPROVEMENT_PASS` 或 `NO_MATERIAL_EDIT`，并完成回归后，客户目录才放版本化 PPTX。来源、提示词、路由结果、前后预览、补丁和 QA 放内部目录。
 
 分别报告：
 
