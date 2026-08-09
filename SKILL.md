@@ -1,6 +1,6 @@
 ---
 name: one-slide
-description: "Turn complete or sparse user material into exactly one source-traceable, presentation-ready slide prompt, and optionally one native-editable 16:9 PowerPoint page with consulting-grade structure and layout. Use when the user wants one professional slide, may not have enough detail, wants missing content completed without changing supplied facts, and needs every synthetic or inferred element identified."
+description: "把完整或零散的用户材料整理成恰好一页、来源可追溯、可直接用于制作演示文稿的提示词，并可选生成一页原生可编辑的 16:9 PowerPoint。适用于用户需要专业单页、材料可能不完整、希望在不改变既有事实的前提下补齐必要内容，并要求明确标识所有合成或推导内容的场景。"
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
