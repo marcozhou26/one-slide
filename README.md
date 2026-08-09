@@ -4,7 +4,7 @@ Turn complete or scattered source material into one clear, source-traceable, nat
 
 OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[Download OneSlide v1.3.0](../../releases/latest/download/one-slide-v1.3.0.zip) · [Get started](#get-started-in-three-minutes) · [Report an issue](../../issues)
+[Download OneSlide v1.3.0](../../releases/latest/download/one-slide-v1.3.0.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](docs/zh/prompt-input-guide.md) · [Report an issue](../../issues)
 
 ## Explain complex logic on one slide
 
