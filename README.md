@@ -4,7 +4,7 @@ Turn complete or scattered source material into one clear, source-traceable, nat
 
 OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[Download OneSlide v1.2.2](../../releases/latest/download/one-slide-v1.2.2.zip) · [Get started](#get-started-in-three-minutes) · [Report an issue](../../issues)
+[Download OneSlide v1.3.0](../../releases/latest/download/one-slide-v1.3.0.zip) · [Get started](#get-started-in-three-minutes) · [Report an issue](../../issues)
 
 ## Explain complex logic on one slide
 
@@ -42,7 +42,7 @@ If you do not explicitly request a PowerPoint file, OneSlide defaults to `PROMPT
 
 ## Get started in three minutes
 
-1. Download and unzip [one-slide-v1.2.2.zip](../../releases/latest/download/one-slide-v1.2.2.zip).
+1. Download and unzip [one-slide-v1.3.0.zip](../../releases/latest/download/one-slide-v1.3.0.zip).
 2. Copy the top-level `one-slide` folder into the Skills directory of a compatible agent client.
 3. Refresh the client and invoke `$one-slide`.
 
@@ -107,7 +107,7 @@ python3 -m unittest discover -s tests -v
 ## Author
 
 - Author and maintainer: 周俊东 Marco
-- WeChat public account and Channels account: 周俊东 Marco
+- WeChat public account and Channels account: 周俊东Marco
 - WeChat: `zhou139223` (include “OneSlide” in the invitation note)
 
 ## Licensing
@@ -121,4 +121,4 @@ Slides created through ordinary use of OneSlide do not need an author watermark 
 
 ## Version status
 
-The current release is v1.2.2. It upgrades the Sankey renderer with native editable Bézier ribbons whose widths are proportional to flow values, plus square borderless nodes that remove visible white gaps. Public licensing and native regression tests are included. Font and layout differences may still occur across clients and PowerPoint versions.
+The current release is v1.3.0. OneSlide now includes 41 productized modules. This release adds multi-period composition shift, cohort retention, box plot, histogram, box plot with jittered observations, correlation matrix, scatter regression, and confidence band modules, and upgrades two-period slope ranking to a backward-compatible multi-period bump-ranking module. Public licensing and native regression tests are included. Font and layout differences may still occur across clients and PowerPoint versions.

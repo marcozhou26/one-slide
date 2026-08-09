@@ -72,8 +72,8 @@ def validate(root: Path) -> dict:
             errors.append("SKILL.md license must be Apache-2.0")
         if not re.search(r'(?m)^\s*author:\s*["\']周俊东 Marco["\']\s*$', skill_text):
             errors.append("SKILL.md author must be 周俊东 Marco")
-        if not re.search(r'(?m)^\s*version:\s*["\']1\.2\.2["\']\s*$', skill_text):
-            errors.append("SKILL.md version must be 1.2.2")
+        if not re.search(r'(?m)^\s*version:\s*["\']1\.3\.0["\']\s*$', skill_text):
+            errors.append("SKILL.md version must be 1.3.0")
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
             if term not in skill_text:
                 errors.append(f"SKILL.md missing required mode or state: {term}")
