@@ -1,124 +1,124 @@
 # OneSlide
 
-把完整或零散材料做成一页逻辑清楚、来源可追溯、原生可编辑的 PowerPoint。
+Turn complete or scattered source material into one clear, source-traceable, natively editable PowerPoint slide.
 
-OneSlide 面向不会写复杂提示词、又希望获得专业单页 PPT 的普通用户。你可以只给一句需求，也可以提供完整材料；信息不足时，它会在不改写原意的前提下定向补全，并明确标出模型补全、计算结果和外部来源。
+OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[下载 OneSlide v1.2.2](../../releases/latest/download/one-slide-v1.2.2.zip) · [查看使用方法](#3-分钟上手) · [提交问题](../../issues)
+[Download OneSlide v1.2.2](../../releases/latest/download/one-slide-v1.2.2.zip) · [Get started](#get-started-in-three-minutes) · [Report an issue](../../issues)
 
-## 一页，也能把复杂逻辑讲清楚
+## Explain complex logic on one slide
 
-下面是 OneSlide 已覆盖或可迁移的单页表达类型。展示数据均为模拟或合成数据，不包含真实客户、员工或个人信息。
+The examples below show slide types supported or migrated into OneSlide. All displayed data is simulated or synthetic and contains no real customer, employee, or personal information.
 
 <table>
   <tr>
-    <td width="50%"><img src="showcase/01-column-chart.png" alt="月度合同额柱状图"><br><b>柱状图：</b>实际、目标与累计缺口</td>
-    <td width="50%"><img src="showcase/02-medium-capability-gap.png" alt="能力差距分析"><br><b>中等复杂度：</b>能力差距、难度与制约因素</td>
+    <td width="50%"><img src="showcase/01-column-chart.png" alt="Monthly contract value bar chart"><br><b>Bar chart:</b> Actual, target, and cumulative shortfall</td>
+    <td width="50%"><img src="showcase/02-medium-capability-gap.png" alt="Capability gap analysis"><br><b>Capability analysis:</b> Gaps, difficulty, and constraints</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/03-bubble-heatmap.png" alt="气泡矩阵与热力表"><br><b>气泡矩阵：</b>价值、难度与优先级</td>
-    <td width="50%"><img src="showcase/04-org-chart.png" alt="组织架构图"><br><b>组织架构：</b>实线汇报与虚线协作关系</td>
+    <td width="50%"><img src="showcase/03-bubble-heatmap.png" alt="Bubble matrix and heatmap"><br><b>Bubble matrix:</b> Value, difficulty, and priority</td>
+    <td width="50%"><img src="showcase/04-org-chart.png" alt="Organization chart"><br><b>Organization chart:</b> Solid-line reporting and dotted-line collaboration</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/05-waterfall.png" alt="EBITDA 瀑布图"><br><b>瀑布图：</b>预算与实际差异归因</td>
-    <td width="50%"><img src="showcase/06-sankey.png" alt="候选人转化桑基图"><br><b>流向分析：</b>候选人来源、筛选、入职与留任</td>
+    <td width="50%"><img src="showcase/05-waterfall.png" alt="EBITDA waterfall chart"><br><b>Waterfall:</b> Budget-to-actual variance attribution</td>
+    <td width="50%"><img src="showcase/06-sankey.png" alt="Candidate flow Sankey diagram"><br><b>Flow analysis:</b> Candidate sourcing, screening, hiring, and retention</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/07-project-gantt.png" alt="项目甘特图"><br><b>项目甘特图：</b>进度、依赖与放行条件</td>
-    <td width="50%"><img src="showcase/08-compensation-productivity.png" alt="人均薪酬与产出效能"><br><b>薪酬效能：</b>人均薪酬、人均产出与部门象限</td>
+    <td width="50%"><img src="showcase/07-project-gantt.png" alt="Project Gantt chart"><br><b>Project Gantt:</b> Progress, dependencies, and release conditions</td>
+    <td width="50%"><img src="showcase/08-compensation-productivity.png" alt="Compensation and productivity analysis"><br><b>Pay effectiveness:</b> Pay per employee, output per employee, and department quadrants</td>
   </tr>
 </table>
 
-## 它只做一页
+## One slide means one slide
 
-每次运行只处理一页 16:9 PPT。材料超过一页时，OneSlide 会推荐最强的单页焦点或请你选择，不会自动生成一整套报告。
+Each run produces exactly one 16:9 slide. If the source material cannot fit honestly on one slide, OneSlide recommends the strongest single-slide focus or asks you to choose. It does not silently turn the request into a multi-slide deck.
 
-它提供两种输出：
+Two output modes are available:
 
-- `PROMPT_ONLY`：生成可交给 PPT 工具或其他模型使用的完整提示词包。
-- `PPT_DRAFT`：直接生成原生可编辑的 PowerPoint，并执行基础排版检查。
+- `PROMPT_ONLY`: produces a complete prompt and handoff package for another presentation tool or model.
+- `PPT_DRAFT`: produces a natively editable PowerPoint slide and runs basic layout checks.
 
-没有明确说“生成 PPT”时，默认先交付提示词包。
+If you do not explicitly request a PowerPoint file, OneSlide defaults to `PROMPT_ONLY`.
 
-## 3 分钟上手
+## Get started in three minutes
 
-1. 下载并解压 [one-slide-v1.2.2.zip](../../releases/latest/download/one-slide-v1.2.2.zip)。
-2. 把顶层 `one-slide` 文件夹复制到支持 Agent Skills 的 Skills 目录。
-3. 刷新客户端，调用 `$one-slide`。
+1. Download and unzip [one-slide-v1.2.2.zip](../../releases/latest/download/one-slide-v1.2.2.zip).
+2. Copy the top-level `one-slide` folder into the Skills directory of a compatible agent client.
+3. Refresh the client and invoke `$one-slide`.
 
-只生成提示词：
-
-```text
-帮我做一页，说明基层管理者每天被审批和会议占用。数据你合理补全，我只要提示词。
-```
-
-直接生成 PPT：
+Prompt package only:
 
 ```text
-根据这份材料直接做成一页专业 PPT。信息不足可以补，但要标明，PPT 必须可以编辑。
+Create one slide explaining that frontline managers spend too much time on approvals and meetings. Add reasonable illustrative data where needed, and return only the prompt package.
 ```
 
-## OneSlide 如何处理信息不足
+Editable PowerPoint draft:
 
-每个重要内容项都会区分：
+```text
+Create one professional, editable PowerPoint slide from this material. You may fill essential gaps, but clearly label anything you add.
+```
 
-- 用户提供；
-- 根据材料稳定推导；
-- 根据数据计算；
-- 模型补全，待确认；
-- 外部来源核验。
+## How OneSlide handles missing information
 
-使用合成数据时，页面必须显示“合成示例数据，非真实客户数据”。确认采用某个假设不会把它变成真实事实。
+Every important content item is classified as one of the following:
 
-## 运行要求
+- supplied by the user;
+- a stable inference from the supplied material;
+- calculated from supplied data;
+- model-generated and pending confirmation; or
+- verified from an external source.
 
-- `PROMPT_ONLY`：Python 3.10 或更高版本。
-- `PPT_DRAFT`：还需要 Node.js，以及能提供 `@oai/artifact-tool` 的兼容 Codex 运行环境。
-- 完整 PowerPoint 验证需要 Microsoft PowerPoint；不可用时会明确标记 `POWERPOINT_OPEN_CHECK=not_tested`。
+When synthetic data is used, the slide must display: “Synthetic sample data, not real customer data.” Confirming an illustrative scenario does not turn it into a verified fact.
 
-检查运行环境：
+## Runtime requirements
+
+- `PROMPT_ONLY`: Python 3.10 or later.
+- `PPT_DRAFT`: Node.js and a Codex environment compatible with `@oai/artifact-tool`.
+- Full PowerPoint verification requires Microsoft PowerPoint. If it is unavailable, the result must state `POWERPOINT_OPEN_CHECK=not_tested`.
+
+Check the environment:
 
 ```bash
 python3 scripts/check_environment.py
 ```
 
-验证 Skill 包：
+Validate the Skill package:
 
 ```bash
 python3 scripts/validate_suite.py .
 python3 -m unittest discover -s tests -v
 ```
 
-## 仓库结构
+## Repository structure
 
-- `SKILL.md`：唯一用户入口。
-- `producer/`：理解用户材料、定向补全和来源标注。
-- `builder/`：选择图形、生成原生 PPT 和检查页面布局。
-- `showcase/`：公开展示用单页效果图，全部采用模拟或合成数据。
-- `scripts/`、`tests/`：环境检查、包验证和回归测试。
+- `SKILL.md`: the single user-facing entry point.
+- `producer/`: interprets source material, fills targeted gaps, and records provenance.
+- `builder/`: selects the visual structure, creates native PowerPoint objects, and checks layout.
+- `showcase/`: public single-slide previews using simulated or synthetic data.
+- `scripts/` and `tests/`: environment checks, package validation, and regression tests.
 
-## 当前边界
+## Current boundaries
 
-- 每次只生成一页，不负责整套演示文稿的故事线。
-- 自动补全不会改写用户事实，也不会把模拟内容冒充为真实数据。
-- PPT 运行依赖不可用时，只交付提示词和结构化交接包。
-- 请勿把客户数据、员工个人信息或其他敏感资料提交到公开 Issue。
+- OneSlide creates one slide at a time; it does not design the storyline for a full presentation.
+- Added content never overrides user-supplied facts, and simulated content must not be presented as real data.
+- If PowerPoint-generation dependencies are unavailable, OneSlide delivers only the prompt and structured handoff package.
+- Do not submit customer data, employee personal information, or other sensitive material through public issues.
 
-## 作者
+## Author
 
-- 作者与维护者：周俊东 Marco
-- 视频号和公众号：周俊东Marco
-- 微信：`zhou139223`（添加时请备注“OneSlide”）
+- Author and maintainer: 周俊东 Marco
+- WeChat public account and Channels account: 周俊东 Marco
+- WeChat: `zhou139223` (include “OneSlide” in the invitation note)
 
-## 授权
+## Licensing
 
-- `SKILL.md`、执行引擎、脚本、配置和测试代码：Apache License 2.0。
-- 原创使用说明、教程、示例输入、示例输出及自有参考 PPT：CC BY 4.0。
-- “OneSlide”“周俊东 Marco”的姓名、头像、Logo、公众号及视频号标识不包含在开放授权中；合理说明作品来源不受影响。
-- 详细范围见 `LICENSE_STATUS.md`、`CONTENT-LICENSE.md`、`TRADEMARKS.md` 和 `NOTICE`。
+- `SKILL.md`, execution engines, scripts, configuration, and test code: Apache License 2.0.
+- Original instructions, tutorials, sample inputs, sample outputs, and original reference presentations: CC BY 4.0.
+- The names “OneSlide” and “周俊东 Marco,” profile images, logos, and WeChat account branding are not included in the open licenses. Reasonable attribution that identifies the source of the work is permitted.
+- See `LICENSE_STATUS.md`, `CONTENT-LICENSE.md`, `TRADEMARKS.md`, and `NOTICE` for the exact scope.
 
-使用 OneSlide 生成普通 PPT 时，不要求在 PPT 中给作者加水印或署名。重新发布、修改或分发 OneSlide 本身及其文档、示例时，须遵守相应许可证。
+Slides created through ordinary use of OneSlide do not need an author watermark or signature. Redistribution or modification of OneSlide itself, its documentation, or its examples remains subject to the applicable license.
 
-## 版本状态
+## Version status
 
-当前版本：v1.2.2。该版本将桑基图升级为原生可编辑的贝塞尔流带，流带宽度与流量成比例，并改用直角无边框节点，消除白色缺口。公开许可证和本机回归测试已经配置；不同客户端和不同 PowerPoint 版本仍可能产生字体或布局差异。
+The current release is v1.2.2. It upgrades the Sankey renderer with native editable Bézier ribbons whose widths are proportional to flow values, plus square borderless nodes that remove visible white gaps. Public licensing and native regression tests are included. Font and layout differences may still occur across clients and PowerPoint versions.
