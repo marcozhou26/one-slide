@@ -4,7 +4,7 @@ description: "把完整或零散的用户材料整理成恰好一页、来源可
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
 # OneSlide
@@ -21,7 +21,7 @@ metadata:
 - `producer/references/provenance-contract.md`
 - `producer/references/output-contract.md`
 
-进入绘制阶段时，再读取 `builder/ENGINE.md` 和路由返回的唯一模块 reference。不要预读全部 Builder 模块。
+进入绘制阶段时，再读取 `builder/ENGINE.md`、`builder/references/information-contribution-gate.md` 和路由返回的唯一模块 reference。Builder 初稿通过后，再完整读取 `editorial/ENGINE.md`；不要预读全部 Builder 模块或 Editorial 低频参考。
 
 ## 首次互动
 
@@ -123,6 +123,8 @@ Builder 交付后再次运行：
 python3 producer/scripts/validate_package.py <run-directory> --stage final --write-report
 ```
 
+Builder 初稿不得直接进入 `delivery/`。先按 `editorial/ENGINE.md` 观察该 PPTX 的真实整页渲染，只选择一个最影响理解的编辑问题，生成一个可回退的成组候选。Editorial Editor 不重写事实、数字、来源、主关系或结论强度；没有明确收益时保留初稿并记录 `NO_MATERIAL_EDIT`。只有候选或保留的初稿通过内容保真、layout、信息贡献、整页渲染和 PowerPoint 检查后，才写入 `delivery/` 并运行 final validation。
+
 Builder 不可用、运行依赖缺失或返回 `MODULE_COVERAGE_GAP` 时，保留可用提示词包并返回 `PPT_RENDERING_BLOCKED`。不得偷偷换用普通渲染器后宣称生成了咨询级 PPT。
 
 Producer 只有在一个已产品化模块能覆盖全部必含内容时，才同时写入 `requested_module` 和完整、可通过该模块 validator 的 `module_payload`。只有模块名没有可执行载荷时不得强制命中；混合页面使用带 layout 门禁的直接编排。
@@ -135,7 +137,17 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 
 有序中心估计与区间任务使用 `confidence-band`。Producer 必须保留 5–12 个唯一且有序的时期、`estimate/lower/upper`、指标与单位、区间类型和完整定义、估计方法、样本/总体、来源、缺失值语义及可选阈值语义。缺少样式或阈值不阻塞；缺少核心序列、区间定义或统计口径时不得猜测。置信区间不得被改称预测区间或风险区间，也不得据此夸大概率、因果或显著性含义。
 
-### 6. 检查 PPTX
+### 6. 编辑式信息设计
+
+`PPT_DRAFT` 在 Builder 初稿后自动进入 Editorial Editor，用户不需要另行调用。编辑器读取一页 PPTX、整页 PNG、layout JSON 和 handoff，并按六维 rubric 检查视觉主语、标题与证据、证据旁注释、语义重点、阅读节奏和信息贡献。
+
+- 一次只选一个主问题；多个对象修改必须共同服务同一编辑假设；
+- 默认一个候选和两次整页渲染；高密度或复杂关系页最多两个不同结构假设、三次整页渲染；
+- 修改允许移动、缩放、层级、字号、字重、对齐、颜色和经证明的重复/无贡献对象删除；
+- 禁止新增业务判断、改变数据、替换不等价图表或引入装饰；
+- 候选没有材料性改善或产生硬回归时必须回退。
+
+### 7. 检查 PPTX
 
 `PPT_DRAFT` 必须满足：
 
@@ -143,6 +155,7 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 - 文字、形状、表格和图表为 PowerPoint 原生可编辑对象；
 - 通过语义审计、整页渲染检查和可读性检查；
 - layout JSON 通过短标签单行、孤字、英文 token、数字单位、两行标题与副标题互斥、标题安全区、纵向空间平衡、跨区块边缘对齐、画布利用率和越界门禁；
+- 每个可见对象通过信息贡献门槛；顶部装饰色带、eyebrow、标题饰线、空卡片和其他纯装饰对象必须阻断；
 - 组织架构图额外检查同层节点水平对齐、一对一直属线垂直对齐、职能虚线方向与无穿越路由；出现 `ORG_PEER_ROW_MISALIGNMENT`、`ORG_DIRECT_REPORT_DOGLEG` 或 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` 时不得交付；
 - 当前环境能使用 Microsoft PowerPoint 时，实际打开检查；
 - 对外交付目录只放版本化 PPTX，来源、提示词、预览和 QA 留在内部目录。
@@ -151,10 +164,12 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 
 - 不生成多页报告、隐藏溢出页或第二个候选页。
 - 不为凑满页面增加装饰性卡片、建议、指标或基准。
+- 不添加没有信息贡献的可见对象；顶部装饰色带、eyebrow、kicker、overline、标题饰线、品牌装饰条、纯视觉图标和空容器均为禁止项。
 - 不为了装下一页而删必需内容、缩成不可读字号或改变中心思想。
 - 不把模型补全内容伪装成用户提供或外部核验。
 - 不暴露本机路径、提示词历史、被否决方案、内部 QA 或制作说明。
 - 不把文件生成、验证脚本通过或 ZIP 完整冒充产品价值或用户验收。
+- 不把 Editorial Editor 变成第二次自由生成；编辑前必须有真实初稿，编辑后必须保存前后证据并完整回归。
 
 ## 发布包自检
 
@@ -179,6 +194,8 @@ SYNTHETIC_DISCLOSURE_PASS | not_applicable | fail
 DATA_RECONCILIATION_PASS | not_applicable | not_tested | fail
 HANDOFF_PACKAGE_PASS | fail
 BUILDER_HANDOFF_READY | not_applicable | fail
+EDITORIAL_REVIEW_PASS | no_material_edit | not_applicable | fail
+SOURCE_FIDELITY_PASS | not_applicable | not_tested | fail
 RENDERED_READABILITY_PASS | not_applicable | not_tested | fail
 POWERPOINT_OPEN_CHECK | not_applicable | not_tested | fail
 REQUIREMENT_COVERAGE_PASS | not_tested | fail

@@ -4,7 +4,7 @@ Turn complete or scattered source material into one clear, source-traceable, nat
 
 OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[Download OneSlide v1.3.0](../../releases/latest/download/one-slide-v1.3.0.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneslide-ask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
+[Download OneSlide v1.4.0](../../releases/latest/download/one-slide-v1.4.0.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneslide-ask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
 
 ## Explain complex logic on one slide
 
@@ -42,7 +42,7 @@ If you do not explicitly request a PowerPoint file, OneSlide defaults to `PROMPT
 
 ## Get started in three minutes
 
-1. Download and unzip [one-slide-v1.3.0.zip](../../releases/latest/download/one-slide-v1.3.0.zip).
+1. Download and unzip [one-slide-v1.4.0.zip](../../releases/latest/download/one-slide-v1.4.0.zip).
 2. Copy the top-level `one-slide` folder into the Skills directory of a compatible agent client.
 3. Refresh the client and invoke `$one-slide`.
 
@@ -94,6 +94,7 @@ python3 -m unittest discover -s tests -v
 - `SKILL.md`: the single user-facing entry point.
 - `producer/`: interprets source material, fills targeted gaps, and records provenance.
 - `builder/`: selects the visual structure, creates native PowerPoint objects, and checks layout.
+- `editorial/`: reviews the actual rendered draft, applies one conservative native-object edit when it clearly improves comprehension, and rolls back unsafe candidates.
 - `showcase/`: public single-slide previews using simulated or synthetic data.
 - `scripts/` and `tests/`: environment checks, package validation, and regression tests.
 
@@ -123,4 +124,4 @@ Slides created through ordinary use of OneSlide do not need an author watermark 
 
 ## Version status
 
-The current release is v1.3.0. OneSlide now includes 41 productized modules. This release adds multi-period composition shift, cohort retention, box plot, histogram, box plot with jittered observations, correlation matrix, scatter regression, and confidence band modules, and upgrades two-period slope ranking to a backward-compatible multi-period bump-ranking module. Public licensing and native regression tests are included. Font and layout differences may still occur across clients and PowerPoint versions.
+The current release is v1.4.0. OneSlide now adds an internal Editorial Editor after the Builder draft: it inspects the real PPTX and full-slide render, diagnoses one material comprehension problem, applies a tightly constrained native-object edit, reruns fidelity, layout, contrast, and PowerPoint checks, and rolls back candidates that do not improve the page safely. This release also blocks decorative top bands, title eyebrows, heading accents, empty strips, and other visible elements that do not carry information or structure. The 41 productized visual modules remain available. Font and layout differences may still occur across clients and PowerPoint versions.

@@ -3,7 +3,11 @@ import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
 const FOOTER_NAME = /(?:footer|source|page-tag|method-note|footnote|disclosure)/iu;
-const HEADING_EXEMPT_NAME = /(?:background|brand|logo|heading-rule|title-accent)/iu;
+const HEADING_EXEMPT_NAME = /(?:background|brand|logo)/iu;
+const EYEBROW_NAME = /(?:eyebrow|kicker|overline|super[-_ ]?title)/iu;
+const TITLE_DECORATION_NAME = /(?:heading[-_ ]?rule|title[-_ ]?accent)/iu;
+const GENERIC_DECORATION_NAME = /(?:decorative|decoration|ornament|flourish|filler|spacer)/iu;
+const BAND_NAME = /(?:top|header|brand|bottom|footer)[-_ ]?(?:band|strip|rule)/iu;
 const MIN_HEADING_CONTENT_GAP = 16;
 const BOTTOM_SPACE_SIGNAL = 56;
 
@@ -17,6 +21,56 @@ function textLines(element) {
     : [];
 }
 
+function hasText(element) {
+  return String(element?.text ?? "").trim().length > 0;
+}
+
+function contains(container, child, tolerance = 2) {
+  const [left, top, width, height] = container.bbox;
+  const [childLeft, childTop, childWidth, childHeight] = child.bbox;
+  return childLeft >= left - tolerance
+    && childTop >= top - tolerance
+    && childLeft + childWidth <= left + width + tolerance
+    && childTop + childHeight <= top + height + tolerance;
+}
+
+function informationContributionFindings(elements, width) {
+  const findings = [];
+  for (const element of elements) {
+    const name = String(element.name ?? "");
+    const [left, top, elementWidth, elementHeight] = element.bbox;
+    const informativeChildren = elements.filter((candidate) => candidate !== element && hasText(candidate) && contains(element, candidate));
+
+    if (EYEBROW_NAME.test(name)) {
+      findings.push({ code: "EYEBROW_BLOCKED", name, detail: "Title eyebrows, kickers, overlines, and supertitles are not allowed." });
+      continue;
+    }
+    if (TITLE_DECORATION_NAME.test(name)) {
+      findings.push({ code: "DECORATIVE_ELEMENT_BLOCKED", name, detail: "Heading rules and title accents do not carry slide information." });
+      continue;
+    }
+    if (GENERIC_DECORATION_NAME.test(name)) {
+      findings.push({ code: "DECORATIVE_ELEMENT_BLOCKED", name, detail: "Aesthetic-only visible elements are not allowed." });
+      continue;
+    }
+
+    const isWideTopBand = !hasText(element)
+      && top <= 48
+      && left <= width * 0.1
+      && elementWidth >= width * 0.8
+      && elementHeight <= 96;
+    if (isWideTopBand && informativeChildren.length === 0) {
+      findings.push({ code: "DECORATIVE_TOP_BAND_BLOCKED", name, bbox: element.bbox });
+      continue;
+    }
+
+    if (BAND_NAME.test(name) && !hasText(element) && informativeChildren.length === 0) {
+      findings.push({ code: "DECORATIVE_ELEMENT_BLOCKED", name, detail: "An empty band, strip, or rule has no information contribution." });
+    }
+  }
+  return findings;
+}
+
 export function auditLayoutObject(layout, { textPolicies = {}, alignmentContracts = [] } = {}) {
   const findings = [];
   const frame = layout?.slide?.frame;
@@ -27,6 +81,7 @@ export function auditLayoutObject(layout, { textPolicies = {}, alignmentContract
   }
 
   const elements = (layout?.elements ?? []).filter((element) => element?.scope === "slide" && Array.isArray(element?.bbox));
+  findings.push(...informationContributionFindings(elements, width));
   const pageTitles = elements.filter((element) => textPolicies[element.name]?.textRole === "pageTitle" || /(?:pageheading|page|decision)[-_]?title$/iu.test(String(element.name ?? "")));
   const pageSubtitles = elements.filter((element) => String(element.text ?? "").trim() && (textPolicies[element.name]?.textRole === "pageSubtitle" || /(?:pageheading|page|decision)[-_]?subtitle$/iu.test(String(element.name ?? ""))));
   for (const title of pageTitles) {
