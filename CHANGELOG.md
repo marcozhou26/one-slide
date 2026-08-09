@@ -1,16 +1,5 @@
 # Changelog
 
-## Unreleased
-
-## 1.4.0 — 2026-08-09
-
-- Added the internal Editorial Editor post-build stage: inspect the actual one-slide PPTX and render, diagnose one material editorial problem, apply one source-locked grouped native-object patch, compare before/after, and either accept or roll back.
-- Added a six-dimension editorial rubric covering visual subject, title-evidence linkage, evidence-adjacent annotation, semantic emphasis, reading rhythm, and information contribution.
-- Added source-hash-locked patch operations, B-level input handling, no-material-edit behavior, native editability and semantic-token verification, and a full editorial run contract.
-- Added a single information-contribution gate for all visible slide and template objects.
-- Blocked decorative top bands, title eyebrows/kickers/overlines, heading rules, title accents, empty decorative strips, filler objects, and other aesthetic-only components.
-- Removed the former heading-safe-zone exemption for heading rules and title accents, while preserving data encodings, relationship lines, axes, necessary grouping containers, provenance, and explicitly required identity marks.
-
 ## 1.3.0 — 2026-08-09
 
 - Added the productized `correlation-matrix` module for 4–10 metrics, accepting a validated symmetric coefficient matrix or reproducible aligned observations with Pearson/Spearman, sample, missing-value, period, population, source and threshold metadata.

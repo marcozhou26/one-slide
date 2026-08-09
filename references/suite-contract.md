@@ -2,7 +2,7 @@
 
 ## 对外只有一个入口
 
-顶层 `SKILL.md` 是唯一可发现入口。`producer/ENGINE.md`、`builder/ENGINE.md` 与 `editorial/ENGINE.md` 是内部执行说明，不得作为需要用户分别安装或调用的 Skill。
+顶层 `SKILL.md` 是唯一可发现入口。`producer/ENGINE.md` 与 `builder/ENGINE.md` 是内部执行说明，不得作为需要用户分别安装或调用的 Skill。
 
 ## 职责边界
 
@@ -32,16 +32,6 @@ Producer 不绘制 PowerPoint。
 
 Builder 不重新决定页面目标，不重写用户事实，不增加新的合成业务内容。
 
-### Editorial Editor 引擎
-
-- 只消费 Builder 已完成的一页原生 PPTX、真实整页渲染、layout 和来源边界；
-- 诊断一个最影响理解的编辑问题；
-- 以一个可回退的成组补丁改善视觉主语、证据旁注释、语义重点、阅读节奏或信息贡献；
-- 修改后重新执行来源保真、布局、渲染和 PowerPoint 检查；
-- 没有明确收益时保留初稿。
-
-Editorial Editor 不重新生成内容，不改变事实、数字、来源、主关系或结论强度。
-
 ## 模式路由
 
 ```text
@@ -55,10 +45,8 @@ PPT_DRAFT
   → validate_package.py
   → Builder 路由
   → 命中模块或 direct composition
-  → 生成一页 Builder 初稿
-  → Editorial Editor 诊断 + 成组补丁或 NO_MATERIAL_EDIT
-  → 来源保真 + 语义审计 + 整页渲染 + PowerPoint 检查
-  → 交付一页 PPTX
+  → 生成一页 PPTX
+  → 语义审计 + 整页渲染 + PowerPoint 检查
 ```
 
 ## 降级规则
@@ -71,7 +59,6 @@ PPT_DRAFT
 - 路由冲突或模块验证失败；
 - 无法生成原生可编辑对象；
 - 当前环境不能完成要求的 PPT 检查。
-- Editorial Editor 无法读取、渲染或保持一页原生可编辑性。
 
 降级后不得在 `delivery/` 中放伪 PPTX，也不得把提示词包称为 PPT 成品。
 
