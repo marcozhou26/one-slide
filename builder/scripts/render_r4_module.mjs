@@ -961,9 +961,9 @@ function renderGantt(slide, data, p) {
     });
     addTextBox(slide, {
       name: `lane-${gi + 1}`,
-      text: g.name,
+      text: Array.from(g.name).join("\n"),
       position: { left: p.main.left + 8, top, width: 46, height },
-      fontSize: 16,
+      fontSize: 14,
       bold: true,
       color: COLORS.navy,
       alignment: "center",
@@ -1000,27 +1000,32 @@ function renderGantt(slide, data, p) {
     const top = p.main.top + 42 + i * rowH;
     addTextBox(slide, {
       name: `task-label-${t.id}`,
-      text: `${t.label.text}\n${t.owner.text}`,
+      text: t.label.text,
       position: {
         left: p.main.left + 60,
         top,
         width: laneW - 66,
         height: rowH - 2,
       },
-      fontSize: 14,
+      fontSize: 12,
       bold: t.critical,
       color: t.critical ? COLORS.orange : COLORS.text,
+      insets: { left: 2, right: 2, top: 0, bottom: 0 },
+      singleLine: true,
     });
     const left = plotL + (t.start - 1) * monthW,
       width = (t.end - t.start + 1) * monthW;
     const frame = addTextBox(slide, {
       name: `task-${t.id}`,
-      text: `${t.progress}%`,
+      text: `${t.progress}%${t.owner.text}`,
       position: { left, top: top + 3, width, height: rowH - 8 },
-      fontSize: 14,
-      bold: true,
+      textRole: "dataLabel",
+      fontSize: 10,
+      bold: false,
       color: COLORS.white,
       alignment: "center",
+      insets: { left: 2, right: 2, top: 0, bottom: 0 },
+      singleLine: true,
       fill: t.critical ? COLORS.orange : COLORS.blue,
       line: {
         style: "solid",
@@ -1034,30 +1039,28 @@ function renderGantt(slide, data, p) {
     const isTimeOrder = d.relationship_class === "time_order_only";
     connectNative(slide, taskShapes.get(d.from), taskShapes.get(d.to), {
       kind: isTimeOrder ? "straight" : "elbow",
-      fromSide: "right",
-      toSide: "left",
+      fromSide: "bottom",
+      toSide: "top",
       arrow: !isTimeOrder,
       placement: "front",
       line: isTimeOrder
         ? { style: "dashed", fill: "#56616F", width: 3 }
-        : { style: "solid", fill: COLORS.blue, width: 1.6 },
+        : { style: "solid", fill: COLORS.blue, width: 1.25 },
     });
   });
   taskShapes.forEach(shape=>shape.bringToFront());
   (data.diagram.milestones ?? []).forEach((m, i) =>
-    addTextBox(slide, {
+    slide.shapes.add({
       name: `milestone-${i + 1}`,
-      text: "◆",
+      geometry: "diamond",
       position: {
-        left: plotL + (m.month - .5) * monthW - 12,
-        top: p.main.top + 14,
-        width: 24,
-        height: 24,
+        left: plotL + (m.month - .5) * monthW - 4,
+        top: p.main.top + 32,
+        width: 8,
+        height: 8,
       },
-      fontSize: 18,
-      bold: true,
-      color: COLORS.orange,
-      alignment: "center",
+      fill: COLORS.orange,
+      line: { style: "solid", fill: COLORS.orange, width: 0 },
     })
   );
   if (layerSteps.length) {
@@ -1128,7 +1131,7 @@ function renderGantt(slide, data, p) {
       fill: COLORS.white,
       border: i === 0 ? COLORS.orange : COLORS.border,
       borderWidth: i === 0 ? 1.5 : 1,
-      fontSize: 16,
+      fontSize: 12,
       bold: i === 0,
       color: COLORS.text,
       alignment: "left",

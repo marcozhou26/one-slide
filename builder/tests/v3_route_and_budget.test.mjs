@@ -140,12 +140,15 @@ test("typography uses role-based hierarchy instead of a universal 16 pt floor", 
     sectionTitle: 18,
     body: 14,
     compact: 12,
+    dataLabel: 10,
     source: 12,
   });
   assert.equal(MIN_FONT_BY_ROLE.body, 12);
   assert.doesNotThrow(() => validateTypography("body", 12));
   assert.doesNotThrow(() => validateTypography("source", 12));
+  assert.doesNotThrow(() => validateTypography("dataLabel", 10));
   assert.throws(() => validateTypography("body", 11), /cannot be smaller than 12 pt/);
+  assert.throws(() => validateTypography("dataLabel", 9), /cannot be smaller than 10 pt/);
   assert.equal(toArtifactFontSize(12), 16);
   assert.ok(Math.abs(toArtifactFontSize(34) - 45.33333333333333) < 1e-9);
   assert.equal(fitPageTitleFontSize("短标题"), 30);
@@ -155,7 +158,7 @@ test("typography uses role-based hierarchy instead of a universal 16 pt floor", 
 test("renderer font literals stay on the consulting typography scale", async () => {
   const scripts = await fs.readdir(path.join(root, "scripts"));
   const renderers = scripts.filter((name) => /^render.*\.mjs$/.test(name));
-  const allowed = new Set([12, 14, 16, 18, 24, 26, 28, 30, 32, 34, 35]);
+  const allowed = new Set([10, 12, 14, 16, 18, 24, 26, 28, 30, 32, 34, 35]);
   for (const renderer of renderers) {
     const source = await fs.readFile(path.join(root, "scripts", renderer), "utf8");
     const expressions = [...source.matchAll(/fontSize\s*[:=]\s*([^,\n}]+)/g)].map((match) => match[1]);

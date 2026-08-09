@@ -15,6 +15,7 @@ from xml.etree import ElementTree as ET
 
 NS = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main", "p": "http://schemas.openxmlformats.org/presentationml/2006/main"}
 BAR_PATTERN = re.compile(r"(?:｜|\s\|\s)")
+DATA_LABEL_PATTERN = re.compile(r"^(?:task-t\d+|data-label-.+)$")
 
 
 @dataclass
@@ -34,6 +35,7 @@ def audit(path: Path) -> Result:
     warnings: list[str] = []
     fonts: list[float] = []
     regular_fonts: list[float] = []
+    data_label_fonts: list[float] = []
     pictures = 0
     slides = 0
     with zipfile.ZipFile(path) as archive:
@@ -58,6 +60,7 @@ def audit(path: Path) -> Result:
                     and width_pt <= 22
                     and height_pt <= 20
                 )
+                controlled_data_label = bool(DATA_LABEL_PATTERN.fullmatch(name))
                 props_list = (
                     shape.findall(".//a:rPr", NS)
                     + shape.findall(".//a:defRPr", NS)
@@ -69,7 +72,9 @@ def audit(path: Path) -> Result:
                         continue
                     point_size = int(size) / 100
                     fonts.append(point_size)
-                    if micro_badge and point_size < 12:
+                    if controlled_data_label:
+                        data_label_fonts.append(point_size)
+                    elif micro_badge and point_size < 12:
                         if props.tag == f"{{{NS['a']}}}rPr" and props.get("b") != "0":
                             warnings.append(f"{slide_name}: micro risk badge must use regular weight: {name}")
                     else:
@@ -82,6 +87,9 @@ def audit(path: Path) -> Result:
     regular_min_font = min(regular_fonts) if regular_fonts else None
     if regular_min_font is not None and regular_min_font < 12:
         warnings.append(f"Visible non-badge font below 12 pt: {regular_min_font:g} pt")
+    data_label_min_font = min(data_label_fonts) if data_label_fonts else None
+    if data_label_min_font is not None and data_label_min_font < 10:
+        warnings.append(f"Controlled data-label font below 10 pt: {data_label_min_font:g} pt")
     if len(regular_font_sizes) > 5:
         warnings.append(f"Too many regular font sizes: {', '.join(f'{size:g}' for size in regular_font_sizes)}")
     ok = not warnings and pictures == 0 and slides == 1

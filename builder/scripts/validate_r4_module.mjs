@@ -125,14 +125,22 @@ export function normalizeGanttDependencies(d){
   const tasks=new Map(d.tasks.map(task=>[task.id,task]));
   return(d.dependencies??[]).map((dependency,index)=>{
     requireCondition(tasks.has(dependency.from)&&tasks.has(dependency.to)&&dependency.from!==dependency.to,"GANTT_DEPENDENCY_FAIL","Dependency endpoints are invalid");
+    const source=tasks.get(dependency.from),target=tasks.get(dependency.to);
     const rawClass=dependency.relationship_class??"prerequisite";
     requireCondition(["time_order_only","prerequisite","necessary_dependency"].includes(rawClass),"GANTT_DEPENDENCY_SEMANTICS_FAIL",`Unsupported relationship_class at dependency ${index+1}`);
     const relationship_class=rawClass==="necessary_dependency"?"prerequisite":rawClass;
+    const safeDefault=source.end<=target.start?"finish_to_start":null;
+    const dependency_type=dependency.dependency_type??safeDefault;
+    requireCondition(["finish_to_start","start_to_start","finish_to_finish","start_to_finish"].includes(dependency_type),"GANTT_DEPENDENCY_TYPE_REQUIRED",`Dependency ${dependency.from}→${dependency.to} overlaps in time; dependency_type is required`);
+    const timeOrderOk=dependency_type==="finish_to_start"?source.end<=target.start:
+      dependency_type==="start_to_start"?source.start<=target.start:
+      dependency_type==="finish_to_finish"?source.end<=target.end:source.start<=target.end;
+    requireCondition(timeOrderOk,"GANTT_DEPENDENCY_TIME_CONFLICT",`${dependency.from}→${dependency.to} conflicts with ${dependency_type}`);
     if(relationship_class==="time_order_only"){
       requireCondition(dependency.not_a_prerequisite===true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only requires not_a_prerequisite=true");
-      requireCondition(tasks.get(dependency.from).start<=tasks.get(dependency.to).start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
+      requireCondition(source.start<=target.start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
     }else requireCondition(dependency.not_a_prerequisite!==true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","A prerequisite cannot set not_a_prerequisite=true");
-    return{...dependency,relationship_class,not_a_prerequisite:relationship_class==="time_order_only"};
+    return{...dependency,relationship_class,dependency_type,not_a_prerequisite:relationship_class==="time_order_only"};
   });
 }
 
