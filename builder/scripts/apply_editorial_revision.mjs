@@ -15,7 +15,7 @@ function parseArgs(argv) {
     if (!argv[index]?.startsWith("--") || argv[index + 1] === undefined) throw new Error("Use --key value arguments.");
     args[argv[index].slice(2)] = argv[index + 1];
   }
-  for (const key of ["workspace", "input", "patch", "output", "audit"]) if (!args[key]) throw new Error(`--${key} is required.`);
+  for (const key of ["workspace", "input", "qa", "plan", "output", "audit"]) if (!args[key]) throw new Error(`--${key} is required.`);
   return args;
 }
 
@@ -76,12 +76,17 @@ async function main() {
     if (error.code !== "ENOENT") throw error;
   }
 
-  const patch = JSON.parse(await fs.readFile(args.patch, "utf8"));
-  if (patch.version !== 1 || !Array.isArray(patch.operations) || patch.operations.length === 0) throw new Error("Patch version 1 with at least one operation is required.");
+  const qaPath = path.resolve(args.qa);
+  const qa = JSON.parse(await fs.readFile(qaPath, "utf8"));
+  const plan = JSON.parse(await fs.readFile(args.plan, "utf8"));
   const inputHash = await sha256(input);
-  if (patch.source_sha256 !== inputHash) throw new Error("source_sha256 does not match input.");
-  if (!patch.primary_issue || !patch.edit_hypothesis) throw new Error("Patch needs primary_issue and edit_hypothesis.");
-  patch.operations.forEach(validateOperation);
+  if (qa.role !== "EDITORIAL_QA" || qa.decision !== "BUILDER_LOCAL_REPAIR") throw new Error("Editorial QA did not authorize BUILDER_LOCAL_REPAIR.");
+  if (qa.source_sha256 !== inputHash) throw new Error("Editorial QA source_sha256 does not match input.");
+  if (plan.version !== 1 || !Array.isArray(plan.operations) || plan.operations.length === 0) throw new Error("Builder revision plan version 1 with at least one operation is required.");
+  if (plan.source_sha256 !== inputHash) throw new Error("Builder plan source_sha256 does not match input.");
+  if (plan.editorial_qa_sha256 !== await sha256(qaPath)) throw new Error("Builder plan is not bound to the Editorial QA brief.");
+  if (!plan.execution_rationale) throw new Error("Builder plan needs execution_rationale.");
+  plan.operations.forEach(validateOperation);
 
   const modulePath = path.join(path.resolve(args.workspace), "node_modules/@oai/artifact-tool/dist/artifact_tool.mjs");
   const { FileBlob, PresentationFile } = await import(pathToFileURL(modulePath).href);
@@ -116,12 +121,15 @@ async function main() {
     source_sha256: inputHash,
     input,
     output,
-    primary_issue: patch.primary_issue,
-    edit_hypothesis: patch.edit_hypothesis,
+    role: "BUILDER_REVISION_EXECUTOR",
+    editorial_qa_sha256: await sha256(qaPath),
+    editorial_decision: qa.decision,
+    primary_issue: qa.primary_issue?.problem,
+    execution_rationale: plan.execution_rationale,
     operations: [],
   };
 
-  for (const op of patch.operations) {
+  for (const op of plan.operations) {
     const target = resolve(op.target, op.expected_bbox);
     const before = bboxOf(target);
     const targetText = visibleText(target.toProto());

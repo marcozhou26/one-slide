@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit contrast for text affected by an Editorial Editor patch."""
+"""Audit contrast for text affected by a Builder editorial revision."""
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify content invariants and same-renderer visual change for Editorial Editor."""
+"""Verify content invariants after a Builder revision requested by Editorial QA."""
 
 from __future__ import annotations
 

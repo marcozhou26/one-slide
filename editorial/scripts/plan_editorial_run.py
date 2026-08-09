@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a deterministic, non-rendering Editorial Editor run plan."""
+"""Create a deterministic, non-rendering Editorial QA run plan."""
 
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def main() -> None:
         stop("SOURCE_INVALID", "input must be PPTX", 4)
     count, shape_count, connector_count = slide_metrics(source)
     if count != 1:
-        stop("SINGLE_SLIDE_REQUIRED", f"Editorial Editor requires exactly one slide; found {count}", 3)
+        stop("SINGLE_SLIDE_REQUIRED", f"Editorial QA requires exactly one slide; found {count}", 3)
     if output == source.parent or output in source.parents:
         stop("OUTPUT_CONFLICT", "output directory must not be the source file directory itself", 7)
     if output.exists() and any(output.iterdir()):

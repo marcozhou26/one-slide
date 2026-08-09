@@ -10,7 +10,7 @@
 
 ## 1.4.0 — 2026-08-09
 
-- Added the internal Editorial Editor post-build stage: inspect the actual one-slide PPTX and render, diagnose one material editorial problem, apply one source-locked grouped native-object patch, compare before/after, and either accept or roll back.
+- Reworked the unreleased post-build concept into a read-only Editorial QA gate: protect strong pages, return at most one high-value Builder brief, and require Builder to own every PPTX change.
 - Added a six-dimension editorial rubric covering visual subject, title-evidence linkage, evidence-adjacent annotation, semantic emphasis, reading rhythm, and information contribution.
 - Added source-hash-locked patch operations, B-level input handling, no-material-edit behavior, native editability and semantic-token verification, and a full editorial run contract.
 - Added a single information-contribution gate for all visible slide and template objects.

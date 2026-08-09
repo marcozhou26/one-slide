@@ -32,15 +32,16 @@ Producer 不绘制 PowerPoint。
 
 Builder 不重新决定页面目标，不重写用户事实，不增加新的合成业务内容。
 
-### Editorial Editor 引擎
+### Editorial QA 引擎
 
 - 只消费 Builder 已完成的一页原生 PPTX、真实整页渲染、layout 和来源边界；
-- 诊断一个最影响理解的编辑问题；
-- 以一个可回退的成组补丁改善视觉主语、证据旁注释、语义重点、阅读节奏或信息贡献；
-- 修改后重新执行来源保真、布局、渲染和 PowerPoint 检查；
-- 没有明确收益时保留初稿。
+- 先识别并保护页面已经成立的设计；
+- 判断 `PASS_AS_IS`、`BUILDER_LOCAL_REPAIR`、`BUILDER_RECOMPOSE` 或 `EDITORIAL_BLOCKED`；
+- 最多给 Builder 一条高价值任务，不输出坐标、字号、颜色值或操作序列；
+- Builder 修改后重新看整页并决定通过或回退；
+- 没有明确净收益时保留初稿。
 
-Editorial Editor 不重新生成内容，不改变事实、数字、来源、主关系或结论强度。
+Editorial QA 不修改 PPTX，不重新生成内容，不改变事实、数字、来源、主关系或结论强度。
 
 ## 模式路由
 
@@ -56,7 +57,9 @@ PPT_DRAFT
   → Builder 路由
   → 命中模块或 direct composition
   → 生成一页 Builder 初稿
-  → Editorial Editor 诊断 + 成组补丁或 NO_MATERIAL_EDIT
+  → Editorial QA 只读判断
+  → Builder 按需局部修复或重排
+  → Editorial QA 复审
   → 来源保真 + 语义审计 + 整页渲染 + PowerPoint 检查
   → 交付一页 PPTX
 ```
@@ -71,7 +74,7 @@ PPT_DRAFT
 - 路由冲突或模块验证失败；
 - 无法生成原生可编辑对象；
 - 当前环境不能完成要求的 PPT 检查。
-- Editorial Editor 无法读取、渲染或保持一页原生可编辑性。
+- Editorial QA 无法读取、渲染或判断一页原生可编辑结果。
 
 降级后不得在 `delivery/` 中放伪 PPTX，也不得把提示词包称为 PPT 成品。
 

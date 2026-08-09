@@ -165,7 +165,7 @@ Do not expose prompt history or internal ledgers. Do not paste large datasets in
 
 For `PROMPT_ONLY`, `status=ready` means the handoff is ready for a compatible Builder.
 
-For `PPT_DRAFT`, do not place a file in `delivery/` until the Builder produces exactly one slide, Editorial Editor returns `EDITORIAL_IMPROVEMENT_PASS` or `NO_MATERIAL_EDIT`, and the required source-fidelity and render checks pass. If rendering or editorial review is blocked, keep `delivery/` absent and record `PPT_RENDERING_BLOCKED` or `EDITORIAL_REVIEW_BLOCKED` in the validation report.
+For `PPT_DRAFT`, do not place a file in `delivery/` until the Builder produces exactly one slide and Editorial QA either returns `PASS_AS_IS` or passes the Builder revision on recheck. Required source-fidelity and render checks must also pass. If rendering or editorial review is blocked, keep `delivery/` absent and record `PPT_RENDERING_BLOCKED` or `EDITORIAL_REVIEW_BLOCKED` in the validation report.
 
 Validate in two stages:
 

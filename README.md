@@ -122,4 +122,4 @@ Slides created through ordinary use of OneSlide do not need an author watermark 
 
 ## Version status
 
-The current release is v1.3.1. It keeps the 41 productized modules from v1.3.0 while reducing mandatory context loading, correcting command paths and component-version labels, and blocking structured handoffs that request a productized module without a complete executable payload. Font and layout differences may still occur across clients and PowerPoint versions.
+The latest public release is v1.3.0. The next version is testing an internal read-only Editorial QA gate after the Builder draft: it protects strong pages, returns at most one high-value revision brief, and leaves all PPTX changes to Builder. This development work is not released yet. The 41 productized visual modules remain available. Font and layout differences may still occur across clients and PowerPoint versions.

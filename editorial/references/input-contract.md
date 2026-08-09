@@ -1,4 +1,4 @@
-# Editorial Editor 输入契约
+# Editorial QA 输入契约
 
 风险等级：B 级文件生产模块。内部契约不转嫁为用户字段表。
 
@@ -9,7 +9,7 @@
 | `baseline_render` | 与源 PPTX 同版本的整页 PNG | derived | 缺失时由 inspector 生成，不向用户索取 | 编辑诊断 |
 | `baseline_layout` | 同一版本 layout JSON | derived | 缺失时由 inspector 生成 | 对象定位与 QA |
 | `qa_mode` | `standard` 或 `targeted` | optional | OneSlide 自动后置默认 `standard`；高密度、复杂关系页默认 `targeted` | 候选与渲染预算 |
-| `editorial_preference` | 用户明确要求的编辑方向 | optional | 缺失不阻塞，使用六维 rubric | 诊断优先级 |
+| `editorial_preference` | 用户明确要求的审校方向 | optional | 缺失不阻塞，按整页审校序列判断 | 审校优先级 |
 | `output_dir` | 新的版本化目录 | derived | 从运行目录生成；已存在则递增版本，不覆盖 | 输出 |
 
 ## 文件与版本
@@ -20,7 +20,7 @@
 - 损坏、加密、缺少 slide XML 或不可导入的文件返回 `SOURCE_INVALID`；
 - 源文件永不覆盖；输出目录已有内容时返回 `OUTPUT_EXISTS`，由 OneSlide 编排层选择新的版本号后重试。
 
-## Editorial handoff
+## Editorial QA handoff
 
 提供 handoff 时必须包含 `source_pptx_sha256`、`central_message`、`primary_relationship`、`protected_content` 和 `source_ids`，并与源 PPTX 哈希一致。没有独立 handoff 时，诊断文件必须记录 `source_sha256`、`context_basis=derived_from_slide`、推导的中心结论、主关系、受保护内容与可见来源；存在竞争解释时不得继续。
 
@@ -32,4 +32,4 @@ READ_CONTEXT → DERIVE_IF_STABLE → USE_DECLARED_DEFAULT
 → EDITORIAL_EDIT_BLOCKED
 ```
 
-缺少颜色偏好、风格、修改数量或具体坐标不得追问。缺少 handoff 但页面目标唯一时直接继续；只有竞争解释会导致相反编辑决策时才阻断。
+缺少颜色偏好、风格、修改数量或具体坐标不得追问。QA 永远不向用户索取坐标或实现参数。缺少 handoff 但页面目标唯一时直接继续；只有竞争解释会导致相反审校决策时才阻断。

@@ -128,7 +128,7 @@ Builder 交付后再次运行：
 python3 producer/scripts/validate_package.py <run-directory> --stage final --write-report
 ```
 
-Builder 初稿不得直接进入 `delivery/`。先按 `editorial/ENGINE.md` 观察该 PPTX 的真实整页渲染，只选择一个最影响理解的编辑问题，生成一个可回退的成组候选。Editorial Editor 不重写事实、数字、来源、主关系或结论强度；没有明确收益时保留初稿并记录 `NO_MATERIAL_EDIT`。只有候选或保留的初稿通过内容保真、layout、信息贡献、整页渲染和 PowerPoint 检查后，才写入 `delivery/` 并运行 final validation。
+Builder 初稿不得直接进入 `delivery/`。先按 `editorial/ENGINE.md` 进行只读 Editorial QA：先确认页面已经成立的设计和必须保护的优势，再判断是否存在一个值得修改的材料性问题。QA 只能选择 `PASS_AS_IS`、`BUILDER_LOCAL_REPAIR`、`BUILDER_RECOMPOSE` 或 `EDITORIAL_BLOCKED`，不得直接编辑 PPT 或输出实现参数。需要修改时由 Builder 执行，QA 重新看整页结果；没有明确净收益时保留初稿。只有最终页面通过内容保真、layout、信息贡献、整页渲染和 PowerPoint 检查后，才写入 `delivery/` 并运行 final validation。
 
 Builder 不可用、运行依赖缺失或返回 `MODULE_COVERAGE_GAP` 时，保留可用提示词包并返回 `PPT_RENDERING_BLOCKED`。不得偷偷换用普通渲染器后宣称生成了咨询级 PPT。
 
@@ -136,15 +136,15 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 
 统计类模块的原始数据、样本口径、计算规则和禁止推断要求由 Producer 在生成阶段执行，并在 Builder 路由命中后从对应模块 reference 读取；不得在入口阶段预载，也不得绕过模块 validator。
 
-### 6. 编辑式信息设计
+### 6. Editorial QA
 
-`PPT_DRAFT` 在 Builder 初稿后自动进入 Editorial Editor，用户不需要另行调用。编辑器读取一页 PPTX、整页 PNG、layout JSON 和 handoff，并按六维 rubric 检查视觉主语、标题与证据、证据旁注释、语义重点、阅读节奏和信息贡献。
+`PPT_DRAFT` 在 Builder 初稿后自动进入 Editorial QA，用户不需要另行调用。QA 读取一页 PPTX、整页 PNG、layout JSON 和 handoff，但没有文件修改权。
 
-- 一次只选一个主问题；多个对象修改必须共同服务同一编辑假设；
-- 默认一个候选和两次整页渲染；高密度或复杂关系页最多两个不同结构假设、三次整页渲染；
-- 修改允许移动、缩放、层级、字号、字重、对齐、颜色和经证明的重复/无贡献对象删除；
-- 禁止新增业务判断、改变数据、替换不等价图表或引入装饰；
-- 候选没有材料性改善或产生硬回归时必须回退。
+- 先写出至少两项页面优势，保护已经成立的构图和板块秩序；
+- 默认输出零条建议，最多一条最重要、最有价值的 Builder 任务；
+- 只有整页可见、材料性明确、成功标准可验证且置信度为 `high` 时才能要求修改；
+- 局部缺陷交给 Builder 修复，结构问题交给 Builder 重排；QA 不指定坐标、字号、颜色值或操作序列；
+- Builder 执行后由 QA 复审；候选没有明显净收益或损害受保护优势时必须回退。
 
 ### 7. 检查 PPTX
 
@@ -168,7 +168,7 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 - 不把模型补全内容伪装成用户提供或外部核验。
 - 不暴露本机路径、提示词历史、被否决方案、内部 QA 或制作说明。
 - 不把文件生成、验证脚本通过或 ZIP 完整冒充产品价值或用户验收。
-- 不把 Editorial Editor 变成第二次自由生成；编辑前必须有真实初稿，编辑后必须保存前后证据并完整回归。
+- 不让 Editorial QA 直接执行修改或变成机械挑错器；审校前必须有真实初稿，需要修改时由 Builder 执行并保存前后证据。
 
 ## 发布包自检
 

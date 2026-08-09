@@ -92,7 +92,7 @@ node builder/scripts/layout_quality.mjs internal/verify/layout.json
 
 ## 交付边界
 
-Builder 输出先作为内部初稿交给 `../editorial/ENGINE.md`，不得直接视为最终美观度通过。只有 Editorial Editor 返回 `EDITORIAL_IMPROVEMENT_PASS` 或 `NO_MATERIAL_EDIT`，并完成回归后，客户目录才放版本化 PPTX。来源、提示词、路由结果、前后预览、补丁和 QA 放内部目录。
+Builder 输出先作为内部初稿交给 `../editorial/ENGINE.md`，不得直接视为最终美观度通过。Editorial QA 只读判断 `PASS_AS_IS`、`BUILDER_LOCAL_REPAIR`、`BUILDER_RECOMPOSE` 或 `EDITORIAL_BLOCKED`。需要修改时 Builder 独立形成执行计划并完成修改，QA 再复审；只有 `PASS_AS_IS` 或复审通过后，客户目录才放版本化 PPTX。来源、提示词、路由结果、前后预览、执行计划和 QA 放内部目录。
 
 分别报告：
 
