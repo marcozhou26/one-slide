@@ -82,5 +82,4 @@ If no installed Builder module faithfully expresses the relationship, return `MO
 - Title, subtitle, and summary use the full available width of their container. Do not insert manual line breaks for appearance.
 - Do not use `|` or `｜` to join visible fields. Use structured aligned items.
 - Do not add an insight rail, action bar, recommendation, or footnote to fill space.
-- Do not request or describe a top decorative band, eyebrow, kicker, overline, title accent, brand strip, empty card, or any other visible object whose only purpose is aesthetic styling.
 - Do not shrink body text or hide material to avoid a scope decision.
