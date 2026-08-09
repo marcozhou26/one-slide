@@ -4,7 +4,7 @@ description: "把完整或零散的用户材料整理成恰好一页、来源可
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
-  version: "1.2.2"
+  version: "1.3.0"
 ---
 
 # OneSlide
