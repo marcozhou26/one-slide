@@ -154,7 +154,7 @@ async function main() {
       if (inSidebar && (op.intent !== "fit-repair" || !Number.isFinite(record.before_px) || targetPx >= record.before_px)) {
         throw new Error(`${op.target}: SIDEBAR_FONT_SIZE_REQUIRES_REDUCTION_FIT_REPAIR`);
       }
-      target.text.fontSize = targetPx;
+      target.text.style = { fontSize: targetPx };
       record.after_px = target.text.fontSize;
     } else if (op.op === "font-weight") {
       record.before_bold = target.text.bold;

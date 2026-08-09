@@ -143,6 +143,13 @@ test("Builder executes the Gantt repair from a hash-bound QA brief and plan", as
   assert.equal(record.role, "BUILDER_REVISION_EXECUTOR");
   assert.equal(record.operations[0].after_px < record.operations[0].before_px, true);
 
+  const unzipped = spawnSync("unzip", ["-p", output, "ppt/slides/slide1.xml"], { encoding: "utf8" });
+  assert.equal(unzipped.status, 0, unzipped.stderr || unzipped.stdout);
+  const targetShape = unzipped.stdout.match(/<p:sp>.*?<p:cNvPr[^>]*name="gantt-metric-3".*?<\/p:sp>/s)?.[0];
+  assert.ok(targetShape, "gantt-metric-3 must remain a native PowerPoint shape");
+  assert.match(targetShape, /<a:defRPr[^>]*sz="1300"/);
+  assert.match(targetShape, /<a:rPr[^>]*sz="1300"/);
+
   const candidate = path.join(directory, "candidate");
   const candidateInspect = spawnSync("node", [inspectScript, "--workspace", skillRoot, "--input", output, "--output-dir", candidate], { encoding: "utf8" });
   assert.equal(candidateInspect.status, 0, candidateInspect.stderr || candidateInspect.stdout);
