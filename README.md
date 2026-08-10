@@ -6,26 +6,26 @@ OneSlide is for people who want a professional single-slide presentation without
 
 [Download OneSlide v1.3.1](../../releases/latest/download/one-slide-v1.3.1.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneslide-ask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
 
-## Explain complex logic on one slide
+## Turn management questions into decision-ready slides
 
-The examples below show slide types supported or migrated into OneSlide. All displayed data is simulated or synthetic and contains no real customer, employee, or personal information.
+These examples show how OneSlide combines a management question, supporting evidence, and a concrete action on one editable slide. Seven pages come from a synthetic business-analysis case library; the Sankey page demonstrates end-to-end flow analysis. All displayed data is simulated or synthetic and contains no real customer, employee, or personal information.
 
 <table>
   <tr>
-    <td width="50%"><img src="showcase/01-column-chart.png" alt="Monthly contract value bar chart"><br><b>Bar chart:</b> Actual, target, and cumulative shortfall</td>
-    <td width="50%"><img src="showcase/02-medium-capability-gap.png" alt="Capability gap analysis"><br><b>Capability analysis:</b> Gaps, difficulty, and constraints</td>
+    <td width="50%"><img src="showcase/01-customer-concentration-risk.png" alt="Customer concentration and revenue-loss exposure analysis"><br><b>Customer concentration risk:</b> Top-account dependency, revenue-loss exposure, and 90-day retention actions</td>
+    <td width="50%"><img src="showcase/02-customer-profitability-segmentation.png" alt="Customer profitability and service-load segmentation"><br><b>Customer profitability:</b> Contribution profit, service load, and treatment by customer tier</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/03-bubble-heatmap.png" alt="Bubble matrix and heatmap"><br><b>Bubble matrix:</b> Value, difficulty, and priority</td>
-    <td width="50%"><img src="showcase/04-org-chart.png" alt="Organization chart"><br><b>Organization chart:</b> Solid-line reporting and dotted-line collaboration</td>
+    <td width="50%"><img src="showcase/03-renewal-driver-analysis.png" alt="Customer experience and renewal driver analysis"><br><b>Renewal driver analysis:</b> Link customer-experience scores to renewal outcomes and prioritize validation</td>
+    <td width="50%"><img src="showcase/04-project-portfolio-priority.png" alt="Project portfolio return and risk prioritization"><br><b>Project portfolio:</b> Compare return, risk, and delivery readiness to reset investment priority</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/05-waterfall.png" alt="EBITDA waterfall chart"><br><b>Waterfall:</b> Budget-to-actual variance attribution</td>
+    <td width="50%"><img src="showcase/05-budget-variance-control.png" alt="Budget variance and cost-control analysis"><br><b>Budget variance control:</b> Separate overspend, timing differences, and avoidable variance</td>
     <td width="50%"><img src="showcase/06-sankey.png" alt="Candidate flow Sankey diagram"><br><b>Flow analysis:</b> Candidate sourcing, screening, hiring, and retention</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/07-project-gantt.png" alt="Project Gantt chart"><br><b>Project Gantt:</b> Progress, dependencies, and release conditions</td>
-    <td width="50%"><img src="showcase/08-compensation-productivity.png" alt="Compensation and productivity analysis"><br><b>Pay effectiveness:</b> Pay per employee, output per employee, and department quadrants</td>
+    <td width="50%"><img src="showcase/07-inventory-aging-risk.png" alt="Aged and slow-moving inventory risk analysis"><br><b>Inventory risk:</b> Cash tied up, aging structure, recurring failures, and disposal actions</td>
+    <td width="50%"><img src="showcase/08-project-forecast-risk.png" alt="Project loss forecast and schedule-risk analysis"><br><b>Project forecast risk:</b> Forecast losses, schedule delays, risk clusters, and escalation priorities</td>
   </tr>
 </table>
 
