@@ -71,7 +71,7 @@ function informationContributionFindings(elements, width) {
   return findings;
 }
 
-export function auditLayoutObject(layout, { textPolicies = {}, alignmentContracts = [] } = {}) {
+export function auditLayoutObject(layout, { textPolicies = {}, alignmentContracts = [], containmentContracts = [] } = {}) {
   const findings = [];
   const frame = layout?.slide?.frame;
   const width = Number(frame?.width);
@@ -178,6 +178,28 @@ export function auditLayoutObject(layout, { textPolicies = {}, alignmentContract
     const spread = Math.max(...values) - Math.min(...values);
     if (spread > (contract.tolerance ?? 2)) {
       findings.push({ code: "EDGE_ALIGNMENT_MISMATCH", name: contract.name, edge: contract.edge, members: contract.members, values, spread, tolerance: contract.tolerance ?? 2 });
+    }
+  }
+
+  for (const contract of containmentContracts) {
+    const parent = byName.get(contract.parent);
+    const missing = [contract.parent, ...contract.members].filter((name) => !byName.has(name));
+    if (missing.length > 0) {
+      findings.push({ code: "CONTAINMENT_MEMBER_MISSING", name: contract.name, missing });
+      continue;
+    }
+    for (const memberName of contract.members) {
+      const member = byName.get(memberName);
+      if (!contains(parent, member, contract.tolerance ?? 2)) {
+        findings.push({
+          code: "CONTAINER_OVERFLOW",
+          name: contract.name,
+          parent: contract.parent,
+          member: memberName,
+          parent_bbox: parent.bbox,
+          member_bbox: member.bbox,
+        });
+      }
     }
   }
 

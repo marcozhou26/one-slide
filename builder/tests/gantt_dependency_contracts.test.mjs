@@ -62,4 +62,13 @@ test("Gantt render keeps connectors complete and separates axis labels from mile
     assert.equal(progressLabel.textLayout.lineCount, 1);
     assert.equal(progressLabel.resolvedFontSize, 13.33); // artifact units = 10 PowerPoint pt
   }
+
+  const sidePanel = byName.get("gantt-side");
+  for (let index = 1; index <= 3; index += 1) {
+    const card = byName.get(`gantt-metric-${index}`);
+    assert.ok(card.bbox[0] >= sidePanel.bbox[0]);
+    assert.ok(card.bbox[1] >= sidePanel.bbox[1]);
+    assert.ok(card.bbox[0] + card.bbox[2] <= sidePanel.bbox[0] + sidePanel.bbox[2]);
+    assert.ok(card.bbox[1] + card.bbox[3] <= sidePanel.bbox[1] + sidePanel.bbox[3]);
+  }
 });

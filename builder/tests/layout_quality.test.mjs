@@ -139,3 +139,21 @@ test("accepts a full-canvas layout with clean line breaks", () => {
   const result = auditLayoutObject(layout(elements));
   assert.deepEqual(result, { ok: true, code: "LAYOUT_QUALITY_PASS", findings: [] });
 });
+
+test("blocks a child card that escapes its declared parent panel", () => {
+  const result = auditLayoutObject(layout([
+    element("side-panel", "", [], [960, 126, 266, 476]),
+    element("side-card-1", "结论一", ["结论一"], [980, 216, 232, 120]),
+    element("side-card-2", "结论二", ["结论二"], [980, 370, 232, 120]),
+    element("side-card-3", "结论三", ["结论三"], [980, 524, 232, 128]),
+  ]), {
+    containmentContracts: [{
+      name: "side-cards-inside-panel",
+      parent: "side-panel",
+      members: ["side-card-1", "side-card-2", "side-card-3"],
+      tolerance: 0,
+    }],
+  });
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "CONTAINER_OVERFLOW" && item.member === "side-card-3"));
+});

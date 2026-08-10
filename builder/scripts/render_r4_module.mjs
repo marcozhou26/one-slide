@@ -14,6 +14,7 @@ import {
   exportPresentation,
   fitPageTitleFontSize,
   parseCliArgs,
+  registerContainment,
 } from "./pptx_core.mjs";
 import { planR4Module } from "./plan_r4_module.mjs";
 import { buildSankeyRibbonPath, computeSankeyGeometry } from "./sankey_geometry.mjs";
@@ -1118,15 +1119,22 @@ function renderGantt(slide, data, p) {
     fontSize: 12,
     color: COLORS.muted,
   });
+  const metricCount = p.gantt.side_metrics.length;
+  const metricGap = 12;
+  const metricTop = p.side.top + 90;
+  const metricBottom = p.side.top + p.side.height - 14;
+  const metricHeight = metricCount
+    ? (metricBottom - metricTop - metricGap * (metricCount - 1)) / metricCount
+    : 0;
   p.gantt.side_metrics.forEach((x, i) =>
     addNode(slide, {
       name: `gantt-metric-${i + 1}`,
       text: x.text,
       position: {
         left: p.side.left + 14,
-        top: p.side.top + 90 + i * 154,
+        top: metricTop + i * (metricHeight + metricGap),
         width: p.side.width - 28,
-        height: 128,
+        height: metricHeight,
       },
       fill: COLORS.white,
       border: i === 0 ? COLORS.orange : COLORS.border,
@@ -1137,6 +1145,14 @@ function renderGantt(slide, data, p) {
       alignment: "left",
     })
   );
+  if (metricCount) {
+    registerContainment({
+      name: "gantt-side-metrics-inside-panel",
+      parent: "gantt-side",
+      members: p.gantt.side_metrics.map((_, i) => `gantt-metric-${i + 1}`),
+      tolerance: 0,
+    });
+  }
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 
