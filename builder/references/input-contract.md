@@ -6,7 +6,7 @@
 | --- | --- | --- | --- | --- |
 | 单页来源内容 | required | 自然语言、Markdown、Word、PPT、CSV、JSON 或结构化交接包 | 先读当前上下文和唯一对象；仍无内容则 `SOURCE_BASELINE_FAIL` | 来源基线 |
 | Prompt Architect 交接包 | optional / preferred | manifest、Builder Prompt、Builder handoff 和按需数据文件 | 检查批准状态、相对路径、字段和文件引用；失败则 `HANDOFF_PACKAGE_FAIL` | Handoff 快速路径 |
-| 结构化交接包 | derived / optional | `subject`、`story`、`source_ids`、`display_blocks`、`structure`、`datasets` 或等价字段 | 存在时直接走快速路径；不得重复编译 page model | V3 路由 |
+| 结构化交接包 | derived / optional | `subject`、`story`、`source_ids`、`display_blocks`、`structure`、`datasets` 或等价字段 | 存在时直接走快速路径；不得重复编译 page model；指定已产品化模块时必须同时提供完整 `module_payload` | V3 路由 |
 | 实际读者与任务 | derived / conditional | 用户原话、项目语境或 `audience_task` | 可稳定推导时继续；不同读者会改变故事时才问一个问题 | 标题、密度、信息隔离 |
 | 数据和口径 | conditional | 数值、单位、期间、范围、公式、来源 | 缺少非核心值可降级为结构草图；核心值冲突则停止正式生成 | 数据门禁与图表 |
 | 图形类型 | derived / optional | 用户指定或由信息关系推导 | 用户指定与数据关系冲突时停止；混合结构进入 `direct_composition` | 路由 |
@@ -32,9 +32,11 @@ READ_CONTEXT
 
 - `subject` 和 `story` 非空；
 - `source_ids` 至少一个；
-- 存在 `display_blocks`、`structure`、`dataset`、`datasets` 或明确的 `requested_module`。
+- 存在 `display_blocks`、`structure`、`dataset`、`datasets`，或同时存在明确的 `requested_module` 与完整 `module_payload`。
 
 路由脚本只返回命中模块或 `direct_composition` 所需的最小文件清单。模型不得读取完整模块注册表。
+
+结构化交接包只声明已产品化 `requested_module`、但没有 `module_payload` 时，返回 `MODULE_PAYLOAD_INCOMPLETE`。这条门禁不适用于原始自然语言输入：用户可以直接指定一种图形，Builder 仍需从原始内容建立输入并运行命中模块的 validator。
 
 ## 原始输入路径
 

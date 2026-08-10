@@ -1,8 +1,8 @@
 # OneSlide 输入契约测试结果
 
-测试对象：`one-slide` 1.3.0（输入契约继承已验证的 1.2.0）
+测试对象：`one-slide` 1.3.1（输入契约继承已验证的 1.3.0）
 输入契约等级：B  
-测试日期：2026-08-07
+测试日期：2026-08-10
 
 | test_id | 场景 | 输入 | 实际行为 | 是否追问 | 证据 | 结果 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -14,6 +14,8 @@
 | IC06 | 异常文件 | 附件损坏，但用户文字已经说明主题 | 标记附件不可读；只使用可读文字继续，不假装提取成功 | 否 | B 级异常输入语义演练 | pass |
 | IC07 | 真实公司无数据 | 要求生成某真实公司的事实离职率，但没有证据 | 不生成真实公司名下的虚构指标；返回 `EVIDENCE_BLOCKED` 或改成匿名示例 | 否 | 事实边界语义演练 | pass |
 | IC08 | PPT 运行依赖缺失 | 请求 PPTX，但 `@oai/artifact-tool` 不可用 | 保留已验证提示词包；返回 `PPT_RENDERING_BLOCKED` | 否 | `check_environment.py` 降级契约 | pass |
+| IC09 | 结构化 handoff 缺模块载荷 | handoff 指定已产品化模块，但没有 `module_payload` | 返回 `MODULE_PAYLOAD_INCOMPLETE`；不进入渲染 | 否 | `v3_route_and_budget.test.mjs` | pass |
+| IC10 | 原始输入直接指定图形 | 自然语言明确要求瀑布图并给出起止数据 | 允许路由到对应模块；后续仍运行模块 validator | 否 | `v3_route_and_budget.test.mjs` | pass |
 
 ## 状态
 

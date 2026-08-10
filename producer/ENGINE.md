@@ -8,6 +8,8 @@ metadata:
 
 # Single Consulting Slide Producer
 
+> 本文档中的命令均假定当前工作目录为包含顶层 `SKILL.md` 的 OneSlide Skill 根目录。
+
 Create exactly one consulting-grade slide. The output may be a production prompt or one native-editable PowerPoint page, but the content scope never expands beyond one page.
 
 This Skill combines source-faithful slide architecture with controlled synthetic completion. It does not require the user to fill a detailed form.
@@ -161,7 +163,7 @@ For ordered estimates with uncertainty intervals, use `confidence-band` only whe
 Run:
 
 ```bash
-python3 scripts/validate_package.py <run-directory> --stage handoff --write-report
+python3 producer/scripts/validate_package.py <run-directory> --stage handoff --write-report
 ```
 
 Then inspect the complete page semantically. The validator proves package structure, declared provenance coverage, topic budget, safe paths, and selected disclosure rules. It does not prove consulting quality or PowerPoint quality.
@@ -180,7 +182,7 @@ If the Builder is unavailable, unsupported, or returns `MODULE_COVERAGE_GAP`, ke
 
 After rendering, require exactly one 16:9 slide, native editability, semantic audit, full-page render inspection, and actual Microsoft PowerPoint review when available. Store previews and QA evidence under `internal/verify/`, never in the public delivery folder.
 
-After the Builder places the PPTX in `delivery/`, run the same validator with `--stage final --write-report`.
+After the Builder places the PPTX in `delivery/`, run the same validator from the Skill root with `--stage final --write-report`.
 
 ## Hard boundaries
 
@@ -200,7 +202,7 @@ After the Builder places the PPTX in `delivery/`, run the same validator with `-
 Validate a generated run directory with:
 
 ```bash
-python3 scripts/validate_package.py <run-directory> --write-report
+python3 producer/scripts/validate_package.py <run-directory> --stage final --write-report
 ```
 
 Exit codes:

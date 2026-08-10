@@ -16,6 +16,12 @@ FORBIDDEN_TEXT = {
     "file:" + "///": "local file URL",
 }
 FORBIDDEN_NAMES = {".DS_Store", "__pycache__"}
+PROHIBITED_GITHUB_ATTRIBUTION = (
+    "南海" + "公学",
+    "nan" + "hai academy",
+    "nan" + "hai.pro",
+)
+SUITE_VERSION = "1.3.1"
 REQUIRED = [
     "SKILL.md",
     "README.md",
@@ -72,8 +78,8 @@ def validate(root: Path) -> dict:
             errors.append("SKILL.md license must be Apache-2.0")
         if not re.search(r'(?m)^\s*author:\s*["\']周俊东 Marco["\']\s*$', skill_text):
             errors.append("SKILL.md author must be 周俊东 Marco")
-        if not re.search(r'(?m)^\s*version:\s*["\']1\.3\.0["\']\s*$', skill_text):
-            errors.append("SKILL.md version must be 1.3.0")
+        if not re.search(rf'(?m)^\s*version:\s*["\']{re.escape(SUITE_VERSION)}["\']\s*$', skill_text):
+            errors.append(f"SKILL.md version must be {SUITE_VERSION}")
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
             if term not in skill_text:
                 errors.append(f"SKILL.md missing required mode or state: {term}")
@@ -94,6 +100,10 @@ def validate(root: Path) -> dict:
             for pattern, label in FORBIDDEN_TEXT.items():
                 if pattern in scan_text:
                     errors.append(f"{label} in {relative}: {pattern}")
+            scan_text_lower = scan_text.lower()
+            for term in PROHIBITED_GITHUB_ATTRIBUTION:
+                if term.lower() in scan_text_lower:
+                    errors.append(f"prohibited GitHub attribution in {relative}: {term}")
 
     registry_path = root / "builder/references/module-registry.json"
     if registry_path.is_file():
@@ -102,6 +112,14 @@ def validate(root: Path) -> dict:
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             errors.append(f"invalid builder module registry: {exc}")
         else:
+            if registry.get("suite_version") != SUITE_VERSION:
+                errors.append(
+                    f"builder suite version mismatch: registry={registry.get('suite_version')}, skill={SUITE_VERSION}"
+                )
+            if not registry.get("builder_engine_version"):
+                errors.append("builder module registry missing builder_engine_version")
+            if "skill_version" in registry:
+                errors.append("builder module registry must not use ambiguous skill_version")
             modules = registry.get("modules") or []
             declared = registry.get("productized_module_count")
             productized = [module for module in modules if module.get("status") == "productized"]

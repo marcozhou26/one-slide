@@ -97,6 +97,16 @@ export async function routeV3(input) {
     return { ...compactModule(byId.get(payloadModule), sourceMode, "validated executable module payload"), module_input: "module_payload" };
   }
 
+  if (sourceMode === "structured_handoff" && requested && byId.has(requested)) {
+    return {
+      status: "blocked",
+      route: "MODULE_PAYLOAD_INCOMPLETE",
+      source_mode: sourceMode,
+      module_id: requested,
+      reason: "A structured handoff that requests a productized module must include its complete module_payload.",
+    };
+  }
+
   if (requested && byId.has(requested)) {
     return compactModule(byId.get(requested), sourceMode, "explicit productized module");
   }

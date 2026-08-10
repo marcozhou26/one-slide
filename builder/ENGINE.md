@@ -5,6 +5,8 @@ description: Build one native-editable 16:9 consulting PowerPoint slide from an 
 
 # Single Consulting Slide Builder V3.3.5
 
+> 本文档中的命令均假定当前工作目录为包含顶层 `SKILL.md` 的 OneSlide Skill 根目录；Builder 脚本使用 `builder/` 前缀执行。
+
 一次只生成一页咨询型 PowerPoint。优先消费已确认的结构化输入包；只加载命中的一个模块。不得调用通用 Presentations Skill 代替本 Skill。
 
 ## 核心结果
@@ -25,7 +27,7 @@ description: Build one native-editable 16:9 consulting PowerPoint slide from an 
 输入保存为 JSON 后运行：
 
 ```bash
-node scripts/route_v3.mjs input.json
+node builder/scripts/route_v3.mjs input.json
 ```
 
 按结果继续：
@@ -70,9 +72,9 @@ node scripts/route_v3.mjs input.json
 生成后运行：
 
 ```bash
-python3 scripts/audit_pptx_semantics.py final.pptx
-node scripts/audit_visual_source.mjs
-node scripts/layout_quality.mjs internal/verify/layout.json
+python3 builder/scripts/audit_pptx_semantics.py final.pptx
+node builder/scripts/audit_visual_source.mjs
+node builder/scripts/layout_quality.mjs internal/verify/layout.json
 ```
 
 `exportPresentation` 已内置 layout 质量门禁；`SHORT_LABEL_WRAP`、`ORPHAN_LINE`、`UNBREAKABLE_TOKEN_WRAP`、`BAD_LINE_START_PUNCTUATION`、`NUMBER_UNIT_SPLIT`、`TWO_LINE_TITLE_WITH_SUBTITLE`、`HEADING_SAFE_ZONE_INTRUSION`、`CONTENT_CROWDS_HEADING_WITH_BOTTOM_SPACE`、`EDGE_ALIGNMENT_MISMATCH`、`CANVAS_WIDTH_UNDERUSED`、`CANVAS_HEIGHT_UNDERUSED` 和越界均必须阻断交付。直接编排还必须用 `registerEdgeAlignment` 声明主要纵向区块的共线边缘。渲染整页要人工检查标题换行、标题安全区、上下留白平衡、遮挡、连接线、数据编码、字段分块和可读性。已知确定性缺陷必须修复，不受候选预算限制；不得为无明确收益的美化反复迭代。
