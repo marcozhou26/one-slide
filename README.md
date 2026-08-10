@@ -109,8 +109,6 @@ python3 -m unittest discover -s tests -v
 - Author and maintainer: 周俊东 Marco
 - WeChat public account and Channels account: 周俊东Marco
 - WeChat: `zhou139223` (include “OneSlide” in the invitation note)
-- Background: Nanhai Academy
-- Website: [nanhai.pro](https://nanhai.pro)
 
 ## Licensing
 
