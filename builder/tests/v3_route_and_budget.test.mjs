@@ -26,9 +26,17 @@ test("structured composite handoff uses direct composition without a second page
   assert.equal(JSON.stringify(result).includes("module-registry"), false);
 });
 
-test("explicit productized module returns only the selected module contract", async () => {
+test("structured handoff cannot request a productized module without its executable payload", async () => {
   const result = await routeV3({ subject: "归因", story: "利润变化由四项因素解释", source_ids: ["S01"], requested_module: "waterfall-attribution", data: { start: 100, end: 90 } });
+  assert.equal(result.status, "blocked");
+  assert.equal(result.route, "MODULE_PAYLOAD_INCOMPLETE");
+  assert.equal(result.module_id, "waterfall-attribution");
+});
+
+test("raw source may still request a productized module and must continue to its validator", async () => {
+  const result = await routeV3({ text: "请用瀑布图呈现利润从100下降到90的四项影响因素。", requested_module: "waterfall-attribution", data: { start: 100, end: 90 } });
   assert.equal(result.route, "deterministic_module");
+  assert.equal(result.source_mode, "raw_source");
   assert.equal(result.module_id, "waterfall-attribution");
   assert.equal(result.load_only.length, 1);
   assert.match(result.renderer, /render_waterfall\.mjs$/);

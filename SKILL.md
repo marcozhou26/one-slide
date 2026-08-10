@@ -4,7 +4,7 @@ description: "把完整或零散的用户材料整理成恰好一页、来源可
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
-  version: "1.3.0"
+  version: "1.3.1"
 ---
 
 # OneSlide
@@ -16,12 +16,16 @@ metadata:
 完整读取：
 
 - `references/input-contract.md`
-- `references/suite-contract.md`
 - `producer/references/single-slide-contract.md`
-- `producer/references/provenance-contract.md`
-- `producer/references/output-contract.md`
 
-进入绘制阶段时，再读取 `builder/ENGINE.md` 和路由返回的唯一模块 reference。不要预读全部 Builder 模块。
+## 阶段性读取
+
+- 开始建立来源记录或补全内容时：读取 `producer/references/provenance-contract.md`。
+- 开始生成运行目录和交接包时：读取 `producer/ENGINE.md` 与 `producer/references/output-contract.md`。
+- 发生降级、阻断、引擎不可用或职责边界冲突时：读取 `references/suite-contract.md`。
+- 进入绘制阶段时：读取 `builder/ENGINE.md` 和路由返回的唯一模块 reference。
+
+不要预读全部 Builder 模块，也不要在尚未进入相应阶段时加载打包、降级或渲染说明。
 
 ## 首次互动
 
@@ -127,13 +131,7 @@ Builder 不可用、运行依赖缺失或返回 `MODULE_COVERAGE_GAP` 时，保�
 
 Producer 只有在一个已产品化模块能覆盖全部必含内容时，才同时写入 `requested_module` 和完整、可通过该模块 validator 的 `module_payload`。只有模块名没有可执行载荷时不得强制命中；混合页面使用带 layout 门禁的直接编排。
 
-组间分布任务只有在原始观测、组别、样本量、共同期间、单位和样本口径齐全时才使用 `box-plot-jitter`。Producer 必须保留全部观测，Builder 依据 Tukey hinges 与 1.5×IQR 规则计算箱线统计，并把每个点绘制为原生对象；横向抖动只用于避免遮挡，页面必须明确说明它不改变观测值。
-
-多指标关系筛选任务在 4–10 个指标具备对称系数方阵或可复算的对齐原始观测时使用 `correlation-matrix`。Producer 必须保留指标 ID/标签、Pearson 或 Spearman、样本量、缺失值处理、期间、总体、来源和显示阈值；缺少方法时可默认 Pearson 并披露，缺少数据或出现口径冲突时不得强制命中。页面必须用位置、带正负号的数值和颜色共同表达，并明确“相关不代表因果”。
-
-两个连续指标的关系判断只有在逐条 x/y 原始观测、两轴指标与单位、样本定义、期间、总体和来源齐全时才使用 `scatter-regression`。V1 仅使用带截距的一元普通最小二乘线性拟合；Producer 必须声明配对缺失、精确重复和异常点处理，Builder 从原始观测复算斜率、截距与 R²。有效配对不足或任一轴零方差时阻断正式模块；相关或回归不得写成因果，不得伪造显著性。
-
-有序中心估计与区间任务使用 `confidence-band`。Producer 必须保留 5–12 个唯一且有序的时期、`estimate/lower/upper`、指标与单位、区间类型和完整定义、估计方法、样本/总体、来源、缺失值语义及可选阈值语义。缺少样式或阈值不阻塞；缺少核心序列、区间定义或统计口径时不得猜测。置信区间不得被改称预测区间或风险区间，也不得据此夸大概率、因果或显著性含义。
+统计类模块的原始数据、样本口径、计算规则和禁止推断要求由 Producer 在生成阶段执行，并在 Builder 路由命中后从对应模块 reference 读取；不得在入口阶段预载，也不得绕过模块 validator。
 
 ### 6. 检查 PPTX
 

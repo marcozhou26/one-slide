@@ -1,5 +1,22 @@
 # Changelog
 
+## Component versions
+
+| Component | Version | Source |
+| --- | --- | --- |
+| OneSlide suite | 1.3.1 | `SKILL.md` and `builder/references/module-registry.json` |
+| Producer engine | 1.1.2 | `producer/ENGINE.md` |
+| Builder engine | 3.3.5 | `builder/ENGINE.md` and the module registry |
+
+## 1.3.1 — 2026-08-10
+
+- Reduced mandatory startup reading to the input and single-slide contracts; provenance, packaging, degradation and rendering instructions now load only when their stage begins.
+- Removed duplicated statistical-module rules from the public Skill entry while preserving the full Producer and module contracts.
+- Standardized documented commands on the top-level OneSlide Skill directory and made final-stage validation explicit.
+- Replaced the ambiguous Builder registry field `skill_version` with separate suite and Builder engine versions, plus a suite-version consistency gate.
+- Blocked structured handoffs that request a productized module without a complete `module_payload`, while preserving direct module requests from raw natural-language input.
+- Added regression coverage for the structured-handoff gate, raw-input compatibility, component versions and prohibited GitHub attribution.
+
 ## 1.3.0 — 2026-08-09
 
 - Added the productized `correlation-matrix` module for 4–10 metrics, accepting a validated symmetric coefficient matrix or reproducible aligned observations with Pearson/Spearman, sample, missing-value, period, population, source and threshold metadata.

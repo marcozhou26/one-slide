@@ -45,9 +45,22 @@ class SuiteContractTests(unittest.TestCase):
             self.assertFalse(result["ok"])
             self.assertTrue(any("absolute user path" in error for error in result["errors"]))
 
+    def test_prohibited_github_attribution_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            copy_root = Path(temporary) / "one-slide"
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            bad_attribution = "nan" + "hai academy"
+            (copy_root / "README.md").write_text(f"Background: {bad_attribution}", encoding="utf-8")
+            result = MODULE.validate(copy_root)
+            self.assertFalse(result["ok"])
+            self.assertTrue(any("prohibited GitHub attribution" in error for error in result["errors"]))
+
     def test_builder_registry_is_complete_and_portable(self):
         registry = json.loads((ROOT / "builder/references/module-registry.json").read_text(encoding="utf-8"))
         modules = registry["modules"]
+        self.assertEqual(registry["suite_version"], "1.3.1")
+        self.assertEqual(registry["builder_engine_version"], "3.3.5")
+        self.assertNotIn("skill_version", registry)
         self.assertEqual(registry["productized_module_count"], len(modules))
         for module in modules:
             for field in ("validator", "planner", "renderer", "reference"):
