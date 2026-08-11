@@ -26,6 +26,7 @@ export {
 export const DEFAULT_SLIDE_BACKGROUND = "#FFFFFF";
 const TEXT_POLICIES = new Map();
 const ALIGNMENT_CONTRACTS = [];
+const CONTAINMENT_CONTRACTS = [];
 export const APPROVED_CONNECTOR_KINDS = Object.freeze([
   "straight",
   "elbow",
@@ -262,6 +263,13 @@ export function registerEdgeAlignment({ name, edge, members, tolerance = 2 }) {
     throw new SlideContractError("ALIGNMENT_CONTRACT_INPUT_FAIL", "Edge alignment requires a name, left/right edge, and at least two member names");
   }
   ALIGNMENT_CONTRACTS.push({ name, edge, members: [...members], tolerance });
+}
+
+export function registerContainment({ name, parent, members, tolerance = 2 }) {
+  if (!name || !parent || !Array.isArray(members) || members.length < 1) {
+    throw new SlideContractError("CONTAINMENT_CONTRACT_INPUT_FAIL", "Containment requires a name, parent, and at least one member name");
+  }
+  CONTAINMENT_CONTRACTS.push({ name, parent, members: [...members], tolerance });
 }
 
 export function addNode(
@@ -534,12 +542,14 @@ export async function exportPresentation(presentation, output) {
   const layoutAudit = auditLayoutObject(JSON.parse(layoutText), {
     textPolicies: Object.fromEntries(TEXT_POLICIES),
     alignmentContracts: ALIGNMENT_CONTRACTS,
+    containmentContracts: CONTAINMENT_CONTRACTS,
   });
   const auditPath = output.layoutAudit ?? `${output.layout}.audit.json`;
   await ensureParent(auditPath);
   await fs.writeFile(auditPath, `${JSON.stringify(layoutAudit, null, 2)}\n`);
   TEXT_POLICIES.clear();
   ALIGNMENT_CONTRACTS.length = 0;
+  CONTAINMENT_CONTRACTS.length = 0;
   if (!layoutAudit.ok) {
     throw new SlideContractError("LAYOUT_QUALITY_FAIL", layoutAudit.findings.map((item) => `${item.code}:${item.name ?? "canvas"}`).join(", "));
   }

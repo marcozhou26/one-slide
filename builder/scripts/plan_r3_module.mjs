@@ -24,6 +24,21 @@ export function planR3Module(data) {
   if (data.module_id === "dumbbell-gap") return { ...base, chart: { left: 54, top: 134, width: 872, height: 472 }, rail: { left: 954, top: 132, width: 272, height: 474 }, bottom: { left: 54, top: 630, width: 1172, height: 34 } };
   if (data.module_id === "bump-ranking") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   if (data.module_id === "composition-shift") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
+  if (data.module_id === "part-to-whole") {
+    const insightCount = data.diagram.insights?.length ?? 0;
+    const hasInsights = insightCount > 1 || (insightCount > 0 && data.diagram.parts.length > 4);
+    const hasConclusion = Boolean(data.diagram.conclusion);
+    const exhibit = { left: 54, top: 128, width: hasInsights ? 876 : 1172, height: hasConclusion ? 470 : 520 };
+    const chartWidth = hasInsights ? 520 : 620;
+    return {
+      ...base,
+      exhibit,
+      chart: { left: exhibit.left + 18, top: exhibit.top + 34, width: chartWidth, height: exhibit.height - 64 },
+      breakdown: { left: exhibit.left + chartWidth + 36, top: exhibit.top + 34, width: exhibit.width - chartWidth - 54, height: exhibit.height - 64 },
+      rail: hasInsights ? { left: 958, top: 128, width: 268, height: exhibit.height } : null,
+      bottom: hasConclusion ? { left: 54, top: 624, width: 1172, height: 40 } : null,
+    };
+  }
   if (data.module_id === "box-plot") return { ...base, chart: { left: 60, top: 136, width: 866, height: 456 }, rail: { left: 952, top: 128, width: 274, height: 464 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   if (data.module_id === "histogram") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };
   if (data.module_id === "box-plot-jitter") return { ...base, chart: { left: 60, top: 136, width: 888, height: 452 }, rail: { left: 976, top: 128, width: 250, height: 466 }, bottom: { left: 54, top: 624, width: 1172, height: 40 } };

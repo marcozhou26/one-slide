@@ -6,6 +6,7 @@ export const FONT_SIZES = Object.freeze({
   sectionTitle: 18,
   body: 14,
   compact: 12,
+  dataLabel: 10,
   source: 12,
 });
 export const MIN_FONT_BY_ROLE = Object.freeze({
@@ -15,6 +16,7 @@ export const MIN_FONT_BY_ROLE = Object.freeze({
   sectionTitle: 16,
   body: 12,
   compact: 12,
+  dataLabel: 10,
   source: 12,
 });
 export const MIN_BODY_FONT_SIZE = MIN_FONT_BY_ROLE.body;
@@ -22,7 +24,7 @@ export const MIN_VISIBLE_FONT_SIZE = 12;
 export const POWERPOINT_POINT_TO_ARTIFACT_UNIT = 4 / 3;
 
 export function toArtifactFontSize(points) {
-  return Math.max(points, MIN_VISIBLE_FONT_SIZE) * POWERPOINT_POINT_TO_ARTIFACT_UNIT;
+  return points * POWERPOINT_POINT_TO_ARTIFACT_UNIT;
 }
 
 export function validateTypography(role, fontSize) {

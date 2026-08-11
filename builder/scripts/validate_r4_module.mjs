@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { buildAnchorMap, requireCondition, validateAllAnchorsMapped, validateTitle, validateVisibleText } from "./source_fidelity.mjs";
-const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","region-map-table","industry-value-chain","spiral-maturity","gantt-dependency"]);
+const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","gantt-dependency"]);
 function ctx(data){
   const anchors=buildAnchorMap(data.source_anchors),mapped=new Set();
   const approvedRewriteMode=data.module_id==="sankey-flow"&&data.title?.origin==="approved_rewrite";
@@ -125,14 +125,22 @@ export function normalizeGanttDependencies(d){
   const tasks=new Map(d.tasks.map(task=>[task.id,task]));
   return(d.dependencies??[]).map((dependency,index)=>{
     requireCondition(tasks.has(dependency.from)&&tasks.has(dependency.to)&&dependency.from!==dependency.to,"GANTT_DEPENDENCY_FAIL","Dependency endpoints are invalid");
+    const source=tasks.get(dependency.from),target=tasks.get(dependency.to);
     const rawClass=dependency.relationship_class??"prerequisite";
     requireCondition(["time_order_only","prerequisite","necessary_dependency"].includes(rawClass),"GANTT_DEPENDENCY_SEMANTICS_FAIL",`Unsupported relationship_class at dependency ${index+1}`);
     const relationship_class=rawClass==="necessary_dependency"?"prerequisite":rawClass;
+    const safeDefault=source.end<=target.start?"finish_to_start":null;
+    const dependency_type=dependency.dependency_type??safeDefault;
+    requireCondition(["finish_to_start","start_to_start","finish_to_finish","start_to_finish"].includes(dependency_type),"GANTT_DEPENDENCY_TYPE_REQUIRED",`Dependency ${dependency.from}→${dependency.to} overlaps in time; dependency_type is required`);
+    const timeOrderOk=dependency_type==="finish_to_start"?source.end<=target.start:
+      dependency_type==="start_to_start"?source.start<=target.start:
+      dependency_type==="finish_to_finish"?source.end<=target.end:source.start<=target.end;
+    requireCondition(timeOrderOk,"GANTT_DEPENDENCY_TIME_CONFLICT",`${dependency.from}→${dependency.to} conflicts with ${dependency_type}`);
     if(relationship_class==="time_order_only"){
       requireCondition(dependency.not_a_prerequisite===true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only requires not_a_prerequisite=true");
-      requireCondition(tasks.get(dependency.from).start<=tasks.get(dependency.to).start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
+      requireCondition(source.start<=target.start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
     }else requireCondition(dependency.not_a_prerequisite!==true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","A prerequisite cannot set not_a_prerequisite=true");
-    return{...dependency,relationship_class,not_a_prerequisite:relationship_class==="time_order_only"};
+    return{...dependency,relationship_class,dependency_type,not_a_prerequisite:relationship_class==="time_order_only"};
   });
 }
 
@@ -146,5 +154,5 @@ function gantt(d,c){
   (d.side_metrics??[]).forEach(x=>c.text(x,"Gantt side metric"));if(d.conclusion)c.text(d.conclusion,"Conclusion");
   return{timeAxis,layerSteps,dependencies};
 }
-export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"region-map-table":region,"industry-value-chain":valueChain,"spiral-maturity":spiral,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
+export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const p=process.argv[2];try{if(!p)throw new Error("Usage: validate_r4_module.mjs <input.json>");process.stdout.write(`${JSON.stringify(validateR4Module(JSON.parse(await fs.readFile(p,"utf8"))))}\n`);}catch(error){process.stderr.write(`${JSON.stringify({code:error.code??"DATA_CONTRACT_FAIL",message:error.message})}\n`);process.exitCode=1;}}

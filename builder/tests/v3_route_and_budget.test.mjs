@@ -75,6 +75,22 @@ test("sparse raw source routes without requesting style fields", async () => {
   assert.equal(result.module_id, "causal-chain");
 });
 
+test("retired fixed templates remain usable only as direct-composition patterns", async () => {
+  const result = await routeV3({ text: "比较自建和外采两条路线，按成本、周期和风险做取舍。" });
+  assert.equal(result.route, "direct_composition");
+  assert.equal(result.preferred_pattern, "route-tradeoff");
+  assert.ok(result.load_only.includes("references/direct-composition-patterns.md"));
+});
+
+test("legacy HR template requests converge on the unified matrix and maps remain blocked", async () => {
+  const merged = await routeV3({ text: "逐项比较服务量和一次解决率", requested_module: "hr-ticket-intake" });
+  assert.equal(merged.route, "deterministic_module");
+  assert.equal(merged.module_id, "hr-operating-diagnostic-matrix");
+  const map = await routeV3({ text: "按区域比较数据", requested_module: "region-map-table" });
+  assert.equal(map.status, "blocked");
+  assert.equal(map.route, "SENSITIVE_MAP_MODULE_RETIRED");
+});
+
 test("missing source blocks instead of inventing content", async () => {
   const result = await routeV3({});
   assert.equal(result.status, "blocked");
@@ -140,12 +156,15 @@ test("typography uses role-based hierarchy instead of a universal 16 pt floor", 
     sectionTitle: 18,
     body: 14,
     compact: 12,
+    dataLabel: 10,
     source: 12,
   });
   assert.equal(MIN_FONT_BY_ROLE.body, 12);
   assert.doesNotThrow(() => validateTypography("body", 12));
   assert.doesNotThrow(() => validateTypography("source", 12));
+  assert.doesNotThrow(() => validateTypography("dataLabel", 10));
   assert.throws(() => validateTypography("body", 11), /cannot be smaller than 12 pt/);
+  assert.throws(() => validateTypography("dataLabel", 9), /cannot be smaller than 10 pt/);
   assert.equal(toArtifactFontSize(12), 16);
   assert.ok(Math.abs(toArtifactFontSize(34) - 45.33333333333333) < 1e-9);
   assert.equal(fitPageTitleFontSize("短标题"), 30);
@@ -155,7 +174,7 @@ test("typography uses role-based hierarchy instead of a universal 16 pt floor", 
 test("renderer font literals stay on the consulting typography scale", async () => {
   const scripts = await fs.readdir(path.join(root, "scripts"));
   const renderers = scripts.filter((name) => /^render.*\.mjs$/.test(name));
-  const allowed = new Set([12, 14, 16, 18, 24, 26, 28, 30, 32, 34, 35]);
+  const allowed = new Set([10, 12, 14, 16, 18, 24, 26, 28, 30, 32, 34, 35]);
   for (const renderer of renderers) {
     const source = await fs.readFile(path.join(root, "scripts", renderer), "utf8");
     const expressions = [...source.matchAll(/fontSize\s*[:=]\s*([^,\n}]+)/g)].map((match) => match[1]);

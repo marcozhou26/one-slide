@@ -118,8 +118,10 @@ function bottom(slide, pos, item) {
     });
   }
 }
-function metricHeader(slide, pos, metrics) {
-  const gap = 12, w = (pos.width - gap * 2) / 3;
+function metricHeader(slide, pos, metrics, dynamic = false) {
+  const gap = 12;
+  const count = dynamic ? Math.max(metrics.length, 1) : 3;
+  const w = (pos.width - gap * (count - 1)) / count;
   metrics.forEach((m, i) =>
     addTextBox(slide, {
       name: `metric-${i + 1}`,
@@ -1382,6 +1384,116 @@ function renderIntake(slide, data, p) {
   rail(slide, p.rail, data.diagram.insights, "发现／根因／动作");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
+function matrixValueText(value, spec) {
+  if (spec.kind === "text") return String(value);
+  const numeric = Number(value);
+  const formatted = Number.isInteger(numeric) ? numeric.toLocaleString("en-US") : String(numeric);
+  return `${formatted}${spec.unit ?? ""}`;
+}
+function renderOperatingMatrix(slide, data, p) {
+  const d = data.diagram;
+  const metricOffset = d.metrics?.length ? 102 : 0;
+  if (d.metrics?.length) metricHeader(slide, {
+    left: p.main.left,
+    top: p.main.top,
+    width: p.main.width,
+  }, d.metrics, true);
+  const tableTop = p.main.top + metricOffset;
+  panel(slide, "operating-diagnostic-table", {
+    left: p.main.left,
+    top: tableTop,
+    width: p.main.width,
+    height: p.main.height - metricOffset,
+  });
+  const labelW = 128;
+  const innerX = p.main.left + 10;
+  const colW = (p.main.width - labelW - 20) / d.columns.length;
+  const headerTop = tableTop + 10;
+  const headerH = 38;
+  const bodyTop = headerTop + headerH + 4;
+  const rowH = (p.main.height - metricOffset - headerH - 24) / d.rows.length;
+  d.columns.forEach((column, index) => addTextBox(slide, {
+    name: `operating-column-${index + 1}`,
+    text: column.label.text,
+    position: {
+      left: innerX + labelW + index * colW,
+      top: headerTop,
+      width: colW - 2,
+      height: headerH,
+    },
+    fontSize: 16,
+    bold: true,
+    color: COLORS.navy,
+    alignment: "center",
+    fill: COLORS.soft,
+    line: { style: "solid", fill: COLORS.border, width: .7 },
+  }));
+  const ranges = d.columns.map((column, columnIndex) => {
+    if (column.primary.kind === "text") return null;
+    const values = d.matrix.map((row) => Number(row[columnIndex].primary));
+    return { min: Math.min(...values), max: Math.max(...values) };
+  });
+  d.rows.forEach((row, rowIndex) => {
+    const rowLabel = row.note ? `${row.label.text}\n${row.note.text}` : row.label.text;
+    addTextBox(slide, {
+      name: `operating-row-${rowIndex + 1}`,
+      text: rowLabel,
+      position: { left: innerX, top: bodyTop + rowIndex * rowH, width: labelW - 8, height: rowH - 2 },
+      fontSize: row.note ? 14 : 16,
+      bold: true,
+      color: COLORS.navy,
+      alignment: "left",
+    });
+    d.columns.forEach((column, columnIndex) => {
+      const cell = d.matrix[rowIndex][columnIndex];
+      const range = ranges[columnIndex];
+      const span = range ? Math.max(range.max - range.min, 1e-9) : 1;
+      const normalized = range ? (Number(cell.primary) - range.min) / span : 0;
+      const risk = column.primary.direction === "lower_is_better"
+        ? normalized
+        : column.primary.direction === "higher_is_better"
+        ? 1 - normalized
+        : 0;
+      const magnitude = column.primary.encoding === "heatmap" ? normalized : 0;
+      const fill = risk > .67
+        ? PALE_ORANGE
+        : magnitude > .67
+        ? PALE_BLUE
+        : magnitude > .33
+        ? COLORS.soft
+        : COLORS.white;
+      const secondary = column.secondary
+        ? `\n${column.secondary.label?.text ? `${column.secondary.label.text} ` : ""}${matrixValueText(cell.secondary, column.secondary)}`
+        : "";
+      addTextBox(slide, {
+        name: `operating-cell-${rowIndex + 1}-${columnIndex + 1}`,
+        text: `${matrixValueText(cell.primary, column.primary)}${secondary}`,
+        position: {
+          left: innerX + labelW + columnIndex * colW,
+          top: bodyTop + rowIndex * rowH,
+          width: colW - 2,
+          height: rowH - 2,
+        },
+        fontSize: column.secondary ? 14 : 16,
+        bold: risk > .67 || magnitude > .67,
+        color: risk > .67 ? COLORS.orange : COLORS.text,
+        alignment: "center",
+        fill,
+        line: { style: "solid", fill: COLORS.border, width: .6 },
+      });
+    });
+  });
+  rail(slide, p.rail, d.insights, "发现／原因／动作");
+  bottom(slide, p.bottom, d.conclusion);
+  if (d.disclosure) addTextBox(slide, {
+    name: "operating-disclosure",
+    text: d.disclosure.text,
+    position: { left: p.bottom.left, top: p.bottom.top + p.bottom.height + 6, width: p.bottom.width, height: 18 },
+    fontSize: 12,
+    color: COLORS.muted,
+    alignment: "right",
+  });
+}
 function renderClassification(slide, data, p) {
   metricHeader(slide, {
     left: p.main.left,
@@ -1485,12 +1597,8 @@ export async function renderR5Module(data, output) {
     "hr-workforce-reconciliation": renderWorkforce,
     "hr-new-hire-survival": renderSurvival,
     "hr-supply-demand-gap": renderSupply,
-    "hr-level-function-matrix": renderLevel,
     "hr-from-to-mobility": renderMobility,
-    "hr-eligibility-matrix": renderEligibility,
-    "hr-service-catalog": renderService,
-    "hr-ticket-intake": renderIntake,
-    "hr-ticket-classification": renderClassification,
+    "hr-operating-diagnostic-matrix": renderOperatingMatrix,
   })[data.module_id](slide, data, p);
   await exportPresentation(presentation, output);
   return p;

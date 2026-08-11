@@ -65,7 +65,7 @@ Recommend one page focus and list excluded candidates in the user-facing brief. 
 Choose the visual family from the relationship, not from the number of rows or the user's use of a chart word:
 
 - comparison: entities on shared criteria;
-- chart: trend, ranking, variance, distribution, or correlation;
+- chart: trend, ranking, variance, distribution, correlation, or single-total composition;
 - matrix: true row-by-column coverage;
 - process: ordered stages or dependencies;
 - waterfall: movement from start to end;
@@ -82,4 +82,5 @@ If no installed Builder module faithfully expresses the relationship, return `MO
 - Title, subtitle, and summary use the full available width of their container. Do not insert manual line breaks for appearance.
 - Do not use `|` or `｜` to join visible fields. Use structured aligned items.
 - Do not add an insight rail, action bar, recommendation, or footnote to fill space.
+- Do not request or describe a top decorative band, eyebrow, kicker, overline, title accent, brand strip, empty card, or any other visible object whose only purpose is aesthetic styling.
 - Do not shrink body text or hide material to avoid a scope decision.

@@ -20,6 +20,8 @@
   },
   "diagram": {
     "type": "marimekko",
+    "layout_mode": "absolute",
+    "value_unit": "¥亿",
     "segments": [
       {
         "label": {
@@ -29,6 +31,7 @@
           ]
         },
         "size_share": 32,
+        "total_value": 38,
         "absolute_size": {
           "text": "¥38 亿",
           "source_ids": [
@@ -55,6 +58,7 @@
               ]
             },
             "share": 7,
+            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -68,6 +72,7 @@
               ]
             },
             "share": 38,
+            "value": 14,
             "source_ids": [
               "S02"
             ]
@@ -81,6 +86,7 @@
               ]
             },
             "share": 25,
+            "value": 10,
             "source_ids": [
               "S02"
             ]
@@ -94,6 +100,7 @@
               ]
             },
             "share": 30,
+            "value": 11,
             "source_ids": [
               "S02"
             ]
@@ -108,6 +115,7 @@
           ]
         },
         "size_share": 24,
+        "total_value": 29,
         "absolute_size": {
           "text": "¥29 亿",
           "source_ids": [
@@ -134,6 +142,7 @@
               ]
             },
             "share": 8,
+            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -147,6 +156,7 @@
               ]
             },
             "share": 34,
+            "value": 10,
             "source_ids": [
               "S02"
             ]
@@ -160,6 +170,7 @@
               ]
             },
             "share": 28,
+            "value": 8,
             "source_ids": [
               "S02"
             ]
@@ -173,6 +184,7 @@
               ]
             },
             "share": 30,
+            "value": 9,
             "source_ids": [
               "S02"
             ]
@@ -187,6 +199,7 @@
           ]
         },
         "size_share": 18,
+        "total_value": 22,
         "absolute_size": {
           "text": "¥22 亿",
           "source_ids": [
@@ -213,6 +226,7 @@
               ]
             },
             "share": 14,
+            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -226,6 +240,7 @@
               ]
             },
             "share": 28,
+            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -239,6 +254,7 @@
               ]
             },
             "share": 24,
+            "value": 5,
             "source_ids": [
               "S02"
             ]
@@ -252,6 +268,7 @@
               ]
             },
             "share": 34,
+            "value": 8,
             "source_ids": [
               "S02"
             ]
@@ -266,6 +283,7 @@
           ]
         },
         "size_share": 15,
+        "total_value": 18,
         "absolute_size": {
           "text": "¥18 亿",
           "source_ids": [
@@ -292,6 +310,7 @@
               ]
             },
             "share": 11,
+            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -305,6 +324,7 @@
               ]
             },
             "share": 31,
+            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -318,6 +338,7 @@
               ]
             },
             "share": 22,
+            "value": 4,
             "source_ids": [
               "S02"
             ]
@@ -331,6 +352,7 @@
               ]
             },
             "share": 36,
+            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -345,6 +367,7 @@
           ]
         },
         "size_share": 11,
+        "total_value": 13,
         "absolute_size": {
           "text": "¥13 亿",
           "source_ids": [
@@ -371,6 +394,7 @@
               ]
             },
             "share": 18,
+            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -384,6 +408,7 @@
               ]
             },
             "share": 25,
+            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -397,6 +422,7 @@
               ]
             },
             "share": 20,
+            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -410,6 +436,7 @@
               ]
             },
             "share": 37,
+            "value": 5,
             "source_ids": [
               "S02"
             ]

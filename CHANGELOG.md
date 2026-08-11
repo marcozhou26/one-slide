@@ -4,9 +4,31 @@
 
 | Component | Version | Source |
 | --- | --- | --- |
-| OneSlide suite | 1.3.1 | `SKILL.md` and `builder/references/module-registry.json` |
+| OneSlide suite | 1.5.0 | `SKILL.md` and `builder/references/module-registry.json` |
 | Producer engine | 1.1.2 | `producer/ENGINE.md` |
-| Builder engine | 3.3.5 | `builder/ENGINE.md` and the module registry |
+| Builder engine | 3.4.0 | `builder/ENGINE.md` and the module registry |
+
+## 1.5.0 — 2026-08-11
+
+- Reduced the productized registry from 40 to 32 modules after a capability-value review. Retired `region-map-table`; moved `route-tradeoff`, `scqa-roadmap`, `scenario-planning`, `industry-value-chain` and `spiral-maturity` to guarded direct-composition patterns; map requests now stop at `SENSITIVE_MAP_MODULE_RETIRED`.
+- Replaced the fixed `hr-level-function-matrix`, `hr-service-catalog` and `hr-ticket-intake` modules with one variable 2–10 row by 2–6 column `hr-operating-diagnostic-matrix`, supporting mixed numeric, percentage and text columns, optional secondary measures, column-local heat encoding and strict source/type/range gates.
+- Corrected `chart-insight` by requiring explicit comparable bar units, stable category/series IDs, a declared secondary-axis range, visible ratio values, and source-backed insight anchors to exact data points instead of renderer-guessed connectors.
+- Added R5 percentage range gates (`0–100`) and closed enum gates for three-level risk scores, with regressions across workforce, survival, mobility and the unified operating diagnostic matrix.
+- Retired `hr-ticket-classification`: aggregate before/after category totals cannot support a truthful reclassification flow without an origin-destination confusion matrix; use `sankey-flow` when real flows exist or `hr-operating-diagnostic-matrix` for non-flow operating diagnostics.
+- Retired `hr-eligibility-matrix`: the implementation encoded automation/readiness states rather than actual eligibility conditions and exceptions; use a source-backed matrix or guarded direct composition.
+- Added the productized `part-to-whole` module for one-period, one-total composition across 3–6 reconciled non-negative parts, with native editable pie and single-ring doughnut charts.
+- Added relationship-first routing, Producer payload rules, source-backed doughnut center content, percentage calculation from exact values, strict reconciliation and scope guards against trends, multi-object comparison, negative values and excess categories.
+- Upgraded `marimekko` with an `absolute` layout mode for non-100% unequal-width and unequal-height columns: widths use segment `total_value`, stack heights use absolute `value`, and every column must reconcile to its total.
+- Preserved the legacy `normalized` 100%-height mode and added Producer handoff rules, absolute-value fixtures, reconciliation failures, native rendering, overflow checks, and editable-shape regression coverage.
+
+## 1.4.0 — 2026-08-09
+
+- Reworked the unreleased post-build concept into a read-only Editorial QA gate: protect strong pages, return at most one high-value Builder brief, and require Builder to own every PPTX change.
+- Added a six-dimension editorial rubric covering visual subject, title-evidence linkage, evidence-adjacent annotation, semantic emphasis, reading rhythm, and information contribution.
+- Added source-hash-locked patch operations, B-level input handling, no-material-edit behavior, native editability and semantic-token verification, and a full editorial run contract.
+- Added a single information-contribution gate for all visible slide and template objects.
+- Blocked decorative top bands, title eyebrows/kickers/overlines, heading rules, title accents, empty decorative strips, filler objects, and other aesthetic-only components.
+- Removed the former heading-safe-zone exemption for heading rules and title accents, while preserving data encodings, relationship lines, axes, necessary grouping containers, provenance, and explicitly required identity marks.
 
 ## 1.3.1 — 2026-08-10
 

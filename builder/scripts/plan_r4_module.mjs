@@ -74,12 +74,10 @@ export function planR4Module(data) {
     subtitle: subtitleInput ? { ...subtitleInput, left: 54, top: 82, width: 1172, height: 28 } : null,
   };
   if (data.module_id === "sankey-flow") return planSankey(data, base);
-  if (["chord-dependency", "region-map-table"].includes(data.module_id)) {
+  if (data.module_id === "chord-dependency") {
     return { ...base, main: { left: 54, top: 132, width: 850, height: 450 }, rail: { left: 934, top: 126, width: 292, height: 466 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
   }
   if (data.module_id === "market-funnel") return { ...base, main: { left: 54, top: 132, width: 548, height: 454 }, side: { left: 634, top: 132, width: 592, height: 454 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
-  if (data.module_id === "industry-value-chain") return { ...base, main: { left: 54, top: 132, width: 1172, height: 464 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
-  if (data.module_id === "spiral-maturity") return { ...base, main: { left: 54, top: 126, width: 930, height: 480 }, side: { left: 1014, top: 126, width: 212, height: 480 }, bottom: { left: 54, top: 626, width: 1172, height: 38 } };
   if (data.module_id === "gantt-dependency") return planGantt(data, base);
   throw new Error(`Unsupported R4 module: ${data.module_id}`);
 }

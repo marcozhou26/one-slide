@@ -10,15 +10,42 @@ function layout(elements) {
   };
 }
 
-function element(name, text, lines, bbox) {
+function element(name, text, lines, bbox, properties = {}) {
   return {
     scope: "slide",
     name,
     text,
     bbox,
     textLayout: { lineCount: lines.length, lines: lines.map((value, index) => ({ index: index + 1, text: value })) },
+    ...properties,
   };
 }
+
+test("blocks an empty dark band across the top of the slide", () => {
+  const result = auditLayoutObject(layout([
+    element("top-band", "", [], [0, 0, 1280, 24], { geometry: "rect", fillColor: "172B4D" }),
+  ]));
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "DECORATIVE_TOP_BAND_BLOCKED"));
+});
+
+test("blocks eyebrow copy and title accents even when they contain text", () => {
+  const result = auditLayoutObject(layout([
+    element("title-eyebrow", "STRATEGY", ["STRATEGY"], [54, 10, 180, 18]),
+    element("heading-rule", "", [], [54, 90, 120, 3]),
+  ]));
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "EYEBROW_BLOCKED"));
+  assert.ok(result.findings.some((item) => item.code === "DECORATIVE_ELEMENT_BLOCKED" && item.name === "heading-rule"));
+});
+
+test("accepts a structural band when it contains reader-facing information", () => {
+  const result = auditLayoutObject(layout([
+    element("bottom-strip", "", [], [54, 580, 1172, 64]),
+    element("bottom-strip-label", "下一步：验证三个关键假设", ["下一步：验证三个关键假设"], [72, 596, 420, 24]),
+  ]));
+  assert.equal(result.ok, true);
+});
 
 test("blocks short labels, orphan lines and split provenance tokens", () => {
   const result = auditLayoutObject(layout([
@@ -111,4 +138,22 @@ test("accepts a full-canvas layout with clean line breaks", () => {
   const elements = Array.from({ length: 12 }, (_, index) => element(`item-${index}`, "完整内容", ["完整内容"], [54 + (index % 4) * 292, 120 + Math.floor(index / 4) * 220, 270, 80]));
   const result = auditLayoutObject(layout(elements));
   assert.deepEqual(result, { ok: true, code: "LAYOUT_QUALITY_PASS", findings: [] });
+});
+
+test("blocks a child card that escapes its declared parent panel", () => {
+  const result = auditLayoutObject(layout([
+    element("side-panel", "", [], [960, 126, 266, 476]),
+    element("side-card-1", "结论一", ["结论一"], [980, 216, 232, 120]),
+    element("side-card-2", "结论二", ["结论二"], [980, 370, 232, 120]),
+    element("side-card-3", "结论三", ["结论三"], [980, 524, 232, 128]),
+  ]), {
+    containmentContracts: [{
+      name: "side-cards-inside-panel",
+      parent: "side-panel",
+      members: ["side-card-1", "side-card-2", "side-card-3"],
+      tolerance: 0,
+    }],
+  });
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "CONTAINER_OVERFLOW" && item.member === "side-card-3"));
 });

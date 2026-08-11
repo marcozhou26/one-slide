@@ -37,7 +37,7 @@ python3 scripts/apply_powerpoint_template.py \
   --manifest internal/template-manifest.json
 ```
 
-模板页必须与生成页同为 16:9，并提供不与正文冲突的目标页。脚本保留模板包、母版、版式、主题、背景和已有装饰，把生成页的原生形状写入目标页；生成页包含需要额外关系的图片、媒体、超链接或图表时停止，不做不完整克隆。
+模板页必须与生成页同为 16:9，并提供不与正文冲突的目标页。脚本保留模板包、母版、版式、主题和背景，但模板可见形状必须先通过 `information-contribution-gate.md`；纯装饰色带、眉标、标题饰线或空装饰容器返回 `TEMPLATE_DECORATION_BLOCKED`。通过后才把生成页的原生形状写入目标页；生成页包含需要额外关系的图片、媒体、超链接或图表时停止，不做不完整克隆。
 
 模板输出仍需执行全尺寸渲染、溢出检查和 Microsoft PowerPoint 实际打开检查。清单只放 `internal/`，客户目录只放版本化 PPTX。
 

@@ -9,6 +9,7 @@ const STACK = [COLORS.orange, COLORS.navy, COLORS.blue, COLORS.line, COLORS.soft
 const COMPOSITION_STACK = [COLORS.orange, COLORS.navy, COLORS.blue, "#5B8E7D", COLORS.line, "#6A5D8C"];
 const PALE_ORANGE = COLORS.orangeLight;
 const PALE_BLUE = COLORS.blueLight;
+const PART_TO_WHOLE_COLORS = [COLORS.blue, COLORS.navy, "#5B8E7D", "#6A5D8C", COLORS.muted, COLORS.line];
 
 function header(slide, plan) {
   const fitted = fitPageTitleFontSize(plan.title.text);
@@ -28,28 +29,98 @@ function bottom(slide, position, item) { if (item) addNode(slide, { name: "botto
 function renderMekko(slide, data, plan) {
   panel(slide, "mekko-frame", plan.chart);
   const plot = { left: plan.chart.left + 54, top: plan.chart.top + 66, width: plan.chart.width - 78, height: plan.chart.height - 120 };
+  const absolute = data.diagram.layout_mode === "absolute";
+  const unit = data.diagram.value_unit ?? "";
+  const formatAbsoluteValue = (value) => unit === "¥亿" ? `¥${compactNumber(value)}亿` : `${unit}${compactNumber(value)}`;
+  const totalWidthValue = absolute ? data.diagram.segments.reduce((sum, segment) => sum + segment.total_value, 0) : 100;
+  const maxHeightValue = absolute ? Math.max(...data.diagram.segments.map((segment) => segment.total_value)) : 100;
   for (let tick = 0; tick <= 4; tick += 1) {
     const y = plot.top + (tick / 4) * plot.height;
     line(slide, `mekko-grid-${tick}`, plot.left, y, plot.left + plot.width, y, "solid", COLORS.border, .7);
-    addTextBox(slide, { name: `mekko-tick-${tick}`, text: `${100 - tick * 25}%`, position: { left: plan.chart.left + 4, top: y - 12, width: 44, height: 24 }, fontSize: 16, color: COLORS.muted, alignment: "right" });
+    const tickText = absolute ? formatAbsoluteValue(maxHeightValue * (1 - tick / 4)) : `${100 - tick * 25}%`;
+    addTextBox(slide, { name: `mekko-tick-${tick}`, text: tickText, position: { left: plan.chart.left - 36, top: y - 12, width: 90, height: 24 }, fontSize: 16, color: COLORS.muted, alignment: "right" });
   }
   let cursor = plot.left;
   data.diagram.segments.forEach((segment, segmentIndex) => {
-    const width = plot.width * segment.size_share / 100;
+    const width = plot.width * (absolute ? segment.total_value / totalWidthValue : segment.size_share / 100);
     let y = plot.top + plot.height;
     segment.stacks.forEach((stack, stackIndex) => {
-      const height = plot.height * stack.share / 100;
+      const height = plot.height * (absolute ? stack.value / maxHeightValue : stack.share / 100);
       y -= height;
       slide.shapes.add({ name: `mekko-${segmentIndex + 1}-${stackIndex + 1}`, geometry: "rect", position: { left: cursor, top: y, width, height }, fill: STACK[stackIndex], line: { style: "solid", fill: COLORS.white, width: 1.2 } });
-      if (height >= 36 && width >= 70) addTextBox(slide, { name: `mekko-label-${segmentIndex + 1}-${stackIndex + 1}`, text: `${stack.label.text} ${stack.share}%`, position: { left: cursor + 4, top: y + height / 2 - 14, width: width - 8, height: 28 }, fontSize: 16, bold: stackIndex === 0, color: stackIndex < 3 ? COLORS.white : COLORS.text, alignment: "center" });
+      if ((absolute && height >= 64 && width >= 100) || (!absolute && height >= 36 && width >= 70)) {
+        const labelValue = absolute ? formatAbsoluteValue(stack.value) : `${stack.share}%`;
+        addTextBox(slide, { name: `mekko-label-${segmentIndex + 1}-${stackIndex + 1}`, text: `${stack.label.text} ${labelValue}`, position: { left: cursor + 4, top: y + height / 2 - 14, width: width - 8, height: 28 }, fontSize: 16, bold: stackIndex === 0, color: stackIndex < 3 ? COLORS.white : COLORS.text, alignment: "center" });
+      }
     });
-    addTextBox(slide, { name: `mekko-top-${segmentIndex + 1}`, text: `${segment.absolute_size.text}\n${segment.growth.text}`, position: { left: cursor, top: plan.chart.top + 10, width, height: 48 }, fontSize: 16, bold: true, color: segment.priority ? COLORS.orange : COLORS.navy, alignment: "center" });
-    addTextBox(slide, { name: `mekko-bottom-${segmentIndex + 1}`, text: `${segment.label.text}\n${segment.size_share}%`, position: { left: cursor, top: plot.top + plot.height + 8, width, height: 40 }, fontSize: 16, bold: segment.priority, color: segment.priority ? COLORS.orange : COLORS.text, alignment: "center" });
+    const topText = absolute ? `${segment.absolute_size.text}\n${segment.growth.text.replace(/^CAGR\s*/u, "")}` : `${segment.absolute_size.text}\n${segment.growth.text}`;
+    addTextBox(slide, { name: `mekko-top-${segmentIndex + 1}`, text: topText, position: { left: cursor, top: plan.chart.top + 10, width, height: 48 }, fontSize: absolute ? 14 : 16, bold: true, color: segment.priority ? COLORS.orange : COLORS.navy, alignment: "center" });
+    const bottomValue = absolute ? formatAbsoluteValue(segment.total_value) : `${segment.size_share}%`;
+    addTextBox(slide, { name: `mekko-bottom-${segmentIndex + 1}`, text: `${segment.label.text}\n${bottomValue}`, position: { left: cursor, top: plot.top + plot.height + 8, width, height: 40 }, fontSize: 16, bold: segment.priority, color: segment.priority ? COLORS.orange : COLORS.text, alignment: "center" });
     if (segment.priority) slide.shapes.add({ name: `mekko-priority-${segmentIndex + 1}`, geometry: "rect", position: { left: cursor - 3, top: plot.top - 3, width: width + 6, height: plot.height + 6 }, fill: "none", line: { style: "solid", fill: COLORS.orange, width: 3 } });
     cursor += width;
   });
   insights(slide, plan.rail, data.diagram.insights ?? []);
   bottom(slide, plan.bottom, data.diagram.conclusion);
+}
+
+function renderPartToWhole(slide, data, plan) {
+  const diagram = data.diagram;
+  panel(slide, "part-to-whole-exhibit", plan.exhibit);
+  const priorityIndex = diagram.parts.findIndex((part) => part.priority === true);
+  const colors = diagram.parts.map((_, index) => {
+    if (index === priorityIndex) return COLORS.orange;
+    const paletteIndex = priorityIndex >= 0 && index > priorityIndex ? index - 1 : index;
+    return PART_TO_WHOLE_COLORS[paletteIndex % PART_TO_WHOLE_COLORS.length];
+  });
+  const percentages = diagram.parts.map((part) => part.value / diagram.total_value * 100);
+  const chartOptions = {
+    position: plan.chart,
+    categories: diagram.parts.map((part) => part.label.text),
+    series: [{
+      name: diagram.total_label.text,
+      values: diagram.parts.map((part) => part.value),
+      points: colors.map((fill, idx) => ({ idx, fill, line: { style: "solid", fill: COLORS.white, width: 1.2 } })),
+    }],
+    hasLegend: false,
+    dataLabels: { showPercent: false, showCategoryName: false, showValue: false },
+    pieOptions: diagram.chart_type === "pie" ? { firstSliceAngle: 0 } : undefined,
+    doughnutOptions: diagram.chart_type === "doughnut" ? { holeSize: 55, firstSliceAngle: 0 } : undefined,
+  };
+  slide.charts.add(diagram.chart_type, chartOptions);
+
+  if (diagram.chart_type === "doughnut") {
+    const center = { left: plan.chart.left + plan.chart.width * .29, top: plan.chart.top + plan.chart.height * .34, width: plan.chart.width * .42, height: plan.chart.height * .3 };
+    addTextBox(slide, { name: "part-center-value", text: diagram.center_value.text, position: { ...center, height: center.height * .58 }, fontSize: 30, bold: true, color: priorityIndex >= 0 ? COLORS.orange : COLORS.navy, alignment: "center", verticalAlignment: "bottom", singleLine: true });
+    addTextBox(slide, { name: "part-center-label", text: diagram.center_label.text, position: { left: center.left, top: center.top + center.height * .58, width: center.width, height: center.height * .42 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "center", verticalAlignment: "top", singleLine: true });
+  }
+
+  addTextBox(slide, { name: "part-breakdown-title", text: diagram.total_label.text, position: { left: plan.breakdown.left, top: plan.breakdown.top, width: plan.breakdown.width, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
+  const totalText = diagram.unit === "%" ? `${compactNumber(diagram.total_value)}%` : `${compactNumber(diagram.total_value)} ${diagram.unit}`;
+  addTextBox(slide, { name: "part-total", text: `总量 ${totalText}`, position: { left: plan.breakdown.left, top: plan.breakdown.top + 34, width: plan.breakdown.width, height: 30 }, fontSize: 16, bold: true, color: COLORS.text, singleLine: true });
+  addTextBox(slide, { name: "part-period", text: diagram.period.text, position: { left: plan.breakdown.left, top: plan.breakdown.top + 64, width: plan.breakdown.width, height: 24 }, fontSize: 14, color: COLORS.muted, singleLine: true });
+  const rowsTop = plan.breakdown.top + 104;
+  const rowGap = 8;
+  const rowHeight = Math.min(54, (plan.breakdown.height - 104 - rowGap * (diagram.parts.length - 1)) / diagram.parts.length);
+  diagram.parts.forEach((part, index) => {
+    const top = rowsTop + index * (rowHeight + rowGap);
+    const emphasized = part.priority === true;
+    slide.shapes.add({ name: `part-swatch-${index + 1}`, geometry: "rect", position: { left: plan.breakdown.left, top: top + 8, width: 14, height: 14 }, fill: colors[index], line: { style: "solid", fill: colors[index], width: 0 } });
+    addTextBox(slide, { name: `part-label-${index + 1}`, text: part.label.text, position: { left: plan.breakdown.left + 24, top, width: plan.breakdown.width * .48, height: 30 }, fontSize: 16, bold: emphasized, color: emphasized ? COLORS.orange : COLORS.text, singleLine: true });
+    const valueText = diagram.unit === "%" ? `${compactNumber(part.value)}%` : `${compactNumber(part.value)} ${diagram.unit}`;
+    const shareText = diagram.unit === "%" ? valueText : `${valueText}　${compactNumber(percentages[index])}%`;
+    addTextBox(slide, { name: `part-value-${index + 1}`, text: shareText, position: { left: plan.breakdown.left + plan.breakdown.width * .48, top, width: plan.breakdown.width * .52, height: 30 }, fontSize: 16, bold: emphasized, color: emphasized ? COLORS.orange : COLORS.navy, alignment: "right", singleLine: true });
+  });
+  if (!plan.rail && (diagram.insights?.length ?? 0) === 1) {
+    const top = rowsTop + diagram.parts.length * (rowHeight + rowGap) + 4;
+    addTextBox(slide, { name: "part-inline-insight", text: `关键判断：${diagram.insights[0].text}`, position: { left: plan.breakdown.left, top, width: plan.breakdown.width, height: Math.max(34, plan.breakdown.top + plan.breakdown.height - top) }, fontSize: 14, bold: true, color: COLORS.orange, verticalAlignment: "top", maxLines: 3 });
+  }
+  if (plan.rail) {
+    panel(slide, "part-insight-rail", plan.rail, COLORS.soft);
+    addTextBox(slide, { name: "part-insight-title", text: "构成洞察", position: { left: plan.rail.left + 18, top: plan.rail.top + 16, width: plan.rail.width - 36, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
+    (diagram.insights ?? []).forEach((item, index) => addTextBox(slide, { name: `part-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 18, top: plan.rail.top + 72 + index * 112, width: plan.rail.width - 36, height: 82 }, fontSize: 14, bold: index === 0, color: index === 0 ? COLORS.orange : COLORS.text, verticalAlignment: "top", maxLines: 4 }));
+  }
+  bottom(slide, plan.bottom, diagram.conclusion);
 }
 
 function renderTornado(slide, data, plan) {
@@ -456,7 +527,7 @@ function renderSmallMultiples(slide, data, plan) {
 
 export async function renderR3Module(data, output) {
   const plan = planR3Module(data); const { presentation, slide } = createPresentation(output.background); header(slide, plan);
-  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "box-plot": renderBoxPlot, histogram: renderHistogram, "box-plot-jitter": renderBoxPlotJitter, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
+  ({ marimekko: renderMekko, "tornado-sensitivity": renderTornado, "radar-capability": renderRadar, "dumbbell-gap": renderDumbbell, "bump-ranking": renderBump, "composition-shift": renderCompositionShift, "part-to-whole": renderPartToWhole, "box-plot": renderBoxPlot, histogram: renderHistogram, "box-plot-jitter": renderBoxPlotJitter, "small-multiples": renderSmallMultiples })[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output); return plan;
 }
 async function main() { const options = parseCliArgs(process.argv.slice(2)); const data = await loadR3ModuleInput(options.input); const plan = await renderR3Module(data, options); process.stdout.write(`${JSON.stringify({ ok: true, module: data.module_id, input_kind: data.input_kind ?? "module-fixture", slide: plan.slide })}\n`); }

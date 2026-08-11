@@ -21,7 +21,7 @@ PROHIBITED_GITHUB_ATTRIBUTION = (
     "nan" + "hai academy",
     "nan" + "hai.pro",
 )
-SUITE_VERSION = "1.3.1"
+SUITE_VERSION = "1.5.0"
 REQUIRED = [
     "SKILL.md",
     "README.md",
@@ -45,6 +45,19 @@ REQUIRED = [
     "builder/references/module-registry.json",
     "builder/scripts/route_v3.mjs",
     "builder/scripts/pptx_core.mjs",
+    "editorial/PRD.md",
+    "editorial/ENGINE.md",
+    "editorial/references/input-contract.md",
+    "editorial/references/editorial-contract.md",
+    "editorial/references/review-rubric.md",
+    "editorial/references/output-contract.md",
+    "editorial/references/walkthrough.md",
+    "editorial/scripts/plan_editorial_run.py",
+    "editorial/scripts/inspect_editorial_slide.mjs",
+    "editorial/scripts/validate_editorial_qa.py",
+    "builder/scripts/apply_editorial_revision.mjs",
+    "editorial/scripts/verify_editorial_roundtrip.py",
+    "editorial/scripts/audit_editorial_contrast.py",
     "scripts/check_environment.py",
     "scripts/validate_suite.py",
     "tests/test_suite_contract.py",

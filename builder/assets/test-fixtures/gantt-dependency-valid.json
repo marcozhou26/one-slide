@@ -251,39 +251,48 @@
     "dependencies": [
       {
         "from": "t1",
-        "to": "t2"
+        "to": "t2",
+        "dependency_type": "start_to_start"
       },
       {
         "from": "t2",
-        "to": "t4"
+        "to": "t4",
+        "dependency_type": "start_to_start"
       },
       {
         "from": "t3",
-        "to": "t4"
+        "to": "t4",
+        "dependency_type": "finish_to_start"
       },
       {
         "from": "t4",
-        "to": "t5"
+        "to": "t5",
+        "dependency_type": "finish_to_start"
       },
       {
         "from": "t6",
-        "to": "t7"
+        "to": "t7",
+        "dependency_type": "finish_to_start"
       },
       {
         "from": "t5",
-        "to": "t9"
+        "to": "t9",
+        "dependency_type": "start_to_start"
       },
       {
         "from": "t7",
-        "to": "t9"
+        "to": "t9",
+        "dependency_type": "finish_to_start"
       },
       {
         "from": "t8",
-        "to": "t9"
+        "to": "t9",
+        "dependency_type": "finish_to_start"
       },
       {
         "from": "t9",
-        "to": "t10"
+        "to": "t10",
+        "dependency_type": "finish_to_start"
       }
     ],
     "milestones": [
