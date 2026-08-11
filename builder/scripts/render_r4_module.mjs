@@ -1164,9 +1164,6 @@ export async function renderR4Module(data, output) {
     "sankey-flow": renderSankey,
     "chord-dependency": renderChord,
     "market-funnel": renderFunnel,
-    "region-map-table": renderRegion,
-    "industry-value-chain": renderValueChain,
-    "spiral-maturity": renderSpiral,
     "gantt-dependency": renderGantt,
   })[data.module_id](slide, data, p);
   await exportPresentation(presentation, output);

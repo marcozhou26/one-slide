@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { buildAnchorMap, requireCondition, validateAllAnchorsMapped, validateTitle, validateVisibleText } from "./source_fidelity.mjs";
-const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","region-map-table","industry-value-chain","spiral-maturity","gantt-dependency"]);
+const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","gantt-dependency"]);
 function ctx(data){
   const anchors=buildAnchorMap(data.source_anchors),mapped=new Set();
   const approvedRewriteMode=data.module_id==="sankey-flow"&&data.title?.origin==="approved_rewrite";
@@ -154,5 +154,5 @@ function gantt(d,c){
   (d.side_metrics??[]).forEach(x=>c.text(x,"Gantt side metric"));if(d.conclusion)c.text(d.conclusion,"Conclusion");
   return{timeAxis,layerSteps,dependencies};
 }
-export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"region-map-table":region,"industry-value-chain":valueChain,"spiral-maturity":spiral,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
+export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const p=process.argv[2];try{if(!p)throw new Error("Usage: validate_r4_module.mjs <input.json>");process.stdout.write(`${JSON.stringify(validateR4Module(JSON.parse(await fs.readFile(p,"utf8"))))}\n`);}catch(error){process.stderr.write(`${JSON.stringify({code:error.code??"DATA_CONTRACT_FAIL",message:error.message})}\n`);process.exitCode=1;}}

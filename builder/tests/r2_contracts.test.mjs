@@ -6,7 +6,7 @@ import { planR2Module } from "../scripts/plan_r2_module.mjs";
 import { routeModule } from "../scripts/route_module.mjs";
 
 const fixture = async (name) => JSON.parse(await fs.readFile(new URL(`../assets/test-fixtures/${name}-valid.json`, import.meta.url), "utf8"));
-const modules = ["route-tradeoff", "scqa-roadmap", "bubble-heatmap", "chart-insight", "scenario-planning"];
+const modules = ["bubble-heatmap", "chart-insight"];
 
 for (const moduleId of modules) {
   test(`${moduleId} validates, maps all source anchors, and plans deterministically`, async () => {
@@ -38,9 +38,6 @@ test("chart-insight blocks unit, axis and insight-anchor correctness failures", 
 });
 
 test("R2 module-specific contradictions are blocked", async () => {
-  const scenario = await fixture("scenario-planning");
-  scenario.diagram.scenarios[0].probability = 30;
-  assert.throws(() => validateR2Module(scenario), (error) => error.code === "SCENARIO_PROBABILITY_FAIL");
   const bubble = await fixture("bubble-heatmap");
   bubble.diagram.items[1].rank = bubble.diagram.items[0].rank;
   assert.throws(() => validateR2Module(bubble), (error) => error.code === "DATA_CONTRACT_FAIL");

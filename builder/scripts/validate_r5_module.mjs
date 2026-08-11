@@ -13,10 +13,8 @@ const MODULES = new Set([
   "hr-workforce-reconciliation",
   "hr-new-hire-survival",
   "hr-supply-demand-gap",
-  "hr-level-function-matrix",
   "hr-from-to-mobility",
-  "hr-service-catalog",
-  "hr-ticket-intake",
+  "hr-operating-diagnostic-matrix",
 ]);
 function context(data) {
   const anchors = buildAnchorMap(data.source_anchors);
@@ -393,6 +391,105 @@ function intake(d, c) {
   });
   c.source(d.source_ids, "Ticket intake matrix");
 }
+function operatingMatrix(d, c) {
+  requireCondition(
+    d.metrics == null || (Array.isArray(d.metrics) && d.metrics.length <= 3),
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix accepts zero to three headline metrics",
+  );
+  (d.metrics ?? []).forEach((x) => {
+    c.text(x.label, "Metric");
+    c.text(x.value, "Metric value");
+    c.text(x.target, "Metric context or target");
+    c.source(x.source_ids, "Metric");
+    visiblePercentText(x.value, "Metric percentage");
+    visiblePercentText(x.target, "Metric target percentage");
+  });
+  requireCondition(
+    Array.isArray(d.rows) && d.rows.length >= 2 && d.rows.length <= 10,
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix requires 2–10 rows",
+  );
+  requireCondition(
+    Array.isArray(d.columns) && d.columns.length >= 2 && d.columns.length <= 6,
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix requires 2–6 columns",
+  );
+  const rowIds = new Set();
+  d.rows.forEach((row) => {
+    requireCondition(
+      typeof row.id === "string" && row.id.trim() && !rowIds.has(row.id),
+      "DATA_CONTRACT_FAIL",
+      "Operating diagnostic row ids must be unique",
+    );
+    rowIds.add(row.id);
+    c.text(row.label, "Operating diagnostic row");
+    if (row.note) c.text(row.note, "Operating diagnostic row note");
+  });
+  const columnIds = new Set();
+  d.columns.forEach((column) => {
+    requireCondition(
+      typeof column.id === "string" && column.id.trim() && !columnIds.has(column.id),
+      "DATA_CONTRACT_FAIL",
+      "Operating diagnostic column ids must be unique",
+    );
+    columnIds.add(column.id);
+    c.text(column.label, "Operating diagnostic column");
+    enumValue(column.primary?.kind, ["number", "percentage", "text"], "Primary cell kind");
+    enumValue(column.primary?.encoding, ["heatmap", "text"], "Primary cell encoding");
+    enumValue(column.primary?.direction, ["neutral", "higher_is_better", "lower_is_better"], "Primary metric direction");
+    requireCondition(
+      column.primary.kind !== "text" || column.primary.encoding === "text",
+      "DATA_CONTRACT_FAIL",
+      "Text columns cannot use heatmap encoding",
+    );
+    if (column.secondary) {
+      enumValue(column.secondary.kind, ["number", "percentage"], "Secondary cell kind");
+      if (column.secondary.label) c.text(column.secondary.label, "Secondary metric label");
+    }
+  });
+  requireCondition(
+    d.columns.some((column) => ["number", "percentage"].includes(column.primary.kind)),
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix needs at least one numeric measure column",
+  );
+  requireCondition(
+    Array.isArray(d.matrix) && d.matrix.length === d.rows.length &&
+      d.matrix.every((row) => Array.isArray(row) && row.length === d.columns.length),
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix dimensions must match rows and columns",
+  );
+  d.matrix.forEach((row) => row.forEach((cell, columnIndex) => {
+    const column = d.columns[columnIndex];
+    if (column.primary.kind === "text") {
+      requireCondition(
+        typeof cell.primary === "string" && cell.primary.trim(),
+        "DATA_CONTRACT_FAIL",
+        "Text matrix cells must contain visible text",
+      );
+    } else {
+      finite([cell.primary], "Numeric matrix cells must contain finite values");
+      requireCondition(cell.primary >= 0, "DATA_CONTRACT_FAIL", "Matrix values must be non-negative");
+      if (column.primary.kind === "percentage") percentage(cell.primary, "Matrix percentage");
+    }
+    if (column.secondary) {
+      finite([cell.secondary], "Secondary matrix cells must contain finite values");
+      requireCondition(cell.secondary >= 0, "DATA_CONTRACT_FAIL", "Secondary matrix values must be non-negative");
+      if (column.secondary.kind === "percentage") percentage(cell.secondary, "Secondary matrix percentage");
+    } else {
+      requireCondition(cell.secondary == null, "DATA_CONTRACT_FAIL", "Unexpected secondary matrix value");
+    }
+    c.source(cell.source_ids, "Operating diagnostic matrix cell");
+  }));
+  requireCondition(
+    Array.isArray(d.insights) && d.insights.length >= 1 && d.insights.length <= 3,
+    "DATA_CONTRACT_FAIL",
+    "Operating diagnostic matrix requires one to three source-backed insights",
+  );
+  textList(d.insights, c, "Insight");
+  if (d.conclusion) c.text(d.conclusion, "Conclusion");
+  if (d.disclosure) c.text(d.disclosure, "Disclosure");
+}
 export function validateR5Module(data) {
   requireCondition(
     data?.version === "1.0",
@@ -416,10 +513,8 @@ export function validateR5Module(data) {
     "hr-workforce-reconciliation": workforce,
     "hr-new-hire-survival": survival,
     "hr-supply-demand-gap": supply,
-    "hr-level-function-matrix": levelMatrix,
     "hr-from-to-mobility": mobility,
-    "hr-service-catalog": service,
-    "hr-ticket-intake": intake,
+    "hr-operating-diagnostic-matrix": operatingMatrix,
   })[data.module_id](data.diagram, c);
   return {
     ok: true,

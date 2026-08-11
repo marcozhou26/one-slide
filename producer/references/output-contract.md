@@ -126,7 +126,9 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 `requested_module`、`structure.primary_exhibit` 和 `module_payload.module_id` 必须一致。`module_payload` 必须包含该模块 validator 所需的全部字段和全部可见内容；不得只放模块名或半成品骨架。混合页面或模块无法容纳全部必含内容时，三项都省略，由 Builder 进入 `direct_composition`，不得硬塞模块。
 
-`chart-insight` 的 `diagram` 必须包含 4–8 个唯一类别 ID、两组唯一且同单位的非负柱形序列，以及一组唯一、带明确单位和固定 `axis_min/axis_max` 的比值或指数序列。三条 `insights[]` 均需携带 `anchor.series_id` 与 `anchor.category_id`，并指向真实存在的数据点；连接线不得由 Renderer 根据洞察顺序猜测。柱形单位冲突、负柱值、比值越界或无效锚点时不得强制命中。`hr-ticket-classification` 与 `hr-eligibility-matrix` 已退休，不得再写入 `requested_module`。
+`chart-insight` 的 `diagram` 必须包含 4–8 个唯一类别 ID、两组唯一且同单位的非负柱形序列，以及一组唯一、带明确单位和固定 `axis_min/axis_max` 的比值或指数序列。三条 `insights[]` 均需携带 `anchor.series_id` 与 `anchor.category_id`，并指向真实存在的数据点；连接线不得由 Renderer 根据洞察顺序猜测。柱形单位冲突、负柱值、比值越界或无效锚点时不得强制命中。`hr-ticket-classification`、`hr-eligibility-matrix`、`hr-level-function-matrix`、`hr-service-catalog` 与 `hr-ticket-intake` 已退休，不得再写入 `requested_module`。
+
+HR 运营诊断页使用 `hr-operating-diagnostic-matrix`。`diagram` 包含 2–10 个唯一 `rows`、2–6 个唯一 `columns`、尺寸严格一致的 `matrix`，以及 1–3 条来源支持的 `insights`；`metrics` 为可选 0–3 项。每列的 `primary.kind` 为 `number|percentage|text`，声明单位、`encoding=heatmap|text` 和 `direction=neutral|higher_is_better|lower_is_better`；可选 `secondary` 只能为数值或百分比，并要求该列每格完整提供。百分比必须在 0–100，数值默认非负，文字列不得使用热力编码。行列含义、单位或单元类型冲突，以及页面需要第二个独立主图时不得强制命中。`route-tradeoff`、`scqa-roadmap`、`scenario-planning`、`industry-value-chain` 和 `spiral-maturity` 只作为 direct-composition pattern，不得写入模块字段；地图请求返回 `SENSITIVE_MAP_MODULE_RETIRED`。
 
 排名迁移页使用正式模块 ID `bump-ranking`。Producer 交接时应使用 `diagram.periods` 和每个对象的 `ranks`、`values`、`states` 数组；数组长度必须与时期数一致，时期保持原始顺序。两期数据可以由 Builder 呈现为 slope-style 视觉，三期及以上数据呈现为 Bump Chart。新进入、退出或暂未上榜必须显式写入 `states`，不能靠颜色或文案猜测。旧版 `slope-ranking` 的左右字段只用于兼容已有运行包，不作为新提示词的生成目标。
 

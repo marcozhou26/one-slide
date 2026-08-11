@@ -75,6 +75,22 @@ test("sparse raw source routes without requesting style fields", async () => {
   assert.equal(result.module_id, "causal-chain");
 });
 
+test("retired fixed templates remain usable only as direct-composition patterns", async () => {
+  const result = await routeV3({ text: "比较自建和外采两条路线，按成本、周期和风险做取舍。" });
+  assert.equal(result.route, "direct_composition");
+  assert.equal(result.preferred_pattern, "route-tradeoff");
+  assert.ok(result.load_only.includes("references/direct-composition-patterns.md"));
+});
+
+test("legacy HR template requests converge on the unified matrix and maps remain blocked", async () => {
+  const merged = await routeV3({ text: "逐项比较服务量和一次解决率", requested_module: "hr-ticket-intake" });
+  assert.equal(merged.route, "deterministic_module");
+  assert.equal(merged.module_id, "hr-operating-diagnostic-matrix");
+  const map = await routeV3({ text: "按区域比较数据", requested_module: "region-map-table" });
+  assert.equal(map.status, "blocked");
+  assert.equal(map.route, "SENSITIVE_MAP_MODULE_RETIRED");
+});
+
 test("missing source blocks instead of inventing content", async () => {
   const result = await routeV3({});
   assert.equal(result.status, "blocked");

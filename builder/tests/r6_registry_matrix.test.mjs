@@ -38,12 +38,12 @@ const validator = (moduleId) => {
   throw new Error(`No validator test adapter for ${moduleId}`);
 };
 
-test("the V3 registry preserves 40 productized modules with resolvable runtime files", async () => {
-  assert.equal(registry.suite_version, "1.4.0");
-  assert.equal(registry.builder_engine_version, "3.3.7");
-  assert.equal(registry.productized_module_count, 40);
-  assert.equal(registry.modules.length, 40);
-  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 40);
+test("the V3 registry preserves 32 productized modules with resolvable runtime files", async () => {
+  assert.equal(registry.suite_version, "1.5.0");
+  assert.equal(registry.builder_engine_version, "3.4.0");
+  assert.equal(registry.productized_module_count, 32);
+  assert.equal(registry.modules.length, 32);
+  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 32);
   for (const module of registry.modules) {
     assert.equal(module.status, "productized");
     for (const field of ["validator", "planner", "renderer", "reference"]) {
@@ -53,7 +53,7 @@ test("the V3 registry preserves 40 productized modules with resolvable runtime f
   }
 });
 
-test("all 40 complete fixtures validate without style input and missing core content is blocked", async () => {
+test("all 32 complete fixtures validate without style input and missing core content is blocked", async () => {
   for (const module of registry.modules) {
     const fixturePath = path.join(skillRoot, "assets/test-fixtures", fixtureName(module.module_id));
     const data = JSON.parse(await fs.readFile(fixturePath, "utf8"));

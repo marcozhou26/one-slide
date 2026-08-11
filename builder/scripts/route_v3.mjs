@@ -8,6 +8,8 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const skillDir = path.dirname(scriptDir);
 const registryPath = path.join(skillDir, "references", "module-registry.json");
 const GENERIC_REQUESTS = new Set(["chart", "comparison", "process", "matrix", "composite"]);
+const DIRECT_PATTERN_IDS = new Set(["route-tradeoff", "scqa-roadmap", "scenario-planning", "industry-value-chain", "spiral-maturity"]);
+const MERGED_HR_MODULE_IDS = new Set(["hr-level-function-matrix", "hr-service-catalog", "hr-ticket-intake"]);
 
 function text(value) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
@@ -40,6 +42,7 @@ function compactModule(module, sourceMode, reason) {
 
 function direct(sourceMode, reason, input) {
   const intents = [...new Set((input.display_blocks ?? []).map((block) => block.display_intent).filter(Boolean))];
+  const preferredPattern = input.preferred_pattern ?? null;
   return {
     status: "ready",
     route: "direct_composition",
@@ -47,8 +50,13 @@ function direct(sourceMode, reason, input) {
     reason,
     family: input.structure?.family ?? input.structure?.primary_exhibit ?? input.requested_module ?? "composite",
     preferred_module: input.structure?.primary_exhibit ?? null,
+    preferred_pattern: preferredPattern,
     display_intents: intents.slice(0, 8),
-    load_only: ["references/visual-grammar.md", "references/direct-composition.md"],
+    load_only: [
+      "references/visual-grammar.md",
+      "references/direct-composition.md",
+      ...(preferredPattern ? ["references/direct-composition-patterns.md"] : []),
+    ],
     primitives: "scripts/pptx_core.mjs",
     token_policy: "Do not generate a second page model and do not read the module registry.",
   };
@@ -77,6 +85,16 @@ export async function routeV3(input) {
   );
   if (!hasSource) {
     return { status: "blocked", route: "SOURCE_BASELINE_FAIL", reason: "No source content or data was provided." };
+  }
+
+  if (requested === "region-map-table") {
+    return { status: "blocked", route: "SENSITIVE_MAP_MODULE_RETIRED", source_mode: sourceMode, reason: "Map modules are retired; use a non-geographic regional comparison." };
+  }
+  if (requested && DIRECT_PATTERN_IDS.has(requested) && modulePayload == null) {
+    return direct(sourceMode, `retired fixed template preserved as direct-composition pattern: ${requested}`, { ...input, preferred_pattern: requested });
+  }
+  if (requested && MERGED_HR_MODULE_IDS.has(requested) && modulePayload == null) {
+    return compactModule(byId.get("hr-operating-diagnostic-matrix"), sourceMode, `legacy HR template merged into hr-operating-diagnostic-matrix: ${requested}`);
   }
 
   if (modulePayload != null) {
@@ -149,6 +167,13 @@ export async function routeV3(input) {
         reason: "two structures have equal source support and require a brief decision",
         next_skill: "consulting-slide-prompt-architect",
       };
+    }
+    if (result.decision === "direct_composition") {
+      return direct(
+        sourceMode,
+        `retired fixed template preserved as direct-composition pattern: ${result.preferred_pattern}`,
+        { ...input, preferred_pattern: result.preferred_pattern },
+      );
     }
     return direct(sourceMode, "raw source requires source-specific composition", input);
   } catch (error) {

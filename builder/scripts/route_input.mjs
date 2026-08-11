@@ -23,8 +23,7 @@ const pageModelMethodMap = new Map([
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
   ["waterfall_attribution", "waterfall-attribution"],
-  ["route_tradeoff", "route-tradeoff"],
-  ["matrix", "hr-level-function-matrix"],
+  ["operating_diagnostic_matrix", "hr-operating-diagnostic-matrix"],
   ["flow", "sankey-flow"],
   ["time_trend", "chart-insight"],
 ]);
@@ -35,11 +34,8 @@ const definitions = {
   "issue-tree": { aliases: ["议题树", "问题树", "issue tree", "logic tree"], cues: [["拆解", "分支", "子议题", "根因", "mece"]] },
   "stage-process": { aliases: ["五步流程", "阶段流程", "chevron", "step process"], cues: [["步骤", "阶段", "流程", "里程碑", "阶段门"]] },
   "waterfall-attribution": { aliases: ["瀑布图", "waterfall"], cues: [["起点", "终点", "预算利润", "实际利润", "增减", "差额", "逐项解释", "归因", "对平"]] },
-  "route-tradeoff": { aliases: ["路线对比", "两种路线", "tradeoff", "路线 a", "路线 b"], cues: [["取舍", "对比", "争议点", "推荐路线", "两条路线"]] },
-  "scqa-roadmap": { aliases: ["scqa", "情境冲突问题答案"], cues: [["情境", "冲突", "问题", "答案", "落地路径"]] },
   "bubble-heatmap": { aliases: ["气泡矩阵", "2×2", "2x2", "bubble matrix"], cues: [["价值", "难度", "气泡", "热力", "优先级"]] },
   "chart-insight": { aliases: ["图表加洞察", "图表＋洞察", "柱状图洞察", "chart insight"], cues: [["柱状图", "折线", "洞察栏", "引线", "数据结论"]] },
-  "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
   marimekko: { aliases: ["marimekko", "mekko", "马赛克图"], cues: [["列宽", "横向宽度", "市场规模占比", "内部构成", "份额构成", "块面积"]] },
   "part-to-whole": { aliases: ["饼图", "环图", "甜甜圈图", "pie chart", "donut chart", "doughnut chart"], cues: [["单一总量", "总量", "构成项", "构成", "占比", "份额", "合计", "整体"]] },
   "tornado-sensitivity": { aliases: ["龙卷风图", "敏感性分析", "tornado", "一次只变一个变量"], cues: [["悲观值", "乐观值", "低值", "高值", "基准情形", "基准结果", "参数", "变量", "单变量"]] },
@@ -58,18 +54,21 @@ const definitions = {
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
   "market-funnel": { aliases: ["tam sam som", "市场漏斗", "市场空间漏斗"], cues: [["tam", "sam", "som", "渗透率", "客单价"]] },
-  "region-map-table": { aliases: ["地图明细", "分布地图", "区域地图"], cues: [["城市", "区域", "地图", "气泡", "明细表"]] },
-  "industry-value-chain": { aliases: ["产业价值链", "价值链图", "value chain"], cues: [["上游", "中游", "下游", "参与者", "利润率"]] },
-  "spiral-maturity": { aliases: ["螺旋成熟度", "螺旋线", "spiral maturity"], cues: [["多轮迭代", "四圈", "设计", "执行", "度量", "沉淀"]] },
   "gantt-dependency": { aliases: ["甘特图", "gantt"], cues: [["任务", "月份", "依赖", "关键路径", "里程碑"]] },
   "hr-age-gender-pyramid": { aliases: ["年龄性别金字塔", "人口金字塔", "人员金字塔"], cues: [["年龄段", "男性", "女性", "人数", "人员结构"]] },
   "hr-workforce-reconciliation": { aliases: ["人员对账", "编制对账", "人头对账"], cues: [["期初", "入职", "离职", "转出", "转入", "期末"]] },
   "hr-new-hire-survival": { aliases: ["新人留存生存曲线", "留存生存曲线", "cohort survival"], cues: [["入职后", "留存率", "批次", "司龄", "存活"]] },
   "hr-supply-demand-gap": { aliases: ["人力供需缺口", "编制供需", "人才供需"], cues: [["需求预测", "内部供给", "自然流失", "退休", "外部补充"]] },
-  "hr-level-function-matrix": { aliases: ["职级职能矩阵", "岗位体系矩阵"], cues: [["职级", "职能序列", "管理跨度", "人数倒挂", "层级"]] },
   "hr-from-to-mobility": { aliases: ["from-to 人才流动", "from-to 方阵", "人才流动方阵", "内部流动矩阵"], cues: [["流出部门", "流入部门", "跨部门转岗", "转岗后质量", "转岗率", "留任人数", "人才孤岛"]] },
-  "hr-service-catalog": { aliases: ["hr 服务目录", "人力资源服务目录", "service catalog"], cues: [["服务目录", "服务层级", "渠道", "时效承诺", "自动化"]] },
-  "hr-ticket-intake": { aliases: ["hr 工单受理", "工单入口", "ticket intake"], cues: [["受理渠道", "工单量", "一次解决率", "积压", "受理"]] },
+  "hr-operating-diagnostic-matrix": { aliases: ["hr 运营诊断矩阵", "服务运营矩阵", "operating diagnostic matrix", "职级职能矩阵", "岗位体系矩阵", "hr 服务目录", "人力资源服务目录", "service catalog", "hr 工单受理", "工单入口", "ticket intake"], cues: [["行", "列", "指标", "诊断"], ["职级", "职能序列", "管理跨度", "人数"], ["服务目录", "需求量", "成功率", "自动化"], ["受理渠道", "工单量", "一次解决率", "积压"]] },
+};
+
+const directCompositionPatterns = {
+  "route-tradeoff": { aliases: ["路线对比", "两种路线", "tradeoff", "路线 a", "路线 b"], cues: [["取舍", "对比", "争议点", "推荐路线", "两条路线"]] },
+  "scqa-roadmap": { aliases: ["scqa", "情境冲突问题答案"], cues: [["情境", "冲突", "问题", "答案", "落地路径"]] },
+  "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
+  "industry-value-chain": { aliases: ["产业价值链", "价值链图", "value chain"], cues: [["上游", "中游", "下游", "参与者", "利润率"]] },
+  "spiral-maturity": { aliases: ["螺旋成熟度", "螺旋线", "spiral maturity"], cues: [["多轮迭代", "四圈", "设计", "执行", "度量", "沉淀"]] },
 };
 
 function normalizeText(value) {
@@ -266,8 +265,26 @@ export async function routeInput(input) {
     throw Object.assign(new Error("Text or data is required"), { code: "SOURCE_BASELINE_FAIL" });
   }
   if (input.requested_module) {
+    if (input.requested_module === "region-map-table") {
+      throw Object.assign(new Error("Map modules are retired"), { code: "SENSITIVE_MAP_MODULE_RETIRED" });
+    }
+    if (Object.hasOwn(directCompositionPatterns, input.requested_module)) {
+      return {
+        decision: "direct_composition",
+        preferred_pattern: input.requested_module,
+        reference: "references/direct-composition-patterns.md",
+        input_mode: mode,
+        confidence: "explicit_pattern",
+        evidence: ["requested_retired_pattern"],
+      };
+    }
+    const mergedModuleAliases = new Set(["hr-level-function-matrix", "hr-service-catalog", "hr-ticket-intake"]);
     const { routeModule } = await import("./route_module.mjs");
-    const routed = await routeModule({ requested_module: input.requested_module });
+    const routed = await routeModule({
+      requested_module: mergedModuleAliases.has(input.requested_module)
+        ? "hr-operating-diagnostic-matrix"
+        : input.requested_module,
+    });
     return { ...routed, input_mode: mode, confidence: "explicit", evidence: ["requested_module"] };
   }
   const compiledModule = pageModelMethodMap.get(input.page_model?.expression_method);
@@ -278,6 +295,14 @@ export async function routeInput(input) {
   }
   const text = normalizeText([input.text, input.title, input.page_claim, input.page_model?.subject?.text, input.page_model?.story?.text, input.page_model?.expression_method, JSON.stringify(input.data ?? {})].filter(Boolean).join(" "));
   if (!text) throw Object.assign(new Error("Text or data is required"), { code: "SOURCE_BASELINE_FAIL" });
+  const geographicMapCue = ["地图", "gis", "行政区", "地理边界"].some((cue) => text.includes(cue)) ||
+    (/\bmap\b/.test(text) && ["region", "city", "geographic", "location"].some((cue) => text.includes(cue)));
+  if (geographicMapCue) {
+    throw Object.assign(
+      new Error("Map modules are retired; use a source-backed regional table or non-geographic comparison"),
+      { code: "SENSITIVE_MAP_MODULE_RETIRED" },
+    );
+  }
   const tokens = dataTokens(input.data ?? {});
   const distributionScopeConflict = conflictingDistributionScope(input.data);
   if (distributionScopeConflict) throw Object.assign(new Error(`Group distribution ${distributionScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
@@ -337,6 +362,20 @@ export async function routeInput(input) {
       : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));
+  const patternRanked = Object.entries(directCompositionPatterns)
+    .map(([patternId, definition]) => ({ patternId, ...scoreDefinition(definition, text, tokens) }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.patternId.localeCompare(b.patternId));
+  if (patternRanked.length && (!ranked.length || patternRanked[0].score > ranked[0].score)) {
+    return {
+      decision: "direct_composition",
+      preferred_pattern: patternRanked[0].patternId,
+      reference: "references/direct-composition-patterns.md",
+      input_mode: mode,
+      confidence: patternRanked[0].score >= 100 ? "explicit_pattern" : "supported_pattern",
+      evidence: patternRanked[0].evidence,
+    };
+  }
   if (!ranked.length) throw Object.assign(new Error("No productized module has enough explicit evidence"), { code: "ROUTE_EVIDENCE_INSUFFICIENT" });
   const explicitTop = ranked[0].score >= 100;
   const threshold = explicitTop ? ranked[0].score : Math.max(20, ranked[0].score - 10);

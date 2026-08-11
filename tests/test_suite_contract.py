@@ -17,7 +17,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_release_source_passes_suite_validator(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
             result = MODULE.validate(copy_root)
             self.assertTrue(result["ok"], result)
 
@@ -28,7 +28,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_nested_skill_entry_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
             nested = copy_root / "builder" / "SKILL.md"
             nested.write_text("---\nname: hidden-builder\n---\n", encoding="utf-8")
             result = MODULE.validate(copy_root)
@@ -38,7 +38,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_local_absolute_path_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
             bad_path = "/" + "Users" + "/example/private/file.pptx"
             (copy_root / "README.md").write_text(f"Use {bad_path}", encoding="utf-8")
             result = MODULE.validate(copy_root)

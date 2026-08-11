@@ -33,7 +33,7 @@ node builder/scripts/route_v3.mjs input.json
 按结果继续：
 
 - `deterministic_module`：只读取返回的单个 `reference`。若路由返回 `module_input=module_payload`，把 handoff 中的 `module_payload` 原样写入运行目录的 `internal/module-input.json`，直接运行 validator、planner 和 renderer；不得重新解释或改写。不要读取完整注册表或渲染器源码。
-- `direct_composition`：只读取 `references/information-contribution-gate.md`、`references/visual-grammar.md` 和 `references/direct-composition.md`，使用 `scripts/pptx_core.mjs` 的语义组件生成一页。`preferred_module` 只是视觉家族提示，不等于已有可执行模块载荷；不得假装命中确定性模块。
+- `direct_composition`：只读取 `references/information-contribution-gate.md`、`references/visual-grammar.md` 和 `references/direct-composition.md`，使用 `scripts/pptx_core.mjs` 的语义组件生成一页。路由返回 `preferred_pattern` 时额外读取 `references/direct-composition-patterns.md`；该文件只提供关系模式和正确性边界，不是确定性模块。`preferred_module` 只是视觉家族提示，不等于已有可执行模块载荷；不得假装命中确定性模块。
 - `BRIEF_REQUIRED`：复杂或歧义原始材料交给 Prompt Architect。
 - `SOURCE_BASELINE_FAIL` 或 `ROUTE_CONFLICT`：按返回的阻塞原因处理，不猜测。
 

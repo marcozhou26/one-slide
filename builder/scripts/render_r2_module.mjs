@@ -214,11 +214,8 @@ export async function renderR2Module(data, output) {
   const { presentation, slide } = createPresentation(output.background);
   addPageHeader(slide, plan);
   const handlers = {
-    "route-tradeoff": renderRouteTradeoff,
-    "scqa-roadmap": renderScqaRoadmap,
     "bubble-heatmap": renderBubbleHeatmap,
     "chart-insight": renderChartInsight,
-    "scenario-planning": renderScenarioPlanning,
   };
   handlers[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output);

@@ -8,9 +8,11 @@
 | Producer engine | 1.1.2 | `producer/ENGINE.md` |
 | Builder engine | 3.3.7 | `builder/ENGINE.md` and the module registry |
 
+- Reduced the productized registry from 40 to 32 modules after a capability-value review. Retired `region-map-table`; moved `route-tradeoff`, `scqa-roadmap`, `scenario-planning`, `industry-value-chain` and `spiral-maturity` to guarded direct-composition patterns; map requests now stop at `SENSITIVE_MAP_MODULE_RETIRED`.
+- Replaced the fixed `hr-level-function-matrix`, `hr-service-catalog` and `hr-ticket-intake` modules with one variable 2–10 row by 2–6 column `hr-operating-diagnostic-matrix`, supporting mixed numeric, percentage and text columns, optional secondary measures, column-local heat encoding and strict source/type/range gates.
 - Corrected `chart-insight` by requiring explicit comparable bar units, stable category/series IDs, a declared secondary-axis range, visible ratio values, and source-backed insight anchors to exact data points instead of renderer-guessed connectors.
-- Added R5 percentage range gates (`0–100`) and closed enum gates for three-level risk scores, with regressions across workforce, survival, mobility, service-catalog and ticket-intake modules.
-- Retired `hr-ticket-classification`: aggregate before/after category totals cannot support a truthful reclassification flow without an origin-destination confusion matrix; use `sankey-flow` when real flows exist or `hr-ticket-intake` for intake diagnostics.
+- Added R5 percentage range gates (`0–100`) and closed enum gates for three-level risk scores, with regressions across workforce, survival, mobility and the unified operating diagnostic matrix.
+- Retired `hr-ticket-classification`: aggregate before/after category totals cannot support a truthful reclassification flow without an origin-destination confusion matrix; use `sankey-flow` when real flows exist or `hr-operating-diagnostic-matrix` for non-flow operating diagnostics.
 - Retired `hr-eligibility-matrix`: the implementation encoded automation/readiness states rather than actual eligibility conditions and exceptions; use a source-backed matrix or guarded direct composition.
 - Added the productized `part-to-whole` module for one-period, one-total composition across 3–6 reconciled non-negative parts, with native editable pie and single-ring doughnut charts.
 - Added relationship-first routing, Producer payload rules, source-backed doughnut center content, percentage calculation from exact values, strict reconciliation and scope guards against trends, multi-object comparison, negative values and excess categories.
