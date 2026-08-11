@@ -8,6 +8,15 @@
 | Producer engine | 1.1.2 | `producer/ENGINE.md` |
 | Builder engine | 3.3.7 | `builder/ENGINE.md` and the module registry |
 
+- Corrected `chart-insight` by requiring explicit comparable bar units, stable category/series IDs, a declared secondary-axis range, visible ratio values, and source-backed insight anchors to exact data points instead of renderer-guessed connectors.
+- Added R5 percentage range gates (`0–100`) and closed enum gates for three-level risk scores, with regressions across workforce, survival, mobility, service-catalog and ticket-intake modules.
+- Retired `hr-ticket-classification`: aggregate before/after category totals cannot support a truthful reclassification flow without an origin-destination confusion matrix; use `sankey-flow` when real flows exist or `hr-ticket-intake` for intake diagnostics.
+- Retired `hr-eligibility-matrix`: the implementation encoded automation/readiness states rather than actual eligibility conditions and exceptions; use a source-backed matrix or guarded direct composition.
+- Added the productized `part-to-whole` module for one-period, one-total composition across 3–6 reconciled non-negative parts, with native editable pie and single-ring doughnut charts.
+- Added relationship-first routing, Producer payload rules, source-backed doughnut center content, percentage calculation from exact values, strict reconciliation and scope guards against trends, multi-object comparison, negative values and excess categories.
+- Upgraded `marimekko` with an `absolute` layout mode for non-100% unequal-width and unequal-height columns: widths use segment `total_value`, stack heights use absolute `value`, and every column must reconcile to its total.
+- Preserved the legacy `normalized` 100%-height mode and added Producer handoff rules, absolute-value fixtures, reconciliation failures, native rendering, overflow checks, and editable-shape regression coverage.
+
 ## 1.4.0 — 2026-08-09
 
 - Reworked the unreleased post-build concept into a read-only Editorial QA gate: protect strong pages, return at most one high-value Builder brief, and require Builder to own every PPTX change.

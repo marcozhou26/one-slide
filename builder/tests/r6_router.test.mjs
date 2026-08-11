@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { routeInput } from "../scripts/route_input.mjs";
+import { routeModule } from "../scripts/route_module.mjs";
 
 const blindCases = [
   ["causal-chain", { input_mode: "text", text: "门店排班准确率提升会减少临时调班，继而降低加班成本，最终改善利润率" }],
@@ -18,6 +19,7 @@ const blindCases = [
   ["dumbbell-gap", { input_mode: "text", text: "十项指标分别列现状、目标和标杆，按差距绝对值排序并标明改善难度" }],
   ["bump-ranking", { input_mode: "text", text: "比较两个时点的前十榜单排名，标出上升、下降、新进入与退出" }],
   ["composition-shift", { input_mode: "text", text: "比较2022到2025年四类收入占比的结构变化，每期合计100%" }],
+  ["part-to-whole", { input_mode: "text", text: "把一个单一总量拆成企业客户、个人客户和其他三项构成，显示各项占比与合计" }],
   ["cohort-retention", { input_mode: "text", text: "按首次激活月份分批，从第0周起比较第1、2、4、8周仍活跃的人数；较新批次后面的周数尚未观察，空白不能当0" }],
   ["box-plot", { input_mode: "text", text: "比较五个区域订单周期的中位数、中间50%范围、离散程度和异常值" }],
   ["histogram", { input_mode: "mixed", text: "查看一批连续测量值集中在哪些区间，是否偏斜并有长尾", data: { metric: "处理时长", unit: "分钟", period: "2026年7月", values: [4, 7, 11, 14, 18, 22, 25, 29, 33, 39, 45, 58, 72] } }],
@@ -37,10 +39,8 @@ const blindCases = [
   ["hr-supply-demand-gap", { input_mode: "data", data: { 需求预测: [], 内部供给: [], 自然流失: [], 退休: [], 外部补充: [] } }],
   ["hr-level-function-matrix", { input_mode: "text", text: "用职级和职能序列做双维格子，检查管理跨度、人数倒挂和层级断层" }],
   ["hr-from-to-mobility", { input_mode: "mixed", text: "内部人才市场", data: { 流出部门: [], 流入部门: [], 转岗率: 0.08, 留任人数: [] } }],
-  ["hr-eligibility-matrix", { input_mode: "text", text: "按资格条件和覆盖人群核对政策是否适用及例外情形，形成资格覆盖矩阵" }],
   ["hr-service-catalog", { input_mode: "text", text: "整理人力资源服务目录，逐项列服务层级、渠道、时效承诺和自动化覆盖" }],
   ["hr-ticket-intake", { input_mode: "text", text: "比较电话、邮件和机器人等受理渠道的工单量、一次解决率与积压" }],
-  ["hr-ticket-classification", { input_mode: "text", text: "按薪酬、招聘、员工关系等工单分类统计重分类率、优先级和服务水平" }],
 ];
 
 test("unfamiliar text, data and mixed inputs route across every module category", async () => {
@@ -80,4 +80,18 @@ test("genuine visual ambiguity returns at most two candidates", async () => {
 test("missing source and unknown structure stop instead of guessing", async () => {
   await assert.rejects(() => routeInput({}), (error) => error.code === "SOURCE_BASELINE_FAIL");
   await assert.rejects(() => routeInput({ text: "请帮我做得高级一点" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
+});
+
+test("retired HR specialization modules cannot be requested or inferred", async () => {
+  for (const moduleId of ["hr-ticket-classification", "hr-eligibility-matrix"]) {
+    await assert.rejects(() => routeModule({ requested_module: moduleId }), (error) => error.code === "MODULE_NOT_PRODUCTIZED");
+  }
+  await assert.rejects(
+    () => routeInput({ text: "按资格条件和覆盖人群核对政策是否适用及例外情形，形成资格覆盖矩阵" }),
+    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+  );
+  await assert.rejects(
+    () => routeInput({ text: "按薪酬、招聘、员工关系等工单分类统计重分类率和最终分类" }),
+    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+  );
 });

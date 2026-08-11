@@ -122,4 +122,4 @@ Slides created through ordinary use of OneSlide do not need an author watermark 
 
 ## Version status
 
-The latest public release is v1.3.0. The next version is testing an internal read-only Editorial QA gate after the Builder draft: it protects strong pages, returns at most one high-value revision brief, and leaves all PPTX changes to Builder. This development work is not released yet. The 41 productized visual modules remain available. Font and layout differences may still occur across clients and PowerPoint versions.
+The latest public release is v1.3.0. The next version is testing an internal read-only Editorial QA gate after the Builder draft: it protects strong pages, returns at most one high-value revision brief, and leaves all PPTX changes to Builder. This development work is not released yet. The 40 productized visual modules include native pie and single-ring doughnut support through `part-to-whole`. Font and layout differences may still occur across clients and PowerPoint versions.

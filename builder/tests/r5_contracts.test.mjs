@@ -12,10 +12,8 @@ const modules = [
   "hr-supply-demand-gap",
   "hr-level-function-matrix",
   "hr-from-to-mobility",
-  "hr-eligibility-matrix",
   "hr-service-catalog",
   "hr-ticket-intake",
-  "hr-ticket-classification",
 ];
 const fixture = async (name) => JSON.parse(await fs.readFile(new URL(`../assets/test-fixtures/${name}-valid.json`, import.meta.url), "utf8"));
 
@@ -60,4 +58,30 @@ test("workforce core reconciliation remains valid when overlays are omitted", as
     delete month.budget;
   }
   assert.deepEqual(validateR5Module(data).unmappedSourceIds, []);
+});
+
+test("R5 percentage and enum ranges are gated", async () => {
+  const workforce = await fixture("hr-workforce-reconciliation");
+  workforce.diagram.months[0].attrition_rate = 101;
+  assert.throws(() => validateR5Module(workforce), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+
+  const survival = await fixture("hr-new-hire-survival");
+  survival.diagram.cohorts[0].values[survival.diagram.cohorts[0].values.length - 1] = -1;
+  assert.throws(() => validateR5Module(survival), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+
+  const risk = await fixture("hr-new-hire-survival");
+  risk.diagram.risk_rows[0].scores[0] = 4;
+  assert.throws(() => validateR5Module(risk), (error) => error.code === "ENUM_RANGE_FAIL");
+
+  const mobility = await fixture("hr-from-to-mobility");
+  mobility.diagram.quality[0][1].retention = 120;
+  assert.throws(() => validateR5Module(mobility), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+
+  const service = await fixture("hr-service-catalog");
+  service.diagram.services[0].automation = -0.1;
+  assert.throws(() => validateR5Module(service), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+
+  const intake = await fixture("hr-ticket-intake");
+  intake.diagram.matrix[0][0].one_touch = 100.1;
+  assert.throws(() => validateR5Module(intake), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
 });

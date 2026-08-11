@@ -15,10 +15,8 @@ const MODULES = new Set([
   "hr-supply-demand-gap",
   "hr-level-function-matrix",
   "hr-from-to-mobility",
-  "hr-eligibility-matrix",
   "hr-service-catalog",
   "hr-ticket-intake",
-  "hr-ticket-classification",
 ]);
 function context(data) {
   const anchors = buildAnchorMap(data.source_anchors);
@@ -51,6 +49,22 @@ const finite = (values, message) =>
     "DATA_CONTRACT_FAIL",
     message,
   );
+const percentage = (value, label) =>
+  requireCondition(
+    Number.isFinite(value) && value >= 0 && value <= 100,
+    "PERCENTAGE_RANGE_FAIL",
+    `${label} must be between 0 and 100`,
+  );
+const enumValue = (value, allowed, label) =>
+  requireCondition(
+    allowed.includes(value),
+    "ENUM_RANGE_FAIL",
+    `${label} must be one of ${allowed.join(", ")}`,
+  );
+const visiblePercentText = (item, label) => {
+  const matches = [...String(item?.text ?? "").matchAll(/(-?\d+(?:\.\d+)?)\s*%/g)];
+  matches.forEach((match) => percentage(Number(match[1]), label));
+};
 const textList = (items, c, label) => items?.forEach((x) => c.text(x, label));
 
 function age(d, c) {
@@ -65,6 +79,8 @@ function age(d, c) {
     c.text(x.salary, "Salary");
     c.text(x.turnover, "Turnover");
     c.text(x.manager_share, "Manager share");
+    visiblePercentText(x.turnover, "Turnover percentage");
+    visiblePercentText(x.manager_share, "Manager share percentage");
     finite(
       [x.male, x.female, x.healthy_male, x.healthy_female],
       "Age counts must be numeric",
@@ -124,6 +140,7 @@ function workforce(d, c) {
       `${field} must be supplied for all twelve months or omitted entirely`,
     );
     if (supplied.length) finite(supplied.map((month) => month[field]), `${field} must be numeric`);
+    if (supplied.length && ["attrition_rate", "recruitment_rate"].includes(field)) supplied.forEach((month) => percentage(month[field], field));
   }
   textList(d.insights, c, "Insight");
   if (d.conclusion) c.text(d.conclusion, "Conclusion");
@@ -151,6 +168,7 @@ function survival(d, c) {
       "Cohort must start at 100 and never increase",
     );
     finite(x.values, "Survival values must be numeric");
+    x.values.forEach((value) => percentage(value, "Survival percentage"));
     c.source(x.source_ids, "Cohort data");
   });
   requireCondition(
@@ -160,6 +178,7 @@ function survival(d, c) {
   );
   c.text(d.benchmark.label, "Benchmark");
   c.source(d.benchmark.source_ids, "Benchmark data");
+  d.benchmark.values.forEach((value) => percentage(value, "Benchmark percentage"));
   requireCondition(
     d.risk_rows?.length === 4,
     "DATA_CONTRACT_FAIL",
@@ -173,6 +192,7 @@ function survival(d, c) {
       "Risk row requires five intervals",
     );
     finite(x.scores, "Risk scores must be numeric");
+    x.scores.forEach((value) => enumValue(value, [1, 2, 3], "Risk score"));
     c.source(x.source_ids, "Risk row");
   });
   textList(d.insights, c, "Insight");
@@ -306,9 +326,11 @@ function mobility(d, c) {
       "Mobility counts must be non-negative integers",
     )
   );
-  d.quality.flat().forEach((v) =>
-    finite([v.retention, v.performance], "Mobility quality must be numeric")
-  );
+  d.quality.flat().forEach((v) => {
+    finite([v.retention, v.performance], "Mobility quality must be numeric");
+    percentage(v.retention, "Mobility retention percentage");
+    percentage(v.performance, "Mobility performance percentage");
+  });
   c.source(d.source_ids, "Mobility matrix");
   textList(d.insights, c, "Insight");
   if (d.conclusion) c.text(d.conclusion, "Conclusion");
@@ -324,33 +346,11 @@ function metrics(d, c) {
     c.text(x.value, "Metric value");
     c.text(x.target, "Metric target");
     c.source(x.source_ids, "Metric");
+    visiblePercentText(x.value, "Metric percentage");
+    visiblePercentText(x.target, "Metric target percentage");
   });
   textList(d.insights, c, "Insight");
   if (d.conclusion) c.text(d.conclusion, "Conclusion");
-}
-function eligibility(d, c) {
-  metrics(d, c);
-  requireCondition(
-    d.policies?.length >= 4 && d.policies.length <= 7,
-    "DATA_CONTRACT_FAIL",
-    "Eligibility matrix requires 4–7 policies",
-  );
-  d.policies.forEach((x) => c.text(x, "Policy"));
-  requireCondition(
-    d.segments?.length >= 4 && d.segments.length <= 8,
-    "DATA_CONTRACT_FAIL",
-    "Eligibility matrix requires 4–8 segments",
-  );
-  d.segments.forEach((x) => {
-    c.text(x.label, "Employee segment");
-    requireCondition(
-      x.scores?.length === d.policies.length,
-      "DATA_CONTRACT_FAIL",
-      "Eligibility row width mismatch",
-    );
-    finite(x.scores, "Eligibility scores must be numeric");
-    c.source(x.source_ids, "Eligibility row");
-  });
 }
 function service(d, c) {
   metrics(d, c);
@@ -366,6 +366,9 @@ function service(d, c) {
       [x.volume, x.success, x.automation],
       "Service metrics must be numeric",
     );
+    requireCondition(x.volume >= 0, "DATA_CONTRACT_FAIL", "Service volume must be non-negative");
+    percentage(x.success, "Service success percentage");
+    percentage(x.automation, "Service automation percentage");
     c.source(x.source_ids, "Service row");
   });
 }
@@ -383,34 +386,13 @@ function intake(d, c) {
     "DATA_CONTRACT_FAIL",
     "Ticket intake matrix must be 5x4",
   );
-  d.matrix.flat().forEach((v) =>
-    finite([v.volume, v.one_touch], "Ticket intake cells must be numeric")
-  );
+  d.matrix.flat().forEach((v) => {
+    finite([v.volume, v.one_touch], "Ticket intake cells must be numeric");
+    requireCondition(v.volume >= 0, "DATA_CONTRACT_FAIL", "Ticket volume must be non-negative");
+    percentage(v.one_touch, "Ticket one-touch percentage");
+  });
   c.source(d.source_ids, "Ticket intake matrix");
 }
-function classification(d, c) {
-  metrics(d, c);
-  requireCondition(
-    d.categories?.length === 5,
-    "DATA_CONTRACT_FAIL",
-    "Classification requires five categories",
-  );
-  d.categories.forEach((x) => {
-    c.text(x.label, "Category");
-    finite(
-      [x.input, x.predicted, x.final],
-      "Classification values must be numeric",
-    );
-    requireCondition(
-      Math.abs(x.input - x.final) <= x.reclassified,
-      "CLASSIFICATION_RECONCILIATION_FAIL",
-      "Category movement cannot explain final count",
-    );
-    c.source(x.source_ids, "Classification category");
-  });
-  c.text(d.other_label, "Other label");
-}
-
 export function validateR5Module(data) {
   requireCondition(
     data?.version === "1.0",
@@ -436,10 +418,8 @@ export function validateR5Module(data) {
     "hr-supply-demand-gap": supply,
     "hr-level-function-matrix": levelMatrix,
     "hr-from-to-mobility": mobility,
-    "hr-eligibility-matrix": eligibility,
     "hr-service-catalog": service,
     "hr-ticket-intake": intake,
-    "hr-ticket-classification": classification,
   })[data.module_id](data.diagram, c);
   return {
     ok: true,

@@ -96,19 +96,40 @@ function validateBubbleHeatmap(data, c) {
 function validateChartInsight(data, c) {
   const categories = data.diagram.categories;
   requireCondition(Array.isArray(categories) && categories.length >= 4 && categories.length <= 8, "DATA_CONTRACT_FAIL", "Chart insight requires 4–8 categories");
-  categories.forEach((item) => c.text(item, "Chart category"));
+  const categoryIds = new Set();
+  categories.forEach((item) => {
+    requireCondition(typeof item.id === "string" && item.id.length > 0 && !categoryIds.has(item.id), "DATA_CONTRACT_FAIL", "Chart category ids must be unique non-empty strings");
+    categoryIds.add(item.id);
+    c.text(item, "Chart category");
+  });
   const series = data.diagram.series;
   requireCondition(Array.isArray(series) && series.length === 2, "DATA_CONTRACT_FAIL", "Chart insight requires exactly two bar series");
+  const seriesIds = new Set();
+  const barUnits = new Set();
   for (const item of series) {
+    requireCondition(typeof item.id === "string" && item.id.length > 0 && !seriesIds.has(item.id), "DATA_CONTRACT_FAIL", "Chart series ids must be unique non-empty strings");
+    seriesIds.add(item.id);
+    requireCondition(typeof item.unit === "string" && item.unit.trim().length > 0, "DATA_CONTRACT_FAIL", "Every bar series requires an explicit unit");
+    barUnits.add(item.unit.trim());
     c.text(item.label, "Series label");
-    requireCondition(Array.isArray(item.values) && item.values.length === categories.length && item.values.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Series values must match categories");
+    requireCondition(Array.isArray(item.values) && item.values.length === categories.length && item.values.every((value) => Number.isFinite(value) && value >= 0), "DATA_CONTRACT_FAIL", "Series values must match categories and be non-negative");
     c.source(item.source_ids, "Series data");
   }
+  requireCondition(barUnits.size === 1, "CHART_UNIT_MISMATCH", "Both bar series must use the same unit");
+  requireCondition(series.some((item) => item.values.some((value) => value > 0)), "DATA_CONTRACT_FAIL", "Chart insight requires at least one positive bar value");
+  const ratio = data.diagram.ratio;
+  requireCondition(typeof ratio?.id === "string" && ratio.id.length > 0 && !seriesIds.has(ratio.id), "DATA_CONTRACT_FAIL", "Ratio series requires a unique non-empty id");
+  requireCondition(typeof ratio.unit === "string" && ratio.unit.trim().length > 0, "DATA_CONTRACT_FAIL", "Ratio series requires an explicit unit");
+  requireCondition(Number.isFinite(ratio.axis_min) && Number.isFinite(ratio.axis_max) && ratio.axis_min < ratio.axis_max, "RATIO_AXIS_FAIL", "Ratio axis requires finite min/max with min below max");
   c.text(data.diagram.ratio.label, "Ratio label");
-  requireCondition(data.diagram.ratio.values?.length === categories.length && data.diagram.ratio.values.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Ratio values must match categories");
+  requireCondition(ratio.values?.length === categories.length && ratio.values.every((value) => Number.isFinite(value) && value >= ratio.axis_min && value <= ratio.axis_max), "RATIO_AXIS_FAIL", "Ratio values must match categories and stay inside the declared axis range");
   c.source(data.diagram.ratio.source_ids, "Ratio data");
   requireCondition(data.diagram.insights?.length === 3, "DATA_CONTRACT_FAIL", "Chart insight requires three insights");
-  data.diagram.insights.forEach((item) => c.text(item, "Insight"));
+  const validSeriesIds = new Set([...seriesIds, ratio.id]);
+  data.diagram.insights.forEach((item) => {
+    c.text(item, "Insight");
+    requireCondition(item.anchor && validSeriesIds.has(item.anchor.series_id) && categoryIds.has(item.anchor.category_id), "INSIGHT_ANCHOR_FAIL", "Every insight must anchor to an existing series and category");
+  });
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
 }
 

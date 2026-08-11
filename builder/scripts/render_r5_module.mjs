@@ -1487,10 +1487,8 @@ export async function renderR5Module(data, output) {
     "hr-supply-demand-gap": renderSupply,
     "hr-level-function-matrix": renderLevel,
     "hr-from-to-mobility": renderMobility,
-    "hr-eligibility-matrix": renderEligibility,
     "hr-service-catalog": renderService,
     "hr-ticket-intake": renderIntake,
-    "hr-ticket-classification": renderClassification,
   })[data.module_id](slide, data, p);
   await exportPresentation(presentation, output);
   return p;

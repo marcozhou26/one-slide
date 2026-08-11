@@ -65,7 +65,7 @@ Recommend one page focus and list excluded candidates in the user-facing brief. 
 Choose the visual family from the relationship, not from the number of rows or the user's use of a chart word:
 
 - comparison: entities on shared criteria;
-- chart: trend, ranking, variance, distribution, or correlation;
+- chart: trend, ranking, variance, distribution, correlation, or single-total composition;
 - matrix: true row-by-column coverage;
 - process: ordered stages or dependencies;
 - waterfall: movement from start to end;

@@ -10,6 +10,7 @@ const pageModelMethodMap = new Map([
   ["multi_period_rank_migration", "bump-ranking"],
   ["composition_shift", "composition-shift"],
   ["share_shift", "composition-shift"],
+  ["part_to_whole", "part-to-whole"],
   ["cohort_retention", "cohort-retention"],
   ["survival_curve", "cohort-retention"],
   ["group_distribution", "box-plot"],
@@ -40,6 +41,7 @@ const definitions = {
   "chart-insight": { aliases: ["图表加洞察", "图表＋洞察", "柱状图洞察", "chart insight"], cues: [["柱状图", "折线", "洞察栏", "引线", "数据结论"]] },
   "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
   marimekko: { aliases: ["marimekko", "mekko", "马赛克图"], cues: [["列宽", "横向宽度", "市场规模占比", "内部构成", "份额构成", "块面积"]] },
+  "part-to-whole": { aliases: ["饼图", "环图", "甜甜圈图", "pie chart", "donut chart", "doughnut chart"], cues: [["单一总量", "总量", "构成项", "构成", "占比", "份额", "合计", "整体"]] },
   "tornado-sensitivity": { aliases: ["龙卷风图", "敏感性分析", "tornado", "一次只变一个变量"], cues: [["悲观值", "乐观值", "低值", "高值", "基准情形", "基准结果", "参数", "变量", "单变量"]] },
   "radar-capability": { aliases: ["雷达图", "九维雷达", "radar chart"], cues: [["能力维度", "当前水平", "行业中位", "目标", "成熟度"]] },
   "dumbbell-gap": { aliases: ["哑铃图", "哑铃点图", "dumbbell"], cues: [["现状", "目标", "标杆", "差距", "指标"]] },
@@ -66,10 +68,8 @@ const definitions = {
   "hr-supply-demand-gap": { aliases: ["人力供需缺口", "编制供需", "人才供需"], cues: [["需求预测", "内部供给", "自然流失", "退休", "外部补充"]] },
   "hr-level-function-matrix": { aliases: ["职级职能矩阵", "岗位体系矩阵"], cues: [["职级", "职能序列", "管理跨度", "人数倒挂", "层级"]] },
   "hr-from-to-mobility": { aliases: ["from-to 人才流动", "from-to 方阵", "人才流动方阵", "内部流动矩阵"], cues: [["流出部门", "流入部门", "跨部门转岗", "转岗后质量", "转岗率", "留任人数", "人才孤岛"]] },
-  "hr-eligibility-matrix": { aliases: ["资格覆盖矩阵", "政策覆盖矩阵", "eligibility matrix"], cues: [["资格条件", "覆盖人群", "政策", "例外", "是否适用"]] },
   "hr-service-catalog": { aliases: ["hr 服务目录", "人力资源服务目录", "service catalog"], cues: [["服务目录", "服务层级", "渠道", "时效承诺", "自动化"]] },
   "hr-ticket-intake": { aliases: ["hr 工单受理", "工单入口", "ticket intake"], cues: [["受理渠道", "工单量", "一次解决率", "积压", "受理"]] },
-  "hr-ticket-classification": { aliases: ["hr 工单分类", "工单分类流", "ticket classification"], cues: [["工单分类", "重分类率", "服务水平", "优先级", "分派"]] },
 };
 
 function normalizeText(value) {
@@ -112,6 +112,21 @@ function inferCompositionShift(data, text) {
   const relationshipCue = ["结构", "构成", "占比", "组合", "mix", "share", "composition"].some((cue) => text.includes(cue));
   if (!relationshipCue) return null;
   return ["inferred:reconciled_component_series", "inferred:multi_period_totals", "cue:structure_relationship"];
+}
+
+function inferPartToWhole(data, text) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const periods = Array.isArray(data.periods) ? data.periods : [];
+  if (periods.length > 1) return null;
+  const parts = Array.isArray(data.parts) ? data.parts : [];
+  const total = Number(data.total_value);
+  if (parts.length < 3 || parts.length > 6 || !Number.isFinite(total) || total <= 0) return null;
+  const values = parts.map((part) => Number(part?.value));
+  if (!values.every((value) => Number.isFinite(value) && value >= 0)) return null;
+  if (Math.abs(values.reduce((sum, value) => sum + value, 0) - total) > Math.max(1e-6, total * 1e-9)) return null;
+  const relationshipCue = ["总量", "整体", "构成", "占比", "份额", "合计", "part-to-whole"].some((cue) => text.includes(cue));
+  if (!relationshipCue) return null;
+  return ["inferred:single_total", "inferred:reconciled_part_to_whole_components", "cue:part_to_whole_relationship"];
 }
 
 function inferCohortRetention(data, text) {
@@ -273,6 +288,8 @@ export async function routeInput(input) {
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   const productized = new Map(registry.modules.filter((item) => item.status === "productized").map((item) => [item.module_id, item]));
   const inferredComposition = inferCompositionShift(input.data, text);
+  const inferredPartToWhole = inferPartToWhole(input.data, text);
+  const partToWholeScopeConflict = (Array.isArray(input.data?.periods) && input.data.periods.length > 1) || ["跨期", "逐年", "趋势", "结构变化", "多个时期", "列宽", "横向宽度", "每个细分", "市场规模", "内部构成"].some((cue) => text.includes(cue));
   const inferredCohort = inferCohortRetention(input.data, text);
   const inferredBoxPlot = inferBoxPlot(input.data, text);
   const inferredHistogram = inferHistogram(input.data, text);
@@ -284,6 +301,12 @@ export async function routeInput(input) {
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
       ? { ...item, score: Math.max(item.score, 60), evidence: [...item.evidence, ...inferredComposition] }
+      : item)
+    .map((item) => inferredPartToWhole && item.moduleId === "part-to-whole"
+      ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredPartToWhole] }
+      : item)
+    .map((item) => item.moduleId === "part-to-whole" && partToWholeScopeConflict
+      ? { ...item, score: 0, evidence: [...item.evidence, "scope:multi_period"] }
       : item)
     .map((item) => inferredCohort && item.moduleId === "cohort-retention"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredCohort] }

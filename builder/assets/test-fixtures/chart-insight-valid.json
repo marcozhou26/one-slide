@@ -4,10 +4,10 @@
     {"id":"S01","text":"人力总成本五年上涨 42%，人均营收仅增 8%，剪刀差持续扩大"},{"id":"S02","text":"2021 2022 2023 2024 2025 2026"},{"id":"S03","text":"人力总成本 100 108 118 128 136 142"},{"id":"S04","text":"人均营收 100 103 104 106 107 108"},{"id":"S05","text":"人效指数 100 95 88 83 79 76"},{"id":"S06","text":"成本增速持续高于产出增速"},{"id":"S07","text":"2023 年后剪刀差明显扩大"},{"id":"S08","text":"人效指数连续五年下降"},{"id":"S09","text":"结论：优先控制结构性增编并提升高成本岗位产出"}
   ],
   "title":{"text":"人力总成本五年上涨 42%，人均营收仅增 8%，剪刀差持续扩大","origin":"source","source_ids":["S01"]},
-  "diagram":{"type":"chart-insight","categories":[{"text":"2021","source_ids":["S02"]},{"text":"2022","source_ids":["S02"]},{"text":"2023","source_ids":["S02"]},{"text":"2024","source_ids":["S02"]},{"text":"2025","source_ids":["S02"]},{"text":"2026","source_ids":["S02"]}],"series":[
-    {"label":{"text":"人力总成本","source_ids":["S03"]},"values":[100,108,118,128,136,142],"source_ids":["S03"]},
-    {"label":{"text":"人均营收","source_ids":["S04"]},"values":[100,103,104,106,107,108],"source_ids":["S04"]}],
-    "ratio":{"label":{"text":"人效指数","source_ids":["S05"]},"values":[100,95,88,83,79,76],"source_ids":["S05"]},
-    "insights":[{"text":"成本增速持续高于产出增速","source_ids":["S06"]},{"text":"2023 年后剪刀差明显扩大","source_ids":["S07"]},{"text":"人效指数连续五年下降","source_ids":["S08"]}],
+  "diagram":{"type":"chart-insight","categories":[{"id":"2021","text":"2021","source_ids":["S02"]},{"id":"2022","text":"2022","source_ids":["S02"]},{"id":"2023","text":"2023","source_ids":["S02"]},{"id":"2024","text":"2024","source_ids":["S02"]},{"id":"2025","text":"2025","source_ids":["S02"]},{"id":"2026","text":"2026","source_ids":["S02"]}],"series":[
+    {"id":"labor-cost","label":{"text":"人力总成本","source_ids":["S03"]},"unit":"指数（2021=100）","values":[100,108,118,128,136,142],"source_ids":["S03"]},
+    {"id":"revenue-per-fte","label":{"text":"人均营收","source_ids":["S04"]},"unit":"指数（2021=100）","values":[100,103,104,106,107,108],"source_ids":["S04"]}],
+    "ratio":{"id":"productivity-index","label":{"text":"人效指数","source_ids":["S05"]},"unit":"点","axis_min":70,"axis_max":105,"values":[100,95,88,83,79,76],"source_ids":["S05"]},
+    "insights":[{"text":"成本增速持续高于产出增速","source_ids":["S06"],"anchor":{"series_id":"labor-cost","category_id":"2026"}},{"text":"2023 年后剪刀差明显扩大","source_ids":["S07"],"anchor":{"series_id":"revenue-per-fte","category_id":"2024"}},{"text":"人效指数连续五年下降","source_ids":["S08"],"anchor":{"series_id":"productivity-index","category_id":"2026"}}],
     "conclusion":{"text":"结论：优先控制结构性增编并提升高成本岗位产出","source_ids":["S09"]}}
 }

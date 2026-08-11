@@ -142,7 +142,7 @@ function renderChartInsight(slide, data, plan) {
     addDivider(slide, `grid-${grid}`, plot.left, y, plot.left + plot.width, y, "solid", COLORS.border, 0.7);
   }
   const groupW = plot.width / categories.length;
-  const anchors = [];
+  const anchors = new Map();
   categories.forEach((category, index) => {
     const center = plot.left + groupW * (index + 0.5);
     data.diagram.series.forEach((series, seriesIndex) => {
@@ -150,24 +150,29 @@ function renderChartInsight(slide, data, plan) {
       const h = (value / max) * plot.height;
       const x = center - 23 + seriesIndex * 28;
       const bar = slide.shapes.add({ name: `bar-${seriesIndex + 1}-${index + 1}`, geometry: "rect", position: { left: x, top: plot.top + plot.height - h, width: 22, height: h }, fill: seriesIndex === 0 ? COLORS.navy : COLORS.soft, line: { style: "solid", fill: seriesIndex === 0 ? COLORS.navy : COLORS.line, width: 1.2 } });
-      if (seriesIndex === 0) anchors.push(bar);
+      anchors.set(`${series.id}:${category.id}`, bar);
       addTextBox(slide, { name: `bar-label-${seriesIndex + 1}-${index + 1}`, text: String(value), position: { left: x - 19, top: plot.top + plot.height - h - 25, width: 60, height: 22 }, fontSize: 16, bold: true, color: seriesIndex === 0 ? COLORS.navy : COLORS.muted, alignment: "center" });
     });
     addTextBox(slide, { name: `category-${index + 1}`, text: category.text, position: { left: center - groupW / 2, top: plot.top + plot.height + 8, width: groupW, height: 24 }, fontSize: 16, color: COLORS.muted, alignment: "center" });
   });
   const ratio = data.diagram.ratio.values;
-  const rMin = Math.min(...ratio);
-  const rMax = Math.max(...ratio);
+  const rMin = data.diagram.ratio.axis_min;
+  const rMax = data.diagram.ratio.axis_max;
   const ratioPoints = ratio.map((value, index) => ({ x: plot.left + groupW * (index + 0.5), y: plot.top + 30 + ((rMax - value) / Math.max(1e-6, rMax - rMin)) * (plot.height - 70) }));
   for (let index = 0; index < ratioPoints.length - 1; index += 1) addDivider(slide, `ratio-line-${index + 1}`, ratioPoints[index].x, ratioPoints[index].y, ratioPoints[index + 1].x, ratioPoints[index + 1].y, "dashed", COLORS.orange, 2.2);
-  const ratioShapes = ratioPoints.map((point, index) => addTextBox(slide, { name: `ratio-point-${index + 1}`, text: "", position: { left: point.x - 5, top: point.y - 5, width: 10, height: 10 }, fontSize: 16, geometry: "ellipse", fill: COLORS.orange, line: { style: "solid", fill: COLORS.orange, width: 0 } }));
-  addTextBox(slide, { name: "legend", text: `${data.diagram.series[0].label.text}  ■   ${data.diagram.series[1].label.text}  □   ${data.diagram.ratio.label.text}  ┄`, position: { left: plan.chart.left + 340, top: plan.chart.top + 6, width: 390, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "right" });
+  const ratioShapes = ratioPoints.map((point, index) => {
+    const shape = addTextBox(slide, { name: `ratio-point-${index + 1}`, text: "", position: { left: point.x - 5, top: point.y - 5, width: 10, height: 10 }, fontSize: 16, geometry: "ellipse", fill: COLORS.orange, line: { style: "solid", fill: COLORS.orange, width: 0 } });
+    anchors.set(`${data.diagram.ratio.id}:${categories[index].id}`, shape);
+    addTextBox(slide, { name: `ratio-label-${index + 1}`, text: `${ratio[index]}${data.diagram.ratio.unit}`, position: { left: point.x - 34, top: point.y - 27, width: 68, height: 22 }, fontSize: 14, bold: true, color: COLORS.orange, alignment: "center" });
+    return shape;
+  });
+  addTextBox(slide, { name: "legend", text: `${data.diagram.series[0].label.text}  ■   ${data.diagram.series[1].label.text}  □   ${data.diagram.ratio.label.text}  ┄`, position: { left: plan.chart.left + 18, top: plan.chart.top + 6, width: plan.chart.width - 36, height: 28 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "right" });
   addPanel(slide, "insight-rail", plan.insight, COLORS.soft, COLORS.border, 1.2);
   addTextBox(slide, { name: "insight-title", text: "关键洞察", position: { left: plan.insight.left + 20, top: plan.insight.top + 16, width: plan.insight.width - 40, height: 34 }, fontSize: 18, bold: true, color: COLORS.navy });
   data.diagram.insights.forEach((insight, index) => {
     const box = addNode(slide, { name: `insight-${index + 1}`, text: insight.text, position: { left: plan.insight.left + 20, top: plan.insight.top + 66 + index * 117, width: plan.insight.width - 40, height: 92 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.8 : 1, fontSize: 18, bold: index === 0, color: COLORS.text, alignment: "left" });
-    const targets = [anchors[anchors.length - 1], anchors[Math.floor(anchors.length / 2)], ratioShapes[ratioShapes.length - 1]];
-    connectNative(slide, box, targets[index], { kind: "straight", role: "leader", fromSide: "left", toSide: "right", arrow: false, line: { style: "solid", fill: COLORS.line, width: 1 } });
+    const target = anchors.get(`${insight.anchor.series_id}:${insight.anchor.category_id}`);
+    connectNative(slide, box, target, { kind: "straight", role: "leader", fromSide: "left", toSide: "right", arrow: false, line: { style: "solid", fill: COLORS.line, width: 1 } });
   });
   if (data.diagram.conclusion) addNode(slide, { name: "conclusion", text: data.diagram.conclusion.text, position: plan.bottom, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.4, fontSize: 18, bold: true, color: COLORS.navy });
 }

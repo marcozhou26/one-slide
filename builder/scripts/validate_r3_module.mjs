@@ -9,7 +9,7 @@ import {
   validateVisibleText,
 } from "./source_fidelity.mjs";
 
-const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "box-plot", "histogram", "box-plot-jitter", "small-multiples"]);
+const MODULES = new Set(["marimekko", "tornado-sensitivity", "radar-capability", "dumbbell-gap", "bump-ranking", "composition-shift", "part-to-whole", "box-plot", "histogram", "box-plot-jitter", "small-multiples"]);
 
 function normalizeRankMigration(data) {
   if (data?.module_id !== "slope-ranking" && data?.diagram?.type !== "slope-ranking") return data;
@@ -191,8 +191,10 @@ export async function validateR3ModuleFile(inputPath) {
 
 function validateMekko(data, c) {
   const segments = data.diagram.segments;
+  const layoutMode = data.diagram.layout_mode ?? "normalized";
+  requireCondition(["normalized", "absolute"].includes(layoutMode), "DATA_CONTRACT_FAIL", "Mekko layout_mode must be normalized or absolute");
   requireCondition(Array.isArray(segments) && segments.length >= 3 && segments.length <= 6, "DATA_CONTRACT_FAIL", "Mekko requires 3–6 segments");
-  requireCondition(near(segments.reduce((sum, item) => sum + item.size_share, 0), 100), "MEKKO_RECONCILIATION_FAIL", "Segment size shares must sum to 100");
+  if (layoutMode === "normalized") requireCondition(near(segments.reduce((sum, item) => sum + item.size_share, 0), 100), "MEKKO_RECONCILIATION_FAIL", "Segment size shares must sum to 100");
   const stackIds = segments[0]?.stacks?.map((item) => item.id) ?? [];
   requireCondition(stackIds.length >= 2 && stackIds.length <= 5, "DATA_CONTRACT_FAIL", "Mekko requires 2–5 stack categories");
   for (const segment of segments) {
@@ -200,13 +202,53 @@ function validateMekko(data, c) {
     c.text(segment.absolute_size, "Segment absolute size");
     c.text(segment.growth, "Segment growth");
     requireCondition(segment.stacks?.map((item) => item.id).join("|") === stackIds.join("|"), "DATA_CONTRACT_FAIL", "Every segment must use identical stack categories");
-    requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.share, 0), 100), "MEKKO_RECONCILIATION_FAIL", `Stacks in ${segment.label.text} must sum to 100`);
+    if (layoutMode === "absolute") {
+      requireCondition(Number.isFinite(segment.total_value) && segment.total_value > 0, "DATA_CONTRACT_FAIL", "Absolute Mekko segments require positive total_value");
+      requireCondition(segment.stacks.every((stack) => Number.isFinite(stack.value) && stack.value >= 0), "DATA_CONTRACT_FAIL", `Absolute Mekko stacks in ${segment.label.text} require numeric value fields`);
+      requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.value, 0), segment.total_value), "MEKKO_RECONCILIATION_FAIL", `Absolute stacks in ${segment.label.text} must sum to total_value`);
+    } else requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.share, 0), 100), "MEKKO_RECONCILIATION_FAIL", `Stacks in ${segment.label.text} must sum to 100`);
     for (const stack of segment.stacks) { c.text(stack.label, "Stack label"); c.source(stack.source_ids, "Stack value"); }
     c.source(segment.source_ids, "Segment data");
   }
   if (data.diagram.priority_label) c.text(data.diagram.priority_label, "Priority label");
   (data.diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+}
+
+function validatePartToWhole(data, c) {
+  const diagram = data.diagram;
+  requireCondition(["pie", "doughnut"].includes(diagram.chart_type), "DATA_CONTRACT_FAIL", "Part-to-whole chart_type must be pie or doughnut");
+  requireCondition(!Array.isArray(diagram.periods) || diagram.periods.length === 0, "MODULE_COVERAGE_GAP", "Part-to-whole accepts one period only; multi-period composition uses composition-shift");
+  c.text(diagram.period, "Part-to-whole period");
+  c.text(diagram.total_label, "Part-to-whole total label");
+  requireCondition(Number.isFinite(diagram.total_value) && diagram.total_value > 0, "DATA_CONTRACT_FAIL", "Part-to-whole requires a positive finite total_value");
+  requireCondition(typeof diagram.unit === "string" && diagram.unit.trim().length > 0, "DATA_CONTRACT_FAIL", "Part-to-whole unit is required");
+  c.source(diagram.total_value_source_ids, "Part-to-whole total value");
+  const parts = diagram.parts;
+  requireCondition(Array.isArray(parts) && parts.length >= 3 && parts.length <= 6, "DATA_CONTRACT_FAIL", "Part-to-whole requires 3–6 parts");
+  const ids = new Set();
+  let priorityCount = 0;
+  let sum = 0;
+  for (const part of parts) {
+    requireCondition(typeof part.id === "string" && part.id.length > 0 && !ids.has(part.id), "DATA_CONTRACT_FAIL", "Part-to-whole part IDs must be unique non-empty strings");
+    ids.add(part.id);
+    c.text(part.label, "Part label");
+    requireCondition(Number.isFinite(part.value) && part.value >= 0, "DATA_CONTRACT_FAIL", `Part ${part.id} value must be finite and non-negative`);
+    c.source(part.source_ids, `Part ${part.id} value`);
+    sum += part.value;
+    if (part.priority === true) priorityCount += 1;
+  }
+  requireCondition(priorityCount <= 1, "DATA_CONTRACT_FAIL", "Part-to-whole supports at most one priority part");
+  requireCondition(near(sum, diagram.total_value), "PART_TO_WHOLE_RECONCILIATION_FAIL", "Part values must sum exactly to total_value");
+  if (diagram.chart_type === "doughnut") {
+    c.text(diagram.center_label, "Doughnut center label");
+    c.text(diagram.center_value, "Doughnut center value");
+  } else {
+    requireCondition(diagram.center_label === undefined && diagram.center_value === undefined, "DATA_CONTRACT_FAIL", "Pie mode cannot contain doughnut center fields");
+  }
+  requireCondition((diagram.insights ?? []).length <= 3, "DATA_CONTRACT_FAIL", "Part-to-whole supports at most three insights");
+  (diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
+  if (diagram.conclusion) c.text(diagram.conclusion, "Conclusion");
 }
 
 function validateTornado(data, c) {
@@ -512,7 +554,7 @@ export function validateR3Module(data) {
   requireCondition(data?.diagram?.type === data.module_id, "LOGIC_STRUCTURE_FAIL", "diagram.type must match module_id");
   const c = context(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
-  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "box-plot": validateBoxPlot, histogram: validateHistogram, "box-plot-jitter": validateBoxPlotJitter, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
+  ({ marimekko: validateMekko, "tornado-sensitivity": validateTornado, "radar-capability": validateRadar, "dumbbell-gap": validateDumbbell, "bump-ranking": validateBump, "composition-shift": validateCompositionShift, "part-to-whole": validatePartToWhole, "box-plot": validateBoxPlot, histogram: validateHistogram, "box-plot-jitter": validateBoxPlotJitter, "small-multiples": validateSmallMultiples })[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };
 }
 

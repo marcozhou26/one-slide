@@ -126,9 +126,13 @@ Every visible text object uses `{text, source_ids}`. Structured display items us
 
 `requested_module`、`structure.primary_exhibit` 和 `module_payload.module_id` 必须一致。`module_payload` 必须包含该模块 validator 所需的全部字段和全部可见内容；不得只放模块名或半成品骨架。混合页面或模块无法容纳全部必含内容时，三项都省略，由 Builder 进入 `direct_composition`，不得硬塞模块。
 
+`chart-insight` 的 `diagram` 必须包含 4–8 个唯一类别 ID、两组唯一且同单位的非负柱形序列，以及一组唯一、带明确单位和固定 `axis_min/axis_max` 的比值或指数序列。三条 `insights[]` 均需携带 `anchor.series_id` 与 `anchor.category_id`，并指向真实存在的数据点；连接线不得由 Renderer 根据洞察顺序猜测。柱形单位冲突、负柱值、比值越界或无效锚点时不得强制命中。`hr-ticket-classification` 与 `hr-eligibility-matrix` 已退休，不得再写入 `requested_module`。
+
 排名迁移页使用正式模块 ID `bump-ranking`。Producer 交接时应使用 `diagram.periods` 和每个对象的 `ranks`、`values`、`states` 数组；数组长度必须与时期数一致，时期保持原始顺序。两期数据可以由 Builder 呈现为 slope-style 视觉，三期及以上数据呈现为 Bump Chart。新进入、退出或暂未上榜必须显式写入 `states`，不能靠颜色或文案猜测。旧版 `slope-ranking` 的左右字段只用于兼容已有运行包，不作为新提示词的生成目标。
 
 多期构成变化页使用 `composition-shift`。`diagram` 必须包含 3–8 个有序 `periods`、2–6 个带唯一 `id` 的 `components`、与时期等长的 `shares`、`basis`、`denominator`、`unit` 和 1–3 条来源支持的 `insights`。每期占比必须对平到 100%。`basis=absolute` 时还要传入各构成的 `values`、每期 `totals` 和 `total_source_ids`，三者必须一致。缺失分母、期间口径冲突、构成项不稳定或页面还需第二个主图时，不得强制命中模块。
+
+单期单总量构成页使用 `part-to-whole`。`diagram` 必须包含 `chart_type=pie|doughnut`、来源支持的单一 `period` 与 `total_label`、正的 `total_value`、`total_value_source_ids`、明确 `unit`，以及 3–6 个带唯一 `id`、来源化 `label`、有限非负 `value` 和 `source_ids` 的互斥构成项。构成值之和必须在浮点误差内严格等于总量；扇区角度使用计算真值，不从四舍五入显示百分比反推。`doughnut` 还必须提供来源支持的 `center_label` 与 `center_value`；`pie` 不得携带中心字段。未指定饼图或环图时，Producer 可对明确构成关系采用 `doughnut` 默认值，不向用户追问。跨期构成转 `composition-shift`；横向规模与内部构成转 `marimekko`；负值、多个总量、超过六个无法诚实合并的构成项、缺少期间/总量/来源或第二个独立主图时不得强制命中。
 
 分群留存或存续页使用 `cohort-retention`。`diagram` 必须包含 4–12 个严格递增且从 0 开始的 `relative_periods`、`relative_period_unit`、`cohort_definition`、`denominator`、`measure`、`curve_mode`，以及 3–8 个带唯一 `id`、`initial_count` 和等长 `retained_counts` 或 `retention_rates` 的 cohort。Producer 不要求用户重复填写人数和比例；只提供一种时由 Builder 计算另一种，两者都有时必须对平。未成熟或未观察周期只能作为尾部连续 `null`，并提供页面可见的 `censoring_note`，不得补 0。`survival` 必须非递增；允许真实回升的当期活跃口径使用 `period_retention`。固定四组、0–24 月并同时要求行业基准和风险矩阵的页面继续使用 `hr-new-hire-survival`。存在第二个独立主图时不得强制命中本模块。
 

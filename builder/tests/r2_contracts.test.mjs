@@ -17,6 +17,26 @@ for (const moduleId of modules) {
   });
 }
 
+test("chart-insight blocks unit, axis and insight-anchor correctness failures", async () => {
+  const data = await fixture("chart-insight");
+
+  const unitMismatch = structuredClone(data);
+  unitMismatch.diagram.series[1].unit = "万元";
+  assert.throws(() => validateR2Module(unitMismatch), (error) => error.code === "CHART_UNIT_MISMATCH");
+
+  const outOfAxis = structuredClone(data);
+  outOfAxis.diagram.ratio.values[0] = outOfAxis.diagram.ratio.axis_max + 1;
+  assert.throws(() => validateR2Module(outOfAxis), (error) => error.code === "RATIO_AXIS_FAIL");
+
+  const badAnchor = structuredClone(data);
+  badAnchor.diagram.insights[0].anchor.category_id = "missing-period";
+  assert.throws(() => validateR2Module(badAnchor), (error) => error.code === "INSIGHT_ANCHOR_FAIL");
+
+  const negativeBar = structuredClone(data);
+  negativeBar.diagram.series[0].values[0] = -1;
+  assert.throws(() => validateR2Module(negativeBar), (error) => error.code === "DATA_CONTRACT_FAIL");
+});
+
 test("R2 module-specific contradictions are blocked", async () => {
   const scenario = await fixture("scenario-planning");
   scenario.diagram.scenarios[0].probability = 30;
