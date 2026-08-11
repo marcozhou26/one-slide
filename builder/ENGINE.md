@@ -3,7 +3,7 @@ name: single-consulting-slide-builder
 description: Build one native-editable 16:9 consulting PowerPoint slide from an approved Consulting Slide Prompt Architect handoff, a structured Synthetic Input Generator package, or a simple unambiguous raw request. Use for consulting comparisons, processes, matrices, trends, rankings, flows, charts, complex organization charts, HR business pages, and composite analytical single slides. Return BRIEF_REQUIRED instead of forcing complex or ambiguous raw material into one page.
 ---
 
-# Single Consulting Slide Builder V3.3.7
+# Single Consulting Slide Builder V3.4.0
 
 > 本文档中的命令均假定当前工作目录为包含顶层 `SKILL.md` 的 OneSlide Skill 根目录；Builder 脚本使用 `builder/` 前缀执行。
 

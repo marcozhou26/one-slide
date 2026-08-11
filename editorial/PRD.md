@@ -1,6 +1,6 @@
 # OneSlide Editorial QA PRD
 
-目标版本：OneSlide 1.4.0
+目标版本：OneSlide 1.5.0
 
 Editorial QA 是 Builder 之后的内部高级审校门禁。它拥有整页审美判断权，但没有 PPT 修改权。它只判断初稿是否值得改、最值得改什么，并把一条高价值任务交回 Builder。
 

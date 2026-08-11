@@ -21,7 +21,7 @@ PROHIBITED_GITHUB_ATTRIBUTION = (
     "nan" + "hai academy",
     "nan" + "hai.pro",
 )
-SUITE_VERSION = "1.3.1"
+SUITE_VERSION = "1.5.0"
 REQUIRED = [
     "SKILL.md",
     "README.md",

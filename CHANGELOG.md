@@ -4,9 +4,11 @@
 
 | Component | Version | Source |
 | --- | --- | --- |
-| OneSlide suite | 1.4.0 | `SKILL.md` and `builder/references/module-registry.json` |
+| OneSlide suite | 1.5.0 | `SKILL.md` and `builder/references/module-registry.json` |
 | Producer engine | 1.1.2 | `producer/ENGINE.md` |
-| Builder engine | 3.3.7 | `builder/ENGINE.md` and the module registry |
+| Builder engine | 3.4.0 | `builder/ENGINE.md` and the module registry |
+
+## 1.5.0 — 2026-08-11
 
 - Reduced the productized registry from 40 to 32 modules after a capability-value review. Retired `region-map-table`; moved `route-tradeoff`, `scqa-roadmap`, `scenario-planning`, `industry-value-chain` and `spiral-maturity` to guarded direct-composition patterns; map requests now stop at `SENSITIVE_MAP_MODULE_RETIRED`.
 - Replaced the fixed `hr-level-function-matrix`, `hr-service-catalog` and `hr-ticket-intake` modules with one variable 2–10 row by 2–6 column `hr-operating-diagnostic-matrix`, supporting mixed numeric, percentage and text columns, optional secondary measures, column-local heat encoding and strict source/type/range gates.
