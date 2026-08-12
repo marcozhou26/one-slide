@@ -1,7 +1,7 @@
 {
   "schema_version": "3.0",
-  "suite_version": "1.5.0",
-  "builder_engine_version": "3.4.0",
+  "suite_version": "1.5.1",
+  "builder_engine_version": "3.4.1",
   "module_contract_version": "1.0.0",
   "productized_module_count": 32,
   "modules": [

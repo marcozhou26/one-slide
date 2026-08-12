@@ -1,8 +1,8 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  COLORS, addChartLine, addTextBox, createPresentation, exportPresentation,
-  fitPageTitleFontSize, parseCliArgs,
+  COLORS, addChartLine, addDataSourceFooter, addNode, addTextBox, createPresentation, exportPresentation,
+  fitPageTitleFontSize, parseCliArgs, setSpeakerNotes,
 } from "./pptx_core.mjs";
 import { planConfidenceBand } from "./plan_confidence_band.mjs";
 import { loadConfidenceBandInput } from "./validate_confidence_band.mjs";
@@ -32,8 +32,7 @@ export async function renderConfidenceBand(data, output) {
   if (plan.subtitle) addTextBox(slide, { name: "page-subtitle", text: plan.subtitle.text, position: plan.subtitle, fontSize: 16, color: COLORS.muted, maxLines: 1 });
   panel(slide, "interval-chart-frame", plan.chart);
   addTextBox(slide, { name: "metric-definition", text: `${d.metric.text}（${d.unit.text}）`, position: { left: plan.chart.left + 18, top: plan.chart.top + 14, width: 300, height: 26 }, fontSize: 16, bold: true, color: COLORS.navy, singleLine: true });
-  addTextBox(slide, { name: "interval-definition", text: d.interval_label.text, position: { left: plan.chart.left + 326, top: plan.chart.top + 14, width: 260, height: 26 }, fontSize: 14, color: COLORS.blue, singleLine: true });
-  addTextBox(slide, { name: "sample-definition", text: `样本：${d.sample_definition.text}`, position: { left: plan.chart.left + 590, top: plan.chart.top + 14, width: 252, height: 26 }, fontSize: 14, color: COLORS.muted, alignment: "right", singleLine: true });
+  addTextBox(slide, { name: "interval-definition", text: "阴影表示估计范围", position: { left: plan.chart.left + 326, top: plan.chart.top + 14, width: 260, height: 26 }, fontSize: 14, color: COLORS.blue, singleLine: true });
 
   const observed = d.periods.filter((period) => period.estimate !== null);
   const values = observed.flatMap((period) => [period.lower, period.upper]);
@@ -68,18 +67,18 @@ export async function renderConfidenceBand(data, output) {
       addTextBox(slide, { name: `estimate-label-${index + 1}`, text: fmt(period.estimate), position: { left: xx - 28, top: y(period.estimate) - 28, width: 56, height: 20 }, fontSize: 12, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
     }
   });
-  addTextBox(slide, { name: "visual-legend", text: `实线与圆点：中心估计　半透明带：${d.interval_label.text}　虚线：阈值`, position: { left: plot.left, top: plot.top + plot.height + 40, width: plot.width, height: 22 }, fontSize: 12, color: COLORS.muted, singleLine: true });
+  addTextBox(slide, { name: "visual-legend", text: "实线与圆点：估计值　半透明带：估计范围　虚线：关注线", position: { left: plot.left, top: plot.top + plot.height + 40, width: plot.width, height: 22 }, fontSize: 12, color: COLORS.muted, singleLine: true });
 
   panel(slide, "interpretation-rail", plan.rail, COLORS.soft);
-  addTextBox(slide, { name: "rail-title", text: "读图与口径", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
-  d.insights.forEach((item, index) => addTextBox(slide, { name: `insight-${index + 1}`, text: `${index + 1}. ${item.text}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 54 + index * 70, width: plan.rail.width - 32, height: 58 }, fontSize: 14, bold: index === 0, color: COLORS.text, verticalAlignment: "top", maxLines: 4 }));
-  const methodText = `区间：重复抽样覆盖，不是单期概率\n估计：季度比例；重抽样2000次\n总体：${d.population_definition.text}`;
-  addTextBox(slide, { name: "method-note", text: methodText, position: { left: plan.rail.left + 16, top: plan.rail.top + 264, width: plan.rail.width - 32, height: 76 }, fontSize: 12, color: COLORS.muted, verticalAlignment: "top", maxLines: 5 });
-  if (d.threshold) addTextBox(slide, { name: "threshold-semantics", text: d.threshold.semantics.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 350, width: plan.rail.width - 32, height: 60 }, fontSize: 12, bold: true, color: COLORS.orange, verticalAlignment: "top", maxLines: 4 });
-
-  const notes = [d.source_note.text, d.missing_value_note?.text, d.disclosure?.text].filter(Boolean).join("；");
-  addTextBox(slide, { name: "source-note", text: notes, position: { left: plan.footer.left, top: plan.footer.top, width: plan.footer.width, height: 24 }, fontSize: 12, color: d.disclosure ? COLORS.orange : COLORS.muted, maxLines: 1 });
-  if (d.conclusion) addTextBox(slide, { name: "conclusion", text: d.conclusion.text, position: { left: plan.footer.left, top: plan.footer.top + 28, width: plan.footer.width, height: 34 }, fontSize: 16, bold: true, color: COLORS.navy, fill: COLORS.orangeLight, line: { style: "solid", fill: COLORS.orange, width: 1 }, alignment: "center", maxLines: 2 });
+  addTextBox(slide, { name: "rail-title", text: "关键发现", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
+  d.insights.slice(0, 2).forEach((item, index) => addNode(slide, { name: `insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 58 + index * 116, width: plan.rail.width - 32, height: 96 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.5 : 1, fontSize: 14, bold: index === 0, color: COLORS.text, alignment: "left" }));
+  if (d.conclusion) addTextBox(slide, { name: "conclusion", text: d.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 308, width: plan.rail.width - 32, height: 120 }, fontSize: 16, bold: true, color: COLORS.navy, fill: COLORS.orangeLight, line: { style: "solid", fill: COLORS.orange, width: 1 }, verticalAlignment: "middle", maxLines: 6 });
+  addDataSourceFooter(slide, { source: d.source_note, disclosure: d.disclosure, position: plan.footer });
+  setSpeakerNotes(slide, [
+    { title: "专业术语", items: [`${d.interval_label.text}：${d.interval_definition.text}`] },
+    { title: "口径解释", items: [d.sample_definition, d.population_definition, d.threshold?.semantics, d.missing_value_note] },
+    { title: "计算方法", items: [d.estimation_method] },
+  ]);
   await exportPresentation(presentation, output);
   return plan;
 }

@@ -521,6 +521,44 @@ async function writeBlob(filePath, blob) {
   await fs.writeFile(filePath, new Uint8Array(await blob.arrayBuffer()));
 }
 
+function visibleText(value) {
+  if (typeof value === "string") return value.trim();
+  if (value && typeof value.text === "string") return value.text.trim();
+  return "";
+}
+
+export function setSpeakerNotes(slide, sections = []) {
+  const text = sections
+    .map((section) => {
+      if (typeof section === "string") return section.trim();
+      const title = visibleText(section?.title);
+      const items = (section?.items ?? []).map(visibleText).filter(Boolean);
+      if (!title && items.length === 0) return "";
+      return [title ? `【${title}】` : "", ...items.map((item) => `- ${item}`)].filter(Boolean).join("\n");
+    })
+    .filter(Boolean)
+    .join("\n\n");
+  if (text) slide.speakerNotes.textFrame.setText(text);
+  return text;
+}
+
+export function addDataSourceFooter(slide, { source, disclosure, position }) {
+  const sourceText = visibleText(source).replace(/^(?:数据)?来源[：:]\s*/u, "");
+  const disclosureText = visibleText(disclosure);
+  const parts = [];
+  if (sourceText) parts.push(sourceText);
+  if (disclosureText && !sourceText.includes(disclosureText)) parts.push(disclosureText);
+  if (parts.length === 0) return null;
+  return addTextBox(slide, {
+    name: "data-source-footer",
+    text: `数据来源：${parts.join("；")}`,
+    position,
+    fontSize: 12,
+    color: disclosureText ? COLORS.orange : COLORS.muted,
+    maxLines: 1,
+  });
+}
+
 export async function exportPresentation(presentation, output) {
   if (!output?.pptx?.endsWith(".pptx") || !output?.preview?.endsWith(".png") || !output?.layout?.endsWith(".json")) {
     throw new SlideContractError("OUTPUT_CONTRACT_FAIL", "pptx, preview, and layout outputs must end in .pptx, .png, and .json");

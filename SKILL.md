@@ -4,7 +4,7 @@ description: "把完整或零散的用户材料整理成恰好一页、来源可
 license: Apache-2.0
 metadata:
   author: "周俊东 Marco"
-  version: "1.5.0"
+  version: "1.5.1"
 ---
 
 # OneSlide
@@ -104,6 +104,8 @@ metadata:
 
 合成定性内容在相邻位置显示“待确认”，或使用能逐项映射的页面图例。用户确认采用某个情景后，它仍是情景假设，不会变成真实事实。
 
+正文只保留读者第一眼理解结论和主证据所需的信息。专业术语解释、口径、计算公式与方法放入 PowerPoint 讲者备注；页面底部只保留一行 `数据来源：...`，合成披露并入同一行。把内容移入备注后必须重新构图，不能留下空容器或失衡留白。
+
 运行：
 
 ```bash
@@ -154,7 +156,8 @@ Producer 只有在一个已产品化模块能覆盖全部必含内容时，才�
 
 - 恰好一页、16:9；
 - 文字、形状、表格和图表为 PowerPoint 原生可编辑对象；
-- 通过语义审计、整页渲染检查和可读性检查；
+- 通过语义审计、整页渲染检查、可读性检查和传播可读性检查；
+- 页面底部只有数据来源；专业术语、口径和计算方法存在于 PowerPoint 备注而不是可见画面；
 - layout JSON 通过短标签单行、孤字、英文 token、数字单位、两行标题与副标题互斥、标题安全区、纵向空间平衡、跨区块边缘对齐、画布利用率和越界门禁；
 - 每个可见对象通过信息贡献门槛；顶部装饰色带、eyebrow、标题饰线、空卡片和其他纯装饰对象必须阻断；
 - 组织架构图额外检查同层节点水平对齐、一对一直属线垂直对齐、职能虚线方向与无穿越路由；出现 `ORG_PEER_ROW_MISALIGNMENT`、`ORG_DIRECT_REPORT_DOGLEG` 或 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` 时不得交付；
@@ -198,6 +201,11 @@ BUILDER_HANDOFF_READY | not_applicable | fail
 EDITORIAL_REVIEW_PASS | no_material_edit | not_applicable | fail
 SOURCE_FIDELITY_PASS | not_applicable | not_tested | fail
 RENDERED_READABILITY_PASS | not_applicable | not_tested | fail
+PUBLIC_READABILITY_PASS | not_applicable | not_tested | fail
+TERMINOLOGY_ACCESSIBILITY_PASS | not_applicable | not_tested | fail
+VISIBLE_INFORMATION_BUDGET_PASS | not_applicable | not_tested | fail
+DATA_SOURCE_ONLY_FOOTER_PASS | not_applicable | not_tested | fail
+SPEAKER_NOTES_COVERAGE_PASS | not_applicable | not_tested | fail
 POWERPOINT_OPEN_CHECK | not_applicable | not_tested | fail
 REQUIREMENT_COVERAGE_PASS | not_tested | fail
 PRODUCT_VALUE_PASS | not_tested | fail
