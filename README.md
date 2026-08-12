@@ -4,7 +4,7 @@ Turn complete or scattered source material into one clear, source-traceable, nat
 
 OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[Download OneSlide v1.5.1](../../releases/download/v1.5.1/one-slide-v1.5.1.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
+[Download OneSlide v1.5.2](../../releases/download/v1.5.2/one-slide-v1.5.2.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
 
 ## Turn management questions into decision-ready slides
 
@@ -42,7 +42,7 @@ If you do not explicitly request a PowerPoint file, OneSlide defaults to `PROMPT
 
 ## Get started in three minutes
 
-1. Download and unzip [OneSlide v1.5.1](../../releases/download/v1.5.1/one-slide-v1.5.1.zip).
+1. Download and unzip [OneSlide v1.5.2](../../releases/download/v1.5.2/one-slide-v1.5.2.zip).
 2. Copy the top-level `one-slide` folder into the Skills directory of a compatible agent client.
 3. Refresh the client and invoke `$one-slide`.
 
@@ -122,4 +122,4 @@ Slides created through ordinary use of OneSlide do not need an author watermark 
 
 ## Version status
 
-The latest public release is v1.5.1. It keeps the 32-module registry from v1.5.0 and adds the first public-readability vertical slice for box plots, confidence bands, and Marimekko pages: visible content is reduced to the conclusion and primary evidence, while technical definitions and calculation methods remain available in native PowerPoint speaker notes. Font and layout differences may still occur across clients and PowerPoint versions.
+The latest public release is v1.5.2. It applies one readability rule to every OneSlide page: visible content is limited to the conclusion and primary evidence, while technical definitions, scope, and calculation methods remain available in native PowerPoint speaker notes. Box plots, confidence bands, and Marimekko are representative regression cases for this page-wide rule; they are not the scope boundary. The release keeps the 32-module registry from v1.5.0. Font and layout differences may still occur across clients and PowerPoint versions.

@@ -58,7 +58,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_builder_registry_is_complete_and_portable(self):
         registry = json.loads((ROOT / "builder/references/module-registry.json").read_text(encoding="utf-8"))
         modules = registry["modules"]
-        self.assertEqual(registry["suite_version"], "1.5.1")
+        self.assertEqual(registry["suite_version"], "1.5.2")
         self.assertEqual(registry["builder_engine_version"], "3.4.1")
         self.assertNotIn("skill_version", registry)
         self.assertEqual(registry["productized_module_count"], len(modules))

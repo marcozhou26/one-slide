@@ -39,7 +39,7 @@ const validator = (moduleId) => {
 };
 
 test("the V3 registry preserves 32 productized modules with resolvable runtime files", async () => {
-  assert.equal(registry.suite_version, "1.5.1");
+  assert.equal(registry.suite_version, "1.5.2");
   assert.equal(registry.builder_engine_version, "3.4.1");
   assert.equal(registry.productized_module_count, 32);
   assert.equal(registry.modules.length, 32);
