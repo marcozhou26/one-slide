@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { COLORS, addChartLine, addNode, addTextBox, createPresentation, exportPresentation, fitPageTitleFontSize, parseCliArgs } from "./pptx_core.mjs";
+import { COLORS, addChartLine, addDataSourceFooter, addNode, addTextBox, createPresentation, exportPresentation, fitPageTitleFontSize, parseCliArgs, setSpeakerNotes } from "./pptx_core.mjs";
 import { planR3Module } from "./plan_r3_module.mjs";
 import { calculateHistogram, loadR3ModuleInput } from "./validate_r3_module.mjs";
 
@@ -25,6 +25,9 @@ function insights(slide, position, items, title = "关键洞察") {
   items.slice(0, 3).forEach((item, index) => addNode(slide, { name: `${title}-item-${index + 1}`, text: item.text, position: { left: position.left + 16, top: position.top + 60 + index * 122, width: position.width - 32, height: 96 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.7 : 1, fontSize: 16, bold: index === 0, color: COLORS.text, alignment: "left" }));
 }
 function bottom(slide, position, item) { if (item) addNode(slide, { name: "bottom-conclusion", text: item.text, position, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 18, bold: true, color: COLORS.navy }); }
+function plainGrowth(text) {
+  return String(text ?? "").replace(/CAGR\s*([+\-]?\s*\d+(?:\.\d+)?%)/giu, "年均增长 $1");
+}
 
 function renderMekko(slide, data, plan) {
   panel(slide, "mekko-frame", plan.chart);
@@ -53,15 +56,20 @@ function renderMekko(slide, data, plan) {
         addTextBox(slide, { name: `mekko-label-${segmentIndex + 1}-${stackIndex + 1}`, text: `${stack.label.text} ${labelValue}`, position: { left: cursor + 4, top: y + height / 2 - 14, width: width - 8, height: 28 }, fontSize: 16, bold: stackIndex === 0, color: stackIndex < 3 ? COLORS.white : COLORS.text, alignment: "center" });
       }
     });
-    const topText = absolute ? `${segment.absolute_size.text}\n${segment.growth.text.replace(/^CAGR\s*/u, "")}` : `${segment.absolute_size.text}\n${segment.growth.text}`;
+    const topText = `${segment.absolute_size.text}\n${plainGrowth(segment.growth.text)}`;
     addTextBox(slide, { name: `mekko-top-${segmentIndex + 1}`, text: topText, position: { left: cursor, top: plan.chart.top + 10, width, height: 48 }, fontSize: absolute ? 14 : 16, bold: true, color: segment.priority ? COLORS.orange : COLORS.navy, alignment: "center" });
     const bottomValue = absolute ? formatAbsoluteValue(segment.total_value) : `${segment.size_share}%`;
     addTextBox(slide, { name: `mekko-bottom-${segmentIndex + 1}`, text: `${segment.label.text}\n${bottomValue}`, position: { left: cursor, top: plot.top + plot.height + 8, width, height: 40 }, fontSize: 16, bold: segment.priority, color: segment.priority ? COLORS.orange : COLORS.text, alignment: "center" });
     if (segment.priority) slide.shapes.add({ name: `mekko-priority-${segmentIndex + 1}`, geometry: "rect", position: { left: cursor - 3, top: plot.top - 3, width: width + 6, height: plot.height + 6 }, fill: "none", line: { style: "solid", fill: COLORS.orange, width: 3 } });
     cursor += width;
   });
-  insights(slide, plan.rail, data.diagram.insights ?? []);
-  bottom(slide, plan.bottom, data.diagram.conclusion);
+  insights(slide, plan.rail, (data.diagram.insights ?? []).slice(0, 2));
+  if (data.diagram.conclusion) addNode(slide, { name: "mekko-conclusion", text: data.diagram.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 326, width: plan.rail.width - 32, height: 112 }, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 16, bold: true, color: COLORS.navy });
+  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.bottom });
+  setSpeakerNotes(slide, [
+    { title: "专业术语", items: ["CAGR 是复合年均增长率，页面已改写为“年均增长”。"] },
+    { title: "计算方法", items: ["年均增长率 =（期末值 ÷ 期初值）的 1/年数 次方 − 1。", ...(data.diagram.segments ?? []).map((segment) => `${segment.label.text}：${segment.growth.text}`)] },
+  ]);
 }
 
 function renderPartToWhole(slide, data, plan) {
@@ -361,7 +369,6 @@ function renderBoxPlot(slide, data, plan) {
     addTextBox(slide, { name: `box-tick-${index + 1}`, text: compactNumber(value), position: { left: plan.chart.left + 4, top: yy - 11, width: 58, height: 22 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
   }
   addTextBox(slide, { name: "box-unit", text: data.diagram.unit.text, position: { left: plan.chart.left + 12, top: plan.chart.top + 14, width: 230, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, singleLine: true });
-  addTextBox(slide, { name: "box-denominator", text: data.diagram.denominator.text, position: { left: plan.chart.left + 246, top: plan.chart.top + 14, width: plan.chart.width - 262, height: 24 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
   const slot = plot.width / groups.length;
   groups.forEach((group, index) => {
     const cx = plot.left + slot * (index + .5);
@@ -382,26 +389,19 @@ function renderBoxPlot(slide, data, plan) {
       addTextBox(slide, { name: `box-outlier-label-${index + 1}-${outlierIndex + 1}`, text: `异常值 ${compactNumber(value)}`, position: { left: cx + 8, top: pointY - 10, width: Math.min(104, slot * .7), height: 20 }, fontSize: 12, bold: true, color: COLORS.orange, singleLine: true });
     });
     addTextBox(slide, { name: `box-group-${index + 1}`, text: group.label.text, position: { left: cx - slot * .46, top: plot.top + plot.height + 8, width: slot * .92, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, alignment: "center", singleLine: true });
-    addTextBox(slide, { name: `box-sample-${index + 1}`, text: `有效 n=${group.sample_size}　缺失=${group.missing_count}`, position: { left: cx - slot * .48, top: plot.top + plot.height + 32, width: slot * .96, height: 20 }, fontSize: 12, color: COLORS.muted, alignment: "center", singleLine: true });
+    addTextBox(slide, { name: `box-sample-${index + 1}`, text: `有效 ${group.sample_size}　缺失 ${group.missing_count}`, position: { left: cx - slot * .48, top: plot.top + plot.height + 32, width: slot * .96, height: 20 }, fontSize: 12, color: COLORS.muted, alignment: "center", singleLine: true });
   });
 
-  panel(slide, "box-method-rail", plan.rail, COLORS.soft);
-  addTextBox(slide, { name: "box-method-title", text: "统计口径", position: { left: plan.rail.left + 16, top: plan.rail.top + 12, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy });
-  const methodItems = [
-    ["样本", `${data.diagram.period.text}\n${data.diagram.sample_definition.text}\n${data.diagram.missing_policy.text}`],
-    ["四分位", data.diagram.quartile_method.text],
-    ["须线与异常", data.diagram.whisker_rule.text],
-  ];
-  let railY = plan.rail.top + 50;
-  methodItems.forEach(([label, value], index) => {
-    addTextBox(slide, { name: `box-method-label-${index + 1}`, text: label, position: { left: plan.rail.left + 16, top: railY, width: 116, height: 22 }, fontSize: 14, bold: true, color: COLORS.orange, singleLine: true });
-    const height = [92, 50, 68][index];
-    addTextBox(slide, { name: `box-method-value-${index + 1}`, text: value, position: { left: plan.rail.left + 16, top: railY + 26, width: plan.rail.width - 32, height }, fontSize: 12, color: COLORS.text, verticalAlignment: "top", maxLines: [5, 3, 4][index] });
-    railY += height + 26;
-  });
-  addTextBox(slide, { name: "box-insight-title", text: "关键发现", position: { left: plan.rail.left + 16, top: railY, width: plan.rail.width - 32, height: 26 }, fontSize: 18, bold: true, color: COLORS.navy });
-  (data.diagram.insights ?? []).slice(0, 2).forEach((item, index) => addTextBox(slide, { name: `box-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: railY + 32 + index * 42, width: plan.rail.width - 32, height: 40 }, fontSize: 12, bold: index === 0, color: index === 0 ? COLORS.orange : COLORS.text, verticalAlignment: "top", maxLines: 3 }));
-  bottom(slide, plan.bottom, data.diagram.conclusion);
+  panel(slide, "box-insight-rail", plan.rail, COLORS.soft);
+  addTextBox(slide, { name: "box-insight-title", text: "关键发现", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy });
+  (data.diagram.insights ?? []).slice(0, 2).forEach((item, index) => addNode(slide, { name: `box-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 64 + index * 122, width: plan.rail.width - 32, height: 100 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.5 : 1, fontSize: 14, bold: index === 0, color: COLORS.text, alignment: "left" }));
+  if (data.diagram.conclusion) addNode(slide, { name: "box-conclusion", text: data.diagram.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 326, width: plan.rail.width - 32, height: 110 }, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 16, bold: true, color: COLORS.navy, alignment: "left" });
+  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.bottom });
+  setSpeakerNotes(slide, [
+    { title: "专业术语", items: ["IQR 是四分位距，也就是中间 50% 数据的跨度。", "Q1 和 Q3 分别是下四分位数和上四分位数；箱体表示两者之间的范围。"] },
+    { title: "口径解释", items: [data.diagram.period, data.diagram.denominator, data.diagram.sample_definition, data.diagram.missing_policy] },
+    { title: "计算方法", items: [data.diagram.quartile_method, data.diagram.whisker_rule] },
+  ]);
 }
 
 function renderHistogram(slide, data, plan) {

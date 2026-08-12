@@ -6,11 +6,11 @@
 
 - `period`、`unit`、`denominator`：明确期间、单位、统计分母和筛选范围；
 - `sample_definition`、`missing_policy`：说明一条观察代表什么、有效样本如何计数、缺失记录如何处理；
-- `quartile_method`：页面可见的四分位算法，本版本使用 `PERCENTILE.INC（线性插值，等同 Type 7）`；
+- `quartile_method`：四分位算法，本版本使用 `PERCENTILE.INC（线性插值，等同 Type 7）`；
 - `whisker_multiplier`：本版本固定为 `1.5`；
 - `whisker_rule`：页面可见说明“须线端点为 1.5×IQR 围栏内的最远观测，围栏外记录逐点标为异常值”；
 - `groups`：3–8 组，`id` 唯一；每组包含标签、有效 `sample_size`、`missing_count`、`whisker_low`、`q1`、`median`、`q3`、`whisker_high`、显式 `outliers` 和 `source_ids`；
-- `insights`：1–3 条由分布摘要支持的发现；可选 `conclusion` 和合成数据 `disclosure`。
+- `insights`：1–3 条由分布摘要支持的发现；`source_note` 为页底来源；可选 `conclusion` 和合成数据 `disclosure`。
 
 ## 门禁
 
@@ -22,6 +22,6 @@
 
 ## 页面与编辑性
 
-主图使用原生 PowerPoint 线条、矩形、椭圆和文本：箱体表达 Q1–Q3，中位数使用明确横线和数值，须线与端点独立可编辑，异常值逐点显示并带“异常值 + 数值”标签。组名下直接显示有效样本量和缺失数；右侧显示期间、样本、缺失、四分位算法和须线规则。合成数据必须在页面上显示“合成示例数据，非真实客户数据”。
+主图使用原生 PowerPoint 线条、矩形、椭圆和文本：箱体表达 Q1–Q3，中位数使用明确横线和数值，须线与端点独立可编辑，异常值逐点显示并带“异常值 + 数值”标签。组名下直接显示有效样本量和缺失数；右侧只保留关键发现与结论。期间、分母、样本、缺失、四分位算法和须线规则写入讲者备注。页底只显示数据来源；合成披露并入同一行。
 
 验收必须覆盖完整输入、稀疏自然语言、关键口径缺失、模糊或冲突、非阻塞样式缺失、异常格式、统计顺序错误、异常值误放、渲染、溢出、原生对象和 Microsoft PowerPoint 实际打开。

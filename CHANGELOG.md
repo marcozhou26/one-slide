@@ -4,9 +4,15 @@
 
 | Component | Version | Source |
 | --- | --- | --- |
-| OneSlide suite | 1.5.0 | `SKILL.md` and `builder/references/module-registry.json` |
+| OneSlide suite | 1.5.1 | `SKILL.md` and `builder/references/module-registry.json` |
 | Producer engine | 1.1.2 | `producer/ENGINE.md` |
-| Builder engine | 3.4.0 | `builder/ENGINE.md` and the module registry |
+| Builder engine | 3.4.1 | `builder/ENGINE.md` and the module registry |
+
+## 1.5.1 — 2026-08-12
+
+- Added the first public-readability vertical slice for `box-plot`, `confidence-band`, and `marimekko`.
+- Kept the visible slide focused on the conclusion and primary evidence, moved technical definitions and calculation methods into native PowerPoint speaker notes, and standardized the footer as one data-source line with synthetic-data disclosure when applicable.
+- Added a machine-checkable visible-information budget, terminology screen, footer audit, and speaker-notes coverage regression without changing the 32-module public registry.
 
 ## 1.5.0 — 2026-08-11
 

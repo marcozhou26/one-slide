@@ -213,6 +213,8 @@ function validateMekko(data, c) {
   if (data.diagram.priority_label) c.text(data.diagram.priority_label, "Priority label");
   (data.diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  if (data.diagram.source_note) c.text(data.diagram.source_note, "Data source");
+  if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
 }
 
 function validatePartToWhole(data, c) {
@@ -424,6 +426,7 @@ function validateBoxPlot(data, c) {
   c.text(data.diagram.missing_policy, "Missing-value policy");
   c.text(data.diagram.quartile_method, "Quartile method");
   c.text(data.diagram.whisker_rule, "Whisker rule");
+  if (data.diagram.source_note) c.text(data.diagram.source_note, "Data source");
   requireCondition(data.diagram.whisker_multiplier === 1.5, "DATA_CONTRACT_FAIL", "Version 1.0 requires a 1.5×IQR whisker multiplier");
   const ids = new Set();
   for (const group of groups) {
