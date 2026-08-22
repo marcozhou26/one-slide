@@ -12,6 +12,9 @@ import {
   validateTypography,
 } from "./layout_constants.mjs";
 import { auditLayoutObject } from "./layout_quality.mjs";
+import { ensureAutoSlideNumber } from "./ensure_auto_slide_number.mjs";
+import { preparePowerPointTextEditability } from "./normalize_powerpoint_text_editability.mjs";
+import { resolveCanvasProfile } from "./canvas_profiles.mjs";
 
 export {
   FONT_SIZES,
@@ -26,7 +29,7 @@ export {
 export const DEFAULT_SLIDE_BACKGROUND = "#FFFFFF";
 const TEXT_POLICIES = new Map();
 const ALIGNMENT_CONTRACTS = [];
-const CONTAINMENT_CONTRACTS = [];
+const PEER_GROUP_CONTRACTS = [];
 export const APPROVED_CONNECTOR_KINDS = Object.freeze([
   "straight",
   "elbow",
@@ -46,6 +49,23 @@ export const COLORS = Object.freeze({
   soft: "#F4F6F8",
   white: "#FFFFFF",
 });
+
+export function resolveBusinessEmphasisStyle({
+  emphasized = false,
+  normalFill = COLORS.white,
+  highlightFill = COLORS.blueLight,
+  textColor = COLORS.text,
+  border = COLORS.border,
+  borderWidth = 0.8,
+} = {}) {
+  return {
+    bold: Boolean(emphasized),
+    fill: emphasized ? highlightFill : normalFill,
+    color: textColor,
+    border,
+    borderWidth,
+  };
+}
 
 export class SlideContractError extends Error {
   constructor(code, message) {
@@ -265,11 +285,19 @@ export function registerEdgeAlignment({ name, edge, members, tolerance = 2 }) {
   ALIGNMENT_CONTRACTS.push({ name, edge, members: [...members], tolerance });
 }
 
-export function registerContainment({ name, parent, members, tolerance = 2 }) {
-  if (!name || !parent || !Array.isArray(members) || members.length < 1) {
-    throw new SlideContractError("CONTAINMENT_CONTRACT_INPUT_FAIL", "Containment requires a name, parent, and at least one member name");
+export function registerPeerGroupLayout({
+  name,
+  headingName,
+  rows,
+  sparse,
+  maximumSparseGap = 28,
+  minimumHeadingGapRatio = 1.35,
+  centerRange = [360, 430],
+}) {
+  if (!name || !headingName || !Array.isArray(rows) || rows.length < 2 || rows.some((row) => !Array.isArray(row) || row.length === 0)) {
+    throw new SlideContractError("PEER_GROUP_CONTRACT_INPUT_FAIL", "Peer-group layout requires a name, heading, and at least two non-empty rows");
   }
-  CONTAINMENT_CONTRACTS.push({ name, parent, members: [...members], tolerance });
+  PEER_GROUP_CONTRACTS.push({ name, headingName, rows: rows.map((row) => [...row]), sparse: Boolean(sparse), maximumSparseGap, minimumHeadingGapRatio, centerRange: [...centerRange] });
 }
 
 export function addNode(
@@ -502,7 +530,7 @@ export function addFieldGroup(
       text: String(field.value ?? ""),
       position: { left, top: position.top + labelHeight, width, height: position.height - labelHeight },
       fontSize: field.fontSize ?? fontSize,
-      bold: field.bold ?? true,
+      bold: field.bold ?? false,
       color: field.color ?? color,
       alignment: field.alignment ?? "left",
       fill,
@@ -510,15 +538,6 @@ export function addFieldGroup(
     }));
     return shapes;
   });
-}
-
-async function ensureParent(filePath) {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-}
-
-async function writeBlob(filePath, blob) {
-  await ensureParent(filePath);
-  await fs.writeFile(filePath, new Uint8Array(await blob.arrayBuffer()));
 }
 
 function visibleText(value) {
@@ -559,6 +578,15 @@ export function addDataSourceFooter(slide, { source, disclosure, position }) {
   });
 }
 
+async function ensureParent(filePath) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+}
+
+async function writeBlob(filePath, blob) {
+  await ensureParent(filePath);
+  await fs.writeFile(filePath, new Uint8Array(await blob.arrayBuffer()));
+}
+
 export async function exportPresentation(presentation, output) {
   if (!output?.pptx?.endsWith(".pptx") || !output?.preview?.endsWith(".png") || !output?.layout?.endsWith(".json")) {
     throw new SlideContractError("OUTPUT_CONTRACT_FAIL", "pptx, preview, and layout outputs must end in .pptx, .png, and .json");
@@ -580,20 +608,22 @@ export async function exportPresentation(presentation, output) {
   const layoutAudit = auditLayoutObject(JSON.parse(layoutText), {
     textPolicies: Object.fromEntries(TEXT_POLICIES),
     alignmentContracts: ALIGNMENT_CONTRACTS,
-    containmentContracts: CONTAINMENT_CONTRACTS,
+    peerGroupContracts: PEER_GROUP_CONTRACTS,
   });
   const auditPath = output.layoutAudit ?? `${output.layout}.audit.json`;
   await ensureParent(auditPath);
   await fs.writeFile(auditPath, `${JSON.stringify(layoutAudit, null, 2)}\n`);
   TEXT_POLICIES.clear();
   ALIGNMENT_CONTRACTS.length = 0;
-  CONTAINMENT_CONTRACTS.length = 0;
+  PEER_GROUP_CONTRACTS.length = 0;
   if (!layoutAudit.ok) {
     throw new SlideContractError("LAYOUT_QUALITY_FAIL", layoutAudit.findings.map((item) => `${item.code}:${item.name ?? "canvas"}`).join(", "));
   }
   await ensureParent(output.pptx);
   const pptx = await PresentationFile.exportPptx(orderedPresentation);
   await pptx.save(output.pptx);
+  await preparePowerPointTextEditability(output.pptx);
+  await ensureAutoSlideNumber(output.pptx);
   const generatedInspect = `${output.pptx}.inspect.ndjson`;
   try {
     await fs.access(generatedInspect);
@@ -613,11 +643,12 @@ export async function exportPresentation(presentation, output) {
   return orderedPresentation;
 }
 
-export function createPresentation(background) {
-  const presentation = Presentation.create({ slideSize: SLIDE });
+export function createPresentation(background, canvasProfile = "presentation_16_9") {
+  const canvas = resolveCanvasProfile(canvasProfile);
+  const presentation = Presentation.create({ slideSize: { width: canvas.width, height: canvas.height } });
   const slide = presentation.slides.add();
   slide.background.fill = resolveSlideBackground(background);
-  return { presentation, slide };
+  return { presentation, slide, canvas };
 }
 
 export function parseCliArgs(argv, required = ["input", "pptx", "preview", "layout"]) {

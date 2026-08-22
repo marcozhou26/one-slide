@@ -1,0 +1,23 @@
+{
+  "case_id": "issue-p09",
+  "layout": "issue",
+  "title": "六项分歧集中在客户、产品、渠道、现金流与竞争场",
+  "questions": [
+    "CEO与HR如何共同构成真实客户系统",
+    "单一产品还是三种物件",
+    "私董会路线能否成为近期主渠道",
+    "HR角色如何影响现金流结构",
+    "最大失败机制来自哪里"
+  ],
+  "cross_cutting": "AI PPT横切：原内容资产可能留在流量、线索或社交破冰环节",
+  "source": "锁定大纲P09；slide-spec icon_handoff代表输入",
+  "icon_handoff": {
+    "status": "requested",
+    "trigger_reason": "issue-map含多个业务问题，客户、产品、风险是同级问题识别锚点。",
+    "items": [
+      { "concept": "客户", "role": "question", "peer_group": "issue_questions", "target_id": "question-1", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P09-S1"] },
+      { "concept": "产品", "role": "question", "peer_group": "issue_questions", "target_id": "question-2", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P09-S2"] },
+      { "concept": "风险", "role": "question", "peer_group": "issue_questions", "target_id": "question-5", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P09-S5"] }
+    ]
+  }
+}

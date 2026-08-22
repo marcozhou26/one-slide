@@ -34,8 +34,8 @@ function renderRail(slide, plan, diagram) {
   panel(slide, "insight-rail", plan.rail, COLORS.soft);
   addTextBox(slide, { name: "insight-title", text: "读图结论", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
   diagram.insights.forEach((item, index) => {
-    addTextBox(slide, { name: `insight-index-${index + 1}`, text: String(index + 1).padStart(2, "0"), position: { left: plan.rail.left + 16, top: plan.rail.top + 62 + index * 104, width: 36, height: 24 }, fontSize: 14, bold: true, color: index === 0 ? COLORS.orange : COLORS.blue, singleLine: true });
-    addTextBox(slide, { name: `insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 58, top: plan.rail.top + 56 + index * 104, width: plan.rail.width - 74, height: 78 }, fontSize: 16, bold: index === 0, color: COLORS.text, verticalAlignment: "top", maxLines: 4 });
+    addTextBox(slide, { name: `insight-index-${index + 1}`, text: String(index + 1).padStart(2, "0"), position: { left: plan.rail.left + 16, top: plan.rail.top + 62 + index * 104, width: 36, height: 24 }, fontSize: 14, bold: true, color: COLORS.blue, singleLine: true });
+    addTextBox(slide, { name: `insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 58, top: plan.rail.top + 56 + index * 104, width: plan.rail.width - 74, height: 78 }, fontSize: 16, bold: false, color: COLORS.text, verticalAlignment: "top", maxLines: 4 });
   });
   if (diagram.censoring_note) {
     addTextBox(slide, { name: "censoring-legend", text: diagram.censoring_note.text, position: { left: plan.rail.left + 16, top: plan.rail.top + plan.rail.height - 72, width: plan.rail.width - 32, height: 52 }, fontSize: 14, bold: true, color: COLORS.orange, verticalAlignment: "top", maxLines: 3 });

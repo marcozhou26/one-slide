@@ -92,7 +92,7 @@ export async function renderWaterfall(data, output) {
       text: insight.text,
       position: { left: 968, top: 218 + index * 88, width: 238, height: 72 },
       fontSize: 14,
-      bold: index === 0,
+      bold: false,
     });
   });
   if (plan.bottom) {

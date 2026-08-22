@@ -1,4 +1,12 @@
-# V3.3 输入契约
+# V3.4 输入契约
+
+## Outline Handoff结构页
+
+收到`schema_version=1.0`的Outline Handoff页面时，`page_type`、页面任务、中心结论、白名单、禁止部件、同级组、相对布局、主题偏好和`deck_context`均视为上游已确认合同。Builder不得要求用户重新填写这些字段，也不得重新设计整套演示。
+
+`theme_preference`缺失或为`inherit_or_neutral`时使用`light`安全默认值；不阻塞。白名单与禁止项冲突、必需部件缺失、同级强调没有业务依据、编号收口缺少callback或平移约束相互冲突时阻断，不猜测。
+
+一次收到多页Handoff时只选择用户指定的一页；若用户明确要求全部制作，拆成独立OneSlide运行，不在一次Builder调用中生成多页。
 
 风险等级：B。优先读取当前对话、附件和唯一文件；内部结构完整不等于要求用户补填字段。
 
@@ -12,6 +20,7 @@
 | 图形类型 | derived / optional | 用户指定或由信息关系推导 | 用户指定与数据关系冲突时停止；混合结构进入 `direct_composition` | 路由 |
 | 组织关系方向 | conditional（组织架构图） | 正式汇报的上级→下级、职能指导的来源→目标，可从原文、表格或 handoff 推导 | 同一虚线关系方向不清时不得为了排版猜测；先读上下文，仍有两个可能方向则返回 `BRIEF_REQUIRED` 或 `ORG_FUNCTIONAL_ROUTE_AMBIGUOUS` | 组织模型、虚线分组与连接线门禁 |
 | 模板与风格 | optional | `.pptx`、字体、颜色、边距 | 缺失时使用方角、白底、三色以内默认咨询风格 | 视觉生成 |
+| 自动页码 | derived / default | 用户无需提供字段 | 默认使用 8pt、右下角的 PowerPoint 原生自动页码；不得为字号、位置或是否启用而追问 | 统一导出、PPTX 语义审计与 PowerPoint 验证 |
 | 输出位置 | optional | 目录或文件名 | 使用版本化输出且不覆盖同名文件 | 交付 |
 
 处理顺序固定为：

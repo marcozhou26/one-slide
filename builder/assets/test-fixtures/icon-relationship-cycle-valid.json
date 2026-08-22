@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "module_id": "icon-relationship-mvp",
+  "title": "服务闭环由需求回流与交付回流共同驱动",
+  "nodes": [
+    { "id": "customer", "label": "客户", "icon_id": "user" },
+    { "id": "platform", "label": "服务平台", "icon_id": "cpu" },
+    { "id": "provider", "label": "服务商", "icon_id": "headset" }
+  ],
+  "relationships": [
+    { "id": "demand", "from": "customer", "to": "platform", "route": "upper_arc", "sourceClock": 2, "targetClock": 10, "gap": 18, "arcHeight": 104, "label": "需求数据" },
+    { "id": "solution", "from": "platform", "to": "customer", "route": "lower_arc", "sourceClock": 8, "targetClock": 4, "gap": 18, "arcHeight": 104, "label": "方案进度" },
+    { "id": "task", "from": "platform", "to": "provider", "route": "upper_arc", "sourceClock": 2, "targetClock": 10, "gap": 18, "arcHeight": 104, "label": "任务标准" },
+    { "id": "result", "from": "provider", "to": "platform", "route": "lower_arc", "sourceClock": 8, "targetClock": 4, "gap": 18, "arcHeight": 104, "label": "结果异常" }
+  ],
+  "source": "OneSlide 模拟案例",
+  "disclosure": "模型补全示例，非真实客户数据"
+}

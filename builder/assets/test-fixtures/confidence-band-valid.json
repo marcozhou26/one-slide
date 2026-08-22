@@ -7,7 +7,6 @@
     {"id": "G01", "text": "合成示例数据，非真实客户数据"}
   ],
   "title": {"text": "中心估计总体上行，但2025年四季度和2026年三季度的不确定性明显扩大", "origin": "source", "source_ids": ["S01"]},
-  "subtitle": {"text": "合成示例数据，非真实客户数据", "source_ids": ["G01"]},
   "diagram": {
     "type": "confidence-band",
     "metric": {"text": "匿名服务完成率", "source_ids": ["S02"]},
@@ -35,7 +34,7 @@
       {"text": "2026年二季度区间首次整体高于6.0%", "source_ids": ["S02"]},
       {"text": "2026年三季度回落且区间变宽，方向不稳", "source_ids": ["S02"]}
     ],
-    "source_note": {"text": "来源：匿名合成季度样本，期间为2025年一季度至2026年四季度", "source_ids": ["S02"]},
+    "source_note": {"text": "匿名合成季度样本", "source_ids": ["S02"]},
     "conclusion": {"text": "在区间明显收窄并持续高于关注线前，不宜把单季上行解释为稳定改善", "source_ids": ["S02"]},
     "disclosure": {"text": "合成示例数据，非真实客户数据", "source_ids": ["G01"]}
   }

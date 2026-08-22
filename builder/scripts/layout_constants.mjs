@@ -1,4 +1,9 @@
-export const SLIDE = Object.freeze({ width: 1280, height: 720 });
+import { CANVAS_PROFILES } from "./canvas_profiles.mjs";
+
+export const SLIDE = Object.freeze({
+  width: CANVAS_PROFILES.presentation_16_9.width,
+  height: CANVAS_PROFILES.presentation_16_9.height,
+});
 export const FONT_SIZES = Object.freeze({
   pageTitle: 32,
   pageSubtitle: 14,
@@ -6,7 +11,6 @@ export const FONT_SIZES = Object.freeze({
   sectionTitle: 18,
   body: 14,
   compact: 12,
-  dataLabel: 10,
   source: 12,
 });
 export const MIN_FONT_BY_ROLE = Object.freeze({
@@ -16,7 +20,6 @@ export const MIN_FONT_BY_ROLE = Object.freeze({
   sectionTitle: 16,
   body: 12,
   compact: 12,
-  dataLabel: 10,
   source: 12,
 });
 export const MIN_BODY_FONT_SIZE = MIN_FONT_BY_ROLE.body;
@@ -24,7 +27,7 @@ export const MIN_VISIBLE_FONT_SIZE = 12;
 export const POWERPOINT_POINT_TO_ARTIFACT_UNIT = 4 / 3;
 
 export function toArtifactFontSize(points) {
-  return points * POWERPOINT_POINT_TO_ARTIFACT_UNIT;
+  return Math.max(points, MIN_VISIBLE_FONT_SIZE) * POWERPOINT_POINT_TO_ARTIFACT_UNIT;
 }
 
 export function validateTypography(role, fontSize) {

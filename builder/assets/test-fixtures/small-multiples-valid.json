@@ -8,7 +8,7 @@
     },
     {
       "id": "S02",
-      "text": "2022；2023；2024；2025；2026；业务 A；期末 90；CAGR +高；加大投入；业务 B；期末 84；CAGR +高；业务 C；期末 82；CAGR +低；维持；业务 D；期末 70；CAGR +低；退出或收缩；业务 E；期末 73；CAGR +高；业务 F；期末 76；CAGR +低；业务 G；期末 86；CAGR +高；业务 H；期末 77；CAGR +低；业务 I；期末 64；CAGR +低；三条业务线持续跑赢公司均值；三条业务线期末低于基准；高增长业务共同具备标准化能力；分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项；全部示例数值与口径"
+      "text": "2022；2023；2024；2025；2026；业务 A；期末 90；CAGR +高；加大投入；业务 B；期末 84；CAGR +高；业务 C；期末 82；CAGR +低；维持；业务 D；期末 70；CAGR +低；退出或收缩；业务 E；期末 73；CAGR +高；业务 F；期末 76；CAGR +低；业务 G；期末 86；CAGR +高；业务 H；期末 77；CAGR +低；业务 I；期末 64；CAGR +低；三条业务线持续跑赢公司均值；三条业务线期末低于基准；高增长业务共同具备标准化能力；分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项；全部示例数值与口径；指标：收入指数；单位：指数点；公司均值"
     }
   ],
   "title": {
@@ -91,7 +91,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p1",
+        "classification_state": "invest"
       },
       {
         "label": {
@@ -121,7 +123,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p2",
+        "classification_state": "invest"
       },
       {
         "label": {
@@ -151,7 +155,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p3",
+        "classification_state": "maintain"
       },
       {
         "label": {
@@ -181,7 +187,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p4",
+        "classification_state": "exit"
       },
       {
         "label": {
@@ -211,7 +219,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p5",
+        "classification_state": "maintain"
       },
       {
         "label": {
@@ -241,7 +251,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p6",
+        "classification_state": "exit"
       },
       {
         "label": {
@@ -271,7 +283,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p7",
+        "classification_state": "invest"
       },
       {
         "label": {
@@ -301,7 +315,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p8",
+        "classification_state": "maintain"
       },
       {
         "label": {
@@ -331,7 +347,9 @@
         ],
         "source_ids": [
           "S02"
-        ]
+        ],
+        "id": "p9",
+        "classification_state": "exit"
       }
     ],
     "insights": [
@@ -356,6 +374,29 @@
     ],
     "conclusion": {
       "text": "分类处置：加大投入 3 项，维持 3 项，退出或收缩 3 项",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "series_type": "line",
+    "metric": {
+      "text": "收入指数",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "unit": {
+      "text": "指数点",
+      "source_ids": [
+        "S02"
+      ]
+    },
+    "scale": {
+      "min": 60,
+      "max": 92
+    },
+    "benchmark_label": {
+      "text": "公司均值",
       "source_ids": [
         "S02"
       ]

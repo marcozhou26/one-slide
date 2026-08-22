@@ -1,0 +1,93 @@
+{
+  "version": "1.0",
+  "module_id": "navigation-page",
+  "theme": "light",
+  "deck_context": {
+    "audience": "准备加入课程体系的候选讲师",
+    "presentation_task": "理解专业标准，以及从观察、跟课到独立交付的成长路径",
+    "narrative_route": "教学培训",
+    "total_slides": 20,
+    "source_baseline": "`HR专业培训品牌_三阶段远景规划.md`，SHA-256 `17a7cc39468a449a4a7007c8e465cdd581516b4de9e829a82cc9b8ac70f32cfb`",
+    "current_slide": 3,
+    "chapter_id": "开场",
+    "previous_page_job": "P02给出三项摘要，本页交代这些结论怎样展开",
+    "next_page_job": "下一页进入第一章“体系总览”",
+    "callback_to": null
+  },
+  "page_contract": {
+    "page_type": "agenda",
+    "page_job": "建立整套演示的章节地图，让听众知道内容边界和推进顺序",
+    "audience_shift": {
+      "before": "只知道结论",
+      "after": "知道接下来分四个章节推进"
+    },
+    "central_message": "整场培训先讲专业体系，再依次展开第一、第二、第三阶段，最后回到独立交付",
+    "source_ids": [
+      "S01-C001",
+      "S01-C015"
+    ],
+    "visible_components": [
+      {
+        "id": "title",
+        "role": "page_title",
+        "text": "目录",
+        "required": true
+      },
+      {
+        "id": "agenda_items",
+        "role": "ordered_peer_list",
+        "required": true,
+        "items": [
+          {
+            "index": "01",
+            "label": "体系总览"
+          },
+          {
+            "index": "02",
+            "label": "第一阶段：观察与识别证据"
+          },
+          {
+            "index": "03",
+            "label": "第二阶段：聚焦与承担模块"
+          },
+          {
+            "index": "04",
+            "label": "第三阶段：复制与独立交付"
+          },
+          {
+            "index": "05",
+            "label": "终局检验：结果与持续迭代"
+          }
+        ]
+      }
+    ],
+    "forbidden_components": [
+      "eyebrow、“Agenda”、长标题、每章解释文字、右上角组件、Logo、品牌署名、页眉、页脚、页码、图标、卡片、装饰线、装饰色块及白名单未列出的任何文字"
+    ],
+    "peer_groups": [
+      {
+        "component_id": "agenda_items",
+        "default_behavior": "homogeneous",
+        "allowed_emphasis": null
+      }
+    ],
+    "layout_intent": {
+      "raw": "“目录”标题保持原位置；以V04目录主体位置为基准，四个目录项整体向左平移约页面宽度的10%，仍明显位于页面左半区与中部之间，不得居中。圆形容器内的编号必须水平、垂直居中，字边距尽量小且始终保持单行；容器填色与编号文字须有足够大的明暗对比。编号圆形右边缘与章节名称左边缘的间距由66像素缩减为46像素，约减少30%；四行使用完全相同的间距",
+      "body_alignment": "inherit",
+      "group_translation": "relative_only",
+      "preserve_internal_spacing": true,
+      "must_not_center": true
+      ,"number_container_height_ratio": 1.5
+      ,"number_font_delta_pt": -3
+      ,"number_font_delta_range_pt": [-4, -2]
+      ,"number_alignment": "optical_center_with_first_line"
+    },
+    "theme_preference": "inherit_or_neutral",
+    "speaker_notes": "目录只交代结构，不提前讲各章细节",
+    "completion_checks": [
+      "页面实际只出现“目录”、四个同质圆形编号和四个章节名称",
+      "标题未移动，目录主体较V04左移约10%",
+      "编号没有换行，且没有居中、解释文字、右上角组件或任何单项视觉强调"
+    ]
+  }
+}

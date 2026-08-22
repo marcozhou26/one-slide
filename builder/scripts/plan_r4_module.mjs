@@ -78,6 +78,7 @@ export function planR4Module(data) {
     return { ...base, main: { left: 54, top: 132, width: 850, height: 450 }, rail: { left: 934, top: 126, width: 292, height: 466 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
   }
   if (data.module_id === "market-funnel") return { ...base, main: { left: 54, top: 132, width: 548, height: 454 }, side: { left: 634, top: 132, width: 592, height: 454 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
+  if (data.module_id === "industry-value-chain") return { ...base, main: { left: 54, top: 132, width: 1172, height: 464 }, bottom: { left: 54, top: 620, width: 1172, height: 44 } };
   if (data.module_id === "gantt-dependency") return planGantt(data, base);
   throw new Error(`Unsupported R4 module: ${data.module_id}`);
 }

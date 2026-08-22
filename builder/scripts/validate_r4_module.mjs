@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { buildAnchorMap, requireCondition, validateAllAnchorsMapped, validateTitle, validateVisibleText } from "./source_fidelity.mjs";
-const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","gantt-dependency"]);
+const MODULES=new Set(["sankey-flow","chord-dependency","market-funnel","industry-value-chain","gantt-dependency"]);
 function ctx(data){
   const anchors=buildAnchorMap(data.source_anchors),mapped=new Set();
   const approvedRewriteMode=data.module_id==="sankey-flow"&&data.title?.origin==="approved_rewrite";
@@ -75,9 +75,7 @@ function sankey(d,c,data){
 }
 function chord(d,c){requireCondition(d.nodes?.length>=5&&d.nodes.length<=15,"DATA_CONTRACT_FAIL","Chord requires 5–15 nodes");const ids=new Set();d.nodes.forEach(n=>{requireCondition(!ids.has(n.id),"DATA_CONTRACT_FAIL","Chord node ids must be unique");ids.add(n.id);c.text(n.label,"Chord node");c.text(n.group,"Chord group");c.source(n.source_ids,"Chord node total");});requireCondition(d.flows?.length>=3,"DATA_CONTRACT_FAIL","Chord flows are required");d.flows.forEach(f=>{requireCondition(ids.has(f.from)&&ids.has(f.to)&&f.from!==f.to,"DATA_CONTRACT_FAIL","Chord flow endpoints are invalid");requireCondition(Number.isFinite(f.value)&&f.value>0,"DATA_CONTRACT_FAIL","Chord flow must be positive");c.source(f.source_ids,"Chord flow");});(d.insights??[]).forEach(x=>c.text(x,"Insight"));if(d.conclusion)c.text(d.conclusion,"Conclusion");}
 function funnel(d,c){requireCondition(d.layers?.length===4,"DATA_CONTRACT_FAIL","Market funnel requires four layers");let prev=Infinity;d.layers.forEach(x=>{c.text(x.label,"Funnel layer");c.text(x.reason,"Funnel reason");requireCondition(Number.isFinite(x.value)&&x.value>=0&&x.value<=prev,"FUNNEL_ORDER_FAIL","Funnel values must descend");prev=x.value;c.source(x.source_ids,"Funnel value");});requireCondition(d.factors?.length>=3&&d.factors.length<=6,"DATA_CONTRACT_FAIL","Funnel requires 3–6 calculation factors");d.factors.forEach(x=>{c.text(x.label,"Factor");c.text(x.value,"Factor value");c.text(x.source,"Factor source");c.text(x.sensitivity,"Factor sensitivity");});if(d.milestone)c.text(d.milestone,"Milestone");if(d.assumptions)d.assumptions.forEach(x=>c.text(x,"Assumption"));}
-function region(d,c){requireCondition(d.regions?.length>=4&&d.regions.length<=10,"DATA_CONTRACT_FAIL","Region map requires 4–10 regions");const ids=new Set();d.regions.forEach(x=>{requireCondition(!ids.has(x.id),"DATA_CONTRACT_FAIL","Region ids must be unique");ids.add(x.id);c.text(x.label,"Region");requireCondition([x.intensity,x.headcount,x.efficiency,x.cost_share,x.output_share,x.x,x.y].every(Number.isFinite),"DATA_CONTRACT_FAIL","Region metrics and coordinates must be numeric");c.source(x.source_ids,"Region data");});requireCondition(d.clusters?.length<=3,"DATA_CONTRACT_FAIL","At most three strategic clusters");(d.clusters??[]).forEach(x=>c.text(x,"Cluster"));(d.insights??[]).forEach(x=>c.text(x,"Insight"));if(d.conclusion)c.text(d.conclusion,"Conclusion");}
 function valueChain(d,c){requireCondition(d.stages?.length>=4&&d.stages.length<=7,"DATA_CONTRACT_FAIL","Value chain requires 4–7 stages");const ids=new Set();d.stages.forEach(x=>{requireCondition(!ids.has(x.id),"DATA_CONTRACT_FAIL","Stage ids must be unique");ids.add(x.id);c.text(x.label,"Value-chain stage");c.text(x.barrier,"Entry barrier");requireCondition([x.margin,x.market_size,x.concentration,x.value_index].every(Number.isFinite),"DATA_CONTRACT_FAIL","Stage metrics must be numeric");c.source(x.source_ids,"Stage data");});requireCondition(d.players?.length>=3&&d.players.length<=8,"DATA_CONTRACT_FAIL","Value chain requires 3–8 player types");d.players.forEach(p=>{c.text(p.label,"Player");requireCondition(p.coverage?.every(id=>ids.has(id)),"DATA_CONTRACT_FAIL","Player coverage cites unknown stage");(p.planned??[]).forEach(id=>requireCondition(ids.has(id),"DATA_CONTRACT_FAIL","Planned stage is unknown"));});if(d.positioning)c.text(d.positioning,"Positioning");}
-function spiral(d,c){requireCondition(d.levels?.length===4,"DATA_CONTRACT_FAIL","Spiral maturity requires four levels");requireCondition(Number.isInteger(d.current_level)&&d.current_level>=1&&d.current_level<=4,"DATA_CONTRACT_FAIL","Current level must be 1–4");const actionIds=d.levels[0]?.actions?.map(a=>a.id)??[];requireCondition(actionIds.length===4,"DATA_CONTRACT_FAIL","Each level requires four actions");d.levels.forEach((level,li)=>{c.text(level.label,"Maturity level");c.text(level.feature,"Level feature");c.text(level.evidence,"Level evidence");c.text(level.exit,"Exit standard");c.text(level.duration,"Level duration");requireCondition(level.actions?.map(a=>a.id).join("|")===actionIds.join("|"),"DATA_CONTRACT_FAIL","Action order must repeat across levels");level.actions.forEach(a=>c.text(a.text,"Level action"));if(li<3)c.text(level.gate,"Stage gate");});c.text(d.core,"Core");if(d.feedback)c.text(d.feedback,"Feedback");}
 export function normalizeGanttTimeAxis(d){
   const maxTask=Math.max(...d.tasks.map(task=>task.end),...(d.milestones??[]).map(milestone=>milestone.month),1);
   if(d.month_label_map===undefined)return Array.from({length:18},(_,index)=>({slot:index+1,label:String(index+1),source_offset:null}));
@@ -125,22 +123,14 @@ export function normalizeGanttDependencies(d){
   const tasks=new Map(d.tasks.map(task=>[task.id,task]));
   return(d.dependencies??[]).map((dependency,index)=>{
     requireCondition(tasks.has(dependency.from)&&tasks.has(dependency.to)&&dependency.from!==dependency.to,"GANTT_DEPENDENCY_FAIL","Dependency endpoints are invalid");
-    const source=tasks.get(dependency.from),target=tasks.get(dependency.to);
     const rawClass=dependency.relationship_class??"prerequisite";
     requireCondition(["time_order_only","prerequisite","necessary_dependency"].includes(rawClass),"GANTT_DEPENDENCY_SEMANTICS_FAIL",`Unsupported relationship_class at dependency ${index+1}`);
     const relationship_class=rawClass==="necessary_dependency"?"prerequisite":rawClass;
-    const safeDefault=source.end<=target.start?"finish_to_start":null;
-    const dependency_type=dependency.dependency_type??safeDefault;
-    requireCondition(["finish_to_start","start_to_start","finish_to_finish","start_to_finish"].includes(dependency_type),"GANTT_DEPENDENCY_TYPE_REQUIRED",`Dependency ${dependency.from}→${dependency.to} overlaps in time; dependency_type is required`);
-    const timeOrderOk=dependency_type==="finish_to_start"?source.end<=target.start:
-      dependency_type==="start_to_start"?source.start<=target.start:
-      dependency_type==="finish_to_finish"?source.end<=target.end:source.start<=target.end;
-    requireCondition(timeOrderOk,"GANTT_DEPENDENCY_TIME_CONFLICT",`${dependency.from}→${dependency.to} conflicts with ${dependency_type}`);
     if(relationship_class==="time_order_only"){
       requireCondition(dependency.not_a_prerequisite===true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only requires not_a_prerequisite=true");
-      requireCondition(source.start<=target.start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
+      requireCondition(tasks.get(dependency.from).start<=tasks.get(dependency.to).start,"GANTT_DEPENDENCY_SEMANTICS_FAIL","time_order_only endpoints must follow source time order");
     }else requireCondition(dependency.not_a_prerequisite!==true,"GANTT_DEPENDENCY_SEMANTICS_FAIL","A prerequisite cannot set not_a_prerequisite=true");
-    return{...dependency,relationship_class,dependency_type,not_a_prerequisite:relationship_class==="time_order_only"};
+    return{...dependency,relationship_class,not_a_prerequisite:relationship_class==="time_order_only"};
   });
 }
 
@@ -154,5 +144,5 @@ function gantt(d,c){
   (d.side_metrics??[]).forEach(x=>c.text(x,"Gantt side metric"));if(d.conclusion)c.text(d.conclusion,"Conclusion");
   return{timeAxis,layerSteps,dependencies};
 }
-export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
+export function validateR4Module(data){requireCondition(data?.version==="1.0","LOGIC_STRUCTURE_FAIL","Unsupported version");requireCondition(MODULES.has(data?.module_id),"LOGIC_STRUCTURE_FAIL","Expected an R4 module_id");requireCondition(data?.diagram?.type===data.module_id,"LOGIC_STRUCTURE_FAIL","diagram.type must match module_id");const c=ctx(data);if(data.subtitle)c.text(data.subtitle,"Subtitle");const validator=({"sankey-flow":sankey,"chord-dependency":chord,"market-funnel":funnel,"industry-value-chain":valueChain,"gantt-dependency":gantt})[data.module_id];validator(data.diagram,c,data);return{ok:true,module_id:data.module_id,...validateAllAnchorsMapped(data.source_anchors,c.mapped)};}
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const p=process.argv[2];try{if(!p)throw new Error("Usage: validate_r4_module.mjs <input.json>");process.stdout.write(`${JSON.stringify(validateR4Module(JSON.parse(await fs.readFile(p,"utf8"))))}\n`);}catch(error){process.stderr.write(`${JSON.stringify({code:error.code??"DATA_CONTRACT_FAIL",message:error.message})}\n`);process.exitCode=1;}}

@@ -1,12 +1,18 @@
 # Input contract
 
+## 复杂报告页面规格
+
+复杂报告只接受slide-spec生成的单页`effective-page-spec-1.0`。收到整套Director Package、旧大纲Handoff或多页数组时返回`EFFECTIVE_PAGE_SPEC_REQUIRED`，不得直接施工。
+
+结构页不重新生成页面模型。Producer使用兼容文件名`compile_outline_handoff.mjs`读取一页effective_page_spec，校验`director_inheritance.locked_fields`后，只补充OneSlide内部的`requested_module`、`primary_exhibit`、`module_payload`和主题默认值。
+
 Risk level: B. This is a file, data, content-production, and multi-step workflow. Internal completeness must not become a user questionnaire.
 
 ## Inputs
 
 | Input | Degree | Accepted form and quality | Missing handling | Conflict handling | Workflow destination |
 | --- | --- | --- | --- | --- | --- |
-| One-slide idea, task, or source material | required | Natural language or readable TXT, MD, CSV, XLSX, DOCX, PPTX, PDF, image, JSON, or GeoJSON | Read conversation and attachments; if no subject or reader task can be derived, ask one blocking question | Preserve competing interpretations and recommend one when possible | Source baseline and page scope |
+| One-slide idea, task, or source material | required | Natural language or readable TXT, MD, CSV, XLSX, DOCX, PPTX, PDF, image, or JSON | Read conversation and attachments; if no subject or reader task can be derived, ask one blocking question | Preserve competing interpretations and recommend one when possible | Source baseline and page scope |
 | Output intent | derived / optional | Prompt language or request to create/render/draw a PPT | Default to `PROMPT_ONLY` and disclose | Explicit latest request wins | Output mode |
 | Audience and reader task | derived / conditional | Natural language or stable context | Derive; use a reversible assumption if one audience is clearly dominant | Ask only when plausible audiences require materially different pages | Page objective |
 | User facts, numbers, claims, and definitions | optional / source-locked | Supplied text or readable source files with units and period where applicable | Continue with available evidence or controlled completion | Never alter; block or exclude conflicting calculations | Claims, data, provenance |

@@ -1,8 +1,8 @@
 # OneSlide 输入契约测试结果
 
-测试对象：`one-slide` 1.5.0（输入契约继承已验证的 1.3.0）
+测试对象：`one-slide` 1.6.1（继承既有输入契约，并新增原生竖版画布和 PowerPoint 原生 PNG 导出场景）
 输入契约等级：B  
-测试日期：2026-08-11
+测试日期：2026-08-10
 
 | test_id | 场景 | 输入 | 实际行为 | 是否追问 | 证据 | 结果 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -16,6 +16,10 @@
 | IC08 | PPT 运行依赖缺失 | 请求 PPTX，但 `@oai/artifact-tool` 不可用 | 保留已验证提示词包；返回 `PPT_RENDERING_BLOCKED` | 否 | `check_environment.py` 降级契约 | pass |
 | IC09 | 结构化 handoff 缺模块载荷 | handoff 指定已产品化模块，但没有 `module_payload` | 返回 `MODULE_PAYLOAD_INCOMPLETE`；不进入渲染 | 否 | `v3_route_and_budget.test.mjs` | pass |
 | IC10 | 原始输入直接指定图形 | 自然语言明确要求瀑布图并给出起止数据 | 允许路由到对应模块；后续仍运行模块 validator | 否 | `v3_route_and_budget.test.mjs` | pass |
+| IC11 | 未提供页码偏好 | 用户只要求生成一页 PPTX，未说页码样式 | 自动添加 8pt、右下角的 PowerPoint 原生动态页码；不追问内部字段 | 否 | `slide_number_contracts.test.mjs` | pass |
+| IC12 | 短视频/B-roll 稀疏输入 | “把这一观点做成短视频 B-roll PowerPoint” | 稳定推导原生 `9:16`；纵向重构，不追问比例，不裁切横版页 | 否 | `canvas_profiles.test.mjs`、代表性 PPTX | pass |
+| IC13 | 4:3 竖版歧义 | “高4宽3，做知识图文” | 规范化为原生竖版 `3:4`（7.5×10 英寸），不生成横版 4:3 | 否 | `canvas_profiles.test.mjs` | pass |
+| IC14 | 竖版宽图超载 | B-roll 同时要求宽幅长流程、多列密表与完整框架 | 不压缩、不裁切、不暗中多页；返回 `SINGLE_SLIDE_SCOPE_OVERLOAD` | 否 | `canvas_profiles.test.mjs`、契约语义检查 | pass |
 
 ## 状态
 
@@ -39,6 +43,25 @@ INPUT_CONTRACT_PASS
 | HIC06 | 异常格式 | 带单位的数字字符串、坏边界、样本不对平和声明频数不一致分别阻断 | 否 | 同上 | pass |
 
 `INPUT_CONTRACT_PASS` 仅覆盖本模块声明与已执行场景，不等于真实用户验收。
+
+## 2026-08-10 reference-list 模块追加验证
+
+| test_id | 场景 | 实际行为 | 是否追问 | 证据 | 结果 |
+| --- | --- | --- | --- | --- | --- |
+| RLIC01 | 完整来源记录 | 从五项实际来源生成单列编号清单、定位信息和支持范围 | 否 | `reference_list_contracts.test.mjs`、代表性 PPTX | pass |
+| RLIC02 | 跨页重复来源 | 按 DOI、URL 或稳定作品标识去重，合并来源 ID 与正文页回链 | 否 | `reference_list_contracts.test.mjs` | pass |
+| RLIC03 | 稀疏自然语言 | 从“实际用过、去重、编号、作者或机构、标题、日期、链接、正文页”自动路由，不要求模块名或视觉名 | 否 | 同上 | pass |
+| RLIC04 | 缺少来源记录 | 返回 `SOURCE_BASELINE_FAIL`，不要求用户重新抄写一份清单 | 否 | 同上 | pass |
+| RLIC05 | 缺少标题或定位信息 | 返回 `REFERENCE_METADATA_FAIL`，不补写不存在的作者、标题、日期或链接 | 否 | 同上 | pass |
+| RLIC06 | 超过八项 | 返回 `SINGLE_SLIDE_SCOPE_OVERLOAD`，不缩小字号或自动生成第二页 | 否 | 同上 | pass |
+| RLIC07 | 非阻塞样式缺失 | 使用统一单列列表继续，不追问颜色、坐标或装饰偏好 | 否 | 同上 | pass |
+| RLIC08 | 语义图标完整输入 | `跨部门协同 + object_identifier` 稳定返回 `users-group`，并保留候选与匹配依据 | 否 | `builder/tests/semantic_icon_library.test.mjs` | pass |
+| RLIC09 | 语义图标稀疏输入 | 只给“数据导入”与流程节点角色，自动使用默认 outline 并返回 `file-import` | 否 | 同上 | pass |
+| RLIC10 | 图标用于装饰 | `decoration` 返回 `ICON_ROLE_NOT_ALLOWED / NO_ICON`，继续无图标构图 | 否 | 同上 | pass |
+| RLIC11 | 未知图标语义 | 无白名单匹配时返回 `NO_SEMANTIC_MATCH / NO_ICON`，不要求用户填写文件名 | 否 | 同上 | pass |
+| RLIC08 | 异常格式 | 损坏 JSON 在读取阶段阻断，不伪装为成功提取 | 否 | 同上 | pass |
+
+`INPUT_CONTRACT_PASS` 证明本模块声明与已执行场景一致；PowerPoint 原生打开、产品价值和用户验收仍分别报告。
 
 ## 2026-08-09 scatter-regression 模块追加验证
 

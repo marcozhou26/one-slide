@@ -1,45 +1,148 @@
 # Changelog
 
+## 1.9.2 — 2026-08-22
+
+- Added a fully transparent native hit area to visually unfilled text shapes, preventing clicks in text-box whitespace from falling through to separate background frames.
+- Preserved paragraph, run, mixed emphasis, shape order and visible formatting without rewriting font properties.
+- Added structural, export and idempotence regressions for the text-object selection boundary.
+- Added native PowerPoint object-selection plus font-size/font-weight save-and-reopen verification to the Builder acceptance boundary.
+
+## 1.9.1 — 2026-08-21
+
+- Added deterministic consumption of slide-spec `icon_handoff`, including field validation, semantic-role mapping, target binding and explicit unsupported or text-only fallback states.
+- Prevented required visual markers from being silently omitted and preserved source concepts instead of rewriting them to match the icon library.
+- Added item-level QA from source concept and route result through the actual SVG or text fallback embedded in the final PPTX.
+- Added representative claim, issue-map and aligned-comparison regressions while keeping icons limited to semantic markers.
+
+## 1.9.0 — 2026-08-21
+
+- Declared slide-spec `effective_page_spec` as the direct upstream for complex-report pages.
+- Added immutable OneDeck director-field checks and precise conflict returns.
+- Assigned deck assembly and cross-page execution control to Deck Control while preserving the one-page run boundary.
+
+## Maintenance cleanup — 2026-08-18
+
+- Removed the obsolete positive-path test for the retired PowerPoint PNG exporter.
+- Removed unreferenced legacy packaging, page-intent, and installation artifacts after isolated backup.
+- Merged the legacy `slope-ranking` compatibility note into the canonical `bump-ranking` module and archived the obsolete historical regression note.
+- Removed the unreachable standalone icon-relationship MVP renderer; the supported connector path remains in `semantic_relationship_connectors.mjs`.
+- Removed the duplicate `powerpoint-contract.md`; active owners remain the public Skill, Builder engine, module contracts, and dedicated regression tests.
+- Kept `POWERPOINT_NATIVE_PNG_RETIRED` as the explicit compatibility response and removed its retired test from the required package inventory.
+
+## 1.8.1 — 2026-08-14
+
+- 摘要段落图标与目录编号改为相对首行文字的光学中心对齐。
+- 目录编号容器从标签有效字高的 1.2 倍增至 1.5 倍，保留默认 3pt 字号差。
+
+## 1.7.2
+
+- Retired Microsoft PowerPoint's direct `save as PNG` route because it can distort portrait OneSlide files.
+- Replaced the former export implementation with a side-effect-free `POWERPOINT_NATIVE_PNG_RETIRED` response.
+- Prohibited automatic PDF intermediates, third-party rendering, screenshots, or other image-export fallbacks until a separate route is explicitly designed and validated.
+
+## 1.7.1
+
+- Added semantic relationship curves for 2–6 large outline icons with clock-position floating endpoints and explicit visual gaps.
+- Replaced tangent-stretched curves that looked like rounded polylines with continuously turning half-ellipse Bezier geometry controlled by `arcHeight`.
+- Kept each curve and arrowhead as one native PowerPoint shape by writing `a:tailEnd` into the curve line properties; prohibited separate arrowhead triangles and default icon containers.
+
+## 1.7.0
+
+- Added a curated 195-icon Tabler SVG subset with bundled MIT license and reproducible generation from the official asset package.
+- Added deterministic Chinese business-semantic retrieval across navigation, object, status, action and process-node roles; decorative, space-filling, business-emphasis and data-encoding roles return `NO_ICON`.
+- Added optional `semantic_icon` handoff, Builder usage contract and regression tests. SVG icons are replaceable visual assets and are not required to be editable as native PowerPoint paths.
+
+## 1.6.1
+
+- Added deterministic one-slide PNG export through Microsoft PowerPoint's native `save as PNG` command.
+- Prohibited PDF intermediates, third-party rendering and GUI coordinate automation for PowerPoint-to-PNG requests.
+- Added output discovery for PowerPoint-selected filenames plus PNG signature, pixel-dimension and no-PDF validation gates.
+
+## 1.6.0
+
+- Added native PowerPoint canvas profiles for 16:9 presentations, 9:16 short-video B-roll and portrait 3:4 knowledge graphics.
+- Made short-video and B-roll requests derive 9:16 without a ratio questionnaire; normalized “high 4, wide 3” to portrait 3:4.
+- Prohibited crop, stretch, screenshots, embedded landscape pages and reuse of 1280×720 module coordinates in portrait modes.
+- Added a vertical one-point renderer, portrait routing guard, canvas/package validation and native PPTX regression coverage.
+- Tightened B-roll scope to one core claim, vertical stacking and phone-readable copy; wide or dense content returns scope overload instead of generating hidden extra pages.
+
+## 1.5.1
+
+- Classified visual differences as structural hierarchy, stable readability patterns, or source-grounded business emphasis.
+- Standardized business emphasis as bold text plus highlight fill; border color, width, line style, and visibility remain unchanged.
+- Added shared-edge rules and regression tests to prevent partial or doubled borders in adjacent containers.
+
+## 1.4.6
+
+- Added blocking checks for empty content containers and large uninterrupted blank bands.
+- Required layout reflow whenever visible content is deleted, compressed, or moved into speaker notes.
+- Prevented low-position decorative or action objects from masking unbalanced main content.
+
+## 1.4.5
+
+- Added one default body/notes allocation without new audience modes: visible slide copy carries the conclusion and primary evidence, while terminology, scope, formulas and methods move to native PowerPoint speaker notes.
+- Restricted the visible footer to one `数据来源：...` line and merged synthetic-data disclosure into that source line.
+- Added `PUBLIC_READABILITY_PASS`, terminology, visible-budget, source-only-footer and speaker-notes coverage checks.
+- Migrated the first vertical MVP across `box-plot`, `confidence-band` and `marimekko`, including plain-language replacements for IQR, Bootstrap and CAGR.
+
+## 1.4.4
+
+- Corrected `chart-insight` with explicit comparable bar units, stable category/series IDs, a declared secondary-axis range, visible ratio values and exact insight-to-data anchors.
+- Added R5 percentage range gates across workforce, mobility, service-catalog and ticket-intake inputs; the previously retired fixed survival module remains absent from the installed build.
+- Retired `hr-ticket-classification` because aggregate category totals cannot prove origin-destination reclassification flow; use `sankey-flow` with a real confusion matrix or `hr-ticket-intake` for intake diagnostics.
+- Retired `hr-eligibility-matrix` because its three-state grid encoded automation readiness rather than actual eligibility conditions and exceptions; use a source-backed general matrix or guarded direct composition.
+
+## 1.4.3
+
+- Added the productized `part-to-whole` module for a single positive total reconciled across 3–6 mutually exclusive non-negative parts.
+- Added native editable PowerPoint pie and single-ring doughnut charts, exact-value angle calculation, stable external composition rows, source-backed doughnut center content, and optional inline or side-rail insights.
+- Added Producer payload rules, relationship-first routing, multi-period and Marimekko scope guards, reconciliation/source/negative/count/ID failures, native-chart regression and a rendered reference page.
+
+## 1.4.2
+
+- Retired and removed `region-map-table` because map-like output creates avoidable political and boundary-expression risk.
+- Retired and removed the decorative `spiral-maturity` module and the superseded fixed-format `hr-new-hire-survival` module; general retention work now uses `cohort-retention`.
+- Upgraded `small-multiples` to 3–9 comparable panels with explicit metric, unit, shared scale, structured classification state, optional benchmark, and line or column views.
+- Removed keyword-based color inference from visible classification text and added sparse, conflict, abnormal-state, scale, routing, rendering, and retirement regressions.
+
+## 1.4.1
+
+- Added deterministic compact peer-group layout for declared agenda, numbered-overview, and numbered-recap items.
+- Added one-to-three-column navigation layouts for 2—18 declared peer items without ordinary-page bullet auto-detection.
+- Added blocking checks for peer-group cohesion, sparse over-distribution, and vertical group balance.
+
 ## Component versions
 
 | Component | Version | Source |
 | --- | --- | --- |
-| OneSlide suite | 1.5.2 | `SKILL.md` and `builder/references/module-registry.json` |
-| Producer engine | 1.1.2 | `producer/ENGINE.md` |
-| Builder engine | 3.4.1 | `builder/ENGINE.md` and the module registry |
+| OneSlide suite | 1.8.1 | `SKILL.md` and `builder/references/module-registry.json` |
+| Producer engine | 1.1.3 | `producer/ENGINE.md` |
+| Builder engine | 3.6.1 | `builder/ENGINE.md` and the module registry |
 
-## 1.5.2 — 2026-08-12
+## 1.4.0 — 2026-08-10
 
-- Clarified that the lower-density visible-page rule applies to every OneSlide page, including deterministic modules, direct composition and Editorial revisions.
-- Renamed the public-readability test set as representative regression coverage: `box-plot`, `confidence-band` and `marimekko` are test cases, not the product scope.
+- Added Outline → OneSlide 1.0 page-contract compilation for one page at a time.
+- Added `bookend-page`, `navigation-page`, and `section-transition` vertical modules.
+- Added support for `cover`, `agenda`, `section_transition`, `numbered_overview`, `numbered_recap`, and `ending`.
+- Added light, navy, and template-inheritance theme modes without semantic drift.
+- Added blocking gates for undeclared components, missing required components, unauthorized peer emphasis, peer geometry, relative translation, short-label wrapping, template skeleton drift, theme drift, and callback failure.
+- Preserved the native 8 pt bottom-right automatic slide number as report-level system chrome.
 
-## 1.5.1 — 2026-08-12
+## 1.3.3 — 2026-08-10
 
-- Added one page-wide public-readability contract for all OneSlide output paths; `box-plot`, `confidence-band`, and `marimekko` provide the first representative regression cases.
-- Kept the visible slide focused on the conclusion and primary evidence, moved technical definitions and calculation methods into native PowerPoint speaker notes, and standardized the footer as one data-source line with synthetic-data disclosure when applicable.
-- Added a generic machine-checkable visible-information budget, terminology screen, footer audit, and speaker-notes coverage regression without changing the 32-module public registry.
+- Added a PowerPoint-native automatic slide-number field to every generated page at the shared export boundary.
+- Fixed the slide-number design at 8pt, right-aligned in the bottom-right page region, without asking users for an internal style field.
+- Added the required placeholder and field to the slide master, layout and slide so the number follows page order instead of behaving like static text.
+- Extended semantic QA to block missing, duplicate, non-automatic, wrongly sized or misplaced page numbers while preserving the 12pt minimum for ordinary visible content.
+- Added export, idempotence, missing-number and native PowerPoint regression coverage. Public release and user acceptance remain separate.
 
-## 1.5.0 — 2026-08-11
+## 1.3.2 — 2026-08-10
 
-- Reduced the productized registry from 40 to 32 modules after a capability-value review. Retired `region-map-table`; moved `route-tradeoff`, `scqa-roadmap`, `scenario-planning`, `industry-value-chain` and `spiral-maturity` to guarded direct-composition patterns; map requests now stop at `SENSITIVE_MAP_MODULE_RETIRED`.
-- Replaced the fixed `hr-level-function-matrix`, `hr-service-catalog` and `hr-ticket-intake` modules with one variable 2–10 row by 2–6 column `hr-operating-diagnostic-matrix`, supporting mixed numeric, percentage and text columns, optional secondary measures, column-local heat encoding and strict source/type/range gates.
-- Corrected `chart-insight` by requiring explicit comparable bar units, stable category/series IDs, a declared secondary-axis range, visible ratio values, and source-backed insight anchors to exact data points instead of renderer-guessed connectors.
-- Added R5 percentage range gates (`0–100`) and closed enum gates for three-level risk scores, with regressions across workforce, survival, mobility and the unified operating diagnostic matrix.
-- Retired `hr-ticket-classification`: aggregate before/after category totals cannot support a truthful reclassification flow without an origin-destination confusion matrix; use `sankey-flow` when real flows exist or `hr-operating-diagnostic-matrix` for non-flow operating diagnostics.
-- Retired `hr-eligibility-matrix`: the implementation encoded automation/readiness states rather than actual eligibility conditions and exceptions; use a source-backed matrix or guarded direct composition.
-- Added the productized `part-to-whole` module for one-period, one-total composition across 3–6 reconciled non-negative parts, with native editable pie and single-ring doughnut charts.
-- Added relationship-first routing, Producer payload rules, source-backed doughnut center content, percentage calculation from exact values, strict reconciliation and scope guards against trends, multi-object comparison, negative values and excess categories.
-- Upgraded `marimekko` with an `absolute` layout mode for non-100% unequal-width and unequal-height columns: widths use segment `total_value`, stack heights use absolute `value`, and every column must reconcile to its total.
-- Preserved the legacy `normalized` 100%-height mode and added Producer handoff rules, absolute-value fixtures, reconciliation failures, native rendering, overflow checks, and editable-shape regression coverage.
-
-## 1.4.0 — 2026-08-09
-
-- Reworked the unreleased post-build concept into a read-only Editorial QA gate: protect strong pages, return at most one high-value Builder brief, and require Builder to own every PPTX change.
-- Added a six-dimension editorial rubric covering visual subject, title-evidence linkage, evidence-adjacent annotation, semantic emphasis, reading rhythm, and information contribution.
-- Added source-hash-locked patch operations, B-level input handling, no-material-edit behavior, native editability and semantic-token verification, and a full editorial run contract.
-- Added a single information-contribution gate for all visible slide and template objects.
-- Blocked decorative top bands, title eyebrows/kickers/overlines, heading rules, title accents, empty decorative strips, filler objects, and other aesthetic-only components.
-- Removed the former heading-safe-zone exemption for heading rules and title accents, while preserving data encodings, relationship lines, axes, necessary grouping containers, provenance, and explicitly required identity marks.
+- Added the productized `reference-list` module for a single numbered list of 2–8 sources actually used by OneSlide.
+- Added Producer compilation from one or more provenance ledgers, DOI/URL/work-level deduplication, first-use ordering and optional正文页回链.
+- Excluded calculations, derived claims, synthetic content and ordinary prompt anchors from the visible reference list; missing citation metadata now blocks instead of being invented.
+- Kept the page deliberately simple: one reading column, native editable text and separators, no cards, charts, icons, thumbnails or supplemental analysis.
+- Added complete, sparse, missing, duplicate, overload, malformed-format, formal-handoff and route regressions. Public release and user acceptance remain separate.
 
 ## 1.3.1 — 2026-08-10
 
@@ -92,7 +195,7 @@
 ## 1.2.0 — 2026-08-07
 
 - Renamed the public product and Skill entry from Single Consulting Slide Suite to OneSlide (`one-slide`).
-- Added author attribution for 周俊东 Marco and a stable contact route.
+- Added public license and attribution files for the release package.
 - Licensed Skill instructions, engines, scripts, configuration, and tests under Apache License 2.0.
 - Licensed original documentation, tutorials, example inputs, example outputs, and owned reference slides under CC BY 4.0.
 - Added `NOTICE`, content-license scope, trademark boundary, author information, and a five-part public release kit.

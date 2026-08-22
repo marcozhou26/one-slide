@@ -71,7 +71,7 @@ export async function renderConfidenceBand(data, output) {
 
   panel(slide, "interpretation-rail", plan.rail, COLORS.soft);
   addTextBox(slide, { name: "rail-title", text: "关键发现", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 28 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
-  d.insights.slice(0, 2).forEach((item, index) => addNode(slide, { name: `insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 58 + index * 116, width: plan.rail.width - 32, height: 96 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.5 : 1, fontSize: 14, bold: index === 0, color: COLORS.text, alignment: "left" }));
+  d.insights.slice(0, 2).forEach((item, index) => addNode(slide, { name: `insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 58 + index * 116, width: plan.rail.width - 32, height: 96 }, fill: COLORS.white, border: COLORS.border, borderWidth: 1, fontSize: 14, bold: false, color: COLORS.text, alignment: "left" }));
   if (d.conclusion) addTextBox(slide, { name: "conclusion", text: d.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 308, width: plan.rail.width - 32, height: 120 }, fontSize: 16, bold: true, color: COLORS.navy, fill: COLORS.orangeLight, line: { style: "solid", fill: COLORS.orange, width: 1 }, verticalAlignment: "middle", maxLines: 6 });
   addDataSourceFooter(slide, { source: d.source_note, disclosure: d.disclosure, position: plan.footer });
   setSpeakerNotes(slide, [

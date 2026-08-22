@@ -170,7 +170,7 @@ function renderChartInsight(slide, data, plan) {
   addPanel(slide, "insight-rail", plan.insight, COLORS.soft, COLORS.border, 1.2);
   addTextBox(slide, { name: "insight-title", text: "关键洞察", position: { left: plan.insight.left + 20, top: plan.insight.top + 16, width: plan.insight.width - 40, height: 34 }, fontSize: 18, bold: true, color: COLORS.navy });
   data.diagram.insights.forEach((insight, index) => {
-    const box = addNode(slide, { name: `insight-${index + 1}`, text: insight.text, position: { left: plan.insight.left + 20, top: plan.insight.top + 66 + index * 117, width: plan.insight.width - 40, height: 92 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.8 : 1, fontSize: 18, bold: index === 0, color: COLORS.text, alignment: "left" });
+    const box = addNode(slide, { name: `insight-${index + 1}`, text: insight.text, position: { left: plan.insight.left + 20, top: plan.insight.top + 66 + index * 117, width: plan.insight.width - 40, height: 92 }, fill: COLORS.white, border: COLORS.border, borderWidth: 1, fontSize: 18, bold: false, color: COLORS.text, alignment: "left" });
     const target = anchors.get(`${insight.anchor.series_id}:${insight.anchor.category_id}`);
     connectNative(slide, box, target, { kind: "straight", role: "leader", fromSide: "left", toSide: "right", arrow: false, line: { style: "solid", fill: COLORS.line, width: 1 } });
   });
@@ -214,8 +214,11 @@ export async function renderR2Module(data, output) {
   const { presentation, slide } = createPresentation(output.background);
   addPageHeader(slide, plan);
   const handlers = {
+    "route-tradeoff": renderRouteTradeoff,
+    "scqa-roadmap": renderScqaRoadmap,
     "bubble-heatmap": renderBubbleHeatmap,
     "chart-insight": renderChartInsight,
+    "scenario-planning": renderScenarioPlanning,
   };
   handlers[data.module_id](slide, data, plan);
   await exportPresentation(presentation, output);

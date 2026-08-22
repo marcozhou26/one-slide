@@ -22,7 +22,7 @@ function line(slide, name, x1, y1, x2, y2, style = "solid", color = COLORS.line,
 function insights(slide, position, items, title = "关键洞察") {
   panel(slide, `${title}-rail`, position, COLORS.soft);
   addTextBox(slide, { name: `${title}-title`, text: title, position: { left: position.left + 18, top: position.top + 14, width: position.width - 36, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy });
-  items.slice(0, 3).forEach((item, index) => addNode(slide, { name: `${title}-item-${index + 1}`, text: item.text, position: { left: position.left + 16, top: position.top + 60 + index * 122, width: position.width - 32, height: 96 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.7 : 1, fontSize: 16, bold: index === 0, color: COLORS.text, alignment: "left" }));
+  items.slice(0, 3).forEach((item, index) => addNode(slide, { name: `${title}-item-${index + 1}`, text: item.text, position: { left: position.left + 16, top: position.top + 60 + index * 122, width: position.width - 32, height: 96 }, fill: COLORS.white, border: COLORS.border, borderWidth: 1, fontSize: 16, bold: false, color: COLORS.text, alignment: "left" }));
 }
 function bottom(slide, position, item) { if (item) addNode(slide, { name: "bottom-conclusion", text: item.text, position, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 18, bold: true, color: COLORS.navy }); }
 function plainGrowth(text) {
@@ -32,40 +32,30 @@ function plainGrowth(text) {
 function renderMekko(slide, data, plan) {
   panel(slide, "mekko-frame", plan.chart);
   const plot = { left: plan.chart.left + 54, top: plan.chart.top + 66, width: plan.chart.width - 78, height: plan.chart.height - 120 };
-  const absolute = data.diagram.layout_mode === "absolute";
-  const unit = data.diagram.value_unit ?? "";
-  const formatAbsoluteValue = (value) => unit === "¥亿" ? `¥${compactNumber(value)}亿` : `${unit}${compactNumber(value)}`;
-  const totalWidthValue = absolute ? data.diagram.segments.reduce((sum, segment) => sum + segment.total_value, 0) : 100;
-  const maxHeightValue = absolute ? Math.max(...data.diagram.segments.map((segment) => segment.total_value)) : 100;
   for (let tick = 0; tick <= 4; tick += 1) {
     const y = plot.top + (tick / 4) * plot.height;
     line(slide, `mekko-grid-${tick}`, plot.left, y, plot.left + plot.width, y, "solid", COLORS.border, .7);
-    const tickText = absolute ? formatAbsoluteValue(maxHeightValue * (1 - tick / 4)) : `${100 - tick * 25}%`;
-    addTextBox(slide, { name: `mekko-tick-${tick}`, text: tickText, position: { left: plan.chart.left - 36, top: y - 12, width: 90, height: 24 }, fontSize: 16, color: COLORS.muted, alignment: "right" });
+    addTextBox(slide, { name: `mekko-tick-${tick}`, text: `${100 - tick * 25}%`, position: { left: plan.chart.left - 20, top: y - 12, width: 70, height: 24 }, fontSize: 14, color: COLORS.muted, alignment: "right", singleLine: true });
   }
   let cursor = plot.left;
   data.diagram.segments.forEach((segment, segmentIndex) => {
-    const width = plot.width * (absolute ? segment.total_value / totalWidthValue : segment.size_share / 100);
+    const width = plot.width * segment.size_share / 100;
     let y = plot.top + plot.height;
     segment.stacks.forEach((stack, stackIndex) => {
-      const height = plot.height * (absolute ? stack.value / maxHeightValue : stack.share / 100);
+      const height = plot.height * stack.share / 100;
       y -= height;
       slide.shapes.add({ name: `mekko-${segmentIndex + 1}-${stackIndex + 1}`, geometry: "rect", position: { left: cursor, top: y, width, height }, fill: STACK[stackIndex], line: { style: "solid", fill: COLORS.white, width: 1.2 } });
-      if ((absolute && height >= 64 && width >= 100) || (!absolute && height >= 36 && width >= 70)) {
-        const labelValue = absolute ? formatAbsoluteValue(stack.value) : `${stack.share}%`;
-        addTextBox(slide, { name: `mekko-label-${segmentIndex + 1}-${stackIndex + 1}`, text: `${stack.label.text} ${labelValue}`, position: { left: cursor + 4, top: y + height / 2 - 14, width: width - 8, height: 28 }, fontSize: 16, bold: stackIndex === 0, color: stackIndex < 3 ? COLORS.white : COLORS.text, alignment: "center" });
-      }
+      const narrowStack = width < 130;
+      if (height >= 36 && width >= 70) addTextBox(slide, { name: `mekko-label-${segmentIndex + 1}-${stackIndex + 1}`, text: width < 110 ? `${stack.share}%` : `${stack.label.text} ${stack.share}%`, position: { left: cursor + 2, top: y + height / 2 - 12, width: width - 4, height: 24 }, fontSize: narrowStack ? 12 : 14, bold: stackIndex === 0, color: stackIndex < 3 ? COLORS.white : COLORS.text, alignment: "center", singleLine: true });
     });
-    const topText = `${segment.absolute_size.text}\n${plainGrowth(segment.growth.text)}`;
-    addTextBox(slide, { name: `mekko-top-${segmentIndex + 1}`, text: topText, position: { left: cursor, top: plan.chart.top + 10, width, height: 48 }, fontSize: absolute ? 14 : 16, bold: true, color: segment.priority ? COLORS.orange : COLORS.navy, alignment: "center" });
-    const bottomValue = absolute ? formatAbsoluteValue(segment.total_value) : `${segment.size_share}%`;
-    addTextBox(slide, { name: `mekko-bottom-${segmentIndex + 1}`, text: `${segment.label.text}\n${bottomValue}`, position: { left: cursor, top: plot.top + plot.height + 8, width, height: 40 }, fontSize: 16, bold: segment.priority, color: segment.priority ? COLORS.orange : COLORS.text, alignment: "center" });
+    addTextBox(slide, { name: `mekko-top-${segmentIndex + 1}`, text: `${segment.absolute_size.text}\n${plainGrowth(segment.growth.text)}`, position: { left: cursor, top: plan.chart.top + 10, width, height: 48 }, fontSize: 16, bold: true, color: segment.priority ? COLORS.orange : COLORS.navy, alignment: "center" });
+    addTextBox(slide, { name: `mekko-bottom-${segmentIndex + 1}`, text: `${segment.label.text}\n${segment.size_share}%`, position: { left: cursor, top: plot.top + plot.height + 8, width, height: 40 }, fontSize: 16, bold: segment.priority, color: segment.priority ? COLORS.orange : COLORS.text, alignment: "center" });
     if (segment.priority) slide.shapes.add({ name: `mekko-priority-${segmentIndex + 1}`, geometry: "rect", position: { left: cursor - 3, top: plot.top - 3, width: width + 6, height: plot.height + 6 }, fill: "none", line: { style: "solid", fill: COLORS.orange, width: 3 } });
     cursor += width;
   });
   insights(slide, plan.rail, (data.diagram.insights ?? []).slice(0, 2));
   if (data.diagram.conclusion) addNode(slide, { name: "mekko-conclusion", text: data.diagram.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 326, width: plan.rail.width - 32, height: 112 }, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 16, bold: true, color: COLORS.navy });
-  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.bottom });
+  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.footer });
   setSpeakerNotes(slide, [
     { title: "专业术语", items: ["CAGR 是复合年均增长率，页面已改写为“年均增长”。"] },
     { title: "计算方法", items: ["年均增长率 =（期末值 ÷ 期初值）的 1/年数 次方 − 1。", ...(data.diagram.segments ?? []).map((segment) => `${segment.label.text}：${segment.growth.text}`)] },
@@ -82,27 +72,20 @@ function renderPartToWhole(slide, data, plan) {
     return PART_TO_WHOLE_COLORS[paletteIndex % PART_TO_WHOLE_COLORS.length];
   });
   const percentages = diagram.parts.map((part) => part.value / diagram.total_value * 100);
-  const chartOptions = {
+  slide.charts.add(diagram.chart_type, {
     position: plan.chart,
     categories: diagram.parts.map((part) => part.label.text),
-    series: [{
-      name: diagram.total_label.text,
-      values: diagram.parts.map((part) => part.value),
-      points: colors.map((fill, idx) => ({ idx, fill, line: { style: "solid", fill: COLORS.white, width: 1.2 } })),
-    }],
+    series: [{ name: diagram.total_label.text, values: diagram.parts.map((part) => part.value), points: colors.map((fill, idx) => ({ idx, fill, line: { style: "solid", fill: COLORS.white, width: 1.2 } })) }],
     hasLegend: false,
     dataLabels: { showPercent: false, showCategoryName: false, showValue: false },
     pieOptions: diagram.chart_type === "pie" ? { firstSliceAngle: 0 } : undefined,
     doughnutOptions: diagram.chart_type === "doughnut" ? { holeSize: 55, firstSliceAngle: 0 } : undefined,
-  };
-  slide.charts.add(diagram.chart_type, chartOptions);
-
+  });
   if (diagram.chart_type === "doughnut") {
     const center = { left: plan.chart.left + plan.chart.width * .29, top: plan.chart.top + plan.chart.height * .34, width: plan.chart.width * .42, height: plan.chart.height * .3 };
     addTextBox(slide, { name: "part-center-value", text: diagram.center_value.text, position: { ...center, height: center.height * .58 }, fontSize: 30, bold: true, color: priorityIndex >= 0 ? COLORS.orange : COLORS.navy, alignment: "center", verticalAlignment: "bottom", singleLine: true });
     addTextBox(slide, { name: "part-center-label", text: diagram.center_label.text, position: { left: center.left, top: center.top + center.height * .58, width: center.width, height: center.height * .42 }, fontSize: 16, bold: true, color: COLORS.navy, alignment: "center", verticalAlignment: "top", singleLine: true });
   }
-
   addTextBox(slide, { name: "part-breakdown-title", text: diagram.total_label.text, position: { left: plan.breakdown.left, top: plan.breakdown.top, width: plan.breakdown.width, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
   const totalText = diagram.unit === "%" ? `${compactNumber(diagram.total_value)}%` : `${compactNumber(diagram.total_value)} ${diagram.unit}`;
   addTextBox(slide, { name: "part-total", text: `总量 ${totalText}`, position: { left: plan.breakdown.left, top: plan.breakdown.top + 34, width: plan.breakdown.width, height: 30 }, fontSize: 16, bold: true, color: COLORS.text, singleLine: true });
@@ -126,7 +109,7 @@ function renderPartToWhole(slide, data, plan) {
   if (plan.rail) {
     panel(slide, "part-insight-rail", plan.rail, COLORS.soft);
     addTextBox(slide, { name: "part-insight-title", text: "构成洞察", position: { left: plan.rail.left + 18, top: plan.rail.top + 16, width: plan.rail.width - 36, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy, singleLine: true });
-    (diagram.insights ?? []).forEach((item, index) => addTextBox(slide, { name: `part-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 18, top: plan.rail.top + 72 + index * 112, width: plan.rail.width - 36, height: 82 }, fontSize: 14, bold: index === 0, color: index === 0 ? COLORS.orange : COLORS.text, verticalAlignment: "top", maxLines: 4 }));
+    (diagram.insights ?? []).forEach((item, index) => addTextBox(slide, { name: `part-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 18, top: plan.rail.top + 72 + index * 112, width: plan.rail.width - 36, height: 82 }, fontSize: 14, bold: false, color: COLORS.text, verticalAlignment: "top", maxLines: 4 }));
   }
   bottom(slide, plan.bottom, diagram.conclusion);
 }
@@ -234,12 +217,12 @@ function renderRadar(slide, data, plan) {
     const left = clamp(cx + Math.cos(angle) * labelRadius - boxWidth / 2, radar.left + 6, radar.left + radar.width - boxWidth - 6);
     const top = clamp(cy + Math.sin(angle) * labelRadius - boxHeight / 2, radar.top + 42, radar.top + radar.height - boxHeight - 6);
     const labelText = d.priority ? `${d.label.text}\n${compactNumber(d.current)} / ${compactNumber(d.benchmark)} / ${compactNumber(d.target)}` : d.label.text;
-    addTextBox(slide, { name: `radar-label-${index + 1}`, text: labelText, position: { left, top, width: boxWidth, height: boxHeight }, fontSize: d.priority ? 14 : 14, bold: d.priority, color: d.priority ? COLORS.orange : COLORS.text, alignment: "center", fill: d.priority ? PALE_ORANGE : "none", line: { style: "solid", fill: d.priority ? COLORS.orange : "none", width: d.priority ? 1.1 : 0 } });
+    addTextBox(slide, { name: `radar-label-${index + 1}`, text: labelText, position: { left, top, width: boxWidth, height: boxHeight }, fontSize: 14, bold: d.priority, color: COLORS.text, alignment: "center", fill: d.priority ? PALE_ORANGE : "none", line: { style: "solid", fill: "none", width: 0 } });
   });
   if (data.diagram.supporting_evidence) renderRankingEvidence(slide, data.diagram.supporting_evidence, plan, scale);
   else {
     panel(slide, "radar-rail", plan.rail, COLORS.soft);
-    (data.diagram.group_cards ?? []).forEach((card, index) => addNode(slide, { name: `group-card-${index + 1}`, text: `${card.group.text}\n均分 ${card.average}\n${card.problem.text}\n${card.action.text}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 18 + index * 150, width: plan.rail.width - 32, height: 128 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.7 : 1, fontSize: 16, bold: index === 0, color: COLORS.text, alignment: "left" }));
+    (data.diagram.group_cards ?? []).forEach((card, index) => addNode(slide, { name: `group-card-${index + 1}`, text: `${card.group.text}\n均分 ${card.average}\n${card.problem.text}\n${card.action.text}`, position: { left: plan.rail.left + 16, top: plan.rail.top + 18 + index * 150, width: plan.rail.width - 32, height: 128 }, fill: COLORS.white, border: COLORS.border, borderWidth: 1, fontSize: 16, bold: false, color: COLORS.text, alignment: "left" }));
   }
   if (plan.condition) renderConditionArea(slide, data.diagram.condition, data.diagram.conclusion, data.diagram.footnotes, plan.condition);
   else bottom(slide, plan.bottom, data.diagram.conclusion);
@@ -380,7 +363,7 @@ function renderBoxPlot(slide, data, plan) {
     line(slide, `box-whisker-${index + 1}`, cx, upperY, cx, lowerY, "solid", COLORS.navy, 1.6);
     line(slide, `box-cap-high-${index + 1}`, cx - boxWidth * .3, upperY, cx + boxWidth * .3, upperY, "solid", COLORS.navy, 1.6);
     line(slide, `box-cap-low-${index + 1}`, cx - boxWidth * .3, lowerY, cx + boxWidth * .3, lowerY, "solid", COLORS.navy, 1.6);
-    slide.shapes.add({ name: `box-iqr-${index + 1}`, geometry: "rect", position: { left: cx - boxWidth / 2, top: q3Y, width: boxWidth, height: Math.max(2, q1Y - q3Y) }, fill: index === 0 ? PALE_ORANGE : PALE_BLUE, line: { style: "solid", fill: index === 0 ? COLORS.orange : COLORS.blue, width: 1.8 } });
+    slide.shapes.add({ name: `box-iqr-${index + 1}`, geometry: "rect", position: { left: cx - boxWidth / 2, top: q3Y, width: boxWidth, height: Math.max(2, q1Y - q3Y) }, fill: PALE_BLUE, line: { style: "solid", fill: COLORS.blue, width: 1.8 } });
     line(slide, `box-median-${index + 1}`, cx - boxWidth / 2, y(group.median), cx + boxWidth / 2, y(group.median), "solid", COLORS.orange, 3);
     addTextBox(slide, { name: `box-median-label-${index + 1}`, text: compactNumber(group.median), position: { left: cx + boxWidth / 2 + 4, top: y(group.median) - 11, width: 48, height: 22 }, fontSize: 12, bold: true, color: COLORS.orange, singleLine: true });
     group.outliers.forEach((value, outlierIndex) => {
@@ -394,9 +377,9 @@ function renderBoxPlot(slide, data, plan) {
 
   panel(slide, "box-insight-rail", plan.rail, COLORS.soft);
   addTextBox(slide, { name: "box-insight-title", text: "关键发现", position: { left: plan.rail.left + 16, top: plan.rail.top + 16, width: plan.rail.width - 32, height: 30 }, fontSize: 18, bold: true, color: COLORS.navy });
-  (data.diagram.insights ?? []).slice(0, 2).forEach((item, index) => addNode(slide, { name: `box-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 64 + index * 122, width: plan.rail.width - 32, height: 100 }, fill: COLORS.white, border: index === 0 ? COLORS.orange : COLORS.border, borderWidth: index === 0 ? 1.5 : 1, fontSize: 14, bold: index === 0, color: COLORS.text, alignment: "left" }));
+  (data.diagram.insights ?? []).slice(0, 2).forEach((item, index) => addNode(slide, { name: `box-insight-${index + 1}`, text: item.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 64 + index * 122, width: plan.rail.width - 32, height: 100 }, fill: COLORS.white, border: COLORS.border, borderWidth: 1, fontSize: 14, bold: false, color: COLORS.text, alignment: "left" }));
   if (data.diagram.conclusion) addNode(slide, { name: "box-conclusion", text: data.diagram.conclusion.text, position: { left: plan.rail.left + 16, top: plan.rail.top + 326, width: plan.rail.width - 32, height: 110 }, fill: PALE_ORANGE, border: COLORS.orange, borderWidth: 1.3, fontSize: 16, bold: true, color: COLORS.navy, alignment: "left" });
-  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.bottom });
+  addDataSourceFooter(slide, { source: data.diagram.source_note, disclosure: data.diagram.disclosure, position: plan.footer });
   setSpeakerNotes(slide, [
     { title: "专业术语", items: ["IQR 是四分位距，也就是中间 50% 数据的跨度。", "Q1 和 Q3 分别是下四分位数和上四分位数；箱体表示两者之间的范围。"] },
     { title: "口径解释", items: [data.diagram.period, data.diagram.denominator, data.diagram.sample_definition, data.diagram.missing_policy] },
@@ -508,21 +491,32 @@ function renderBoxPlotJitter(slide, data, plan) {
   bottom(slide, plan.bottom, data.diagram.conclusion);
 }
 function renderSmallMultiples(slide, data, plan) {
-  const panels = data.diagram.panels; const cols = panels.length === 4 ? 2 : 3; const rows = Math.ceil(panels.length / cols); const gap = 12; const w = (plan.grid.width - gap * (cols - 1)) / cols; const h = (plan.grid.height - gap * (rows - 1)) / rows; const all = panels.flatMap((p) => p.values).concat(data.diagram.benchmark); const min = Math.min(...all); const max = Math.max(...all);
-  const classColor = (text) => /加大|增长|领先/.test(text) ? COLORS.blue : /退出|落后|收缩/.test(text) ? COLORS.orange : COLORS.muted;
+  const diagram = data.diagram; const panels = diagram.panels; const cols = panels.length === 4 ? 2 : 3; const rows = Math.ceil(panels.length / cols); const gap = 12; const legendH = 30; const w = (plan.grid.width - gap * (cols - 1)) / cols; const h = (plan.grid.height - legendH - gap * (rows - 1)) / rows; const min = diagram.scale.min; const max = diagram.scale.max;
+  const stateColor = { invest: COLORS.blue, maintain: COLORS.navy, watch: COLORS.muted, exit: COLORS.orange };
+  const benchmarkText = diagram.benchmark ? `；基准：${diagram.benchmark_label.text}` : "；无统一基准";
+  addTextBox(slide, { name: "small-shared-scale", text: `${diagram.metric.text}（${diagram.unit.text}）；共享刻度 ${min}–${max}${benchmarkText}`, position: { left: plan.grid.left, top: plan.grid.top, width: plan.grid.width, height: 24 }, fontSize: 14, bold: true, color: COLORS.navy, singleLine: true });
   panels.forEach((p, index) => {
-    const col = index % cols; const row = Math.floor(index / cols); const left = plan.grid.left + col * (w + gap); const top = plan.grid.top + row * (h + gap); const color = classColor(p.classification.text);
+    const col = index % cols; const row = Math.floor(index / cols); const rowCount = row === rows - 1 ? panels.length - row * cols : cols; const rowOffset = rowCount < cols ? (cols - rowCount) * (w + gap) / 2 : 0; const left = plan.grid.left + rowOffset + col * (w + gap); const top = plan.grid.top + legendH + row * (h + gap); const color = stateColor[p.classification_state];
     panel(slide, `small-${index + 1}`, { left, top, width: w, height: h }, COLORS.white, color, 1.5);
-    addTextBox(slide, { name: `small-title-${index + 1}`, text: p.label.text, position: { left: left + 10, top: top + 8, width: w * .46, height: 42 }, fontSize: 16, bold: true, color: COLORS.navy });
-    addTextBox(slide, { name: `small-summary-${index + 1}`, text: p.summary.text, position: { left: left + w * .46, top: top + 6, width: w * .49, height: 44 }, fontSize: 16, bold: true, color, alignment: "right" });
-    const plot = { left: left + 18, top: top + 58, width: w - 36, height: h - 86 }; const point = (value, i) => ({ x: plot.left + i / Math.max(1, p.values.length - 1) * plot.width, y: plot.top + (max - value) / Math.max(1e-6, max - min) * plot.height });
-    const bench = data.diagram.benchmark.map(point); const series = p.values.map(point);
-    bench.slice(1).forEach((pt, i) => line(slide, `small-b-${index + 1}-${i + 1}`, bench[i].x, bench[i].y, pt.x, pt.y, "solid", COLORS.line, 1.1));
-    series.slice(1).forEach((pt, i) => line(slide, `small-s-${index + 1}-${i + 1}`, series[i].x, series[i].y, pt.x, pt.y, "solid", color, 2.2));
-    addTextBox(slide, { name: `small-class-${index + 1}`, text: p.classification.text, position: { left: left + 10, top: top + h - 26, width: w - 20, height: 20 }, fontSize: 16, bold: true, color, alignment: "right" });
+    addTextBox(slide, { name: `small-title-${index + 1}`, text: p.label.text, position: { left: left + 10, top: top + 6, width: w * .29, height: 24 }, fontSize: 16, bold: true, color: COLORS.navy, singleLine: true });
+    addTextBox(slide, { name: `small-summary-${index + 1}`, text: p.summary.text, position: { left: left + w * .31, top: top + 5, width: w * .65, height: 26 }, fontSize: 14, bold: true, color, alignment: "right", singleLine: true });
+    const plot = { left: left + 22, top: top + 36, width: w - 44, height: h - 96 }; const point = (value, i) => ({ x: plot.left + i / Math.max(1, p.values.length - 1) * plot.width, y: plot.top + (max - value) / (max - min) * plot.height });
+    [min, max].forEach((value, tickIndex) => addTextBox(slide, { name: `small-scale-${index + 1}-${tickIndex + 1}`, text: String(value), position: { left: left + 2, top: tickIndex ? plot.top - 9 : plot.top + plot.height - 20, width: 38, height: 20 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true }));
+    if (diagram.benchmark) { const bench = diagram.benchmark.map(point); bench.slice(1).forEach((pt, i) => line(slide, `small-b-${index + 1}-${i + 1}`, bench[i].x, bench[i].y, pt.x, pt.y, "dashed", COLORS.line, 1.1)); }
+    const series = p.values.map(point);
+    if (diagram.series_type === "line") {
+      series.slice(1).forEach((pt, i) => line(slide, `small-s-${index + 1}-${i + 1}`, series[i].x, series[i].y, pt.x, pt.y, "solid", color, 2.2));
+      [0, series.length - 1].forEach((pointIndex) => slide.shapes.add({ name: `small-point-${index + 1}-${pointIndex + 1}`, geometry: "ellipse", position: { left: series[pointIndex].x - 3.5, top: series[pointIndex].y - 3.5, width: 7, height: 7 }, fill: color, line: { style: "solid", fill: COLORS.white, width: .8 } }));
+    } else {
+      const slot = plot.width / p.values.length; const baseline = point(Math.max(min, Math.min(max, 0)), 0).y;
+      p.values.forEach((value, valueIndex) => { const y = point(value, valueIndex).y; slide.shapes.add({ name: `small-column-${index + 1}-${valueIndex + 1}`, geometry: "rect", position: { left: plot.left + valueIndex * slot + slot * .2, top: Math.min(y, baseline), width: slot * .6, height: Math.max(1, Math.abs(baseline - y)) }, fill: color, line: { style: "solid", fill: color, width: 0 } }); });
+    }
+    addTextBox(slide, { name: `small-first-period-${index + 1}`, text: diagram.periods[0].text, position: { left: plot.left, top: plot.top + plot.height + 1, width: plot.width / 2, height: 20 }, fontSize: 12, color: COLORS.muted, singleLine: true });
+    addTextBox(slide, { name: `small-last-period-${index + 1}`, text: diagram.periods.at(-1).text, position: { left: plot.left + plot.width / 2, top: plot.top + plot.height + 1, width: plot.width / 2, height: 20 }, fontSize: 12, color: COLORS.muted, alignment: "right", singleLine: true });
+    addTextBox(slide, { name: `small-class-${index + 1}`, text: p.classification.text, position: { left: left + 10, top: top + h - 24, width: w - 20, height: 20 }, fontSize: 14, bold: true, color, alignment: "right", singleLine: true });
   });
-  insights(slide, plan.rail, data.diagram.insights ?? []);
-  bottom(slide, plan.bottom, data.diagram.conclusion);
+  insights(slide, plan.rail, diagram.insights ?? []);
+  bottom(slide, plan.bottom, diagram.conclusion);
 }
 
 export async function renderR3Module(data, output) {

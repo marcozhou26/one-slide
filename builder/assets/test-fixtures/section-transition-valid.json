@@ -1,0 +1,78 @@
+{
+  "version": "1.0",
+  "module_id": "section-transition",
+  "theme": "light",
+  "deck_context": {
+    "audience": "准备加入课程体系的候选讲师",
+    "presentation_task": "理解专业标准，以及从观察、跟课到独立交付的成长路径",
+    "narrative_route": "教学培训",
+    "total_slides": 20,
+    "source_baseline": "`HR专业培训品牌_三阶段远景规划.md`，SHA-256 `17a7cc39468a449a4a7007c8e465cdd581516b4de9e829a82cc9b8ac70f32cfb`",
+    "current_slide": 4,
+    "chapter_id": "体系总览",
+    "previous_page_job": "P03目录的第一章",
+    "next_page_job": "下一页先定义候选讲师加入的是一套什么样的专业体系",
+    "callback_to": "目录第1章"
+  },
+  "page_contract": {
+    "page_type": "section_transition",
+    "page_job": "提示听众进入第一章，并明确本章要回答“候选讲师加入的是什么、专业能力从哪里来”",
+    "audience_shift": {
+      "before": "停留在整场目录",
+      "after": "准备理解讲师成长的专业基础"
+    },
+    "central_message": "讲师成长必须建立在统一专业标准和真实应用循环上",
+    "source_ids": [
+      "S01-C001",
+      "S01-C003",
+      "S01-C004"
+    ],
+    "visible_components": [
+      {
+        "id": "component_1",
+        "role": "number_label",
+        "text": "01",
+        "required": true,
+        "source_description": "大号章节编号“01”"
+      },
+      {
+        "id": "component_2",
+        "role": "structural_rule",
+        "text": "原版深蓝横线",
+        "required": true,
+        "source_description": "原版深蓝横线"
+      },
+      {
+        "id": "component_3",
+        "role": "peer_label",
+        "text": "体系总览",
+        "required": true,
+        "source_description": "章节名“体系总览”"
+      },
+      {
+        "id": "component_4",
+        "role": "guidance",
+        "text": "先看懂专业体系，再谈讲师成长",
+        "required": true,
+        "source_description": "引导语“先看懂专业体系，再谈讲师成长”"
+      }
+    ],
+    "forbidden_components": [
+      "Logo、机构品牌署名及其品牌页式、左上角品牌、右上角footnote或eyebrow、页眉、页脚、页码、“加入的是什么体系”“专业能力从哪里来”等本章问题、图标及白名单未列出的任何内容"
+    ],
+    "peer_groups": [],
+    "layout_intent": {
+      "raw": "保持最初版本中大号编号、横线、章节名和引导语的原始位置、字号层级和对齐关系，不得改成单行标题或新的过渡页构图",
+      "body_alignment": "inherit",
+      "group_translation": "none",
+      "preserve_internal_spacing": true,
+      "must_not_center": false
+    },
+    "theme_preference": "inherit_or_neutral",
+    "speaker_notes": "停顿并提醒听众，本章是后续三阶段的共同基础",
+    "completion_checks": [
+      "原版四部件过渡布局完整保留",
+      "无左上角品牌、右上角footnote或eyebrow、底部问题、页脚或其他品牌部件"
+    ]
+  }
+}

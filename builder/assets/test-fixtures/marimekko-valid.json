@@ -8,11 +8,7 @@
     },
     {
       "id": "S02",
-      "text": "大型企业；¥38 亿；CAGR +12%；我方；对手 A；对手 B；其他；中型企业；¥29 亿；CAGR +9%；小微企业；¥22 亿；CAGR +5%；政企；¥18 亿；CAGR +7%；个人；¥13 亿；CAGR +3%；★ 优先进攻；大型与中型企业占市场 56%；我方在两大细分份额均低于 8%；优先投入两大细分可覆盖主要增长空间；资源优先转向大型与中型企业细分；全部示例数值与口径"
-    },
-    {
-      "id": "S03",
-      "text": "合成示例数据，非真实客户数据"
+      "text": "大型企业；¥38 亿；CAGR +12%；我方；对手 A；对手 B；其他；中型企业；¥29 亿；CAGR +9%；小微企业；¥22 亿；CAGR +5%；政企；¥18 亿；CAGR +7%；个人；¥13 亿；CAGR +3%；★ 优先进攻；大型与中型企业占市场 56%；我方在两大细分份额均低于 8%；优先投入两大细分可覆盖主要增长空间；资源优先转向大型与中型企业细分；匿名合成市场示例；合成示例数据，非真实客户数据；全部示例数值与口径"
     }
   ],
   "title": {
@@ -24,8 +20,6 @@
   },
   "diagram": {
     "type": "marimekko",
-    "layout_mode": "absolute",
-    "value_unit": "¥亿",
     "segments": [
       {
         "label": {
@@ -35,7 +29,6 @@
           ]
         },
         "size_share": 32,
-        "total_value": 38,
         "absolute_size": {
           "text": "¥38 亿",
           "source_ids": [
@@ -62,7 +55,6 @@
               ]
             },
             "share": 7,
-            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -76,7 +68,6 @@
               ]
             },
             "share": 38,
-            "value": 14,
             "source_ids": [
               "S02"
             ]
@@ -90,7 +81,6 @@
               ]
             },
             "share": 25,
-            "value": 10,
             "source_ids": [
               "S02"
             ]
@@ -104,7 +94,6 @@
               ]
             },
             "share": 30,
-            "value": 11,
             "source_ids": [
               "S02"
             ]
@@ -119,7 +108,6 @@
           ]
         },
         "size_share": 24,
-        "total_value": 29,
         "absolute_size": {
           "text": "¥29 亿",
           "source_ids": [
@@ -146,7 +134,6 @@
               ]
             },
             "share": 8,
-            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -160,7 +147,6 @@
               ]
             },
             "share": 34,
-            "value": 10,
             "source_ids": [
               "S02"
             ]
@@ -174,7 +160,6 @@
               ]
             },
             "share": 28,
-            "value": 8,
             "source_ids": [
               "S02"
             ]
@@ -188,7 +173,6 @@
               ]
             },
             "share": 30,
-            "value": 9,
             "source_ids": [
               "S02"
             ]
@@ -203,7 +187,6 @@
           ]
         },
         "size_share": 18,
-        "total_value": 22,
         "absolute_size": {
           "text": "¥22 亿",
           "source_ids": [
@@ -230,7 +213,6 @@
               ]
             },
             "share": 14,
-            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -244,7 +226,6 @@
               ]
             },
             "share": 28,
-            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -258,7 +239,6 @@
               ]
             },
             "share": 24,
-            "value": 5,
             "source_ids": [
               "S02"
             ]
@@ -272,7 +252,6 @@
               ]
             },
             "share": 34,
-            "value": 8,
             "source_ids": [
               "S02"
             ]
@@ -287,7 +266,6 @@
           ]
         },
         "size_share": 15,
-        "total_value": 18,
         "absolute_size": {
           "text": "¥18 亿",
           "source_ids": [
@@ -314,7 +292,6 @@
               ]
             },
             "share": 11,
-            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -328,7 +305,6 @@
               ]
             },
             "share": 31,
-            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -342,7 +318,6 @@
               ]
             },
             "share": 22,
-            "value": 4,
             "source_ids": [
               "S02"
             ]
@@ -356,7 +331,6 @@
               ]
             },
             "share": 36,
-            "value": 6,
             "source_ids": [
               "S02"
             ]
@@ -371,7 +345,6 @@
           ]
         },
         "size_share": 11,
-        "total_value": 13,
         "absolute_size": {
           "text": "¥13 亿",
           "source_ids": [
@@ -398,7 +371,6 @@
               ]
             },
             "share": 18,
-            "value": 2,
             "source_ids": [
               "S02"
             ]
@@ -412,7 +384,6 @@
               ]
             },
             "share": 25,
-            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -426,7 +397,6 @@
               ]
             },
             "share": 20,
-            "value": 3,
             "source_ids": [
               "S02"
             ]
@@ -440,7 +410,6 @@
               ]
             },
             "share": 37,
-            "value": 5,
             "source_ids": [
               "S02"
             ]
@@ -481,16 +450,12 @@
       ]
     },
     "source_note": {
-      "text": "全部示例数值与口径",
-      "source_ids": [
-        "S02"
-      ]
+      "text": "匿名合成市场示例",
+      "source_ids": ["S02"]
     },
     "disclosure": {
       "text": "合成示例数据，非真实客户数据",
-      "source_ids": [
-        "S03"
-      ]
+      "source_ids": ["S02"]
     }
   }
 }

@@ -630,7 +630,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
     const isRoot = node.id === plan.rootId;
     const isFirstLevel = plan.firstLevelIds.includes(node.id);
     const fill = isRoot ? COLORS.navy : node.risk ? riskFill(node.risk.turnoverRatePct, COLORS) : isFirstLevel ? COLORS.blueLight : COLORS.white;
-    const border = isRoot ? COLORS.navy : node.risk?.tripleBreakpoint ? COLORS.orange : isFirstLevel ? COLORS.navy : COLORS.border;
+    const border = isRoot ? COLORS.navy : isFirstLevel ? COLORS.navy : COLORS.border;
     node.textColor = isRoot ? COLORS.white : COLORS.text;
     node.bold = isRoot || isFirstLevel;
     shapes.set(node.id, addNode(slide, {
@@ -639,7 +639,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
       position: node,
       fill,
       border,
-      borderWidth: isRoot ? 1.5 : node.risk?.tripleBreakpoint ? 2.4 : isFirstLevel ? 1.4 : 1,
+      borderWidth: isRoot ? 1.5 : isFirstLevel ? 1.4 : 1,
       fontSize: node.fontSize,
     }));
   }
@@ -796,7 +796,7 @@ export async function renderComplexOrgChart(model, output, overlayInput, pageCon
         text: evidenceText(item),
         position: slot,
         fill: item.authorization_score < 5 ? COLORS.orangeLight : COLORS.blueLight,
-        border: item.authorization_score < 5 ? COLORS.orange : COLORS.blue,
+        border: COLORS.border,
         borderWidth: 1.2,
         fontSize: 12,
         bold: false,

@@ -191,10 +191,8 @@ export async function validateR3ModuleFile(inputPath) {
 
 function validateMekko(data, c) {
   const segments = data.diagram.segments;
-  const layoutMode = data.diagram.layout_mode ?? "normalized";
-  requireCondition(["normalized", "absolute"].includes(layoutMode), "DATA_CONTRACT_FAIL", "Mekko layout_mode must be normalized or absolute");
   requireCondition(Array.isArray(segments) && segments.length >= 3 && segments.length <= 6, "DATA_CONTRACT_FAIL", "Mekko requires 3–6 segments");
-  if (layoutMode === "normalized") requireCondition(near(segments.reduce((sum, item) => sum + item.size_share, 0), 100), "MEKKO_RECONCILIATION_FAIL", "Segment size shares must sum to 100");
+  requireCondition(near(segments.reduce((sum, item) => sum + item.size_share, 0), 100), "MEKKO_RECONCILIATION_FAIL", "Segment size shares must sum to 100");
   const stackIds = segments[0]?.stacks?.map((item) => item.id) ?? [];
   requireCondition(stackIds.length >= 2 && stackIds.length <= 5, "DATA_CONTRACT_FAIL", "Mekko requires 2–5 stack categories");
   for (const segment of segments) {
@@ -202,11 +200,7 @@ function validateMekko(data, c) {
     c.text(segment.absolute_size, "Segment absolute size");
     c.text(segment.growth, "Segment growth");
     requireCondition(segment.stacks?.map((item) => item.id).join("|") === stackIds.join("|"), "DATA_CONTRACT_FAIL", "Every segment must use identical stack categories");
-    if (layoutMode === "absolute") {
-      requireCondition(Number.isFinite(segment.total_value) && segment.total_value > 0, "DATA_CONTRACT_FAIL", "Absolute Mekko segments require positive total_value");
-      requireCondition(segment.stacks.every((stack) => Number.isFinite(stack.value) && stack.value >= 0), "DATA_CONTRACT_FAIL", `Absolute Mekko stacks in ${segment.label.text} require numeric value fields`);
-      requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.value, 0), segment.total_value), "MEKKO_RECONCILIATION_FAIL", `Absolute stacks in ${segment.label.text} must sum to total_value`);
-    } else requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.share, 0), 100), "MEKKO_RECONCILIATION_FAIL", `Stacks in ${segment.label.text} must sum to 100`);
+    requireCondition(near(segment.stacks.reduce((sum, item) => sum + item.share, 0), 100), "MEKKO_RECONCILIATION_FAIL", `Stacks in ${segment.label.text} must sum to 100`);
     for (const stack of segment.stacks) { c.text(stack.label, "Stack label"); c.source(stack.source_ids, "Stack value"); }
     c.source(segment.source_ids, "Segment data");
   }
@@ -245,9 +239,7 @@ function validatePartToWhole(data, c) {
   if (diagram.chart_type === "doughnut") {
     c.text(diagram.center_label, "Doughnut center label");
     c.text(diagram.center_value, "Doughnut center value");
-  } else {
-    requireCondition(diagram.center_label === undefined && diagram.center_value === undefined, "DATA_CONTRACT_FAIL", "Pie mode cannot contain doughnut center fields");
-  }
+  } else requireCondition(diagram.center_label === undefined && diagram.center_value === undefined, "DATA_CONTRACT_FAIL", "Pie mode cannot contain doughnut center fields");
   requireCondition((diagram.insights ?? []).length <= 3, "DATA_CONTRACT_FAIL", "Part-to-whole supports at most three insights");
   (diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
   if (diagram.conclusion) c.text(diagram.conclusion, "Conclusion");
@@ -426,7 +418,6 @@ function validateBoxPlot(data, c) {
   c.text(data.diagram.missing_policy, "Missing-value policy");
   c.text(data.diagram.quartile_method, "Quartile method");
   c.text(data.diagram.whisker_rule, "Whisker rule");
-  if (data.diagram.source_note) c.text(data.diagram.source_note, "Data source");
   requireCondition(data.diagram.whisker_multiplier === 1.5, "DATA_CONTRACT_FAIL", "Version 1.0 requires a 1.5×IQR whisker multiplier");
   const ids = new Set();
   for (const group of groups) {
@@ -449,6 +440,7 @@ function validateBoxPlot(data, c) {
   requireCondition(Array.isArray(data.diagram.insights) && data.diagram.insights.length >= 1 && data.diagram.insights.length <= 3, "DATA_CONTRACT_FAIL", "Box plot requires 1–3 source-backed insights");
   data.diagram.insights.forEach((item) => c.text(item, "Distribution insight"));
   if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  if (data.diagram.source_note) c.text(data.diagram.source_note, "Data source");
   if (data.diagram.disclosure) c.text(data.diagram.disclosure, "Disclosure");
 }
 
@@ -533,21 +525,40 @@ function validateHistogram(data, c) {
   return calculated;
 }
 function validateSmallMultiples(data, c) {
-  const panels = data.diagram.panels;
-  requireCondition([4, 6, 9].includes(panels?.length), "DATA_CONTRACT_FAIL", "Small multiples requires 4, 6, or 9 panels");
-  const count = panels[0]?.values?.length;
-  requireCondition(count >= 4 && count <= 8, "DATA_CONTRACT_FAIL", "Small multiples requires 4–8 timepoints");
-  requireCondition(data.diagram.benchmark?.length === count && data.diagram.benchmark.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Benchmark length must match every panel");
-  c.source(data.diagram.benchmark_source_ids, "Benchmark data");
+  const diagram = data.diagram;
+  const panels = diagram.panels;
+  requireCondition(Array.isArray(panels) && panels.length >= 3 && panels.length <= 9, "DATA_CONTRACT_FAIL", "Small multiples requires 3–9 panels");
+  requireCondition(["line", "column"].includes(diagram.series_type), "DATA_CONTRACT_FAIL", "Small multiples series_type must be line or column");
+  c.text(diagram.metric, "Small multiples metric");
+  c.text(diagram.unit, "Small multiples unit");
+  const scale = diagram.scale;
+  requireCondition(scale && Number.isFinite(scale.min) && Number.isFinite(scale.max) && scale.min < scale.max, "SCALE_CONTRACT_FAIL", "Small multiples requires a finite shared scale with min < max");
+  const count = diagram.periods?.length;
+  requireCondition(Number.isInteger(count) && count >= 3 && count <= 12, "DATA_CONTRACT_FAIL", "Small multiples requires 3–12 periods");
+  diagram.periods.forEach((item) => c.text(item, "Period"));
+  const benchmarkSupplied = diagram.benchmark !== undefined;
+  if (benchmarkSupplied) {
+    requireCondition(Array.isArray(diagram.benchmark) && diagram.benchmark.length === count && diagram.benchmark.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Benchmark length must match every panel");
+    requireCondition(diagram.benchmark.every((value) => value >= scale.min && value <= scale.max), "SCALE_RANGE_FAIL", "Benchmark values must stay within the shared scale");
+    c.text(diagram.benchmark_label, "Benchmark label");
+    c.source(diagram.benchmark_source_ids, "Benchmark data");
+  } else {
+    requireCondition(diagram.benchmark_label === undefined && diagram.benchmark_source_ids === undefined, "DATA_CONTRACT_FAIL", "Benchmark metadata cannot be supplied without benchmark values");
+  }
+  const ids = new Set();
+  const states = new Set(["invest", "maintain", "watch", "exit"]);
   for (const panel of panels) {
+    requireCondition(typeof panel.id === "string" && panel.id.length > 0 && !ids.has(panel.id), "DATA_CONTRACT_FAIL", "Small multiples panel ids must be unique non-empty strings");
+    ids.add(panel.id);
     c.text(panel.label, "Panel label"); c.text(panel.summary, "Panel summary"); c.text(panel.classification, "Panel classification");
-    requireCondition(panel.values?.length === count && panel.values.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Every panel must use the same timepoints");
+    requireCondition(states.has(panel.classification_state), "DATA_CONTRACT_FAIL", "Panel classification_state must be invest, maintain, watch, or exit");
+    requireCondition(panel.values?.length === count && panel.values.every(Number.isFinite), "DATA_CONTRACT_FAIL", "Every panel must use the same periods");
+    requireCondition(panel.values.every((value) => value >= scale.min && value <= scale.max), "SCALE_RANGE_FAIL", `Panel ${panel.id} values must stay within the shared scale`);
     c.source(panel.source_ids, "Panel values");
   }
-  requireCondition(data.diagram.periods?.length === count, "DATA_CONTRACT_FAIL", "Periods must match series length");
-  data.diagram.periods.forEach((item) => c.text(item, "Period"));
-  (data.diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
-  if (data.diagram.conclusion) c.text(data.diagram.conclusion, "Conclusion");
+  requireCondition((diagram.insights ?? []).length <= 3, "DATA_CONTRACT_FAIL", "Small multiples supports at most three insights");
+  (diagram.insights ?? []).forEach((item) => c.text(item, "Insight"));
+  if (diagram.conclusion) c.text(diagram.conclusion, "Conclusion");
 }
 
 export function validateR3Module(data) {

@@ -1,0 +1,15 @@
+{
+  "case_id": "claim-p07",
+  "layout": "claim",
+  "title": "AI退到后台，专业判断走到前台",
+  "claim": "不再出售AI知识，而是出售被AI放大的专业判断。",
+  "source": "锁定大纲P07；slide-spec icon_handoff代表输入",
+  "icon_handoff": {
+    "status": "requested",
+    "trigger_reason": "低密度claim页面只有一句主张，但有AI与专业判断两个可命名语义锚点。",
+    "items": [
+      { "concept": "人工智能", "role": "object", "peer_group": "claim_markers", "target_id": "claim-marker-1", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P07-S1"] },
+      { "concept": "专业判断", "role": "object", "peer_group": "claim_markers", "target_id": "claim-marker-2", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P07-S1"] }
+    ]
+  }
+}

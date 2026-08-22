@@ -1,0 +1,15 @@
+{
+  "case_id": "aligned-p06",
+  "layout": "aligned",
+  "title": "这次调整不是退守，而是把竞争拉回专业判断的主场",
+  "source": "锁定大纲P06/P07语义链；slide-spec icon_handoff代表输入",
+  "icon_handoff": {
+    "status": "requested",
+    "trigger_reason": "aligned-comparison页面含三类支撑项，需要帮助识别支撑对象如何汇聚到新价值链。",
+    "items": [
+      { "concept": "分析", "role": "support", "peer_group": "p06_supports", "target_id": "support-frame-1", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P06-S1"] },
+      { "concept": "人工智能", "role": "support", "peer_group": "p06_supports", "target_id": "support-frame-2", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P06-S2"] },
+      { "concept": "经营", "role": "support", "peer_group": "p06_supports", "target_id": "support-frame-3", "required": true, "style": "line", "fallback": "text_only", "source_ids": ["P06-S3"] }
+    ]
+  }
+}

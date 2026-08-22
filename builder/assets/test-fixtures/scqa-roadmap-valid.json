@@ -1,0 +1,17 @@
+{
+  "version":"1.0","module_id":"scqa-roadmap",
+  "source_anchors":[
+    {"id":"S01","text":"分三阶段推进，可在 12 个月内完成 HR 数字化转型"},{"id":"S02","text":"现有系统分散，数据口径不统一"},{"id":"S03","text":"业务需求增长快，但交付能力不足"},{"id":"S04","text":"如何在不中断业务的前提下完成转型"},{"id":"S05","text":"采用试点、复制、固化三阶段路径"},
+    {"id":"S06","text":"0–3 月；试点验收通过；组织与流程；完成流程梳理；技术与工具；上线最小可用版本"},
+    {"id":"S07","text":"4–8 月；覆盖率达到 60%；组织与流程；复制标准流程；技术与工具；扩展核心接口"},
+    {"id":"S08","text":"9–12 月；运营指标达标；组织与流程；固化治理机制；技术与工具；建立持续运营"}
+  ],
+  "title":{"text":"分三阶段推进，可在 12 个月内完成 HR 数字化转型","origin":"source","source_ids":["S01"]},
+  "diagram":{"type":"scqa-roadmap","scqa":{
+    "s":{"text":"现有系统分散，数据口径不统一","source_ids":["S02"]},"c":{"text":"业务需求增长快，但交付能力不足","source_ids":["S03"]},"q":{"text":"如何在不中断业务的前提下完成转型","source_ids":["S04"]},"a":{"text":"采用试点、复制、固化三阶段路径","source_ids":["S05"]}},
+    "stages":[
+      {"label":{"text":"0–3 月","source_ids":["S06"]},"gate":{"text":"试点验收通过","source_ids":["S06"]},"lanes":[{"id":"org","label":{"text":"组织与流程","source_ids":["S06"]},"action":{"text":"完成流程梳理","source_ids":["S06"]}},{"id":"tech","label":{"text":"技术与工具","source_ids":["S06"]},"action":{"text":"上线最小可用版本","source_ids":["S06"]}}]},
+      {"label":{"text":"4–8 月","source_ids":["S07"]},"gate":{"text":"覆盖率达到 60%","source_ids":["S07"]},"lanes":[{"id":"org","label":{"text":"组织与流程","source_ids":["S07"]},"action":{"text":"复制标准流程","source_ids":["S07"]}},{"id":"tech","label":{"text":"技术与工具","source_ids":["S07"]},"action":{"text":"扩展核心接口","source_ids":["S07"]}}]},
+      {"label":{"text":"9–12 月","source_ids":["S08"]},"gate":{"text":"运营指标达标","source_ids":["S08"]},"lanes":[{"id":"org","label":{"text":"组织与流程","source_ids":["S08"]},"action":{"text":"固化治理机制","source_ids":["S08"]}},{"id":"tech","label":{"text":"技术与工具","source_ids":["S08"]},"action":{"text":"建立持续运营","source_ids":["S08"]}}]}
+    ]}
+}

@@ -4,34 +4,34 @@ Turn complete or scattered source material into one clear, source-traceable, nat
 
 OneSlide is for people who want a professional single-slide presentation without writing a complex prompt. Start with one sentence or provide complete source material. When essential information is missing, OneSlide adds only the minimum needed content, preserves the supplied meaning, and clearly labels model-generated content, calculations, and externally verified sources.
 
-[Download OneSlide v1.5.2](../../releases/download/v1.5.2/one-slide-v1.5.2.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
+[Download latest source](../../archive/refs/heads/main.zip) · [Get started](#get-started-in-three-minutes) · [中文提示词指南](https://github.com/marcozhou26/oneask/blob/main/docs/OneSlide_%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BE%93%E5%85%A5%E6%8C%87%E5%8D%97_%E5%85%AC%E5%BC%80%E7%89%88_v1.0.md) · [Report an issue](../../issues)
 
-## Turn management questions into decision-ready slides
+## Explain complex logic on one slide
 
-These examples show how OneSlide combines a management question, supporting evidence, and a concrete action on one editable slide. Seven pages come from a synthetic business-analysis case library; the Sankey page demonstrates end-to-end flow analysis. All displayed data is simulated or synthetic and contains no real customer, employee, or personal information.
+The examples below show slide types supported or migrated into OneSlide. All displayed data is simulated or synthetic and contains no real customer, employee, or personal information.
 
 <table>
   <tr>
-    <td width="50%"><img src="showcase/01-customer-concentration-risk.png" alt="Customer concentration and revenue-loss exposure analysis"><br><b>Customer concentration risk:</b> Top-account dependency, revenue-loss exposure, and 90-day retention actions</td>
-    <td width="50%"><img src="showcase/02-customer-profitability-segmentation.png" alt="Customer profitability and service-load segmentation"><br><b>Customer profitability:</b> Contribution profit, service load, and treatment by customer tier</td>
+    <td width="50%"><img src="showcase/01-column-chart.png" alt="Monthly contract value bar chart"><br><b>Bar chart:</b> Actual, target, and cumulative shortfall</td>
+    <td width="50%"><img src="showcase/02-medium-capability-gap.png" alt="Capability gap analysis"><br><b>Capability analysis:</b> Gaps, difficulty, and constraints</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/03-renewal-driver-analysis.png" alt="Customer experience and renewal driver analysis"><br><b>Renewal driver analysis:</b> Link customer-experience scores to renewal outcomes and prioritize validation</td>
-    <td width="50%"><img src="showcase/04-project-portfolio-priority.png" alt="Project portfolio return and risk prioritization"><br><b>Project portfolio:</b> Compare return, risk, and delivery readiness to reset investment priority</td>
+    <td width="50%"><img src="showcase/03-bubble-heatmap.png" alt="Bubble matrix and heatmap"><br><b>Bubble matrix:</b> Value, difficulty, and priority</td>
+    <td width="50%"><img src="showcase/04-org-chart.png" alt="Organization chart"><br><b>Organization chart:</b> Solid-line reporting and dotted-line collaboration</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/05-budget-variance-control.png" alt="Budget variance and cost-control analysis"><br><b>Budget variance control:</b> Separate overspend, timing differences, and avoidable variance</td>
+    <td width="50%"><img src="showcase/05-waterfall.png" alt="EBITDA waterfall chart"><br><b>Waterfall:</b> Budget-to-actual variance attribution</td>
     <td width="50%"><img src="showcase/06-sankey.png" alt="Candidate flow Sankey diagram"><br><b>Flow analysis:</b> Candidate sourcing, screening, hiring, and retention</td>
   </tr>
   <tr>
-    <td width="50%"><img src="showcase/07-inventory-aging-risk.png" alt="Aged and slow-moving inventory risk analysis"><br><b>Inventory risk:</b> Cash tied up, aging structure, recurring failures, and disposal actions</td>
-    <td width="50%"><img src="showcase/08-project-forecast-risk.png" alt="Project loss forecast and schedule-risk analysis"><br><b>Project forecast risk:</b> Forecast losses, schedule delays, risk clusters, and escalation priorities</td>
+    <td width="50%"><img src="showcase/07-project-gantt.png" alt="Project Gantt chart"><br><b>Project Gantt:</b> Progress, dependencies, and release conditions</td>
+    <td width="50%"><img src="showcase/08-compensation-productivity.png" alt="Compensation and productivity analysis"><br><b>Pay effectiveness:</b> Pay per employee, output per employee, and department quadrants</td>
   </tr>
 </table>
 
 ## One slide means one slide
 
-Each run produces exactly one 16:9 slide. If the source material cannot fit honestly on one slide, OneSlide recommends the strongest single-slide focus or asks you to choose. It does not silently turn the request into a multi-slide deck.
+Each run produces exactly one slide on one native PowerPoint canvas: 16:9 for presentations, 9:16 for short-video B-roll, or portrait 3:4 for knowledge graphics. It composes directly on that canvas and never crops or stretches a landscape slide. If the source material cannot fit honestly, OneSlide recommends the strongest one-page focus or asks you to choose; it does not silently create extra slides.
 
 Two output modes are available:
 
@@ -42,7 +42,7 @@ If you do not explicitly request a PowerPoint file, OneSlide defaults to `PROMPT
 
 ## Get started in three minutes
 
-1. Download and unzip [OneSlide v1.5.2](../../releases/download/v1.5.2/one-slide-v1.5.2.zip).
+1. Download and unzip the [latest source package](../../archive/refs/heads/main.zip).
 2. Copy the top-level `one-slide` folder into the Skills directory of a compatible agent client.
 3. Refresh the client and invoke `$one-slide`.
 
@@ -94,7 +94,6 @@ python3 -m unittest discover -s tests -v
 - `SKILL.md`: the single user-facing entry point.
 - `producer/`: interprets source material, fills targeted gaps, and records provenance.
 - `builder/`: selects the visual structure, creates native PowerPoint objects, and checks layout.
-- `editorial/`: reviews the rendered draft, protects strong pages, and returns at most one high-value repair brief to Builder without editing the PowerPoint itself.
 - `showcase/`: public single-slide previews using simulated or synthetic data.
 - `scripts/` and `tests/`: environment checks, package validation, and regression tests.
 
@@ -105,21 +104,15 @@ python3 -m unittest discover -s tests -v
 - If PowerPoint-generation dependencies are unavailable, OneSlide delivers only the prompt and structured handoff package.
 - Do not submit customer data, employee personal information, or other sensitive material through public issues.
 
-## Author
-
-- Author and maintainer: 周俊东 Marco
-- WeChat public account and Channels account: 周俊东Marco
-- WeChat: `zhou139223` (include “OneSlide” in the invitation note)
-
 ## Licensing
 
 - `SKILL.md`, execution engines, scripts, configuration, and test code: Apache License 2.0.
 - Original instructions, tutorials, sample inputs, sample outputs, and original reference presentations: CC BY 4.0.
-- The names “OneSlide” and “周俊东 Marco,” profile images, logos, and WeChat account branding are not included in the open licenses. Reasonable attribution that identifies the source of the work is permitted.
+- The name “OneSlide,” project marks, profile images, logos, and social-account branding are not included in the open licenses.
 - See `LICENSE_STATUS.md`, `CONTENT-LICENSE.md`, `TRADEMARKS.md`, and `NOTICE` for the exact scope.
 
-Slides created through ordinary use of OneSlide do not need an author watermark or signature. Redistribution or modification of OneSlide itself, its documentation, or its examples remains subject to the applicable license.
+Slides created through ordinary use of OneSlide do not need a watermark or signature. Redistribution or modification of OneSlide itself, its documentation, or its examples remains subject to the applicable license.
 
 ## Version status
 
-The latest public release is v1.5.2. It applies one readability rule to every OneSlide page: visible content is limited to the conclusion and primary evidence, while technical definitions, scope, and calculation methods remain available in native PowerPoint speaker notes. Box plots, confidence bands, and Marimekko are representative regression cases for this page-wide rule; they are not the scope boundary. The release keeps the 32-module registry from v1.5.0. Font and layout differences may still occur across clients and PowerPoint versions.
+The current local build is v1.9.2. It preserves the v1.8.1 slide-generation, semantic-icon, summary-page and optical-alignment behavior, formally accepts slide-spec `effective_page_spec` as the direct upstream for complex-report pages, deterministically consumes its `icon_handoff`, and gives visually unfilled text shapes a fully transparent native hit area so PowerPoint users can select the text object instead of accidentally selecting its background frame. It does not rewrite paragraph or run font properties. It retains the retired Microsoft PowerPoint direct PNG-export boundary and does not automatically enable a PDF or third-party conversion fallback. Public release status remains separate from this local build.

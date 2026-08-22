@@ -17,7 +17,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_release_source_passes_suite_validator(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
             result = MODULE.validate(copy_root)
             self.assertTrue(result["ok"], result)
 
@@ -28,7 +28,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_nested_skill_entry_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
             nested = copy_root / "builder" / "SKILL.md"
             nested.write_text("---\nname: hidden-builder\n---\n", encoding="utf-8")
             result = MODULE.validate(copy_root)
@@ -38,7 +38,7 @@ class SuiteContractTests(unittest.TestCase):
     def test_local_absolute_path_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             copy_root = Path(temporary) / "one-slide"
-            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules"))
+            shutil.copytree(ROOT, copy_root, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
             bad_path = "/" + "Users" + "/example/private/file.pptx"
             (copy_root / "README.md").write_text(f"Use {bad_path}", encoding="utf-8")
             result = MODULE.validate(copy_root)
@@ -58,8 +58,8 @@ class SuiteContractTests(unittest.TestCase):
     def test_builder_registry_is_complete_and_portable(self):
         registry = json.loads((ROOT / "builder/references/module-registry.json").read_text(encoding="utf-8"))
         modules = registry["modules"]
-        self.assertEqual(registry["suite_version"], "1.5.2")
-        self.assertEqual(registry["builder_engine_version"], "3.4.1")
+        self.assertEqual(registry["suite_version"], "1.9.2")
+        self.assertEqual(registry["builder_engine_version"], "3.7.2")
         self.assertNotIn("skill_version", registry)
         self.assertEqual(registry["productized_module_count"], len(modules))
         for module in modules:
@@ -77,6 +77,11 @@ class SuiteContractTests(unittest.TestCase):
             "ASK_ONE_BLOCKING_QUESTION",
         ):
             self.assertIn(term, contract)
+
+    def test_canvas_modes_are_declared_without_crop_or_stretch(self):
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        for term in ("presentation_16_9", "short_video_broll_9_16", "knowledge_graphic_3_4", "禁止从 16:9 页面裁切"):
+            self.assertIn(term, skill)
 
     def test_public_license_files_and_scopes_are_present(self):
         status = (ROOT / "LICENSE_STATUS.md").read_text(encoding="utf-8")

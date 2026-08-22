@@ -6,6 +6,8 @@
 
 兼容输入：旧版 `slope-ranking` 的 `left_period`、`right_period`、`left_rank`、`right_rank`、`left_value` 和 `right_value` 会在加载时转换为新版 `periods`、`ranks` 和 `values`。
 
+兼容说明：旧请求或旧输入可以继续使用 `slope-ranking` 名称；路由和校验器会将其规范化为正式模块 ID `bump-ranking`。两期数据呈现经典 slope chart，三期及以上数据呈现 Bump Chart。不得根据排名变化补写原因。
+
 阻塞：时点少于 2 个或多于 8 个、对象少于 5 个或多于 12 个、每个对象的数组长度与时点不一致、同一时点排名重复、活动对象缺少正整数排名、退出/未入榜对象仍有排名或数值时停止。不得根据排名变化补写原因；原因必须有来源。
 
 视觉规则：
@@ -17,4 +19,3 @@
 - 只在首个和最后一个有效时点放对象标签和数值，避免中间标签墙。
 
 验收：运行 `validate_r3_module.mjs`、`plan_r3_module.mjs` 和 `render_r3_module.mjs`；至少覆盖两期兼容、五期迁移和新进入/退出三个案例，并检查 PowerPoint 原生对象与页面可读性。
-

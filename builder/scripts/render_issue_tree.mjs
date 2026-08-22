@@ -120,7 +120,7 @@ export async function renderIssueTree(data, output) {
         text: insight.text,
         position: insight,
         fontSize: 16,
-        bold: index === 0,
+        bold: false,
       });
     });
   }

@@ -1,9 +1,9 @@
 {
   "schema_version": "3.0",
-  "suite_version": "1.5.2",
-  "builder_engine_version": "3.4.1",
+  "suite_version": "1.9.2",
+  "builder_engine_version": "3.7.2",
   "module_contract_version": "1.0.0",
-  "productized_module_count": 32,
+  "productized_module_count": 42,
   "modules": [
     {
       "module_id": "complex-org-chart",
@@ -51,6 +51,24 @@
       "reference": "references/waterfall-module.md"
     },
     {
+      "module_id": "route-tradeoff",
+      "status": "productized",
+      "signals": ["has_two_routes", "has_aligned_comparison_dimensions"],
+      "validator": "scripts/validate_r2_module.mjs",
+      "planner": "scripts/plan_r2_module.mjs",
+      "renderer": "scripts/render_r2_module.mjs",
+      "reference": "references/route-tradeoff-module.md"
+    },
+    {
+      "module_id": "scqa-roadmap",
+      "status": "productized",
+      "signals": ["has_scqa", "has_implementation_stages"],
+      "validator": "scripts/validate_r2_module.mjs",
+      "planner": "scripts/plan_r2_module.mjs",
+      "renderer": "scripts/render_r2_module.mjs",
+      "reference": "references/scqa-roadmap-module.md"
+    },
+    {
       "module_id": "bubble-heatmap",
       "status": "productized",
       "signals": ["has_two_dimension_portfolio", "has_multi_criteria_scores"],
@@ -67,6 +85,15 @@
       "planner": "scripts/plan_r2_module.mjs",
       "renderer": "scripts/render_r2_module.mjs",
       "reference": "references/chart-insight-module.md"
+    },
+    {
+      "module_id": "scenario-planning",
+      "status": "productized",
+      "signals": ["has_three_scenarios", "has_leading_indicators"],
+      "validator": "scripts/validate_r2_module.mjs",
+      "planner": "scripts/plan_r2_module.mjs",
+      "renderer": "scripts/render_r2_module.mjs",
+      "reference": "references/scenario-planning-module.md"
     },
     {
       "module_id": "marimekko",
@@ -180,6 +207,12 @@
       "validator": "scripts/validate_r4_module.mjs", "planner": "scripts/plan_r4_module.mjs", "renderer": "scripts/render_r4_module.mjs", "reference": "references/market-funnel-module.md"
     },
     {
+      "module_id": "industry-value-chain",
+      "status": "productized",
+      "signals": ["has_value_chain_stages", "has_player_coverage"],
+      "validator": "scripts/validate_r4_module.mjs", "planner": "scripts/plan_r4_module.mjs", "renderer": "scripts/render_r4_module.mjs", "reference": "references/industry-value-chain-module.md"
+    },
+    {
       "module_id": "gantt-dependency",
       "status": "productized",
       "signals": ["has_timed_tasks", "has_task_dependencies"],
@@ -194,20 +227,24 @@
       "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-workforce-reconciliation-module.md"
     },
     {
-      "module_id": "hr-new-hire-survival", "status": "productized", "signals": ["has_tenure_survival_curves", "has_hire_cohorts"],
-      "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-new-hire-survival-module.md"
-    },
-    {
       "module_id": "hr-supply-demand-gap", "status": "productized", "signals": ["has_workforce_demand_forecast", "has_internal_supply_bridge"],
       "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-supply-demand-gap-module.md"
+    },
+    {
+      "module_id": "hr-level-function-matrix", "status": "productized", "signals": ["has_level_function_grid", "has_management_span"],
+      "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-level-function-matrix-module.md"
     },
     {
       "module_id": "hr-from-to-mobility", "status": "productized", "signals": ["has_department_from_to_matrix", "has_internal_mobility_quality"],
       "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-from-to-mobility-module.md"
     },
     {
-      "module_id": "hr-operating-diagnostic-matrix", "status": "productized", "signals": ["has_operating_diagnostic_matrix", "has_mixed_measure_columns"],
-      "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-operating-diagnostic-matrix-module.md"
+      "module_id": "hr-service-catalog", "status": "productized", "signals": ["has_hr_service_catalog_metrics", "has_service_automation_coverage"],
+      "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-service-catalog-module.md"
+    },
+    {
+      "module_id": "hr-ticket-intake", "status": "productized", "signals": ["has_ticket_intake_matrix", "has_one_touch_resolution"],
+      "validator": "scripts/validate_r5_module.mjs", "planner": "scripts/plan_r5_module.mjs", "renderer": "scripts/render_r5_module.mjs", "reference": "references/hr-ticket-intake-module.md"
     },
     {
       "module_id": "confidence-band",
@@ -217,6 +254,51 @@
       "planner": "scripts/plan_confidence_band.mjs",
       "renderer": "scripts/render_confidence_band.mjs",
       "reference": "references/confidence-band-module.md"
+    },
+    {
+      "module_id": "bookend-page",
+      "status": "productized",
+      "signals": ["has_cover_contract", "has_ending_contract"],
+      "validator": "scripts/validate_bookend_page.mjs",
+      "planner": "scripts/plan_bookend_page.mjs",
+      "renderer": "scripts/render_bookend_page.mjs",
+      "reference": "references/bookend-page-module.md"
+    },
+    {
+      "module_id": "navigation-page",
+      "status": "productized",
+      "signals": ["has_agenda_contract", "has_numbered_overview_contract", "has_numbered_recap_contract"],
+      "validator": "scripts/validate_navigation_page.mjs",
+      "planner": "scripts/plan_navigation_page.mjs",
+      "renderer": "scripts/render_navigation_page.mjs",
+      "reference": "references/navigation-page-module.md"
+    },
+    {
+      "module_id": "summary-page",
+      "status": "productized",
+      "signals": ["has_summary_narrative", "has_paragraph_leading_icons"],
+      "validator": "scripts/validate_summary_page.mjs",
+      "planner": "scripts/plan_summary_page.mjs",
+      "renderer": "scripts/render_summary_page.mjs",
+      "reference": "references/summary-page-module.md"
+    },
+    {
+      "module_id": "section-transition",
+      "status": "productized",
+      "signals": ["has_section_transition_contract"],
+      "validator": "scripts/validate_section_transition.mjs",
+      "planner": "scripts/plan_section_transition.mjs",
+      "renderer": "scripts/render_section_transition.mjs",
+      "reference": "references/section-transition-module.md"
+    },
+    {
+      "module_id": "reference-list",
+      "status": "productized",
+      "signals": ["has_citable_source_records", "has_reference_list_task"],
+      "validator": "scripts/validate_reference_list.mjs",
+      "planner": "scripts/plan_reference_list.mjs",
+      "renderer": "scripts/render_reference_list.mjs",
+      "reference": "references/reference-list-module.md"
     }
   ]
 }

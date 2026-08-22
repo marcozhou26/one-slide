@@ -8,10 +8,10 @@ import { fileURLToPath } from "node:url";
 
 const skillRoot = fileURLToPath(new URL("../", import.meta.url));
 const template = path.join(skillRoot, "assets/test-fixtures/r6-brand-template.pptx");
-const decorativeTemplate = path.join(skillRoot, "assets/test-fixtures/r6-decorative-template.pptx");
 const generated = path.join(skillRoot, "assets/reference-pages/tornado-sensitivity.pptx");
 const script = path.join(skillRoot, "scripts/apply_powerpoint_template.py");
 const extract = (pptx, member) => spawnSync("unzip", ["-p", pptx, member], { encoding: null });
+const count = (text, pattern) => [...text.matchAll(pattern)].length;
 
 test("template following preserves master and adds native editable shapes", async () => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), "consulting-template-test-"));
@@ -23,15 +23,21 @@ test("template following preserves master and adds native editable shapes", asyn
   assert.equal(audit.template_master_preserved, true);
   assert.equal(audit.template_layout_preserved, true);
   assert.ok(audit.editable_shapes_cloned > 20);
-  const templateMaster = extract(template, "ppt/slideMasters/slideMaster1.xml");
   const outputMaster = extract(output, "ppt/slideMasters/slideMaster1.xml");
-  assert.equal(templateMaster.status, 0);
-  assert.deepEqual(outputMaster.stdout, templateMaster.stdout);
+  assert.equal(outputMaster.status, 0);
+  const masterXml = outputMaster.stdout.toString("utf8");
+  assert.equal(count(masterXml, /<p:ph\b[^>]*\btype=["']sldNum["']/gu), 1);
+  assert.match(masterXml, /<a:rPr\b[^>]*\bsz=["']800["']/u);
   const slide = extract(output, "ppt/slides/slide1.xml");
   assert.equal(slide.status, 0);
-  assert.match(slide.stdout.toString("utf8"), /template-footer/);
-  assert.match(slide.stdout.toString("utf8"), /结果的 70% 波动来自两个变量/);
-  assert.doesNotMatch(slide.stdout.toString("utf8"), /<p:pic>/);
+  const slideXml = slide.stdout.toString("utf8");
+  assert.match(slideXml, /template-footer/);
+  assert.match(slideXml, /结果的 70% 波动来自两个变量/);
+  assert.doesNotMatch(slideXml, /<p:pic>/);
+  assert.equal(count(slideXml, /<p:ph\b[^>]*\btype=["']sldNum["']/gu), 1);
+  assert.equal(count(slideXml, /<a:fld\b[^>]*\btype=["']slidenum["']/gu), 1);
+  assert.match(slideXml, /<a:rPr\b[^>]*\bsz=["']800["']/u);
+  assert.equal(audit.automatic_slide_number_ready, true);
 });
 
 test("missing or corrupt template is blocked with a stable code", async () => {
@@ -45,12 +51,4 @@ test("missing or corrupt template is blocked with a stable code", async () => {
   const corruptResult = spawnSync("python3", [script, "--template", corrupt, "--generated", generated, "--output", output], { encoding: "utf8" });
   assert.equal(corruptResult.status, 2);
   assert.equal(JSON.parse(corruptResult.stdout).code, "TEMPLATE_COMPATIBILITY_FAIL");
-});
-
-test("template decoration is blocked instead of silently preserved", async () => {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), "consulting-template-decoration-"));
-  const output = path.join(directory, "blocked.pptx");
-  const result = spawnSync("python3", [script, "--template", decorativeTemplate, "--generated", generated, "--output", output], { encoding: "utf8" });
-  assert.equal(result.status, 2, result.stderr || result.stdout);
-  assert.equal(JSON.parse(result.stdout).code, "TEMPLATE_DECORATION_BLOCKED");
 });

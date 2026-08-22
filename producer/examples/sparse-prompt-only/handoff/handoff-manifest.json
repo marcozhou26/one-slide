@@ -4,6 +4,7 @@
   "output_mode": "PROMPT_ONLY",
   "generation_mode": "SYNTHETIC_AUGMENTATION",
   "single_slide": true,
+  "canvas_profile": "presentation_16_9",
   "synthetic_content": true,
   "synthetic_data": true,
   "status": "ready",

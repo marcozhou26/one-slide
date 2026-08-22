@@ -8,10 +8,11 @@ import { routeModule } from "../scripts/route_module.mjs";
 const modules = [
   "hr-age-gender-pyramid",
   "hr-workforce-reconciliation",
-  "hr-new-hire-survival",
   "hr-supply-demand-gap",
+  "hr-level-function-matrix",
   "hr-from-to-mobility",
-  "hr-operating-diagnostic-matrix",
+  "hr-service-catalog",
+  "hr-ticket-intake",
 ];
 const fixture = async (name) => JSON.parse(await fs.readFile(new URL(`../assets/test-fixtures/${name}-valid.json`, import.meta.url), "utf8"));
 
@@ -33,9 +34,21 @@ test("R5 missing, conflict and abnormal input are blocked", async () => {
   workforce.diagram.months[4].closing += 1;
   assert.throws(() => validateR5Module(workforce), (error) => error.code === "WORKFORCE_RECONCILIATION_FAIL");
 
-  const survival = await fixture("hr-new-hire-survival");
-  survival.diagram.cohorts[0].values[8] = survival.diagram.cohorts[0].values[7] + 1;
-  assert.throws(() => validateR5Module(survival), (error) => error.code === "SURVIVAL_CURVE_FAIL");
+});
+
+test("R5 percentage ranges are gated", async () => {
+  const workforce = await fixture("hr-workforce-reconciliation");
+  workforce.diagram.months[0].attrition_rate = 101;
+  assert.throws(() => validateR5Module(workforce), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+  const mobility = await fixture("hr-from-to-mobility");
+  mobility.diagram.quality[0][1].retention = 120;
+  assert.throws(() => validateR5Module(mobility), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+  const service = await fixture("hr-service-catalog");
+  service.diagram.services[0].automation = -0.1;
+  assert.throws(() => validateR5Module(service), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
+  const intake = await fixture("hr-ticket-intake");
+  intake.diagram.matrix[0][0].one_touch = 100.1;
+  assert.throws(() => validateR5Module(intake), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
 });
 
 test("R5 supply and matrix reconciliation are strict", async () => {
@@ -56,54 +69,4 @@ test("workforce core reconciliation remains valid when overlays are omitted", as
     delete month.budget;
   }
   assert.deepEqual(validateR5Module(data).unmappedSourceIds, []);
-});
-
-test("R5 percentage and enum ranges are gated", async () => {
-  const workforce = await fixture("hr-workforce-reconciliation");
-  workforce.diagram.months[0].attrition_rate = 101;
-  assert.throws(() => validateR5Module(workforce), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
-
-  const survival = await fixture("hr-new-hire-survival");
-  survival.diagram.cohorts[0].values[survival.diagram.cohorts[0].values.length - 1] = -1;
-  assert.throws(() => validateR5Module(survival), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
-
-  const risk = await fixture("hr-new-hire-survival");
-  risk.diagram.risk_rows[0].scores[0] = 4;
-  assert.throws(() => validateR5Module(risk), (error) => error.code === "ENUM_RANGE_FAIL");
-
-  const mobility = await fixture("hr-from-to-mobility");
-  mobility.diagram.quality[0][1].retention = 120;
-  assert.throws(() => validateR5Module(mobility), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
-
-  const operating = await fixture("hr-operating-diagnostic-matrix");
-  operating.diagram.matrix[0][1].primary = 100.1;
-  assert.throws(() => validateR5Module(operating), (error) => error.code === "PERCENTAGE_RANGE_FAIL");
-});
-
-test("operating diagnostic matrix accepts sparse presentation options and variable dimensions", async () => {
-  const operating = await fixture("hr-operating-diagnostic-matrix");
-  delete operating.diagram.metrics;
-  delete operating.diagram.conclusion;
-  delete operating.diagram.disclosure;
-  operating.diagram.rows = operating.diagram.rows.slice(0, 3);
-  operating.diagram.matrix = operating.diagram.matrix.slice(0, 3);
-  assert.deepEqual(validateR5Module(operating).unmappedSourceIds, []);
-});
-
-test("operating diagnostic matrix blocks dimension, type and secondary-value conflicts", async () => {
-  const dimensions = await fixture("hr-operating-diagnostic-matrix");
-  dimensions.diagram.matrix[0].pop();
-  assert.throws(() => validateR5Module(dimensions), (error) => error.code === "DATA_CONTRACT_FAIL");
-
-  const textHeatmap = await fixture("hr-operating-diagnostic-matrix");
-  textHeatmap.diagram.columns[3].primary.encoding = "heatmap";
-  assert.throws(() => validateR5Module(textHeatmap), (error) => error.code === "DATA_CONTRACT_FAIL");
-
-  const secondary = await fixture("hr-operating-diagnostic-matrix");
-  secondary.diagram.columns = secondary.diagram.columns.slice(0, 2);
-  secondary.diagram.columns[0].secondary = { kind: "percentage", unit: "%" };
-  secondary.diagram.matrix = secondary.diagram.matrix.map((row) => row.slice(0, 2));
-  assert.throws(() => validateR5Module(secondary), (error) => error.code === "DATA_CONTRACT_FAIL");
-  secondary.diagram.matrix.forEach((row, index) => { row[0].secondary = 80 + index; });
-  assert.deepEqual(validateR5Module(secondary).unmappedSourceIds, []);
 });

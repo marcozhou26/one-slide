@@ -10,42 +10,15 @@ function layout(elements) {
   };
 }
 
-function element(name, text, lines, bbox, properties = {}) {
+function element(name, text, lines, bbox) {
   return {
     scope: "slide",
     name,
     text,
     bbox,
     textLayout: { lineCount: lines.length, lines: lines.map((value, index) => ({ index: index + 1, text: value })) },
-    ...properties,
   };
 }
-
-test("blocks an empty dark band across the top of the slide", () => {
-  const result = auditLayoutObject(layout([
-    element("top-band", "", [], [0, 0, 1280, 24], { geometry: "rect", fillColor: "172B4D" }),
-  ]));
-  assert.equal(result.ok, false);
-  assert.ok(result.findings.some((item) => item.code === "DECORATIVE_TOP_BAND_BLOCKED"));
-});
-
-test("blocks eyebrow copy and title accents even when they contain text", () => {
-  const result = auditLayoutObject(layout([
-    element("title-eyebrow", "STRATEGY", ["STRATEGY"], [54, 10, 180, 18]),
-    element("heading-rule", "", [], [54, 90, 120, 3]),
-  ]));
-  assert.equal(result.ok, false);
-  assert.ok(result.findings.some((item) => item.code === "EYEBROW_BLOCKED"));
-  assert.ok(result.findings.some((item) => item.code === "DECORATIVE_ELEMENT_BLOCKED" && item.name === "heading-rule"));
-});
-
-test("accepts a structural band when it contains reader-facing information", () => {
-  const result = auditLayoutObject(layout([
-    element("bottom-strip", "", [], [54, 580, 1172, 64]),
-    element("bottom-strip-label", "下一步：验证三个关键假设", ["下一步：验证三个关键假设"], [72, 596, 420, 24]),
-  ]));
-  assert.equal(result.ok, true);
-});
 
 test("blocks short labels, orphan lines and split provenance tokens", () => {
   const result = auditLayoutObject(layout([
@@ -140,20 +113,95 @@ test("accepts a full-canvas layout with clean line breaks", () => {
   assert.deepEqual(result, { ok: true, code: "LAYOUT_QUALITY_PASS", findings: [] });
 });
 
-test("blocks a child card that escapes its declared parent panel", () => {
+test("blocks a large container left with only its heading after content removal", () => {
   const result = auditLayoutObject(layout([
-    element("side-panel", "", [], [960, 126, 266, 476]),
-    element("side-card-1", "结论一", ["结论一"], [980, 216, 232, 120]),
-    element("side-card-2", "结论二", ["结论二"], [980, 370, 232, 120]),
-    element("side-card-3", "结论三", ["结论三"], [980, 524, 232, 128]),
-  ]), {
-    containmentContracts: [{
-      name: "side-cards-inside-panel",
-      parent: "side-panel",
-      members: ["side-card-1", "side-card-2", "side-card-3"],
-      tolerance: 0,
-    }],
-  });
+    element("PageHeading-title", "客户价值", ["客户价值"], [54, 28, 1172, 52]),
+    element("EvidencePanel", "", [], [54, 120, 1172, 260]),
+    element("EvidencePanelTitle", "关键发现", ["关键发现"], [74, 136, 220, 28]),
+    ...Array.from({ length: 10 }, (_, index) => element(`metric-${index}`, "证据", ["证据"], [60 + index * 110, 430, 90, 40])),
+    element("SourceFooter", "数据来源：案例数据", ["数据来源：案例数据"], [54, 650, 1172, 20]),
+  ]));
   assert.equal(result.ok, false);
-  assert.ok(result.findings.some((item) => item.code === "CONTAINER_OVERFLOW" && item.member === "side-card-3"));
+  assert.ok(result.findings.some((item) => item.code === "EMPTY_CONTENT_CONTAINER_FAIL"));
+});
+
+test("blocks a large uninterrupted blank band even when a low object masks max-bottom checks", () => {
+  const result = auditLayoutObject(layout([
+    element("PageHeading-title", "客户价值", ["客户价值"], [54, 28, 1172, 52]),
+    ...Array.from({ length: 12 }, (_, index) => element(`metric-${index}`, "证据", ["证据"], [54 + (index % 4) * 292, 120 + Math.floor(index / 4) * 55, 270, 36])),
+    element("LowAction", "下一步", ["下一步"], [54, 590, 1172, 30]),
+    element("SourceFooter", "数据来源：案例数据", ["数据来源：案例数据"], [54, 650, 1172, 20]),
+  ]));
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "VISUAL_BALANCE_FAIL"));
+});
+
+test("blocks visible content below the data-source footer", () => {
+  const result = auditLayoutObject(layout([
+    element("PageHeading-title", "客户价值", ["客户价值"], [54, 28, 1172, 52]),
+    ...Array.from({ length: 12 }, (_, index) => element(`metric-${index}`, "证据", ["证据"], [54 + (index % 4) * 292, 120 + Math.floor(index / 4) * 100, 270, 70])),
+    element("data-source-footer", "数据来源：案例数据", ["数据来源：案例数据"], [54, 650, 1172, 20]),
+    element("StrayConclusion", "判断仍留在页底", ["判断仍留在页底"], [54, 680, 800, 20]),
+  ]));
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "CONTENT_BELOW_SOURCE_FOOTER_FAIL"));
+});
+
+const peerGroupPolicy = {
+  textPolicies: { title: { textRole: "pageTitle", maxLines: 1 } },
+  peerGroupContracts: [{
+    name: "overview_items",
+    headingName: "title",
+    rows: [["row-1"], ["row-2"], ["row-3"]],
+    sparse: true,
+    maximumSparseGap: 28,
+    minimumHeadingGapRatio: 1.35,
+    centerRange: [360, 430],
+  }],
+};
+
+test("blocks sparse peer rows that are spread across the available height", () => {
+  const result = auditLayoutObject(layout([
+    element("title", "目录", ["目录"], [62, 38, 760, 58]),
+    element("row-1", "第一章", ["第一章"], [218, 140, 760, 52]),
+    element("row-2", "第二章", ["第二章"], [218, 300, 760, 52]),
+    element("row-3", "第三章", ["第三章"], [218, 460, 760, 52]),
+  ]), peerGroupPolicy);
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "PEER_GROUP_COHESION_FAIL"));
+  assert.ok(result.findings.some((item) => item.code === "SPARSE_GROUP_OVERDISTRIBUTED"));
+});
+
+test("blocks a compact peer group whose visual center remains too high", () => {
+  const result = auditLayoutObject(layout([
+    element("title", "目录", ["目录"], [62, 38, 760, 58]),
+    element("row-1", "第一章", ["第一章"], [218, 140, 760, 52]),
+    element("row-2", "第二章", ["第二章"], [218, 216, 760, 52]),
+    element("row-3", "第三章", ["第三章"], [218, 292, 760, 52]),
+  ]), peerGroupPolicy);
+  assert.equal(result.ok, false);
+  assert.ok(result.findings.some((item) => item.code === "CONTENT_GROUP_TOO_HIGH"));
+  assert.ok(!result.findings.some((item) => item.code === "SPARSE_GROUP_OVERDISTRIBUTED"));
+});
+
+test("accepts a compact peer group centered at or slightly below canvas center", () => {
+  const result = auditLayoutObject(layout([
+    element("title", "目录", ["目录"], [62, 38, 760, 58]),
+    element("row-1", "第一章", ["第一章"], [218, 288, 760, 52]),
+    element("row-2", "第二章", ["第二章"], [218, 364, 760, 52]),
+    element("row-3", "第三章", ["第三章"], [218, 440, 760, 52]),
+  ]), peerGroupPolicy);
+  assert.deepEqual(result, { ok: true, code: "LAYOUT_QUALITY_PASS", findings: [] });
+});
+
+test("group-aware balance replaces the generic page-bottom occupancy gate", () => {
+  const result = auditLayoutObject(layout([
+    element("title", "目录", ["目录"], [62, 38, 760, 58]),
+    element("row-1", "第一章", ["第一章"], [218, 288, 900, 52]),
+    element("row-2", "第二章", ["第二章"], [218, 364, 900, 52]),
+    element("row-3", "第三章", ["第三章"], [218, 440, 900, 52]),
+    ...Array.from({ length: 9 }, (_, index) => element(`decorative-peer-${index}`, "", [], [1120 + index, 440, 1, 1])),
+  ]), peerGroupPolicy);
+  assert.ok(!result.findings.some((item) => item.code === "CANVAS_HEIGHT_UNDERUSED"));
+  assert.equal(result.ok, true);
 });

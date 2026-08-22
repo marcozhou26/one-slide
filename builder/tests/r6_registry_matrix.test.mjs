@@ -15,7 +15,12 @@ import { validateCohortRetention } from "../scripts/validate_cohort_retention.mj
 import { validateCorrelationMatrix } from "../scripts/validate_correlation_matrix.mjs";
 import { validateScatterRegression } from "../scripts/validate_scatter_regression.mjs";
 import { validateConfidenceBand } from "../scripts/validate_confidence_band.mjs";
+import { validateReferenceList } from "../scripts/validate_reference_list.mjs";
 import { validateOrgModel } from "../scripts/validate_org_model.mjs";
+import { validateBookendPage } from "../scripts/validate_bookend_page.mjs";
+import { validateNavigationPage } from "../scripts/validate_navigation_page.mjs";
+import { validateSectionTransition } from "../scripts/validate_section_transition.mjs";
+import { validateSummaryPage } from "../scripts/validate_summary_page.mjs";
 
 const skillRoot = fileURLToPath(new URL("../", import.meta.url));
 const registry = JSON.parse(await fs.readFile(path.join(skillRoot, "references/module-registry.json"), "utf8"));
@@ -26,6 +31,10 @@ const validator = (moduleId) => {
   if (moduleId === "issue-tree") return validateIssueTree;
   if (moduleId === "stage-process") return validateStageProcess;
   if (moduleId === "waterfall-attribution") return validateWaterfall;
+  if (moduleId === "bookend-page") return validateBookendPage;
+  if (moduleId === "navigation-page") return validateNavigationPage;
+  if (moduleId === "section-transition") return validateSectionTransition;
+  if (moduleId === "summary-page") return validateSummaryPage;
   const validatorPath = registry.modules.find((item) => item.module_id === moduleId)?.validator;
   if (validatorPath === "scripts/validate_r2_module.mjs") return validateR2Module;
   if (validatorPath === "scripts/validate_r3_module.mjs") return validateR3Module;
@@ -35,15 +44,16 @@ const validator = (moduleId) => {
   if (validatorPath === "scripts/validate_correlation_matrix.mjs") return validateCorrelationMatrix;
   if (validatorPath === "scripts/validate_scatter_regression.mjs") return validateScatterRegression;
   if (validatorPath === "scripts/validate_confidence_band.mjs") return validateConfidenceBand;
+  if (validatorPath === "scripts/validate_reference_list.mjs") return validateReferenceList;
   throw new Error(`No validator test adapter for ${moduleId}`);
 };
 
-test("the V3 registry preserves 32 productized modules with resolvable runtime files", async () => {
-  assert.equal(registry.suite_version, "1.5.2");
-  assert.equal(registry.builder_engine_version, "3.4.1");
-  assert.equal(registry.productized_module_count, 32);
-  assert.equal(registry.modules.length, 32);
-  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 32);
+test("the V3 registry preserves 42 productized modules with resolvable runtime files", async () => {
+  assert.equal(registry.suite_version, "1.9.2");
+  assert.equal(registry.builder_engine_version, "3.7.2");
+  assert.equal(registry.productized_module_count, 42);
+  assert.equal(registry.modules.length, 42);
+  assert.equal(new Set(registry.modules.map((item) => item.module_id)).size, 42);
   for (const module of registry.modules) {
     assert.equal(module.status, "productized");
     for (const field of ["validator", "planner", "renderer", "reference"]) {
@@ -53,14 +63,15 @@ test("the V3 registry preserves 32 productized modules with resolvable runtime f
   }
 });
 
-test("all 32 complete fixtures validate without style input and missing core content is blocked", async () => {
+test("all 42 complete fixtures validate without style input and missing core content is blocked", async () => {
   for (const module of registry.modules) {
     const fixturePath = path.join(skillRoot, "assets/test-fixtures", fixtureName(module.module_id));
     const data = JSON.parse(await fs.readFile(fixturePath, "utf8"));
     delete data.style;
     assert.doesNotThrow(() => validator(module.module_id)(data), module.module_id);
     const missing = structuredClone(data);
-    if (module.module_id === "complex-org-chart") delete missing.nodes;
+    if (["bookend-page", "navigation-page", "section-transition", "summary-page"].includes(module.module_id)) delete missing.page_contract;
+    else if (module.module_id === "complex-org-chart") delete missing.nodes;
     else delete missing.diagram;
     assert.throws(() => validator(module.module_id)(missing), undefined, module.module_id);
   }

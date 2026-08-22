@@ -28,6 +28,11 @@ VALID_KINDS = {
     "synthetic_generated": "G",
     "externally_verified": "E",
 }
+CANVAS_PROFILES = {
+    "presentation_16_9": ("16:9", "landscape", 13.333333, 7.5),
+    "short_video_broll_9_16": ("9:16", "portrait", 7.5, 13.333333),
+    "knowledge_graphic_3_4": ("3:4", "portrait", 7.5, 10.0),
+}
 
 
 class ValidationError(Exception):
@@ -153,6 +158,17 @@ def validate(run_directory: Path, stage: str = "final") -> ValidationResult:
     require(handoff.get("single_slide") is True, "builder-handoff single_slide must be true", errors)
     require(handoff.get("output_mode") == manifest.get("output_mode"), "output_mode mismatch", errors)
     require(handoff.get("generation_mode") == manifest.get("generation_mode"), "generation_mode mismatch", errors)
+    canvas = handoff.get("canvas") or {}
+    canvas_profile = canvas.get("profile")
+    require(canvas_profile in CANVAS_PROFILES, "invalid or missing canvas.profile", errors)
+    require(manifest.get("canvas_profile") == canvas_profile, "canvas_profile mismatch", errors)
+    if canvas_profile in CANVAS_PROFILES:
+        ratio, orientation, width_in, height_in = CANVAS_PROFILES[canvas_profile]
+        require(canvas.get("aspect_ratio") == ratio, "canvas aspect_ratio mismatch", errors)
+        require(canvas.get("orientation") == orientation, "canvas orientation mismatch", errors)
+        require(abs(float(canvas.get("powerpoint_width_in", 0)) - width_in) < 0.001, "canvas PowerPoint width mismatch", errors)
+        require(abs(float(canvas.get("powerpoint_height_in", 0)) - height_in) < 0.001, "canvas PowerPoint height mismatch", errors)
+        require(canvas.get("composition_policy") == "native_recompose", "canvas must use native_recompose", errors)
     for field in ("subject", "story", "audience_task"):
         require(isinstance(handoff.get(field), str) and bool(handoff[field].strip()), f"missing {field}", errors)
 
@@ -174,6 +190,8 @@ def validate(run_directory: Path, stage: str = "final") -> ValidationResult:
 
     module_payload = handoff.get("module_payload")
     requested_module = handoff.get("requested_module")
+    if canvas_profile in {"short_video_broll_9_16", "knowledge_graphic_3_4"}:
+        require(requested_module is None and module_payload is None, "portrait canvas cannot reuse fixed 16:9 module payload", errors)
     if module_payload is not None:
         require(isinstance(module_payload, dict), "module_payload must be an object", errors)
         if isinstance(module_payload, dict):

@@ -3,13 +3,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { routeInput } from "./route_input.mjs";
+import { resolveCanvasProfile } from "./canvas_profiles.mjs";
+import { resolveIconHandoff } from "./icon_handoff_core.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const skillDir = path.dirname(scriptDir);
 const registryPath = path.join(skillDir, "references", "module-registry.json");
 const GENERIC_REQUESTS = new Set(["chart", "comparison", "process", "matrix", "composite"]);
-const DIRECT_PATTERN_IDS = new Set(["route-tradeoff", "scqa-roadmap", "scenario-planning", "industry-value-chain", "spiral-maturity"]);
-const MERGED_HR_MODULE_IDS = new Set(["hr-level-function-matrix", "hr-service-catalog", "hr-ticket-intake"]);
+const RETIRED_MODULES = new Map([
+  ["spiral-maturity", "Use stage-process, radar-capability, or dumbbell-gap according to the actual relationship."],
+  ["hr-new-hire-survival", "Use cohort-retention for new-hire or general retention analysis."],
+]);
 
 function text(value) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
@@ -40,9 +44,50 @@ function compactModule(module, sourceMode, reason) {
   };
 }
 
+function withSemanticIconReference(result, input) {
+  if (!input?.semantic_icon?.enabled) return result;
+  return {
+    ...result,
+    load_only: [...new Set([...(result.load_only ?? []), "references/semantic-icon-library.md"])],
+    semantic_icon: {
+      status: "resolve_before_draw",
+      concept: input.semantic_icon.concept ?? null,
+      role: input.semantic_icon.role ?? null,
+      style: input.semantic_icon.style ?? "outline",
+      icon_id: input.semantic_icon.icon_id ?? null,
+      resolver: "scripts/resolve_semantic_icon.mjs",
+    },
+  };
+}
+
+async function withIconHandoffReference(result, input) {
+  const semanticResult = withSemanticIconReference(result, input);
+  if (!input?.icon_handoff) return semanticResult;
+  try {
+    const iconHandoff = await resolveIconHandoff(input.icon_handoff);
+    return {
+      ...semanticResult,
+      load_only: [...new Set([...(semanticResult.load_only ?? []), "references/semantic-icon-library.md"])],
+      icon_handoff: { ...iconHandoff, resolver: "scripts/icon_handoff_core.mjs" },
+    };
+  } catch (error) {
+    return {
+      ...semanticResult,
+      status: "blocked",
+      route: error.code ?? "ICON_HANDOFF_UNSUPPORTED",
+      reason: error.message,
+      icon_handoff: {
+        status: "blocked",
+        code: error.code ?? "ICON_HANDOFF_UNSUPPORTED",
+        message: error.message,
+        resolver: "scripts/icon_handoff_core.mjs",
+      },
+    };
+  }
+}
+
 function direct(sourceMode, reason, input) {
   const intents = [...new Set((input.display_blocks ?? []).map((block) => block.display_intent).filter(Boolean))];
-  const preferredPattern = input.preferred_pattern ?? null;
   return {
     status: "ready",
     route: "direct_composition",
@@ -50,13 +95,8 @@ function direct(sourceMode, reason, input) {
     reason,
     family: input.structure?.family ?? input.structure?.primary_exhibit ?? input.requested_module ?? "composite",
     preferred_module: input.structure?.primary_exhibit ?? null,
-    preferred_pattern: preferredPattern,
     display_intents: intents.slice(0, 8),
-    load_only: [
-      "references/visual-grammar.md",
-      "references/direct-composition.md",
-      ...(preferredPattern ? ["references/direct-composition-patterns.md"] : []),
-    ],
+    load_only: ["references/visual-grammar.md", "references/direct-composition.md"],
     primitives: "scripts/pptx_core.mjs",
     token_policy: "Do not generate a second page model and do not read the module registry.",
   };
@@ -67,11 +107,27 @@ export async function routeV3(input) {
     return { status: "blocked", route: "SOURCE_BASELINE_FAIL", reason: "Input must be a JSON object." };
   }
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
+  let canvas;
+  try {
+    canvas = resolveCanvasProfile(input.canvas_profile ?? input.canvas?.profile ?? "presentation_16_9");
+  } catch (error) {
+    return { status: "blocked", route: error.code ?? "CANVAS_PROFILE_FAIL", reason: error.message };
+  }
   const modules = registry.modules.filter((module) => module.status === "productized");
   const byId = new Map(modules.map((module) => [module.module_id, module]));
   const sourceMode = structured(input) ? "structured_handoff" : "raw_source";
   const requested = text(input.requested_module);
   const modulePayload = input.module_payload;
+  const payloadModuleId = text(modulePayload?.module_id);
+  const policyText = [input.text, input.title, input.page_claim, input.subject, input.story, JSON.stringify(input.data ?? {}), JSON.stringify(input.dataset ?? {}), JSON.stringify(input.datasets ?? [])].filter(Boolean).join(" ");
+  const geographicMapRequest = /区域地图|分布地图|地图明细|行政区|省市地图|全国地图|地理地图|choropleth|geojson|geographic map/iu.test(policyText);
+  if (requested === "region-map-table" || payloadModuleId === "region-map-table" || geographicMapRequest) {
+    return { status: "blocked", route: "MAP_POLITICAL_RISK_BLOCKED", reason: "Geographic map output is retired because political and boundary-expression risk is outside the OneSlide product boundary." };
+  }
+  const retired = RETIRED_MODULES.get(requested) ?? RETIRED_MODULES.get(payloadModuleId);
+  if (retired) {
+    return { status: "blocked", route: "MODULE_RETIRED", module_id: requested ?? payloadModuleId, reason: retired };
+  }
   const hasSource = Boolean(
     text(input.text) ||
       text(input.title) ||
@@ -87,14 +143,12 @@ export async function routeV3(input) {
     return { status: "blocked", route: "SOURCE_BASELINE_FAIL", reason: "No source content or data was provided." };
   }
 
-  if (requested === "region-map-table") {
-    return { status: "blocked", route: "SENSITIVE_MAP_MODULE_RETIRED", source_mode: sourceMode, reason: "Map modules are retired; use a non-geographic regional comparison." };
-  }
-  if (requested && DIRECT_PATTERN_IDS.has(requested) && modulePayload == null) {
-    return direct(sourceMode, `retired fixed template preserved as direct-composition pattern: ${requested}`, { ...input, preferred_pattern: requested });
-  }
-  if (requested && MERGED_HR_MODULE_IDS.has(requested) && modulePayload == null) {
-    return compactModule(byId.get("hr-operating-diagnostic-matrix"), sourceMode, `legacy HR template merged into hr-operating-diagnostic-matrix: ${requested}`);
+  if (canvas.orientation === "portrait" && (modulePayload != null || (requested && byId.has(requested)))) {
+    return withIconHandoffReference(direct(sourceMode, "portrait canvases require native vertical recomposition; fixed 16:9 module coordinates are not reusable", {
+      ...input,
+      canvas_profile: canvas.id,
+      requested_module: null,
+    }), input);
   }
 
   if (modulePayload != null) {
@@ -112,7 +166,7 @@ export async function routeV3(input) {
     if (primaryExhibit && primaryExhibit !== payloadModule) {
       return { status: "blocked", route: "ROUTE_CONFLICT", reason: "structure.primary_exhibit and module_payload.module_id disagree" };
     }
-    return { ...compactModule(byId.get(payloadModule), sourceMode, "validated executable module payload"), module_input: "module_payload" };
+    return withIconHandoffReference({ ...compactModule(byId.get(payloadModule), sourceMode, "validated executable module payload"), module_input: "module_payload" }, input);
   }
 
   if (sourceMode === "structured_handoff" && requested && byId.has(requested)) {
@@ -126,20 +180,20 @@ export async function routeV3(input) {
   }
 
   if (requested && byId.has(requested)) {
-    return compactModule(byId.get(requested), sourceMode, "explicit productized module");
+    return withIconHandoffReference(compactModule(byId.get(requested), sourceMode, "explicit productized module"), input);
   }
   if (sourceMode === "structured_handoff") {
     if (requested && GENERIC_REQUESTS.has(requested)) {
-      return direct(sourceMode, "generic or composite visual request requires one source-specific composition", input);
+      return withIconHandoffReference(direct(sourceMode, "generic or composite visual request requires one source-specific composition", input), input);
     }
     const signals = new Set(input.structure?.signals ?? []);
     const matches = modules.filter((module) => module.signals.length > 0 && module.signals.every((signal) => signals.has(signal)));
     const intents = new Set((input.display_blocks ?? []).map((block) => block.display_intent).filter(Boolean));
     const composite = (input.display_blocks?.length ?? 0) > 2 || intents.size > 1 || matches.length > 1;
     if (matches.length === 1 && !composite) {
-      return compactModule(matches[0], sourceMode, `single structural signal set matched ${matches[0].module_id}`);
+      return withIconHandoffReference(compactModule(matches[0], sourceMode, `single structural signal set matched ${matches[0].module_id}`), input);
     }
-    return direct(sourceMode, composite ? "multiple evidence relationships form a composite page" : "no single deterministic module covers the structured handoff", input);
+    return withIconHandoffReference(direct(sourceMode, composite ? "multiple evidence relationships form a composite page" : "no single deterministic module covers the structured handoff", input), input);
   }
 
   const rawText = [input.text, input.title, input.page_claim].filter((value) => typeof value === "string").join(" ");
@@ -157,7 +211,7 @@ export async function routeV3(input) {
   try {
     const result = await routeInput(input);
     if (result.decision === "selected") {
-      return compactModule(result.module, sourceMode, result.evidence?.join(", ") || result.reason || "raw source route");
+      return withIconHandoffReference(compactModule(result.module, sourceMode, result.evidence?.join(", ") || result.reason || "raw source route"), input);
     }
     if (result.decision === "needs_structure_choice") {
       return {
@@ -168,18 +222,11 @@ export async function routeV3(input) {
         next_skill: "consulting-slide-prompt-architect",
       };
     }
-    if (result.decision === "direct_composition") {
-      return direct(
-        sourceMode,
-        `retired fixed template preserved as direct-composition pattern: ${result.preferred_pattern}`,
-        { ...input, preferred_pattern: result.preferred_pattern },
-      );
-    }
-    return direct(sourceMode, "raw source requires source-specific composition", input);
+    return withIconHandoffReference(direct(sourceMode, "raw source requires source-specific composition", input), input);
   } catch (error) {
     const sourceLength = [input.text, input.title, input.page_claim].filter((value) => typeof value === "string").join(" ").trim().length;
     if (error.code === "ROUTE_EVIDENCE_INSUFFICIENT" && (text(input.page_claim) || text(input.story)) && (sourceLength >= 80 || input.data != null)) {
-      return direct(sourceMode, "source is sufficiently detailed but no single deterministic module covers it", input);
+      return withIconHandoffReference(direct(sourceMode, "source is sufficiently detailed but no single deterministic module covers it", input), input);
     }
     if (error.code === "ROUTE_EVIDENCE_INSUFFICIENT" && sourceLength >= 80) {
       return {

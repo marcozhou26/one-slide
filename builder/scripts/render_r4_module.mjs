@@ -14,7 +14,6 @@ import {
   exportPresentation,
   fitPageTitleFontSize,
   parseCliArgs,
-  registerContainment,
 } from "./pptx_core.mjs";
 import { planR4Module } from "./plan_r4_module.mjs";
 import { buildSankeyRibbonPath, computeSankeyGeometry } from "./sankey_geometry.mjs";
@@ -99,10 +98,10 @@ function rail(slide, pos, items, title = "关键洞察") {
         height: 96,
       },
       fill: COLORS.white,
-      border: i === 0 ? COLORS.orange : COLORS.border,
-      borderWidth: i === 0 ? 1.7 : 1,
+      border: COLORS.border,
+      borderWidth: 1,
       fontSize: 16,
-      bold: i === 0,
+      bold: false,
       color: COLORS.text,
       alignment: "left",
     }))
@@ -176,10 +175,10 @@ function sankeyEvidenceRail(slide, p, rows, insights) {
     text: item.text,
     position: { left: p.rail.left + 14, top: insightTop + index * 62, width: p.rail.width - 28, height: 54 },
     fontSize: 14,
-    bold: index === 0,
-    color: index === 0 ? COLORS.orange : COLORS.text,
+    bold: false,
+    color: COLORS.text,
     fill: COLORS.white,
-    line: { style: "solid", fill: index === 0 ? COLORS.orange : COLORS.border, width: index === 0 ? 1.2 : .7 },
+    line: { style: "solid", fill: COLORS.border, width: .7 },
   }));
 }
 
@@ -477,9 +476,9 @@ function renderFunnel(slide, data, p) {
         width: factorW - 10,
         height: 142,
       },
-      fill: COLORS.white,
-      border: i === 1 ? COLORS.orange : COLORS.border,
-      borderWidth: i === 1 ? 1.6 : 1,
+      fill: i === 1 ? PALE_ORANGE : COLORS.white,
+      border: COLORS.border,
+      borderWidth: 1,
       fontSize: 16,
       bold: i === 1,
       color: COLORS.text,
@@ -531,104 +530,6 @@ function renderFunnel(slide, data, p) {
     })
   );
   bottom(slide, p.bottom, data.diagram.conclusion ?? data.diagram.milestone);
-}
-
-function customMap(slide, pos) {
-  const pts = [
-    [8, 45],
-    [18, 20],
-    [35, 12],
-    [48, 24],
-    [62, 13],
-    [80, 25],
-    [92, 42],
-    [82, 55],
-    [88, 73],
-    [70, 88],
-    [50, 80],
-    [38, 94],
-    [23, 78],
-    [10, 68],
-  ];
-  const commands = [
-    { moveTo: { x: pts[0][0], y: pts[0][1] } },
-    ...pts.slice(1).map((q) => ({ lineTo: { x: q[0], y: q[1] } })),
-    { close: {} },
-  ];
-  return slide.shapes.add({
-    name: "region-map-outline",
-    geometry: "custom",
-    position: pos,
-    fill: PALE_BLUE,
-    line: { style: "solid", fill: COLORS.blue, width: 1.5 },
-    customPaths: [{ width: 100, height: 100, commands }],
-  });
-}
-function renderRegion(slide, data, p) {
-  panel(slide, "region-frame", p.main);
-  const mapPos = {
-    left: p.main.left + 20,
-    top: p.main.top + 34,
-    width: 390,
-    height: 330,
-  };
-  customMap(slide, mapPos);
-  const regionShapes = new Map();
-  data.diagram.regions.forEach((x, i) => {
-    const px = mapPos.left + (x.x ?? (20 + i * 9)) / 100 * mapPos.width,
-      py = mapPos.top + (x.y ?? (20 + i * 7)) / 100 * mapPos.height,
-      s = Math.max(82, 22 + Math.sqrt(x.headcount) * 2);
-    const bubble = addTextBox(slide, {
-      name: `region-${x.id}`,
-      text: String(x.efficiency),
-      position: { left: px - s / 2, top: py - s / 2, width: s, height: s },
-      fontSize: 16,
-      bold: true,
-      color: COLORS.white,
-      alignment: "center",
-      geometry: "ellipse",
-      fill: x.efficiency < 100 ? COLORS.orange : COLORS.blue,
-      line: { style: "solid", fill: COLORS.white, width: 1 },
-    });
-    regionShapes.set(x.id, bubble);
-    addTextBox(slide, {
-      name: `region-label-${x.id}`,
-      text: x.label.text,
-      position: { left: px - 50, top: py + s / 2, width: 100, height: 24 },
-      fontSize: 16,
-      bold: true,
-      color: COLORS.navy,
-      alignment: "center",
-    });
-  });
-  const table = {
-    left: p.main.left + 410,
-    top: p.main.top + 34,
-    width: 420,
-    height: 330,
-  };
-  addContainer(slide, { name: "region-table-head-frame", position: { left: table.left, top: table.top, width: table.width, height: 32 }, fill: COLORS.soft, border: COLORS.border });
-  addFieldGroup(slide, { name: "region-table-head", fields: ["区域", "人数", "成本", "产出", "人效"].map((value) => ({ value, bold: true, alignment: "center" })), position: { left: table.left + 4, top: table.top, width: table.width - 8, height: 32 }, gap: 2, fontSize: 16, color: COLORS.navy });
-  const rowShapes = new Map();
-  data.diagram.regions.forEach((x, i) => {
-    const rowPosition = { left: table.left, top: table.top + 32 + i * 34, width: table.width, height: 34 };
-    const row = addContainer(slide, { name: `region-row-${i + 1}`, position: rowPosition, fill: x.focus ? PALE_ORANGE : COLORS.white, border: COLORS.border, borderWidth: .7 });
-    addFieldGroup(slide, { name: `region-row-fields-${i + 1}`, fields: [x.label.text, x.headcount, `${x.cost_share}%`, `${x.output_share}%`, x.efficiency].map((value) => ({ value, bold: x.focus, alignment: "center" })), position: { left: rowPosition.left + 4, top: rowPosition.top, width: rowPosition.width - 8, height: rowPosition.height }, gap: 2, fontSize: 16, color: x.efficiency < 100 ? COLORS.orange : COLORS.text });
-    rowShapes.set(x.id, row);
-  });
-  ["north", "east", "south"].forEach((id) => {
-    if (regionShapes.get(id) && rowShapes.get(id)) {
-      connectNative(slide, regionShapes.get(id), rowShapes.get(id), {
-        kind: "elbow",
-        role: "leader",
-        fromSide: "right",
-        toSide: "left",
-        line: { style: "solid", fill: COLORS.line, width: .8 },
-      });
-    }
-  });
-  rail(slide, p.rail, data.diagram.insights ?? []);
-  bottom(slide, p.bottom, data.diagram.conclusion);
 }
 
 function renderValueChain(slide, data, p) {
@@ -755,179 +656,6 @@ function renderValueChain(slide, data, p) {
   bottom(slide, p.bottom, data.diagram.positioning);
 }
 
-function renderSpiral(slide, data, p) {
-  panel(slide, "spiral-frame", p.main);
-  panel(slide, "score-frame", p.side, COLORS.soft);
-  const cx = p.main.left + 220, cy = p.main.top + p.main.height / 2 + 4;
-  let prev = null;
-  for (let i = 0; i <= 180; i++) {
-    const t = i / 180 * 8 * Math.PI,
-      r = 16 + 7.4 * t,
-      x = cx + Math.cos(t) * r,
-      y = cy + Math.sin(t) * r;
-    if (prev) {
-      line(
-        slide,
-        `spiral-${i}`,
-        prev.x,
-        prev.y,
-        x,
-        y,
-        "solid",
-        i > 135
-          ? COLORS.navy
-          : i > 90
-          ? COLORS.blue
-          : i > 45
-          ? "#7FA1C2"
-          : COLORS.line,
-        1 + i / 70,
-      );
-    }
-    prev = { x, y };
-  }
-  const core = addNode(slide, {
-    name: "spiral-core",
-    text: data.diagram.core.text,
-    position: { left: cx - 58, top: cy - 36, width: 116, height: 72 },
-    fill: COLORS.navy,
-    border: COLORS.navy,
-    fontSize: 16,
-    bold: true,
-    color: COLORS.white,
-  });
-  const actionShapes = [];
-  data.diagram.levels.forEach((level, li) => {
-    const rr = 72 + li * 42, offset = [0, 12, 24, 36][li];
-    level.actions.forEach((a, ai) => {
-      const angle = (-90 + ai * 90 + offset) * Math.PI / 180,
-        x = cx + Math.cos(angle) * rr,
-        y = cy + Math.sin(angle) * rr;
-      const s = addTextBox(slide, {
-        name: `spiral-node-${li + 1}-${ai + 1}`,
-        text: String(ai + 1),
-        position: { left: x - 14, top: y - 14, width: 28, height: 28 },
-        fontSize: 16,
-        bold: true,
-        color: COLORS.white,
-        alignment: "center",
-        geometry: "ellipse",
-        fill: li === 3 ? COLORS.orange : li === 2 ? COLORS.navy : COLORS.blue,
-        line: { style: "solid", fill: COLORS.white, width: 1 },
-      });
-      actionShapes.push({ li, ai, shape: s });
-    });
-    const left = p.main.left + p.main.width - 460,
-      top = p.main.top + 4 + li * 112;
-    addTextBox(slide, {
-      name: `level-${li + 1}`,
-      text:
-        `${level.label.text}\n${level.duration.text}；${level.feature.text}\n证据：${level.evidence.text}\n退出：${level.exit.text}`,
-      position: { left, top, width: 444, height: 46 },
-      fontSize: 16,
-      bold: true,
-      color: li === 3 ? COLORS.orange : COLORS.text,
-      fill: COLORS.white,
-      line: {
-        style: "solid",
-        fill: li === 3 ? COLORS.orange : COLORS.border,
-        width: 1,
-      },
-    });
-    level.actions.forEach((a, ai) => {
-      addTextBox(slide, {
-        name: `action-card-${li + 1}-${ai + 1}`,
-        text: `${ai + 1} ${a.text.text}`,
-        position: {
-          left: left + 4 + (ai % 2) * 220,
-          top: top + 50 + Math.floor(ai / 2) * 30,
-          width: 216,
-          height: 28,
-        },
-        fontSize: 16,
-        bold: li === 3,
-        color: li === 3 ? COLORS.orange : COLORS.navy,
-        alignment: "center",
-        fill: li === 3 ? PALE_ORANGE : COLORS.soft,
-        line: {
-          style: "solid",
-          fill: li === 3 ? COLORS.orange : COLORS.border,
-          width: .8,
-        },
-      });
-    });
-    if (li < 3) {
-      const ga = (1.5 + li * 2) * Math.PI,
-        gr = 16 + 7.4 * ga,
-        gx = cx + Math.cos(ga) * gr,
-        gy = cy + Math.sin(ga) * gr;
-      addTextBox(slide, {
-        name: `gate-${li + 1}`,
-        text: `G${li + 1}`,
-        position: { left: gx - 16, top: gy - 16, width: 32, height: 32 },
-        fontSize: 16,
-        bold: true,
-        color: COLORS.white,
-        alignment: "center",
-        geometry: "diamond",
-        fill: COLORS.orange,
-        line: { style: "solid", fill: COLORS.white, width: 1 },
-      });
-    }
-  });
-  const outer = actionShapes.find((x) => x.li === 3 && x.ai === 1)?.shape;
-  if (outer) {
-    connectNative(slide, outer, core, {
-      kind: "curved",
-      fromSide: "right",
-      toSide: "right",
-      placement: "front",
-      line: { style: "dashed", fill: COLORS.orange, width: 1.5 },
-    });
-  }
-  addTextBox(slide, {
-    name: "feedback-label",
-    text: "经验回灌",
-    position: { left: cx + 82, top: cy - 66, width: 92, height: 26 },
-    fontSize: 16,
-    bold: true,
-    color: COLORS.orange,
-    alignment: "center",
-    fill: COLORS.white,
-  });
-  addTextBox(slide, {
-    name: "score-title",
-    text: "成熟度水位",
-    position: {
-      left: p.side.left + 18,
-      top: p.side.top + 16,
-      width: p.side.width - 36,
-      height: 30,
-    },
-    fontSize: 18,
-    bold: true,
-    color: COLORS.navy,
-  });
-  data.diagram.levels.forEach((l, i) =>
-    addTextBox(slide, {
-      name: `score-${i + 1}`,
-      text: `${l.label.text}  ${i < data.diagram.current_level ? "●" : "○"}`,
-      position: {
-        left: p.side.left + 20,
-        top: p.side.top + 70 + i * 72,
-        width: p.side.width - 40,
-        height: 52,
-      },
-      fontSize: 18,
-      bold: i + 1 === data.diagram.current_level,
-      color: i + 1 === data.diagram.current_level ? COLORS.orange : COLORS.text,
-      fill: i + 1 === data.diagram.current_level ? PALE_ORANGE : COLORS.white,
-      line: { style: "solid", fill: COLORS.border, width: 1 },
-    })
-  );
-  bottom(slide, p.bottom, data.diagram.feedback);
-}
-
 function renderGantt(slide, data, p) {
   panel(slide, "gantt-frame", p.main);
   panel(slide, "gantt-side", p.side, COLORS.soft);
@@ -962,9 +690,9 @@ function renderGantt(slide, data, p) {
     });
     addTextBox(slide, {
       name: `lane-${gi + 1}`,
-      text: Array.from(g.name).join("\n"),
+      text: g.name,
       position: { left: p.main.left + 8, top, width: 46, height },
-      fontSize: 14,
+      fontSize: 16,
       bold: true,
       color: COLORS.navy,
       alignment: "center",
@@ -1001,32 +729,27 @@ function renderGantt(slide, data, p) {
     const top = p.main.top + 42 + i * rowH;
     addTextBox(slide, {
       name: `task-label-${t.id}`,
-      text: t.label.text,
+      text: `${t.label.text}\n${t.owner.text}`,
       position: {
         left: p.main.left + 60,
         top,
         width: laneW - 66,
         height: rowH - 2,
       },
-      fontSize: 12,
+      fontSize: 14,
       bold: t.critical,
       color: t.critical ? COLORS.orange : COLORS.text,
-      insets: { left: 2, right: 2, top: 0, bottom: 0 },
-      singleLine: true,
     });
     const left = plotL + (t.start - 1) * monthW,
       width = (t.end - t.start + 1) * monthW;
     const frame = addTextBox(slide, {
       name: `task-${t.id}`,
-      text: `${t.progress}%${t.owner.text}`,
+      text: `${t.progress}%`,
       position: { left, top: top + 3, width, height: rowH - 8 },
-      textRole: "dataLabel",
-      fontSize: 10,
-      bold: false,
+      fontSize: 14,
+      bold: true,
       color: COLORS.white,
       alignment: "center",
-      insets: { left: 2, right: 2, top: 0, bottom: 0 },
-      singleLine: true,
       fill: t.critical ? COLORS.orange : COLORS.blue,
       line: {
         style: "solid",
@@ -1040,28 +763,30 @@ function renderGantt(slide, data, p) {
     const isTimeOrder = d.relationship_class === "time_order_only";
     connectNative(slide, taskShapes.get(d.from), taskShapes.get(d.to), {
       kind: isTimeOrder ? "straight" : "elbow",
-      fromSide: "bottom",
-      toSide: "top",
+      fromSide: "right",
+      toSide: "left",
       arrow: !isTimeOrder,
       placement: "front",
       line: isTimeOrder
         ? { style: "dashed", fill: "#56616F", width: 3 }
-        : { style: "solid", fill: COLORS.blue, width: 1.25 },
+        : { style: "solid", fill: COLORS.blue, width: 1.6 },
     });
   });
   taskShapes.forEach(shape=>shape.bringToFront());
   (data.diagram.milestones ?? []).forEach((m, i) =>
-    slide.shapes.add({
+    addTextBox(slide, {
       name: `milestone-${i + 1}`,
-      geometry: "diamond",
+      text: "◆",
       position: {
-        left: plotL + (m.month - .5) * monthW - 4,
-        top: p.main.top + 32,
-        width: 8,
-        height: 8,
+        left: plotL + (m.month - .5) * monthW - 12,
+        top: p.main.top + 14,
+        width: 24,
+        height: 24,
       },
-      fill: COLORS.orange,
-      line: { style: "solid", fill: COLORS.orange, width: 0 },
+      fontSize: 18,
+      bold: true,
+      color: COLORS.orange,
+      alignment: "center",
     })
   );
   if (layerSteps.length) {
@@ -1119,40 +844,25 @@ function renderGantt(slide, data, p) {
     fontSize: 12,
     color: COLORS.muted,
   });
-  const metricCount = p.gantt.side_metrics.length;
-  const metricGap = 12;
-  const metricTop = p.side.top + 90;
-  const metricBottom = p.side.top + p.side.height - 14;
-  const metricHeight = metricCount
-    ? (metricBottom - metricTop - metricGap * (metricCount - 1)) / metricCount
-    : 0;
   p.gantt.side_metrics.forEach((x, i) =>
     addNode(slide, {
       name: `gantt-metric-${i + 1}`,
       text: x.text,
       position: {
         left: p.side.left + 14,
-        top: metricTop + i * (metricHeight + metricGap),
+        top: p.side.top + 90 + i * 154,
         width: p.side.width - 28,
-        height: metricHeight,
+        height: 128,
       },
       fill: COLORS.white,
-      border: i === 0 ? COLORS.orange : COLORS.border,
-      borderWidth: i === 0 ? 1.5 : 1,
-      fontSize: 12,
-      bold: i === 0,
+      border: COLORS.border,
+      borderWidth: 1,
+      fontSize: 16,
+      bold: false,
       color: COLORS.text,
       alignment: "left",
     })
   );
-  if (metricCount) {
-    registerContainment({
-      name: "gantt-side-metrics-inside-panel",
-      parent: "gantt-side",
-      members: p.gantt.side_metrics.map((_, i) => `gantt-metric-${i + 1}`),
-      tolerance: 0,
-    });
-  }
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
 
@@ -1164,6 +874,7 @@ export async function renderR4Module(data, output) {
     "sankey-flow": renderSankey,
     "chord-dependency": renderChord,
     "market-funnel": renderFunnel,
+    "industry-value-chain": renderValueChain,
     "gantt-dependency": renderGantt,
   })[data.module_id](slide, data, p);
   await exportPresentation(presentation, output);

@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "module_id": "reference-list",
+  "source_anchors": [
+    {"id": "D99", "text": "引用资料；共 5 项，按首次出现顺序排列；仅列实际使用并具有可核验定位信息的资料"},
+    {"id": "E01", "text": "World Economic Forum：《Future of Jobs Report 2025》（2025）；https://www.weforum.org/publications/the-future-of-jobs-report-2025"},
+    {"id": "E02", "text": "OECD：《Employment Outlook 2025》（2025）；https://www.oecd.org/employment-outlook/2025"},
+    {"id": "E03", "text": "International Labour Organization：《Generative AI and Jobs》（2025）；https://www.ilo.org/publications/generative-ai-and-jobs"},
+    {"id": "E04", "text": "NIST：《AI Risk Management Framework》（2023）；DOI：10.6028/NIST.AI.100-1"},
+    {"id": "U01", "text": "课程项目组：《课程需求访谈纪要》（2026-08-01）；课程需求访谈纪要_2026-08-01.docx"}
+  ],
+  "title": {"text": "引用资料", "origin": "source", "source_ids": ["D99"]},
+  "subtitle": {"text": "共 5 项，按首次出现顺序排列", "source_ids": ["D99"]},
+  "diagram": {
+    "type": "reference-list",
+    "references": [
+      {"id": "REF01", "canonical_key": "url:https://www.weforum.org/publications/the-future-of-jobs-report-2025", "citation": {"text": "World Economic Forum：《Future of Jobs Report 2025》（2025）", "source_ids": ["E01"]}, "locator": {"text": "https://www.weforum.org/publications/the-future-of-jobs-report-2025", "source_ids": ["E01"]}, "source_ids": ["E01"], "supporting_pages": ["P03", "P07"]},
+      {"id": "REF02", "canonical_key": "url:https://www.oecd.org/employment-outlook/2025", "citation": {"text": "OECD：《Employment Outlook 2025》（2025）", "source_ids": ["E02"]}, "locator": {"text": "https://www.oecd.org/employment-outlook/2025", "source_ids": ["E02"]}, "source_ids": ["E02"], "supporting_pages": ["P04"]},
+      {"id": "REF03", "canonical_key": "url:https://www.ilo.org/publications/generative-ai-and-jobs", "citation": {"text": "International Labour Organization：《Generative AI and Jobs》（2025）", "source_ids": ["E03"]}, "locator": {"text": "https://www.ilo.org/publications/generative-ai-and-jobs", "source_ids": ["E03"]}, "source_ids": ["E03"], "supporting_pages": ["P05"]},
+      {"id": "REF04", "canonical_key": "doi:10.6028/nist.ai.100-1", "citation": {"text": "NIST：《AI Risk Management Framework》（2023）", "source_ids": ["E04"]}, "locator": {"text": "DOI：10.6028/NIST.AI.100-1", "source_ids": ["E04"]}, "source_ids": ["E04"], "supporting_pages": ["P06"]},
+      {"id": "REF05", "canonical_key": "work:课程项目组:课程需求访谈纪要:2026-08-01", "citation": {"text": "课程项目组：《课程需求访谈纪要》（2026-08-01）", "source_ids": ["U01"]}, "locator": {"text": "课程需求访谈纪要_2026-08-01.docx", "source_ids": ["U01"]}, "source_ids": ["U01"], "supporting_pages": ["P02", "P08"]}
+    ],
+    "source_note": {"text": "仅列实际使用并具有可核验定位信息的资料", "source_ids": ["D99"]}
+  }
+}

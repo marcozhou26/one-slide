@@ -1,11 +1,5 @@
-# 关于作者
+# About OneSlide
 
-OneSlide 由周俊东 Marco 创建并维护。
+OneSlide is a public single-slide generation Skill for turning incomplete or complete source material into one source-traceable, natively editable PowerPoint slide.
 
-- 微信公众号：周俊东 Marco
-- 视频号：周俊东 Marco
-- 微信：zhou139223
-- 添加微信时请备注：OneSlide
-
-欢迎反馈安装问题、使用障碍、生成效果和希望增加的单页类型。请勿通过公开问题区提交客户数据、个人信息或其他敏感材料。
-
+Please use GitHub issues for installation problems, usage blockers, generation defects, or requests for new single-slide patterns. Do not submit customer data, employee personal information, or other sensitive material through public issues.

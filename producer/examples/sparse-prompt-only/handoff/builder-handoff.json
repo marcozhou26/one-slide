@@ -4,6 +4,14 @@
   "output_mode": "PROMPT_ONLY",
   "generation_mode": "SYNTHETIC_AUGMENTATION",
   "single_slide": true,
+  "canvas": {
+    "profile": "presentation_16_9",
+    "aspect_ratio": "16:9",
+    "orientation": "landscape",
+    "powerpoint_width_in": 13.333333,
+    "powerpoint_height_in": 7.5,
+    "composition_policy": "native_recompose"
+  },
   "subject": "基层管理者每周管理活动时间分配",
   "story": "在合成示例中，审批与重复会议合计占所列管理活动时间的 69%",
   "audience_task": "识别最值得进一步核实和减少的低价值管理活动",

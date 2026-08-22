@@ -1,21 +1,9 @@
 {
   "version": "1.0",
   "module_id": "part-to-whole",
-  "source_anchors": [
-    {
-      "id": "S01",
-      "text": "2026年上半年；服务工单构成；1000；件；咨询；520；办理；310；投诉；170；咨询类工单占全部服务需求的一半以上；咨询类占全部工单的52%；合成示例数据，非真实客户数据"
-    }
-  ],
-  "title": {
-    "text": "咨询类工单占全部服务需求的一半以上",
-    "origin": "source",
-    "source_ids": ["S01"]
-  },
-  "subtitle": {
-    "text": "合成示例数据，非真实客户数据",
-    "source_ids": ["S01"]
-  },
+  "source_anchors": [{ "id": "S01", "text": "2026年上半年；服务工单构成；1000；件；咨询；520；办理；310；投诉；170；咨询类工单占全部服务需求的一半以上；咨询类占全部工单的52%；合成示例数据，非真实客户数据" }],
+  "title": { "text": "咨询类工单占全部服务需求的一半以上", "origin": "source", "source_ids": ["S01"] },
+  "subtitle": { "text": "合成示例数据，非真实客户数据", "source_ids": ["S01"] },
   "diagram": {
     "type": "part-to-whole",
     "chart_type": "pie",
@@ -29,8 +17,6 @@
       { "id": "p2", "label": { "text": "办理", "source_ids": ["S01"] }, "value": 310, "source_ids": ["S01"] },
       { "id": "p3", "label": { "text": "投诉", "source_ids": ["S01"] }, "value": 170, "source_ids": ["S01"] }
     ],
-    "insights": [
-      { "text": "咨询类占全部工单的52%", "source_ids": ["S01"] }
-    ]
+    "insights": [{ "text": "咨询类占全部工单的52%", "source_ids": ["S01"] }]
   }
 }

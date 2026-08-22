@@ -2,7 +2,7 @@
 
 ## Non-negotiable scope
 
-One run produces content for exactly one 16:9 slide. A review file, source ledger, prompt, data file, preview, or QA report does not count as another slide. A second PPT page, hidden overflow page, appendix page, or alternate candidate violates this contract unless the user starts a separate run.
+One run produces content for exactly one slide on the locked native canvas: presentation 16:9, short-video B-roll 9:16, or portrait knowledge graphic 3:4. A review file, source ledger, prompt, data file, preview, or QA report does not count as another slide. A second PPT page, hidden overflow page, appendix page, or alternate candidate violates this contract unless the user starts a separate run.
 
 ## Page model
 
@@ -45,9 +45,19 @@ The following may not be synthesized as facts:
 
 Exactly one visible block has `budget_role=primary_exhibit`.
 
-At most three visible blocks have `budget_role=supporting_evidence` and at most one has `budget_role=action_or_condition`. Necessary title, subtitle, units, sample, period, definition, disclosure, and provenance legend are metadata and do not consume evidence slots.
+At most three visible blocks have `budget_role=supporting_evidence` and at most one has `budget_role=action_or_condition`. Every visible title, subtitle, unit, period, label, legend, definition, disclosure, source line, and annotation consumes the visible information budget. Metadata is not exempt merely because it is technically necessary.
 
 Do not turn every generated field into visible content. Keep plausibility and reconciliation fields internal when readers do not need them.
+
+For `short_video_broll_9_16`, tighten the visible budget to one core claim, one primary exhibit and at most one tightly coupled supporting cue. Use vertical stacking and phone-readable labels. A wide process, dense multi-column table or complete lecture framework is scope overload, not permission to shrink, crop or create extra pages.
+
+## Body, notes, and footer allocation
+
+- Keep only the conclusion, primary evidence, and reader-needed labels on the visible slide.
+- Put terminology explanations, scope and denominator explanations, code or acronym translations, formulas, calculation methods, missing-value handling, and technical limitations in PowerPoint speaker notes.
+- Reserve the visible footer for one `数据来源：...` line only. Merge the exact synthetic-data disclosure into that source line when applicable.
+- Do not use speaker notes to hide a fact or limitation whose omission would cause the visible conclusion to be materially misunderstood. Rewrite the visible conclusion instead.
+- Do not expose unexplained professional acronyms or internal module names in titles, conclusions, legends, or body copy.
 
 ## Scope overload
 
@@ -82,5 +92,8 @@ If no installed Builder module faithfully expresses the relationship, return `MO
 - Title, subtitle, and summary use the full available width of their container. Do not insert manual line breaks for appearance.
 - Do not use `|` or `｜` to join visible fields. Use structured aligned items.
 - Do not add an insight rail, action bar, recommendation, or footnote to fill space.
-- Do not request or describe a top decorative band, eyebrow, kicker, overline, title accent, brand strip, empty card, or any other visible object whose only purpose is aesthetic styling.
+- Do not emphasize an item because it is first, last, highly ranked, or visually convenient. Bold, emphasis text color, emphasis fill, and emphasis border changes default to false for peer content. Neutral zebra banding by odd/even row or column is allowed only as a readability aid and must not change weight, text color, border, size, or business meaning. Business emphasis requires `allowed_emphasis.target`, `reason`, `method`, and `source_ids`; otherwise return `UNAUTHORIZED_EMPHASIS_FAIL`.
+- When one business state is authorized for emphasis, use one emphasis style for that state and one uniform neutral style for everything else. Do not assign separate colors to non-focus states.
+- The default business-emphasis method is bold text plus a highlight fill. Do not change border color, width, line style, or visibility for emphasis. Adjacent cells and containers must keep one uniform thin shared-edge treatment. A border difference used only for emphasis returns `EMPHASIS_BORDER_FORBIDDEN`.
 - Do not shrink body text or hide material to avoid a scope decision.
+- Do not place any visible footer content other than the data source line.

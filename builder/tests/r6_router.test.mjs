@@ -8,8 +8,11 @@ const blindCases = [
   ["issue-tree", { input_mode: "text", text: "把客户续约下降拆解为产品适配、交付体验和商务条件三个分支，每个分支下再列子议题" }],
   ["stage-process", { input_mode: "text", text: "按诊断、设计、试点、推广、固化五个步骤列出阶段流程、里程碑和阶段门" }],
   ["waterfall-attribution", { input_mode: "mixed", text: "从预算到实际逐项解释差额", data: { 起点: 8.2, 终点: 6.7, 增减: [-0.4, -0.7, -0.4], 对平: true } }],
+  ["route-tradeoff", { input_mode: "text", text: "比较自建和外采两条路线，按成本、周期、适配风险和能力沉淀横向对比后给出取舍" }],
+  ["scqa-roadmap", { input_mode: "text", text: "上半部依次写情境、冲突、问题和答案，下半部接三阶段落地路径" }],
   ["bubble-heatmap", { input_mode: "text", text: "把十二项举措放入价值和难度二维气泡矩阵，右侧用热力评分表列优先级" }],
   ["chart-insight", { input_mode: "text", text: "左侧柱状图叠加折线，右侧三张洞察卡通过引线锚定具体数据" }],
+  ["scenario-planning", { input_mode: "data", data: { 悲观: {}, 基准: {}, 乐观: {}, 发生概率: [25, 55, 20], 领先指标: [], 无悔举措: [] } }],
   ["marimekko", { input_mode: "text", text: "五个客户细分的横向宽度按市场规模占比，每个细分内部再按我方、对手和其他的份额构成" }],
   ["tornado-sensitivity", { input_mode: "mixed", text: "八个参数分别取低值和高值", data: { 基准情形: 100, 变量: [], 单变量: true } }],
   ["radar-capability", { input_mode: "text", text: "九个能力维度比较当前水平、行业中位和十二个月目标，并按成熟度分组" }],
@@ -22,17 +25,19 @@ const blindCases = [
   ["histogram", { input_mode: "mixed", text: "查看一批连续测量值集中在哪些区间，是否偏斜并有长尾", data: { metric: "处理时长", unit: "分钟", period: "2026年7月", values: [4, 7, 11, 14, 18, 22, 25, 29, 33, 39, 45, 58, 72] } }],
   ["box-plot-jitter", { input_mode: "text", text: "比较四个班组每位员工的处理时长分布，同时标出中位数、四分位、样本量和异常值" }],
   ["scatter-regression", { input_mode: "text", text: "判断两个连续指标的关系方向和关系强度，找出偏离趋势的离群记录，并说明样本内关联的可解释范围" }],
-  ["small-multiples", { input_mode: "text", text: "九条业务线放进3×3矩阵，每格重复同一迷你折线并统一刻度和公司基准" }],
+  ["small-multiples", { input_mode: "text", text: "七条业务线用同一收入指数比较2022到2026趋势，每格重复一条迷你折线，统一刻度和公司基准，并按投资、维持、观察、退出状态分类" }],
   ["sankey-flow", { input_mode: "text", text: "展示获客渠道到筛选再到成交和续约的四层分流，流带宽度按人数，损耗流向下方" }],
   ["chord-dependency", { input_mode: "data", data: { 圆周: ["销售", "产品", "交付", "财务", "人力"], 双向依赖: [], 交互强度: [] } }],
   ["gantt-dependency", { input_mode: "text", text: "18个月项目计划，任务按四条泳道排列，标出完成开始依赖、里程碑和关键路径" }],
   ["market-funnel", { input_mode: "text", text: "从 TAM 到 SAM、SOM 再到三年目标逐层收敛，右侧用客户数、渗透率和客单价推导收入" }],
+  ["industry-value-chain", { input_mode: "text", text: "按上游、中游、下游展开产业价值链，比较各参与者覆盖环节和利润率" }],
   ["hr-age-gender-pyramid", { input_mode: "mixed", text: "检查人员结构", data: { 年龄段: [], 男性: [], 女性: [], 人数: [] } }],
   ["hr-workforce-reconciliation", { input_mode: "data", data: { 期初: 820, 入职: 20, 离职: 14, 转出: 2, 转入: 1, 期末: 825 } }],
-  ["hr-new-hire-survival", { input_mode: "text", text: "四个招聘渠道按入职后0到24个月绘制新人留存率，比较不同批次的存活拐点" }],
   ["hr-supply-demand-gap", { input_mode: "data", data: { 需求预测: [], 内部供给: [], 自然流失: [], 退休: [], 外部补充: [] } }],
+  ["hr-level-function-matrix", { input_mode: "text", text: "用职级和职能序列做双维格子，检查管理跨度、人数倒挂和层级断层" }],
   ["hr-from-to-mobility", { input_mode: "mixed", text: "内部人才市场", data: { 流出部门: [], 流入部门: [], 转岗率: 0.08, 留任人数: [] } }],
-  ["hr-operating-diagnostic-matrix", { input_mode: "text", text: "把五类HR服务按需求量、一次解决率、积压和责任组做运营诊断矩阵" }],
+  ["hr-service-catalog", { input_mode: "text", text: "整理人力资源服务目录，逐项列服务层级、渠道、时效承诺和自动化覆盖" }],
+  ["hr-ticket-intake", { input_mode: "text", text: "比较电话、邮件和机器人等受理渠道的工单量、一次解决率与积压" }],
 ];
 
 test("unfamiliar text, data and mixed inputs route across every module category", async () => {
@@ -74,58 +79,36 @@ test("missing source and unknown structure stop instead of guessing", async () =
   await assert.rejects(() => routeInput({ text: "请帮我做得高级一点" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
 });
 
-test("retired fixed templates route to direct-composition patterns", async () => {
-  const cases = [
-    ["route-tradeoff", "比较自建和外采两条路线，按成本、周期和风险做取舍"],
-    ["scqa-roadmap", "用SCQA说明情境、冲突、问题、答案，再接三阶段落地路径"],
-    ["scenario-planning", "比较悲观、基准、乐观三种情景和无悔举措"],
-    ["industry-value-chain", "按上游、中游、下游比较参与者覆盖和利润率"],
-    ["spiral-maturity", "用四圈螺旋表达设计、执行、度量、沉淀的成熟升级"],
-  ];
-  for (const [pattern, text] of cases) {
-    const result = await routeInput({ text });
-    assert.equal(result.decision, "direct_composition", JSON.stringify(result));
-    assert.equal(result.preferred_pattern, pattern, JSON.stringify(result));
-  }
-});
-
-test("retired map module is blocked and legacy HR templates converge on one matrix", async () => {
-  await assert.rejects(
-    () => routeInput({ text: "按城市在地图上放区域气泡并连接明细表" }),
-    (error) => error.code === "SENSITIVE_MAP_MODULE_RETIRED",
-  );
-  for (const text of [
-    "用职级和职能序列做双维格子，检查管理跨度和人数",
-    "整理HR服务目录，逐项列需求量、成功率和自动化覆盖",
-    "比较受理渠道的工单量、一次解决率与积压",
-  ]) {
-    const result = await routeInput({ text });
-    assert.equal(result.module.module_id, "hr-operating-diagnostic-matrix", JSON.stringify(result));
-  }
-});
-
-test("retired modules cannot be requested as productized modules", async () => {
-  for (const moduleId of [
-    "hr-ticket-classification",
-    "hr-eligibility-matrix",
-    "hr-ticket-intake",
-    "hr-service-catalog",
-    "hr-level-function-matrix",
-    "region-map-table",
-    "route-tradeoff",
-    "scqa-roadmap",
-    "scenario-planning",
-    "industry-value-chain",
-    "spiral-maturity",
-  ]) {
+test("retired HR specialization modules cannot be requested or inferred", async () => {
+  for (const moduleId of ["hr-ticket-classification", "hr-eligibility-matrix"]) {
     await assert.rejects(() => routeModule({ requested_module: moduleId }), (error) => error.code === "MODULE_NOT_PRODUCTIZED");
   }
+  await assert.rejects(() => routeInput({ text: "按资格条件和覆盖人群核对政策是否适用及例外情形，形成资格覆盖矩阵" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
+  await assert.rejects(() => routeInput({ text: "按薪酬、招聘、员工关系等工单分类统计重分类率和最终分类" }), (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT");
+});
+
+test("retired modules and geographic maps are blocked explicitly", async () => {
   await assert.rejects(
-    () => routeInput({ text: "按资格条件和覆盖人群核对政策是否适用及例外情形，形成资格覆盖矩阵" }),
-    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+    () => routeInput({ text: "按省市行政区绘制全国分布地图并放气泡" }),
+    (error) => error.code === "MAP_POLITICAL_RISK_BLOCKED",
   );
   await assert.rejects(
-    () => routeInput({ text: "按薪酬、招聘、员工关系等工单分类统计重分类率和最终分类" }),
-    (error) => error.code === "ROUTE_EVIDENCE_INSUFFICIENT",
+    () => routeInput({ requested_module: "region-map-table" }),
+    (error) => error.code === "MAP_POLITICAL_RISK_BLOCKED",
   );
+  for (const requested_module of ["spiral-maturity", "hr-new-hire-survival"]) {
+    await assert.rejects(
+      () => routeInput({ requested_module }),
+      (error) => error.code === "MODULE_RETIRED",
+    );
+  }
+});
+
+test("new-hire retention now routes to the general cohort module", async () => {
+  const result = await routeInput({
+    input_mode: "text",
+    text: "四个招聘渠道按入职批次，从第0个月比较第3、6、12、24个月仍在职人数；较新批次后续月份尚未观察，空白不能当0",
+  });
+  assert.equal(result.decision, "selected");
+  assert.equal(result.module.module_id, "cohort-retention");
 });

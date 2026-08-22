@@ -3,7 +3,7 @@ name: single-consulting-slide-producer
 description: Turn sparse or complete user material into one source-traceable consulting-grade slide prompt, and optionally one native-editable PowerPoint draft. Use when the user wants exactly one consulting-style PPT page, may not have enough detail, needs missing content completed without changing supplied facts, and wants every inferred, calculated, or synthetic element clearly identified.
 license: Apache-2.0
 metadata:
-  version: 1.1.2
+  version: 1.1.3
 ---
 
 # Single Consulting Slide Producer
@@ -56,6 +56,12 @@ Infer the mode from the request:
 - `PPT_DRAFT`: the user asks to create, draw, render, or deliver the slide itself.
 
 When the request is silent about the final carrier, use `PROMPT_ONLY` and say so briefly. The user can request `PPT_DRAFT` without repeating the source material.
+
+## Native canvas selection
+
+Derive one canvas profile before page architecture: `presentation_16_9` for ordinary presentation work, `short_video_broll_9_16` for short-video or B-roll requests, and `knowledge_graphic_3_4` for portrait knowledge graphics. Treat “4:3 portrait” plus an explicit high-4/wide-3 description as `knowledge_graphic_3_4`. Record the profile in both manifest and handoff. Never convert a landscape slide by crop, stretch, screenshot or whole-page embedding.
+
+For B-roll, keep one core claim, one primary exhibit and at most one tightly coupled supporting cue. Use vertical stacking. A wide process, dense multi-column table or complete lecture framework returns `SINGLE_SLIDE_SCOPE_OVERLOAD`; do not silently produce multiple pictures in one run.
 
 ## Generation modes
 
@@ -132,6 +138,16 @@ Use visible review marking only where needed:
 
 User confirmation does not convert synthetic data into verified fact. It becomes a confirmed scenario assumption and retains an appropriate external disclosure.
 
+### 5A. Allocate visible copy and PowerPoint notes
+
+Use one default allocation; do not create audience modes or ask the user to choose one.
+
+- Keep the conclusion, primary evidence and reader-needed labels visible.
+- Translate professional acronyms and codes into ordinary Chinese in visible copy.
+- Put complete terminology explanations, scope and denominator explanations, formulas, calculation methods, missing-value handling and technical limitations into `content.speaker_notes` or the module's note-producing fields.
+- Reserve the visible footer for `数据来源：...` only. Merge `合成示例数据，非真实客户数据` into that line when applicable.
+- Count every visible label, legend, unit, period, annotation and source line in the information budget.
+
 ### 6. Compile the single-slide package
 
 Create the package in `references/output-contract.md`. Keep user-facing review material separate from internal ledgers.
@@ -146,15 +162,13 @@ For multi-period composition pages, use `composition-shift` only when one stable
 
 For one-period part-to-whole pages, use `part-to-whole` only when one positive total is fully reconciled into 3–6 mutually exclusive, non-negative parts. The complete payload must include source-backed `period`, `total_label`, `total_value`, `total_value_source_ids`, explicit `unit`, unique part IDs, labels, exact numeric values and sources, plus `chart_type=pie|doughnut`. Use `doughnut` as the reversible default when the relationship is clear but the user did not choose a form; do not ask for colors, angle or hole size. A doughnut center requires one source-backed `center_label` and `center_value`; a pie has no center fields. Cross-period composition goes to `composition-shift`; width plus internal composition goes to `marimekko`; multiple objects, negative values, more than six irreducible parts, an unreconciled total, or a second primary exhibit must not be forced into this module.
 
-For `chart-insight`, preserve 4–8 uniquely identified categories, two uniquely identified non-negative bar series with the same explicit unit, and one uniquely identified ratio/index series with an explicit unit and a source-supported fixed `axis_min/axis_max`. Each of the three insights must name one exact `anchor.series_id + anchor.category_id`; do not let Builder guess connector targets from insight order. Missing or conflicting units, negative bar values, ratio values outside the declared axis, or unanchored insights block the formal module payload. `hr-ticket-classification`, `hr-eligibility-matrix`, `hr-level-function-matrix`, `hr-service-catalog` and `hr-ticket-intake` are retired IDs. Use a real origin-destination flow, `hr-operating-diagnostic-matrix`, a source-backed general matrix or guarded direct composition as appropriate.
+For `chart-insight`, preserve 4–8 uniquely identified categories, two uniquely identified non-negative bar series with the same explicit unit, and one uniquely identified ratio/index series with an explicit unit and a source-supported fixed `axis_min/axis_max`. Each of the three insights must name one exact `anchor.series_id + anchor.category_id`; do not let Builder guess connector targets from insight order. Missing or conflicting units, negative bar values, ratio values outside the declared axis, or unanchored insights block the formal module payload. `hr-ticket-classification` and `hr-eligibility-matrix` are retired and must not be requested; use a real origin-destination flow, a source-backed general matrix, `hr-ticket-intake`, or guarded direct composition as appropriate.
 
-For HR operating diagnostic pages, use `hr-operating-diagnostic-matrix` only when 2–10 row objects share 2–6 column definitions and every matrix cell has a source-backed value. Columns declare `primary.kind=number|percentage|text`, a unit where applicable, a direction and `encoding=heatmap|text`; a numeric or percentage `secondary` measure is optional but must be complete for that column. Producer derives row and column identities from the source and does not ask the user for internal matrix fields. Missing metrics, conclusion, disclosure or style are non-blocking; row/column meaning conflicts, mixed units inside one column, missing cells, invalid percentages or a second independent primary exhibit prevent a formal module payload. Route/service comparisons, SCQA roadmaps, three-scenario layouts, value chains and maturity cycles are direct-composition patterns rather than module IDs. Map requests are blocked and must not be converted into model-invented geography.
+For cohort retention or survival pages, use `cohort-retention` when 3–8 joining, hiring, acquisition or activation cohorts are compared on the same 4–12 relative periods and every cohort has an explicit initial base. The payload must preserve `relative_periods`, `relative_period_unit`, `cohort_definition`, `denominator`, `measure`, `curve_mode`, and one aligned counts or rates series per cohort. Counts and rates must reconcile when both are supplied. Trailing unobserved or immature periods remain `null`, require a visible censoring note, and must never be converted to zero. Use `curve_mode=survival` only for cumulative still-present measures that cannot rise; use `period_retention` when activity may legitimately rebound. A benchmark plus a separate risk-factor matrix is a second primary exhibit: use guarded direct composition only when the single-slide budget can preserve both; otherwise return `SINGLE_SLIDE_SCOPE_OVERLOAD`.
 
-For Marimekko pages, use `layout_mode=absolute` when the user needs both unequal column widths and unequal column heights. Producer must hand off a positive `total_value` for every segment and an absolute `value` for every stack; stack values must reconcile to the segment total, and `value_unit` must be explicit. Use `layout_mode=normalized` only for the legacy 100%-height composition view. Do not derive absolute heights from rounded shares or adjust values to make the drawing look balanced.
+For repeated comparable trend or period pages, use `small-multiples` when 3–9 objects share one metric, unit, ordered period set and explicit finite Y scale. The payload must declare `series_type=line|column`, `metric`, `unit`, `scale.min/max`, optional aligned `benchmark` with label and sources, and one equal-length numeric series per panel. Each panel requires a source-backed visible classification plus the structural state `invest|maintain|watch|exit`; visible wording never determines color or meaning. Missing common scale, unit conflict, unequal periods, out-of-scale values or a second independent primary exhibit must not be forced into this module.
 
-For cohort retention or survival pages, use `cohort-retention` when 3–8 joining, hiring, acquisition or activation cohorts are compared on the same 4–12 relative periods and every cohort has an explicit initial base. The payload must preserve `relative_periods`, `relative_period_unit`, `cohort_definition`, `denominator`, `measure`, `curve_mode`, and one aligned counts or rates series per cohort. Counts and rates must reconcile when both are supplied. Trailing unobserved or immature periods remain `null`, require a visible censoring note, and must never be converted to zero. Use `curve_mode=survival` only for cumulative still-present measures that cannot rise; use `period_retention` when activity may legitimately rebound. Keep the fixed 0–24 month, four-channel, benchmark-and-risk-matrix page in `hr-new-hire-survival`. If a separate driver matrix or another independent primary exhibit is required, omit all three module fields and use guarded direct composition.
-
-For comparable group distributions, use `box-plot` only when 3–8 groups share one metric, period, unit, denominator, sample definition, missing-value rule, quartile algorithm, and whisker rule. The payload must include effective `sample_size`, `missing_count`, `whisker_low`, `q1`, `median`, `q3`, `whisker_high`, and explicit numeric `outliers` for every group. Version 1.0 uses `PERCENTILE.INC` linear interpolation (Type 7) and whisker endpoints at the most extreme observations inside the 1.5×IQR fences. Missing statistical definitions, conflicting group scopes, or a second independent primary exhibit must not be forced into this module. Outliers must be explicitly labelled in the visible page, not inferred from color alone.
+For comparable group distributions, use `box-plot` only when 3–8 groups share one metric, period, unit, denominator, sample definition, missing-value rule, quartile algorithm, and whisker rule. The payload must include effective `sample_size`, `missing_count`, `whisker_low`, `q1`, `median`, `q3`, `whisker_high`, explicit numeric `outliers`, and `source_note`. Version 1.0 uses `PERCENTILE.INC` linear interpolation (Type 7) and whisker endpoints at the most extreme observations inside the 1.5×IQR fences. Preserve those definitions in speaker notes; visible copy uses ordinary language and does not display `IQR`, `PERCENTILE.INC` or `Type 7`. Missing statistical definitions, conflicting group scopes, or a second independent primary exhibit must not be forced into this module. Outliers must be explicitly labelled in the visible page, not inferred from color alone.
 
 For continuous numeric distributions, use `histogram` only when the reader needs to understand concentration, skew, tails, or multiple peaks for one metric and one period. Preserve the raw numeric observations with explicit nulls, metric, unit, period, denominator, total/valid/missing sample counts, `frequency_basis`, and reproducible `explicit_edges` binning. Producer may calculate bins but must also hand off the original observations and declared inclusion rules so Builder can reproduce every count. Do not use a categorical column chart, silently drop missing values, or merge conflicting units or periods. Sparse natural language may use a declared reversible binning default only when the observations and measurement metadata are present; missing observations or conflicting unit/period is blocking for the formal module payload.
 
@@ -164,7 +178,9 @@ For multi-metric relationship screening, use `correlation-matrix` only for 4–1
 
 For two-continuous-variable relationship pages, use `scatter-regression` only when the reader needs the direction, linear strength, unusual observations, and interpretation boundary of one paired x/y sample. Preserve every raw observation with a unique ID, explicit nulls, both metric names and units, sample definition, period, population, and source. Version 1.0 uses `ordinary_least_squares_with_intercept`, pairwise exclusion for missing pairs, retention of exact duplicates as independent observations, and retention plus visible labels for the top 1–3 absolute-residual observations. The payload must include total/valid/missing/duplicate counts, declared slope/intercept/R², the visible reconciliation and rounding rule, and the visible boundary that sample association is not causation and extrapolation requires separate validation. Builder must recompute all statistics from the unrounded raw pairs. Fewer than eight valid pairs, zero variance on either axis, conflicting units/periods, aggregate-only statistics, or a second independent primary exhibit must not be forced into this module. Never generate p-values, significance, confidence intervals, or causal language without source-backed inputs.
 
-For ordered estimates with uncertainty intervals, use `confidence-band` only when 5–12 unique ordered periods share one metric, unit, interval definition, estimation method, sample/population scope and source basis. Each period must contain a complete `estimate/lower/upper` triple or an explicit all-null missing period, and every observed point must satisfy `lower <= estimate <= upper`. Preserve `interval_type`, `interval_label`, `interval_definition`, and `confidence_level` when applicable; never rename a confidence interval as a prediction or risk interval. Missing style or threshold is non-blocking. Missing core series, interval meaning, method, sample/population scope, source, or conflicting period order blocks the formal module payload. A threshold is optional but, when present, must carry visible semantics and must not be presented as statistical significance or causality unless the source says so.
+For ordered estimates with uncertainty intervals, use `confidence-band` only when 5–12 unique ordered periods share one metric, unit, interval definition, estimation method, sample/population scope and source basis. Each period must contain a complete `estimate/lower/upper` triple or an explicit all-null missing period, and every observed point must satisfy `lower <= estimate <= upper`. Preserve `interval_type`, `interval_label`, `interval_definition`, `confidence_level`, method and scope in speaker notes; visible copy calls the band an `估计范围` while retaining the source's exact technical meaning in notes. Never rename a confidence interval as a prediction or risk interval. Missing style or threshold is non-blocking. Missing core series, interval meaning, method, sample/population scope, source, or conflicting period order blocks the formal module payload. A threshold is optional; its technical semantics belong in notes and the visible label must not imply significance or causality.
+
+For a references appendix, use `reference-list` only when the reader needs a numbered list of sources actually used in the work. Compile it from one or more provenance ledgers with `producer/scripts/compile_reference_list.mjs`; include externally verified entries and user-supplied files only when they carry real citation metadata, merge duplicates by DOI, URL or stable work identity, and preserve optional page backlinks. Do not include calculations, derived claims, synthetic content or ordinary prompt anchors. Do not invent missing author, organization, date, title or locator fields. Two to eight unique sources fit one page; more than eight returns `SINGLE_SLIDE_SCOPE_OVERLOAD`. Detailed data remains a native table, and supplemental analysis remains an ordinary OneSlide page rather than this module.
 
 ### 7. Validate the package
 
@@ -188,7 +204,7 @@ For `PPT_DRAFT`, locate `single-consulting-slide-builder` and give it the valida
 
 If the Builder is unavailable, unsupported, or returns `MODULE_COVERAGE_GAP`, keep the valid prompt package and return `PPT_RENDERING_BLOCKED`. Do not fall back to a generic renderer and claim consulting-grade PowerPoint completion.
 
-After rendering, require exactly one 16:9 slide, native editability, semantic audit, full-page render inspection, and actual Microsoft PowerPoint review when available. Store previews and QA evidence under `internal/verify/`, never in the public delivery folder.
+After rendering, require exactly one slide on the locked native canvas, native editability, semantic audit, full-page render inspection, and actual Microsoft PowerPoint review when available. Store previews and QA evidence under `internal/verify/`, never in the public delivery folder.
 
 After the Builder places the PPTX in `delivery/`, run the same validator from the Skill root with `--stage final --write-report`.
 
@@ -200,7 +216,7 @@ After the Builder places the PPTX in `delivery/`, run the same validator from th
 - If the user requires factual accuracy and evidence is absent, use `EVIDENCE_BLOCKED`; do not synthesize numbers.
 - Never alter a user-supplied number to make arithmetic work. Expose the conflict.
 - Never write the conclusion first and manufacture numbers to support it.
-- Never hide required visible content in speaker notes, footnotes, internal files, or another page.
+- Never hide a fact or limitation in speaker notes when its omission would materially change the visible conclusion. Professional explanations, scope, formulas and methods belong in notes by default and remain part of the lossless content mapping.
 - Never solve overload by deleting content, shrinking body text, or stacking microcharts.
 - Never expose prompt history, rejected options, internal QA, local paths, or production instructions in a client-facing PPTX.
 - Do not mark package validation as PowerPoint quality or user acceptance.
@@ -234,6 +250,8 @@ python3 -m unittest discover -s tests -v
 - [ ] Generated content fills a declared gap and does not overwrite a supplied anchor.
 - [ ] Synthetic data has the exact visible disclosure.
 - [ ] The visible topic budget passes without hidden overflow.
+- [ ] Every visible item is counted; the footer contains only data source information.
+- [ ] Professional terms, codes, formulas and methods are covered in PowerPoint notes and not exposed unexplained in visible copy.
 - [ ] `validate_package.py` passes and its report is stored internally.
 - [ ] `PPT_DRAFT` contains exactly one editable slide and passes rendered inspection.
 - [ ] PowerPoint inspection and user acceptance remain separate from structural validation.

@@ -65,6 +65,7 @@ def make_package(root, output_mode="PROMPT_ONLY", synthetic=True):
     handoff = {
         "schema_version": "1.0", "product": "single-consulting-slide-producer",
         "output_mode": output_mode, "generation_mode": generation_mode, "single_slide": True,
+        "canvas": {"profile": "presentation_16_9", "aspect_ratio": "16:9", "orientation": "landscape", "powerpoint_width_in": 13.333333, "powerpoint_height_in": 7.5, "composition_policy": "native_recompose"},
         "subject": "基层管理者工作负担", "story": "审批和重复会议占用大部分非辅导时间",
         "audience_task": "识别最需要减少的管理活动", "source_ids": source_ids,
         "content": {
@@ -83,6 +84,7 @@ def make_package(root, output_mode="PROMPT_ONLY", synthetic=True):
     write_json(root / "handoff" / "handoff-manifest.json", {
         "schema_version": "1.0", "product": "single-consulting-slide-producer", "output_mode": output_mode,
         "generation_mode": generation_mode, "single_slide": True, "synthetic_content": synthetic,
+        "canvas_profile": "presentation_16_9",
         "synthetic_data": synthetic, "status": "ready", "builder_target": "single-consulting-slide-builder",
         "entrypoints": {"builder_prompt": "builder-prompt.md", "builder_handoff": "builder-handoff.json", "content_review": "../review/content-review.md"},
         "files": [{"path": "data/workload.csv", "role": "display_data", "format": "csv", "sha256": file_hash(data), "row_count": 3}],
@@ -114,6 +116,35 @@ class PackageValidationTests(unittest.TestCase):
         make_package(self.root, synthetic=False)
         result = MODULE.validate(self.root)
         self.assertTrue(result["ok"], result)
+
+    def test_portrait_handoff_canvas_contract_passes(self):
+        make_package(self.root)
+        manifest_path = self.root / "handoff" / "handoff-manifest.json"
+        handoff_path = self.root / "handoff" / "builder-handoff.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        handoff = json.loads(handoff_path.read_text(encoding="utf-8"))
+        manifest["canvas_profile"] = "short_video_broll_9_16"
+        handoff["canvas"] = {"profile": "short_video_broll_9_16", "aspect_ratio": "9:16", "orientation": "portrait", "powerpoint_width_in": 7.5, "powerpoint_height_in": 13.333333, "composition_policy": "native_recompose"}
+        write_json(manifest_path, manifest)
+        write_json(handoff_path, handoff)
+        result = MODULE.validate(self.root, stage="handoff")
+        self.assertTrue(result["ok"], result)
+
+    def test_portrait_handoff_rejects_landscape_module_payload(self):
+        make_package(self.root)
+        manifest_path = self.root / "handoff" / "handoff-manifest.json"
+        handoff_path = self.root / "handoff" / "builder-handoff.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        handoff = json.loads(handoff_path.read_text(encoding="utf-8"))
+        manifest["canvas_profile"] = "short_video_broll_9_16"
+        handoff["canvas"] = {"profile": "short_video_broll_9_16", "aspect_ratio": "9:16", "orientation": "portrait", "powerpoint_width_in": 7.5, "powerpoint_height_in": 13.333333, "composition_policy": "native_recompose"}
+        handoff["requested_module"] = "waterfall-attribution"
+        handoff["module_payload"] = {"version": "1.0", "module_id": "waterfall-attribution", "source_anchors": [{}], "title": {"text": "x"}, "diagram": {"x": 1}}
+        write_json(manifest_path, manifest)
+        write_json(handoff_path, handoff)
+        result = MODULE.validate(self.root, stage="handoff")
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("portrait canvas cannot reuse" in error for error in result["errors"]), result)
 
     def test_missing_item_provenance_fails(self):
         make_package(self.root)

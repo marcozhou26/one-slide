@@ -1,0 +1,3729 @@
+{
+  "schema_version": "1.0",
+  "source": "Tabler Icons",
+  "source_version": "3.46.0",
+  "license": "MIT",
+  "selection_policy": "OneSlide business semantic whitelist; SVG assets are replaceable visual resources and are not required to be path-editable.",
+  "icon_count": 195,
+  "icons": {
+    "activity": {
+      "icon_id": "activity",
+      "category": "Health",
+      "tags": [
+        "pulse",
+        "motion",
+        "health",
+        "action",
+        "activity",
+        "movement",
+        "dynamic",
+        "active"
+      ],
+      "styles": {
+        "outline": "outline/activity.svg"
+      }
+    },
+    "adjustments": {
+      "icon_id": "adjustments",
+      "category": "System",
+      "tags": [
+        "equalizer",
+        "sliders",
+        "controls",
+        "settings",
+        "filter",
+        "adjustments",
+        "control",
+        "operation",
+        "function",
+        "interface"
+      ],
+      "styles": {
+        "outline": "outline/adjustments.svg",
+        "filled": "filled/adjustments.svg"
+      }
+    },
+    "affiliate": {
+      "icon_id": "affiliate",
+      "category": "System",
+      "tags": [
+        "network",
+        "connection",
+        "collaboration",
+        "people",
+        "connect",
+        "organization",
+        "networking",
+        "affiliate"
+      ],
+      "styles": {
+        "outline": "outline/affiliate.svg",
+        "filled": "filled/affiliate.svg"
+      }
+    },
+    "ai": {
+      "icon_id": "ai",
+      "category": "Development",
+      "tags": [
+        "artificial intelligence",
+        "letters",
+        "text",
+        "technology",
+        "robot",
+        "automatic",
+        "character",
+        "programming",
+        "software",
+        "ai"
+      ],
+      "styles": {
+        "outline": "outline/ai.svg"
+      }
+    },
+    "alarm": {
+      "icon_id": "alarm",
+      "category": "System",
+      "tags": [
+        "time",
+        "watch",
+        "clock",
+        "ring",
+        "alarm",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/alarm.svg",
+        "filled": "filled/alarm.svg"
+      }
+    },
+    "alert-circle": {
+      "icon_id": "alert-circle",
+      "category": "System",
+      "tags": [
+        "warning",
+        "danger",
+        "caution",
+        "risk",
+        "alert",
+        "circle",
+        "control",
+        "operation",
+        "round",
+        "circular"
+      ],
+      "styles": {
+        "outline": "outline/alert-circle.svg",
+        "filled": "filled/alert-circle.svg"
+      }
+    },
+    "alert-octagon": {
+      "icon_id": "alert-octagon",
+      "category": "System",
+      "tags": [
+        "warning",
+        "danger",
+        "caution",
+        "risk",
+        "alert",
+        "octagon",
+        "control",
+        "operation",
+        "function",
+        "interface"
+      ],
+      "styles": {
+        "outline": "outline/alert-octagon.svg",
+        "filled": "filled/alert-octagon.svg"
+      }
+    },
+    "alert-triangle": {
+      "icon_id": "alert-triangle",
+      "category": "System",
+      "tags": [
+        "warning",
+        "danger",
+        "caution",
+        "risk",
+        "alert",
+        "triangle",
+        "control",
+        "operation",
+        "function",
+        "interface"
+      ],
+      "styles": {
+        "outline": "outline/alert-triangle.svg",
+        "filled": "filled/alert-triangle.svg"
+      }
+    },
+    "apps": {
+      "icon_id": "apps",
+      "category": "Development",
+      "tags": [
+        "application",
+        "add-on",
+        "user",
+        "download",
+        "mobile",
+        "apps",
+        "programming",
+        "software",
+        "coding",
+        "technical"
+      ],
+      "styles": {
+        "outline": "outline/apps.svg",
+        "filled": "filled/apps.svg"
+      }
+    },
+    "arrow-bar-to-down": {
+      "icon_id": "arrow-bar-to-down",
+      "category": "Arrows",
+      "tags": [
+        "drag",
+        "move",
+        "arrow",
+        "bar",
+        "down",
+        "direction",
+        "pointer",
+        "bottom",
+        "decrease",
+        "navigation"
+      ],
+      "styles": {
+        "outline": "outline/arrow-bar-to-down.svg"
+      }
+    },
+    "arrow-down": {
+      "icon_id": "arrow-down",
+      "category": "Arrows",
+      "tags": [
+        "proceed",
+        "swipe",
+        "below",
+        "bottom",
+        "arrow",
+        "down",
+        "direction",
+        "pointer",
+        "decrease",
+        "navigation"
+      ],
+      "styles": {
+        "outline": "outline/arrow-down.svg"
+      }
+    },
+    "arrows-diff": {
+      "icon_id": "arrows-diff",
+      "category": "Arrows",
+      "tags": [
+        "direction",
+        "right",
+        "left",
+        "west",
+        "east",
+        "arrows",
+        "diff",
+        "navigation",
+        "flow",
+        "movement"
+      ],
+      "styles": {
+        "outline": "outline/arrows-diff.svg"
+      }
+    },
+    "arrows-exchange": {
+      "icon_id": "arrows-exchange",
+      "category": "Arrows",
+      "tags": [
+        "direction",
+        "west",
+        "east",
+        "arrows",
+        "exchange",
+        "navigation",
+        "flow",
+        "movement",
+        "route",
+        "path"
+      ],
+      "styles": {
+        "outline": "outline/arrows-exchange.svg"
+      }
+    },
+    "arrows-shuffle": {
+      "icon_id": "arrows-shuffle",
+      "category": "Arrows",
+      "tags": [
+        "direction",
+        "random",
+        "cross",
+        "mix",
+        "music",
+        "arrows",
+        "shuffle",
+        "navigation",
+        "flow",
+        "movement"
+      ],
+      "styles": {
+        "outline": "outline/arrows-shuffle.svg"
+      }
+    },
+    "arrows-split": {
+      "icon_id": "arrows-split",
+      "category": "Arrows",
+      "tags": [
+        "direction",
+        "navigation",
+        "east",
+        "arrows",
+        "split",
+        "flow",
+        "movement",
+        "route",
+        "path",
+        "pointers"
+      ],
+      "styles": {
+        "outline": "outline/arrows-split.svg"
+      }
+    },
+    "assembly": {
+      "icon_id": "assembly",
+      "category": "Development",
+      "tags": [
+        "assembly",
+        "engineering",
+        "manufacturing",
+        "production",
+        "robotics",
+        "programming",
+        "software",
+        "coding",
+        "technical",
+        "developer"
+      ],
+      "styles": {
+        "outline": "outline/assembly.svg",
+        "filled": "filled/assembly.svg"
+      }
+    },
+    "automation": {
+      "icon_id": "automation",
+      "category": "System",
+      "tags": [
+        "technology",
+        "process",
+        "efficiency",
+        "machine",
+        "control",
+        "system",
+        "software",
+        "robotics",
+        "engineering",
+        "industry"
+      ],
+      "styles": {
+        "outline": "outline/automation.svg"
+      }
+    },
+    "award": {
+      "icon_id": "award",
+      "category": "Badges",
+      "tags": [
+        "prize",
+        "reward",
+        "competition",
+        "contest",
+        "win",
+        "award"
+      ],
+      "styles": {
+        "outline": "outline/award.svg",
+        "filled": "filled/award.svg"
+      }
+    },
+    "bell": {
+      "icon_id": "bell",
+      "category": "System",
+      "tags": [
+        "alarm",
+        "sound",
+        "notification",
+        "bell",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/bell.svg",
+        "filled": "filled/bell.svg"
+      }
+    },
+    "bell-exclamation": {
+      "icon_id": "bell-exclamation",
+      "category": "System",
+      "tags": [
+        "alert",
+        "warning",
+        "danger",
+        "notice",
+        "attention",
+        "critical",
+        "caution",
+        "emphasis",
+        "highlight",
+        "prominence"
+      ],
+      "styles": {
+        "outline": "outline/bell-exclamation.svg"
+      }
+    },
+    "binary": {
+      "icon_id": "binary",
+      "category": "Computers",
+      "tags": [
+        "binary",
+        "code",
+        "digital",
+        "computer",
+        "programming",
+        "data",
+        "bit",
+        "byte",
+        "numeric",
+        "computing"
+      ],
+      "styles": {
+        "outline": "outline/binary.svg"
+      }
+    },
+    "binary-tree": {
+      "icon_id": "binary-tree",
+      "category": "Computers",
+      "tags": [
+        "data",
+        "diversity",
+        "it",
+        "math",
+        "binary",
+        "tree",
+        "code",
+        "digital",
+        "computer",
+        "programming"
+      ],
+      "styles": {
+        "outline": "outline/binary-tree.svg",
+        "filled": "filled/binary-tree.svg"
+      }
+    },
+    "bolt": {
+      "icon_id": "bolt",
+      "category": "Design",
+      "tags": [
+        "energy",
+        "power",
+        "electricity",
+        "storm",
+        "lightning",
+        "flash",
+        "bolt",
+        "quick",
+        "fast",
+        "speed"
+      ],
+      "styles": {
+        "outline": "outline/bolt.svg",
+        "filled": "filled/bolt.svg"
+      }
+    },
+    "book-2": {
+      "icon_id": "book-2",
+      "category": "Document",
+      "tags": [
+        "read",
+        "dictionary",
+        "magazine",
+        "library",
+        "booklet",
+        "novel",
+        "book",
+        "file",
+        "paper",
+        "text"
+      ],
+      "styles": {
+        "outline": "outline/book-2.svg"
+      }
+    },
+    "books": {
+      "icon_id": "books",
+      "category": "Document",
+      "tags": [
+        "education",
+        "learning",
+        "reading",
+        "school",
+        "library",
+        "books",
+        "file",
+        "paper",
+        "text",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/books.svg"
+      }
+    },
+    "box": {
+      "icon_id": "box",
+      "category": "Design",
+      "tags": [
+        "cube",
+        "app",
+        "application",
+        "package",
+        "container",
+        "box"
+      ],
+      "styles": {
+        "outline": "outline/box.svg"
+      }
+    },
+    "brain": {
+      "icon_id": "brain",
+      "category": "Health",
+      "tags": [
+        "mind",
+        "human",
+        "iq",
+        "inteligence",
+        "organ",
+        "brain",
+        "medical",
+        "wellness",
+        "healthcare",
+        "treatment"
+      ],
+      "styles": {
+        "outline": "outline/brain.svg"
+      }
+    },
+    "briefcase": {
+      "icon_id": "briefcase",
+      "category": "Design",
+      "tags": [
+        "bag",
+        "baggage",
+        "folder",
+        "carrier",
+        "documents",
+        "suitcase",
+        "job",
+        "work",
+        "luggage",
+        "briefcase"
+      ],
+      "styles": {
+        "outline": "outline/briefcase.svg",
+        "filled": "filled/briefcase.svg"
+      }
+    },
+    "bug": {
+      "icon_id": "bug",
+      "category": "Development",
+      "tags": [
+        "germ",
+        "insect",
+        "error",
+        "nature",
+        "bug",
+        "programming",
+        "software",
+        "coding",
+        "technical",
+        "developer"
+      ],
+      "styles": {
+        "outline": "outline/bug.svg",
+        "filled": "filled/bug.svg"
+      }
+    },
+    "building": {
+      "icon_id": "building",
+      "category": "Buildings",
+      "tags": [
+        "flat",
+        "office",
+        "city",
+        "urban",
+        "scyscraper",
+        "architecture",
+        "construction",
+        "building",
+        "structure",
+        "property"
+      ],
+      "styles": {
+        "outline": "outline/building.svg"
+      }
+    },
+    "building-bank": {
+      "icon_id": "building-bank",
+      "category": "Buildings",
+      "tags": [
+        "architecture",
+        "city",
+        "urban",
+        "construction",
+        "money",
+        "credit",
+        "loan",
+        "workplace",
+        "building",
+        "bank"
+      ],
+      "styles": {
+        "outline": "outline/building-bank.svg"
+      }
+    },
+    "building-community": {
+      "icon_id": "building-community",
+      "category": "Buildings",
+      "tags": [
+        "place",
+        "skyscraper",
+        "district neighborhood",
+        "area",
+        "building",
+        "community",
+        "architecture",
+        "structure",
+        "construction",
+        "property"
+      ],
+      "styles": {
+        "outline": "outline/building-community.svg"
+      }
+    },
+    "building-factory": {
+      "icon_id": "building-factory",
+      "category": "Buildings",
+      "tags": [
+        "goods",
+        "manufature",
+        "machine",
+        "trade",
+        "produce",
+        "product",
+        "worker",
+        "industry",
+        "industrial",
+        "site"
+      ],
+      "styles": {
+        "outline": "outline/building-factory.svg"
+      }
+    },
+    "building-store": {
+      "icon_id": "building-store",
+      "category": "Buildings",
+      "tags": [
+        "shopping",
+        "shop",
+        "supermarket",
+        "market",
+        "products",
+        "retail",
+        "buy",
+        "sell",
+        "building",
+        "store"
+      ],
+      "styles": {
+        "outline": "outline/building-store.svg"
+      }
+    },
+    "building-warehouse": {
+      "icon_id": "building-warehouse",
+      "category": "Buildings",
+      "tags": [
+        "store",
+        "inventory",
+        "stuff",
+        "things",
+        "machinery",
+        "building",
+        "warehouse",
+        "architecture",
+        "structure",
+        "construction"
+      ],
+      "styles": {
+        "outline": "outline/building-warehouse.svg"
+      }
+    },
+    "bulb": {
+      "icon_id": "bulb",
+      "category": "Design",
+      "tags": [
+        "energy",
+        "power",
+        "electricity",
+        "creativity",
+        "light",
+        "idea",
+        "bulb"
+      ],
+      "styles": {
+        "outline": "outline/bulb.svg",
+        "filled": "filled/bulb.svg"
+      }
+    },
+    "calculator": {
+      "icon_id": "calculator",
+      "category": "Devices",
+      "tags": [
+        "math",
+        "count",
+        "add",
+        "subtract",
+        "multiply",
+        "divide",
+        "amount",
+        "calculator",
+        "hardware",
+        "technology"
+      ],
+      "styles": {
+        "outline": "outline/calculator.svg",
+        "filled": "filled/calculator.svg"
+      }
+    },
+    "calendar-event": {
+      "icon_id": "calendar-event",
+      "category": "System",
+      "tags": [
+        "date",
+        "day",
+        "plan",
+        "schedule",
+        "agenda",
+        "calender",
+        "calendar",
+        "event",
+        "control",
+        "operation"
+      ],
+      "styles": {
+        "outline": "outline/calendar-event.svg",
+        "filled": "filled/calendar-event.svg"
+      }
+    },
+    "calendar-stats": {
+      "icon_id": "calendar-stats",
+      "category": "System",
+      "tags": [
+        "plan",
+        "timetable",
+        "schedule",
+        "meeting",
+        "busy",
+        "month",
+        "year",
+        "date",
+        "statistics",
+        "calender"
+      ],
+      "styles": {
+        "outline": "outline/calendar-stats.svg"
+      }
+    },
+    "calendar-time": {
+      "icon_id": "calendar-time",
+      "category": "System",
+      "tags": [
+        "plan",
+        "timetable",
+        "schedule",
+        "meeting",
+        "busy",
+        "month",
+        "year",
+        "date",
+        "calender",
+        "calendar"
+      ],
+      "styles": {
+        "outline": "outline/calendar-time.svg"
+      }
+    },
+    "cash": {
+      "icon_id": "cash",
+      "category": "E-commerce",
+      "tags": [
+        "currency",
+        "payment",
+        "money",
+        "pay",
+        "cash",
+        "store",
+        "purchase",
+        "finance",
+        "dollar",
+        "banknote"
+      ],
+      "styles": {
+        "outline": "outline/cash.svg"
+      }
+    },
+    "category": {
+      "icon_id": "category",
+      "category": "Shapes",
+      "tags": [
+        "folder",
+        "menu",
+        "tag",
+        "game",
+        "category",
+        "geometry",
+        "form",
+        "figure",
+        "pattern",
+        "outline"
+      ],
+      "styles": {
+        "outline": "outline/category.svg",
+        "filled": "filled/category.svg"
+      }
+    },
+    "certificate": {
+      "icon_id": "certificate",
+      "category": "Document",
+      "tags": [
+        "document",
+        "official",
+        "attest",
+        "signature",
+        "birth",
+        "death",
+        "gift",
+        "authenticity",
+        "seal",
+        "course",
+        "complete",
+        "qualification"
+      ],
+      "styles": {
+        "outline": "outline/certificate.svg"
+      }
+    },
+    "chart-bar": {
+      "icon_id": "chart-bar",
+      "category": "Charts",
+      "tags": [
+        "statistics",
+        "diagram",
+        "graph",
+        "rhythm",
+        "data",
+        "analysis",
+        "chart",
+        "bar",
+        "visualization",
+        "analytics"
+      ],
+      "styles": {
+        "outline": "outline/chart-bar.svg"
+      }
+    },
+    "chart-candle": {
+      "icon_id": "chart-candle",
+      "category": "Charts",
+      "tags": [
+        "statistics",
+        "diagram",
+        "graph",
+        "rhythm",
+        "data",
+        "analysis",
+        "chart",
+        "candle",
+        "visualization",
+        "analytics"
+      ],
+      "styles": {
+        "outline": "outline/chart-candle.svg",
+        "filled": "filled/chart-candle.svg"
+      }
+    },
+    "chart-dots": {
+      "icon_id": "chart-dots",
+      "category": "Charts",
+      "tags": [
+        "statistics",
+        "data",
+        "value",
+        "variable",
+        "scale",
+        "statistical",
+        "chart",
+        "dots",
+        "visualization",
+        "analytics"
+      ],
+      "styles": {
+        "outline": "outline/chart-dots.svg",
+        "filled": "filled/chart-dots.svg"
+      }
+    },
+    "chart-line": {
+      "icon_id": "chart-line",
+      "category": "Charts",
+      "tags": [
+        "statistics",
+        "diagram",
+        "graph",
+        "rhythm",
+        "data",
+        "analysis",
+        "chart",
+        "line",
+        "visualization",
+        "analytics"
+      ],
+      "styles": {
+        "outline": "outline/chart-line.svg"
+      }
+    },
+    "checks": {
+      "icon_id": "checks",
+      "category": "System",
+      "tags": [
+        "tick",
+        "yes",
+        "confirm",
+        "checks",
+        "control",
+        "operation",
+        "approve",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/checks.svg"
+      }
+    },
+    "circle-check": {
+      "icon_id": "circle-check",
+      "category": "Shapes",
+      "tags": [
+        "accept",
+        "yes",
+        "tick",
+        "done",
+        "circle",
+        "check",
+        "round",
+        "circular",
+        "confirm",
+        "approve"
+      ],
+      "styles": {
+        "outline": "outline/circle-check.svg",
+        "filled": "filled/circle-check.svg"
+      }
+    },
+    "circle-x": {
+      "icon_id": "circle-x",
+      "category": "Shapes",
+      "tags": [
+        "cancel",
+        "no",
+        "circle",
+        "round",
+        "circular",
+        "geometry",
+        "form",
+        "figure",
+        "pattern",
+        "outline"
+      ],
+      "styles": {
+        "outline": "outline/circle-x.svg",
+        "filled": "filled/circle-x.svg"
+      }
+    },
+    "clipboard-check": {
+      "icon_id": "clipboard-check",
+      "category": "Document",
+      "tags": [
+        "copy",
+        "yes",
+        "clipboard",
+        "check",
+        "confirm",
+        "approve",
+        "file",
+        "paper",
+        "text",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/clipboard-check.svg",
+        "filled": "filled/clipboard-check.svg"
+      }
+    },
+    "clipboard-data": {
+      "icon_id": "clipboard-data",
+      "category": "Document",
+      "tags": [
+        "document",
+        "report",
+        "file",
+        "list",
+        "analytics",
+        "clipboard",
+        "data",
+        "paper",
+        "text",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/clipboard-data.svg",
+        "filled": "filled/clipboard-data.svg"
+      }
+    },
+    "clipboard-list": {
+      "icon_id": "clipboard-list",
+      "category": "Document",
+      "tags": [
+        "copy",
+        "items",
+        "clipboard",
+        "list",
+        "file",
+        "paper",
+        "text",
+        "record",
+        "information"
+      ],
+      "styles": {
+        "outline": "outline/clipboard-list.svg",
+        "filled": "filled/clipboard-list.svg"
+      }
+    },
+    "clock": {
+      "icon_id": "clock",
+      "category": "System",
+      "tags": [
+        "time",
+        "watch",
+        "alarm",
+        "clock",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/clock.svg",
+        "filled": "filled/clock.svg"
+      }
+    },
+    "clock-bolt": {
+      "icon_id": "clock-bolt",
+      "category": "System",
+      "tags": [
+        "fast",
+        "quick",
+        "speed",
+        "instant",
+        "lightning",
+        "rapid",
+        "swift",
+        "flash",
+        "hurry",
+        "urgent"
+      ],
+      "styles": {
+        "outline": "outline/clock-bolt.svg"
+      }
+    },
+    "clock-pause": {
+      "icon_id": "clock-pause",
+      "category": "System",
+      "tags": [
+        "time",
+        "stop",
+        "pause",
+        "wait",
+        "rest",
+        "off",
+        "clock",
+        "control",
+        "operation",
+        "break"
+      ],
+      "styles": {
+        "outline": "outline/clock-pause.svg"
+      }
+    },
+    "cloud": {
+      "icon_id": "cloud",
+      "category": "Weather",
+      "tags": [
+        "weather",
+        "online",
+        "cloud",
+        "storage",
+        "climate",
+        "forecast",
+        "server",
+        "sync",
+        "meteorology",
+        "atmospheric"
+      ],
+      "styles": {
+        "outline": "outline/cloud.svg",
+        "filled": "filled/cloud.svg"
+      }
+    },
+    "cloud-computing": {
+      "icon_id": "cloud-computing",
+      "category": "Computers",
+      "tags": [
+        "server",
+        "network",
+        "data",
+        "storage",
+        "share",
+        "internet",
+        "cloud",
+        "computing",
+        "online",
+        "sync"
+      ],
+      "styles": {
+        "outline": "outline/cloud-computing.svg",
+        "filled": "filled/cloud-computing.svg"
+      }
+    },
+    "cloud-download": {
+      "icon_id": "cloud-download",
+      "category": "System",
+      "tags": [
+        "files",
+        "cloud",
+        "download",
+        "storage",
+        "online",
+        "control",
+        "operation",
+        "server",
+        "sync",
+        "function"
+      ],
+      "styles": {
+        "outline": "outline/cloud-download.svg"
+      }
+    },
+    "cloud-upload": {
+      "icon_id": "cloud-upload",
+      "category": "System",
+      "tags": [
+        "files",
+        "cloud",
+        "upload",
+        "storage",
+        "online",
+        "import",
+        "transfer",
+        "control",
+        "operation",
+        "server"
+      ],
+      "styles": {
+        "outline": "outline/cloud-upload.svg"
+      }
+    },
+    "code": {
+      "icon_id": "code",
+      "category": "Text",
+      "tags": [
+        "brackets",
+        "source",
+        "programming",
+        "command",
+        "code",
+        "script",
+        "software",
+        "development",
+        "coding",
+        "typography"
+      ],
+      "styles": {
+        "outline": "outline/code.svg"
+      }
+    },
+    "coin": {
+      "icon_id": "coin",
+      "category": "E-commerce",
+      "tags": [
+        "money",
+        "earn",
+        "salary",
+        "change",
+        "dollar",
+        "coin",
+        "store",
+        "purchase",
+        "shopping",
+        "retail"
+      ],
+      "styles": {
+        "outline": "outline/coin.svg",
+        "filled": "filled/coin.svg"
+      }
+    },
+    "columns-2": {
+      "icon_id": "columns-2",
+      "category": "Text",
+      "tags": [
+        "layout",
+        "grid",
+        "design",
+        "arranegment",
+        "columns",
+        "typography",
+        "writing",
+        "font",
+        "character",
+        "word"
+      ],
+      "styles": {
+        "outline": "outline/columns-2.svg",
+        "filled": "filled/columns-2.svg"
+      }
+    },
+    "compass": {
+      "icon_id": "compass",
+      "category": "Map",
+      "tags": [
+        "navigation",
+        "safari",
+        "travel",
+        "direction",
+        "discover",
+        "compass",
+        "location",
+        "geography",
+        "place",
+        "position"
+      ],
+      "styles": {
+        "outline": "outline/compass.svg",
+        "filled": "filled/compass.svg"
+      }
+    },
+    "contract": {
+      "icon_id": "contract",
+      "category": "Document",
+      "tags": [
+        "agreement",
+        "deal",
+        "pact",
+        "covenant",
+        "treaty",
+        "commitment",
+        "understanding",
+        "arrangement",
+        "negotiation",
+        "compact"
+      ],
+      "styles": {
+        "outline": "outline/contract.svg"
+      }
+    },
+    "cpu": {
+      "icon_id": "cpu",
+      "category": "Devices",
+      "tags": [
+        "processor",
+        "computer",
+        "chip",
+        "hardware",
+        "technology",
+        "electronic",
+        "cpu",
+        "gadget",
+        "equipment"
+      ],
+      "styles": {
+        "outline": "outline/cpu.svg"
+      }
+    },
+    "crown": {
+      "icon_id": "crown",
+      "category": "Design",
+      "tags": [
+        "queen",
+        "king",
+        "prince",
+        "princess",
+        "dynasty",
+        "royalty",
+        "crown"
+      ],
+      "styles": {
+        "outline": "outline/crown.svg",
+        "filled": "filled/crown.svg"
+      }
+    },
+    "currency-dollar": {
+      "icon_id": "currency-dollar",
+      "category": "Currencies",
+      "tags": [
+        "american",
+        "us",
+        "dollar",
+        "usd",
+        "sign",
+        "bucks",
+        "usa",
+        "money",
+        "banknote",
+        "pay"
+      ],
+      "styles": {
+        "outline": "outline/currency-dollar.svg"
+      }
+    },
+    "current-location": {
+      "icon_id": "current-location",
+      "category": "Map",
+      "tags": [
+        "localization",
+        "maps",
+        "navigation",
+        "pin",
+        "target",
+        "current",
+        "location",
+        "geography",
+        "place",
+        "position"
+      ],
+      "styles": {
+        "outline": "outline/current-location.svg",
+        "filled": "filled/current-location.svg"
+      }
+    },
+    "dashboard": {
+      "icon_id": "dashboard",
+      "category": "System",
+      "tags": [
+        "home",
+        "car",
+        "dashboard",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/dashboard.svg",
+        "filled": "filled/dashboard.svg"
+      }
+    },
+    "database": {
+      "icon_id": "database",
+      "category": "Database",
+      "tags": [
+        "storage",
+        "data",
+        "memory",
+        "database",
+        "repository",
+        "records",
+        "information",
+        "table",
+        "content",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/database.svg",
+        "filled": "filled/database.svg"
+      }
+    },
+    "database-export": {
+      "icon_id": "database-export",
+      "category": "Database",
+      "tags": [
+        "data",
+        "backup",
+        "file",
+        "storage",
+        "system",
+        "database",
+        "export",
+        "repository",
+        "records",
+        "information"
+      ],
+      "styles": {
+        "outline": "outline/database-export.svg"
+      }
+    },
+    "database-import": {
+      "icon_id": "database-import",
+      "category": "Database",
+      "tags": [
+        "data",
+        "file",
+        "storage",
+        "backup",
+        "system",
+        "database",
+        "import",
+        "repository",
+        "records",
+        "information"
+      ],
+      "styles": {
+        "outline": "outline/database-import.svg"
+      }
+    },
+    "database-search": {
+      "icon_id": "database-search",
+      "category": "Database",
+      "tags": [
+        "find",
+        "lookup",
+        "explore",
+        "discover",
+        "locate",
+        "probe",
+        "scan",
+        "inspect",
+        "seek",
+        "browse"
+      ],
+      "styles": {
+        "outline": "outline/database-search.svg"
+      }
+    },
+    "device-desktop": {
+      "icon_id": "device-desktop",
+      "category": "Devices",
+      "tags": [
+        "monitor",
+        "computer",
+        "imac",
+        "device",
+        "desktop",
+        "hardware",
+        "technology",
+        "electronic",
+        "gadget",
+        "equipment"
+      ],
+      "styles": {
+        "outline": "outline/device-desktop.svg",
+        "filled": "filled/device-desktop.svg"
+      }
+    },
+    "device-floppy": {
+      "icon_id": "device-floppy",
+      "category": "Devices",
+      "tags": [
+        "save",
+        "file",
+        "disk",
+        "device",
+        "floppy",
+        "hardware",
+        "technology",
+        "electronic",
+        "gadget",
+        "equipment"
+      ],
+      "styles": {
+        "outline": "outline/device-floppy.svg",
+        "filled": "filled/device-floppy.svg"
+      }
+    },
+    "door-enter": {
+      "icon_id": "door-enter",
+      "category": "System",
+      "tags": [
+        "entrance",
+        "open",
+        "in",
+        "entry",
+        "door",
+        "enter"
+      ],
+      "styles": {
+        "outline": "outline/door-enter.svg"
+      }
+    },
+    "door-exit": {
+      "icon_id": "door-exit",
+      "category": "System",
+      "tags": [
+        "out",
+        "close",
+        "leave",
+        "door",
+        "exit"
+      ],
+      "styles": {
+        "outline": "outline/door-exit.svg"
+      }
+    },
+    "download": {
+      "icon_id": "download",
+      "category": "Arrows",
+      "tags": [
+        "save",
+        "arrow",
+        "download",
+        "navigation",
+        "flow",
+        "movement",
+        "route",
+        "path"
+      ],
+      "styles": {
+        "outline": "outline/download.svg",
+        "filled": "filled/download.svg"
+      }
+    },
+    "edit": {
+      "icon_id": "edit",
+      "category": "Design",
+      "tags": [
+        "pencil",
+        "change",
+        "update",
+        "edit",
+        "modify",
+        "creative",
+        "artistic",
+        "revise",
+        "adjust",
+        "visual"
+      ],
+      "styles": {
+        "outline": "outline/edit.svg",
+        "filled": "filled/edit.svg"
+      }
+    },
+    "file-certificate": {
+      "icon_id": "file-certificate",
+      "category": "Document",
+      "tags": [
+        "certificate",
+        "license",
+        "diploma",
+        "document",
+        "format",
+        "data",
+        "paper",
+        "file",
+        "content",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/file-certificate.svg"
+      }
+    },
+    "file-chart": {
+      "icon_id": "file-chart",
+      "category": "Document",
+      "tags": [
+        "data",
+        "graph",
+        "analytics",
+        "file",
+        "chart",
+        "document",
+        "content",
+        "record",
+        "paper",
+        "text"
+      ],
+      "styles": {
+        "outline": "outline/file-chart.svg"
+      }
+    },
+    "file-check": {
+      "icon_id": "file-check",
+      "category": "Document",
+      "tags": [
+        "list",
+        "document",
+        "accept",
+        "done",
+        "tick",
+        "checkmark",
+        "file",
+        "check",
+        "data",
+        "confirm"
+      ],
+      "styles": {
+        "outline": "outline/file-check.svg",
+        "filled": "filled/file-check.svg"
+      }
+    },
+    "file-download": {
+      "icon_id": "file-download",
+      "category": "Document",
+      "tags": [
+        "save",
+        "transfer",
+        "input",
+        "file",
+        "download",
+        "document",
+        "data",
+        "content",
+        "record",
+        "paper"
+      ],
+      "styles": {
+        "outline": "outline/file-download.svg",
+        "filled": "filled/file-download.svg"
+      }
+    },
+    "file-export": {
+      "icon_id": "file-export",
+      "category": "Document",
+      "tags": [
+        "arrow",
+        "data",
+        "paper",
+        "document",
+        "format",
+        "file",
+        "export",
+        "content",
+        "record",
+        "text"
+      ],
+      "styles": {
+        "outline": "outline/file-export.svg"
+      }
+    },
+    "file-import": {
+      "icon_id": "file-import",
+      "category": "Document",
+      "tags": [
+        "arrow",
+        "data",
+        "paper",
+        "document",
+        "format",
+        "file",
+        "import",
+        "content",
+        "record",
+        "text"
+      ],
+      "styles": {
+        "outline": "outline/file-import.svg"
+      }
+    },
+    "file-search": {
+      "icon_id": "file-search",
+      "category": "Document",
+      "tags": [
+        "search",
+        "data",
+        "paper",
+        "document",
+        "format",
+        "file",
+        "find",
+        "look",
+        "seek",
+        "content"
+      ],
+      "styles": {
+        "outline": "outline/file-search.svg"
+      }
+    },
+    "file-text": {
+      "icon_id": "file-text",
+      "category": "Document",
+      "tags": [
+        "data",
+        "pdf",
+        "txt",
+        "file",
+        "text",
+        "document",
+        "content",
+        "record",
+        "paper",
+        "information"
+      ],
+      "styles": {
+        "outline": "outline/file-text.svg",
+        "filled": "filled/file-text.svg"
+      }
+    },
+    "file-upload": {
+      "icon_id": "file-upload",
+      "category": "Document",
+      "tags": [
+        "save",
+        "transfer",
+        "input",
+        "file",
+        "upload",
+        "document",
+        "data",
+        "import",
+        "content",
+        "record"
+      ],
+      "styles": {
+        "outline": "outline/file-upload.svg",
+        "filled": "filled/file-upload.svg"
+      }
+    },
+    "files": {
+      "icon_id": "files",
+      "category": "Document",
+      "tags": [
+        "forms",
+        "documents",
+        "stack",
+        "letter",
+        "files",
+        "file",
+        "paper",
+        "text",
+        "record",
+        "information"
+      ],
+      "styles": {
+        "outline": "outline/files.svg",
+        "filled": "filled/files.svg"
+      }
+    },
+    "flag": {
+      "icon_id": "flag",
+      "category": "Map",
+      "tags": [
+        "banner",
+        "pin",
+        "report",
+        "map",
+        "warning",
+        "alert",
+        "flag",
+        "location",
+        "navigation",
+        "geography"
+      ],
+      "styles": {
+        "outline": "outline/flag.svg",
+        "filled": "filled/flag.svg"
+      }
+    },
+    "flame": {
+      "icon_id": "flame",
+      "category": "Nature",
+      "tags": [
+        "fire",
+        "fireplace",
+        "light",
+        "burn",
+        "bonfire",
+        "smoke",
+        "barbecue",
+        "flame"
+      ],
+      "styles": {
+        "outline": "outline/flame.svg",
+        "filled": "filled/flame.svg"
+      }
+    },
+    "folder": {
+      "icon_id": "folder",
+      "category": "Document",
+      "tags": [
+        "cancel",
+        "no",
+        "directory",
+        "dir",
+        "folder",
+        "collection",
+        "container",
+        "group",
+        "file",
+        "paper"
+      ],
+      "styles": {
+        "outline": "outline/folder.svg",
+        "filled": "filled/folder.svg"
+      }
+    },
+    "gauge": {
+      "icon_id": "gauge",
+      "category": "System",
+      "tags": [
+        "car",
+        "dashboard",
+        "gauge",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/gauge.svg",
+        "filled": "filled/gauge.svg"
+      }
+    },
+    "gift": {
+      "icon_id": "gift",
+      "category": "E-commerce",
+      "tags": [
+        "present",
+        "birthday",
+        "celebration",
+        "wish",
+        "bonus",
+        "souvenire",
+        "surprise",
+        "gift",
+        "store",
+        "purchase"
+      ],
+      "styles": {
+        "outline": "outline/gift.svg",
+        "filled": "filled/gift.svg"
+      }
+    },
+    "hand-stop": {
+      "icon_id": "hand-stop",
+      "category": "Gestures",
+      "tags": [
+        "forbiddance",
+        "nixing",
+        "ban",
+        "interdicting",
+        "hand",
+        "stop",
+        "touch",
+        "action",
+        "motion",
+        "interaction"
+      ],
+      "styles": {
+        "outline": "outline/hand-stop.svg"
+      }
+    },
+    "headset": {
+      "icon_id": "headset",
+      "category": "Media",
+      "tags": [
+        "music",
+        "headphones",
+        "audio",
+        "sound",
+        "customer",
+        "headset",
+        "content",
+        "entertainment",
+        "multimedia",
+        "broadcast"
+      ],
+      "styles": {
+        "outline": "outline/headset.svg",
+        "filled": "filled/headset.svg"
+      }
+    },
+    "heart": {
+      "icon_id": "heart",
+      "category": "Shapes",
+      "tags": [
+        "love",
+        "emotion",
+        "like",
+        "favorite",
+        "relationship",
+        "heart",
+        "geometry",
+        "form",
+        "figure",
+        "pattern"
+      ],
+      "styles": {
+        "outline": "outline/heart.svg",
+        "filled": "filled/heart.svg"
+      }
+    },
+    "heart-handshake": {
+      "icon_id": "heart-handshake",
+      "category": "Health",
+      "tags": [
+        "support",
+        "care",
+        "friends",
+        "couple",
+        "relation",
+        "heart",
+        "handshake",
+        "love",
+        "like"
+      ],
+      "styles": {
+        "outline": "outline/heart-handshake.svg"
+      }
+    },
+    "help-circle": {
+      "icon_id": "help-circle",
+      "category": "System",
+      "tags": [
+        "assist",
+        "support",
+        "guide",
+        "aid",
+        "resolve",
+        "explain",
+        "instruct",
+        "clarify",
+        "help",
+        "circle"
+      ],
+      "styles": {
+        "outline": "outline/help-circle.svg",
+        "filled": "filled/help-circle.svg"
+      }
+    },
+    "hierarchy": {
+      "icon_id": "hierarchy",
+      "category": "Design",
+      "tags": [
+        "relation",
+        "above",
+        "below",
+        "status",
+        "society",
+        "important",
+        "hierarchy",
+        "creative",
+        "artistic",
+        "visual"
+      ],
+      "styles": {
+        "outline": "outline/hierarchy.svg"
+      }
+    },
+    "hourglass": {
+      "icon_id": "hourglass",
+      "category": "System",
+      "tags": [
+        "time",
+        "timer",
+        "sand",
+        "clock",
+        "hourglass",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/hourglass.svg",
+        "filled": "filled/hourglass.svg"
+      }
+    },
+    "id-badge-2": {
+      "icon_id": "id-badge-2",
+      "category": "System",
+      "tags": [
+        "identification",
+        "pass",
+        "card",
+        "identity",
+        "badge",
+        "control",
+        "operation",
+        "id",
+        "function",
+        "interface"
+      ],
+      "styles": {
+        "outline": "outline/id-badge-2.svg"
+      }
+    },
+    "key": {
+      "icon_id": "key",
+      "category": "Design",
+      "tags": [
+        "password",
+        "login",
+        "authentication",
+        "secure",
+        "key"
+      ],
+      "styles": {
+        "outline": "outline/key.svg",
+        "filled": "filled/key.svg"
+      }
+    },
+    "leaf": {
+      "icon_id": "leaf",
+      "category": "Nature",
+      "tags": [
+        "nature",
+        "plant",
+        "tree",
+        "autumn",
+        "fall",
+        "greenery",
+        "flower",
+        "forest",
+        "garden",
+        "leaf"
+      ],
+      "styles": {
+        "outline": "outline/leaf.svg",
+        "filled": "filled/leaf.svg"
+      }
+    },
+    "lifebuoy": {
+      "icon_id": "lifebuoy",
+      "category": "System",
+      "tags": [
+        "life ring",
+        "help",
+        "support",
+        "lifebuoy"
+      ],
+      "styles": {
+        "outline": "outline/lifebuoy.svg",
+        "filled": "filled/lifebuoy.svg"
+      }
+    },
+    "link": {
+      "icon_id": "link",
+      "category": "Text",
+      "tags": [
+        "zoom-filled",
+        "link",
+        "url",
+        "connection",
+        "hyperlink",
+        "reference",
+        "attach",
+        "join",
+        "typography",
+        "writing"
+      ],
+      "styles": {
+        "outline": "outline/link.svg",
+        "filled": "filled/link.svg"
+      }
+    },
+    "list-check": {
+      "icon_id": "list-check",
+      "category": "Text",
+      "tags": [
+        "to-do",
+        "checklist",
+        "form",
+        "template",
+        "task",
+        "reminder",
+        "schedule",
+        "agenda",
+        "list",
+        "check"
+      ],
+      "styles": {
+        "outline": "outline/list-check.svg",
+        "filled": "filled/list-check.svg"
+      }
+    },
+    "list-numbers": {
+      "icon_id": "list-numbers",
+      "category": "Text",
+      "tags": [
+        "to-do",
+        "checklist",
+        "form",
+        "template",
+        "task",
+        "reminder",
+        "schedule",
+        "agenda",
+        "list",
+        "numbers"
+      ],
+      "styles": {
+        "outline": "outline/list-numbers.svg"
+      }
+    },
+    "loader-2": {
+      "icon_id": "loader-2",
+      "category": "System",
+      "tags": [
+        "process",
+        "download",
+        "upload",
+        "loader",
+        "loading",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/loader-2.svg"
+      }
+    },
+    "lock": {
+      "icon_id": "lock",
+      "category": "System",
+      "tags": [
+        "security",
+        "password",
+        "secure",
+        "lock",
+        "private",
+        "control",
+        "operation",
+        "protected",
+        "closed",
+        "function"
+      ],
+      "styles": {
+        "outline": "outline/lock.svg",
+        "filled": "filled/lock.svg"
+      }
+    },
+    "login-2": {
+      "icon_id": "login-2",
+      "category": "Arrows",
+      "tags": [
+        "access",
+        "enter",
+        "signin",
+        "authenticate",
+        "logon",
+        "admit",
+        "initiate",
+        "link",
+        "connect",
+        "open"
+      ],
+      "styles": {
+        "outline": "outline/login-2.svg"
+      }
+    },
+    "logout-2": {
+      "icon_id": "logout-2",
+      "category": "System",
+      "tags": [
+        "exit",
+        "signout",
+        "leave",
+        "disconnect",
+        "close",
+        "terminate",
+        "end",
+        "depart",
+        "unlink",
+        "shut"
+      ],
+      "styles": {
+        "outline": "outline/logout-2.svg"
+      }
+    },
+    "mail": {
+      "icon_id": "mail",
+      "category": "Communication",
+      "tags": [
+        "inbox",
+        "gmail",
+        "email",
+        "envelope",
+        "message",
+        "mail",
+        "contact",
+        "conversation",
+        "letter",
+        "post"
+      ],
+      "styles": {
+        "outline": "outline/mail.svg",
+        "filled": "filled/mail.svg"
+      }
+    },
+    "map-pin": {
+      "icon_id": "map-pin",
+      "category": "Map",
+      "tags": [
+        "navigation",
+        "location",
+        "travel",
+        "pin",
+        "position",
+        "marker",
+        "map",
+        "attach",
+        "fix",
+        "mark"
+      ],
+      "styles": {
+        "outline": "outline/map-pin.svg",
+        "filled": "filled/map-pin.svg"
+      }
+    },
+    "map-route": {
+      "icon_id": "map-route",
+      "category": "Map",
+      "tags": [
+        "path",
+        "way",
+        "course",
+        "track",
+        "journey",
+        "navigation",
+        "direction",
+        "trail",
+        "road",
+        "map"
+      ],
+      "styles": {
+        "outline": "outline/map-route.svg"
+      }
+    },
+    "message": {
+      "icon_id": "message",
+      "category": "Communication",
+      "tags": [
+        "comment",
+        "chat",
+        "reply",
+        "communication",
+        "conversation",
+        "faq",
+        "message",
+        "contact",
+        "messaging",
+        "interaction"
+      ],
+      "styles": {
+        "outline": "outline/message.svg",
+        "filled": "filled/message.svg"
+      }
+    },
+    "messages": {
+      "icon_id": "messages",
+      "category": "Communication",
+      "tags": [
+        "chat",
+        "reply",
+        "comment",
+        "conversation",
+        "communication",
+        "faq",
+        "messages",
+        "contact",
+        "messaging",
+        "interaction"
+      ],
+      "styles": {
+        "outline": "outline/messages.svg",
+        "filled": "filled/messages.svg"
+      }
+    },
+    "microscope": {
+      "icon_id": "microscope",
+      "category": "Health",
+      "tags": [
+        "school",
+        "education",
+        "learning",
+        "laboratory",
+        "experimental",
+        "chemistry",
+        "biology",
+        "medical",
+        "bacteria",
+        "technology",
+        "test"
+      ],
+      "styles": {
+        "outline": "outline/microscope.svg",
+        "filled": "filled/microscope.svg"
+      }
+    },
+    "mood-smile": {
+      "icon_id": "mood-smile",
+      "category": "Mood",
+      "tags": [
+        "face",
+        "emoji",
+        "emotion",
+        "mood",
+        "smile"
+      ],
+      "styles": {
+        "outline": "outline/mood-smile.svg",
+        "filled": "filled/mood-smile.svg"
+      }
+    },
+    "network": {
+      "icon_id": "network",
+      "category": "Computers",
+      "tags": [
+        "connection",
+        "internet",
+        "communication",
+        "connect",
+        "web",
+        "signal",
+        "network",
+        "computing",
+        "machine",
+        "processor"
+      ],
+      "styles": {
+        "outline": "outline/network.svg"
+      }
+    },
+    "package": {
+      "icon_id": "package",
+      "category": "E-commerce",
+      "tags": [
+        "npm",
+        "box",
+        "container",
+        "package",
+        "store",
+        "purchase",
+        "shopping",
+        "retail",
+        "business"
+      ],
+      "styles": {
+        "outline": "outline/package.svg"
+      }
+    },
+    "package-export": {
+      "icon_id": "package-export",
+      "category": "Development",
+      "tags": [
+        "npm",
+        "box",
+        "container",
+        "delivery",
+        "logistic",
+        "package",
+        "export",
+        "programming",
+        "software",
+        "coding"
+      ],
+      "styles": {
+        "outline": "outline/package-export.svg"
+      }
+    },
+    "packages": {
+      "icon_id": "packages",
+      "category": "Development",
+      "tags": [
+        "delivery",
+        "boxes",
+        "storage",
+        "packages",
+        "programming",
+        "software",
+        "coding",
+        "technical",
+        "developer"
+      ],
+      "styles": {
+        "outline": "outline/packages.svg"
+      }
+    },
+    "pencil": {
+      "icon_id": "pencil",
+      "category": "Design",
+      "tags": [
+        "write",
+        "draft",
+        "edit",
+        "note",
+        "pencil",
+        "creative",
+        "artistic",
+        "visual",
+        "aesthetic",
+        "style"
+      ],
+      "styles": {
+        "outline": "outline/pencil.svg",
+        "filled": "filled/pencil.svg"
+      }
+    },
+    "phone": {
+      "icon_id": "phone",
+      "category": "Devices",
+      "tags": [
+        "call",
+        "mobile",
+        "conversation",
+        "landline",
+        "answer",
+        "number",
+        "phone",
+        "hardware",
+        "technology",
+        "contact"
+      ],
+      "styles": {
+        "outline": "outline/phone.svg",
+        "filled": "filled/phone.svg"
+      }
+    },
+    "pig-money": {
+      "icon_id": "pig-money",
+      "category": "Animals",
+      "tags": [
+        "coin",
+        "finance",
+        "saving",
+        "bank",
+        "pig",
+        "money",
+        "creature",
+        "wildlife",
+        "nature",
+        "living"
+      ],
+      "styles": {
+        "outline": "outline/pig-money.svg"
+      }
+    },
+    "plane": {
+      "icon_id": "plane",
+      "category": "Vehicles",
+      "tags": [
+        "travel",
+        "journey",
+        "trip",
+        "airport",
+        "baggage",
+        "luggage",
+        "plane",
+        "transport",
+        "vehicle",
+        "automobile"
+      ],
+      "styles": {
+        "outline": "outline/plane.svg",
+        "filled": "filled/plane.svg"
+      }
+    },
+    "plant": {
+      "icon_id": "plant",
+      "category": "Nature",
+      "tags": [
+        "nature",
+        "green",
+        "flower",
+        "pot",
+        "tree",
+        "leaf",
+        "greenery",
+        "root",
+        "stem",
+        "seed"
+      ],
+      "styles": {
+        "outline": "outline/plant.svg"
+      }
+    },
+    "player-pause": {
+      "icon_id": "player-pause",
+      "category": "Media",
+      "tags": [
+        "video",
+        "film",
+        "music",
+        "player",
+        "stop",
+        "pause",
+        "content",
+        "entertainment",
+        "break",
+        "suspend"
+      ],
+      "styles": {
+        "outline": "outline/player-pause.svg",
+        "filled": "filled/player-pause.svg"
+      }
+    },
+    "plug-connected": {
+      "icon_id": "plug-connected",
+      "category": "Devices",
+      "tags": [
+        "power",
+        "electricity",
+        "cable",
+        "socket",
+        "plug",
+        "connected",
+        "hardware",
+        "technology",
+        "electronic",
+        "gadget"
+      ],
+      "styles": {
+        "outline": "outline/plug-connected.svg"
+      }
+    },
+    "presentation": {
+      "icon_id": "presentation",
+      "category": "Document",
+      "tags": [
+        "slideshow",
+        "display",
+        "exhibition",
+        "speech",
+        "topic",
+        "conference",
+        "presentation",
+        "file",
+        "paper",
+        "text"
+      ],
+      "styles": {
+        "outline": "outline/presentation.svg",
+        "filled": "filled/presentation.svg"
+      }
+    },
+    "progress": {
+      "icon_id": "progress",
+      "category": "System",
+      "tags": [
+        "development",
+        "status",
+        "update",
+        "advancement",
+        "indicator",
+        "growth",
+        "evolution",
+        "flow",
+        "improvement",
+        "track"
+      ],
+      "styles": {
+        "outline": "outline/progress.svg"
+      }
+    },
+    "receipt": {
+      "icon_id": "receipt",
+      "category": "Document",
+      "tags": [
+        "bill",
+        "restaurant",
+        "shop",
+        "price",
+        "pay",
+        "money",
+        "total",
+        "tax",
+        "receipt",
+        "file"
+      ],
+      "styles": {
+        "outline": "outline/receipt.svg",
+        "filled": "filled/receipt.svg"
+      }
+    },
+    "recycle": {
+      "icon_id": "recycle",
+      "category": "Symbols",
+      "tags": [
+        "trash",
+        "rubbish",
+        "recyclable",
+        "reuse",
+        "waste",
+        "recycle",
+        "sign",
+        "mark",
+        "emblem",
+        "representation"
+      ],
+      "styles": {
+        "outline": "outline/recycle.svg"
+      }
+    },
+    "report-analytics": {
+      "icon_id": "report-analytics",
+      "category": "Document",
+      "tags": [
+        "statistics",
+        "results",
+        "business",
+        "sales",
+        "analysis",
+        "analyse",
+        "bar",
+        "chart",
+        "report",
+        "analytics"
+      ],
+      "styles": {
+        "outline": "outline/report-analytics.svg",
+        "filled": "filled/report-analytics.svg"
+      }
+    },
+    "report-money": {
+      "icon_id": "report-money",
+      "category": "Document",
+      "tags": [
+        "results",
+        "business",
+        "sales",
+        "analysis",
+        "analyse",
+        "finance",
+        "financial",
+        "total",
+        "report",
+        "money"
+      ],
+      "styles": {
+        "outline": "outline/report-money.svg",
+        "filled": "filled/report-money.svg"
+      }
+    },
+    "robot": {
+      "icon_id": "robot",
+      "category": "Games",
+      "tags": [
+        "technology",
+        "ai",
+        "machine",
+        "bot",
+        "android",
+        "robot",
+        "entertainment",
+        "playing",
+        "recreation",
+        "fun"
+      ],
+      "styles": {
+        "outline": "outline/robot.svg"
+      }
+    },
+    "rocket": {
+      "icon_id": "rocket",
+      "category": "Map",
+      "tags": [
+        "universe",
+        "galaxy",
+        "space",
+        "journey",
+        "discover",
+        "extraterrestrial",
+        "spaceship",
+        "rocket",
+        "location",
+        "navigation"
+      ],
+      "styles": {
+        "outline": "outline/rocket.svg"
+      }
+    },
+    "rosette": {
+      "icon_id": "rosette",
+      "category": "Shapes",
+      "tags": [
+        "shape",
+        "badge",
+        "star",
+        "medal",
+        "rosette",
+        "geometry",
+        "form",
+        "figure",
+        "pattern",
+        "outline"
+      ],
+      "styles": {
+        "outline": "outline/rosette.svg",
+        "filled": "filled/rosette.svg"
+      }
+    },
+    "rosette-discount-check": {
+      "icon_id": "rosette-discount-check",
+      "category": "E-commerce",
+      "tags": [
+        "reduction",
+        "price",
+        "cost",
+        "money",
+        "shopping",
+        "bargain",
+        "tick",
+        "done",
+        "verified",
+        "certificate",
+        "valid",
+        "official",
+        "success"
+      ],
+      "styles": {
+        "outline": "outline/rosette-discount-check.svg",
+        "filled": "filled/rosette-discount-check.svg"
+      }
+    },
+    "route": {
+      "icon_id": "route",
+      "category": "Map",
+      "tags": [
+        "path",
+        "journey",
+        "direction",
+        "trail",
+        "navigate",
+        "travel",
+        "way",
+        "road",
+        "travel-route",
+        "route-way"
+      ],
+      "styles": {
+        "outline": "outline/route.svg"
+      }
+    },
+    "scale": {
+      "icon_id": "scale",
+      "category": "System",
+      "tags": [
+        "weigh",
+        "balance",
+        "amount",
+        "heavy",
+        "light",
+        "libra",
+        "scale"
+      ],
+      "styles": {
+        "outline": "outline/scale.svg",
+        "filled": "filled/scale.svg"
+      }
+    },
+    "school": {
+      "icon_id": "school",
+      "category": "Map",
+      "tags": [
+        "students",
+        "class",
+        "teachers",
+        "professors",
+        "doctors",
+        "hall",
+        "classroom",
+        "subject",
+        "science",
+        "break",
+        "lesson"
+      ],
+      "styles": {
+        "outline": "outline/school.svg",
+        "filled": "filled/school.svg"
+      }
+    },
+    "search": {
+      "icon_id": "search",
+      "category": "System",
+      "tags": [
+        "find",
+        "magnifier",
+        "magnifying glass",
+        "search",
+        "look",
+        "seek",
+        "query",
+        "browse"
+      ],
+      "styles": {
+        "outline": "outline/search.svg",
+        "filled": "filled/search.svg"
+      }
+    },
+    "send": {
+      "icon_id": "send",
+      "category": "Communication",
+      "tags": [
+        "message",
+        "mail",
+        "email",
+        "gmail",
+        "paper",
+        "airplane",
+        "aeroplane",
+        "send",
+        "contact",
+        "conversation"
+      ],
+      "styles": {
+        "outline": "outline/send.svg",
+        "filled": "filled/send.svg"
+      }
+    },
+    "server": {
+      "icon_id": "server",
+      "category": "Devices",
+      "tags": [
+        "storage",
+        "hosting",
+        "www",
+        "server",
+        "hardware",
+        "technology",
+        "electronic",
+        "gadget",
+        "equipment"
+      ],
+      "styles": {
+        "outline": "outline/server.svg"
+      }
+    },
+    "settings": {
+      "icon_id": "settings",
+      "category": "System",
+      "tags": [
+        "cog",
+        "edit",
+        "gear",
+        "preferences",
+        "tools",
+        "settings",
+        "config",
+        "options",
+        "control",
+        "operation"
+      ],
+      "styles": {
+        "outline": "outline/settings.svg",
+        "filled": "filled/settings.svg"
+      }
+    },
+    "settings-cog": {
+      "icon_id": "settings-cog",
+      "category": "System",
+      "tags": [
+        "gear",
+        "configuration",
+        "adjust",
+        "setup",
+        "control",
+        "wheel",
+        "mechanism",
+        "tooth",
+        "gadget",
+        "machinery"
+      ],
+      "styles": {
+        "outline": "outline/settings-cog.svg"
+      }
+    },
+    "share": {
+      "icon_id": "share",
+      "category": "System",
+      "tags": [
+        "network",
+        "link",
+        "connection",
+        "share",
+        "distribute",
+        "send",
+        "publish",
+        "broadcast",
+        "spread"
+      ],
+      "styles": {
+        "outline": "outline/share.svg"
+      }
+    },
+    "share-2": {
+      "icon_id": "share-2",
+      "category": "Arrows",
+      "tags": [
+        "network",
+        "link",
+        "connection",
+        "share",
+        "navigation",
+        "flow",
+        "distribute",
+        "send",
+        "publish",
+        "broadcast"
+      ],
+      "styles": {
+        "outline": "outline/share-2.svg"
+      }
+    },
+    "shield-check": {
+      "icon_id": "shield-check",
+      "category": "System",
+      "tags": [
+        "safety",
+        "protect",
+        "protection",
+        "yes",
+        "add",
+        "shield",
+        "check",
+        "control",
+        "operation",
+        "confirm"
+      ],
+      "styles": {
+        "outline": "outline/shield-check.svg",
+        "filled": "filled/shield-check.svg"
+      }
+    },
+    "shield-exclamation": {
+      "icon_id": "shield-exclamation",
+      "category": "System",
+      "tags": [
+        "protection",
+        "alert",
+        "warning",
+        "notice",
+        "security",
+        "guard",
+        "caution",
+        "important",
+        "attention",
+        "notify"
+      ],
+      "styles": {
+        "outline": "outline/shield-exclamation.svg"
+      }
+    },
+    "shopping-cart": {
+      "icon_id": "shopping-cart",
+      "category": "E-commerce",
+      "tags": [
+        "shop",
+        "store",
+        "buy",
+        "purchase",
+        "product",
+        "bag",
+        "trolley",
+        "supermarket",
+        "grocery",
+        "shopping"
+      ],
+      "styles": {
+        "outline": "outline/shopping-cart.svg",
+        "filled": "filled/shopping-cart.svg"
+      }
+    },
+    "signature": {
+      "icon_id": "signature",
+      "category": "Text",
+      "tags": [
+        "name",
+        "certficate",
+        "sign",
+        "edit",
+        "write",
+        "document",
+        "writing",
+        "signature",
+        "typography",
+        "font"
+      ],
+      "styles": {
+        "outline": "outline/signature.svg"
+      }
+    },
+    "sitemap": {
+      "icon_id": "sitemap",
+      "category": "Development",
+      "tags": [
+        "page",
+        "webpage",
+        "website",
+        "list",
+        "roadmap",
+        "index",
+        "graph",
+        "schema",
+        "diagram",
+        "tree",
+        "hierarchy",
+        "organization",
+        "data"
+      ],
+      "styles": {
+        "outline": "outline/sitemap.svg",
+        "filled": "filled/sitemap.svg"
+      }
+    },
+    "sort-descending": {
+      "icon_id": "sort-descending",
+      "category": "Text",
+      "tags": [
+        "filter",
+        "classify",
+        "arrange",
+        "order",
+        "sort",
+        "descending",
+        "typography",
+        "writing",
+        "font",
+        "character"
+      ],
+      "styles": {
+        "outline": "outline/sort-descending.svg"
+      }
+    },
+    "sparkles": {
+      "icon_id": "sparkles",
+      "category": "System",
+      "tags": [
+        "star",
+        "light",
+        "fire",
+        "shine",
+        "sparkles"
+      ],
+      "styles": {
+        "outline": "outline/sparkles.svg",
+        "filled": "filled/sparkles.svg"
+      }
+    },
+    "speakerphone": {
+      "icon_id": "speakerphone",
+      "category": "Media",
+      "tags": [
+        "voice",
+        "loud",
+        "microphone",
+        "loudspeaker",
+        "event",
+        "protest",
+        "speaker",
+        "shout",
+        "listen",
+        "speakerphone"
+      ],
+      "styles": {
+        "outline": "outline/speakerphone.svg"
+      }
+    },
+    "square": {
+      "icon_id": "square",
+      "category": "Shapes",
+      "tags": [
+        "checkbox",
+        "box",
+        "shape",
+        "square",
+        "rectangular",
+        "geometry",
+        "form",
+        "figure",
+        "pattern",
+        "outline"
+      ],
+      "styles": {
+        "outline": "outline/square.svg",
+        "filled": "filled/square.svg"
+      }
+    },
+    "stairs-up": {
+      "icon_id": "stairs-up",
+      "category": "Map",
+      "tags": [
+        "building",
+        "step",
+        "floor",
+        "staircase",
+        "entryway",
+        "stairs",
+        "top",
+        "increase",
+        "location",
+        "navigation"
+      ],
+      "styles": {
+        "outline": "outline/stairs-up.svg"
+      }
+    },
+    "table": {
+      "icon_id": "table",
+      "category": "Database",
+      "tags": [
+        "spreadsheet",
+        "layout",
+        "grid",
+        "arrange",
+        "row",
+        "column",
+        "table",
+        "storage",
+        "repository",
+        "records"
+      ],
+      "styles": {
+        "outline": "outline/table.svg",
+        "filled": "filled/table.svg"
+      }
+    },
+    "table-export": {
+      "icon_id": "table-export",
+      "category": "Database",
+      "tags": [
+        "spreadsheet",
+        "layout",
+        "grid",
+        "arrange",
+        "row",
+        "column",
+        "cells",
+        "sheet",
+        "arrow",
+        "table"
+      ],
+      "styles": {
+        "outline": "outline/table-export.svg"
+      }
+    },
+    "table-import": {
+      "icon_id": "table-import",
+      "category": "Database",
+      "tags": [
+        "spreadsheet",
+        "layout",
+        "grid",
+        "arrange",
+        "row",
+        "column",
+        "cells",
+        "sheet",
+        "arrow",
+        "table"
+      ],
+      "styles": {
+        "outline": "outline/table-import.svg"
+      }
+    },
+    "target": {
+      "icon_id": "target",
+      "category": "Map",
+      "tags": [
+        "focus",
+        "bullseye",
+        "aim",
+        "target",
+        "location",
+        "navigation",
+        "geography",
+        "place",
+        "position"
+      ],
+      "styles": {
+        "outline": "outline/target.svg"
+      }
+    },
+    "target-arrow": {
+      "icon_id": "target-arrow",
+      "category": "Sport",
+      "tags": [
+        "goal",
+        "aim",
+        "archery",
+        "archer",
+        "target",
+        "arrow",
+        "direction",
+        "pointer",
+        "athletic",
+        "fitness"
+      ],
+      "styles": {
+        "outline": "outline/target-arrow.svg"
+      }
+    },
+    "telescope": {
+      "icon_id": "telescope",
+      "category": "System",
+      "tags": [
+        "astronomy",
+        "moon",
+        "observation",
+        "vision",
+        "space",
+        "astrology",
+        "telescope"
+      ],
+      "styles": {
+        "outline": "outline/telescope.svg"
+      }
+    },
+    "timeline": {
+      "icon_id": "timeline",
+      "category": "System",
+      "tags": [
+        "process",
+        "plan",
+        "planning",
+        "diagram",
+        "chart",
+        "roadmap",
+        "timeline"
+      ],
+      "styles": {
+        "outline": "outline/timeline.svg"
+      }
+    },
+    "timeline-event": {
+      "icon_id": "timeline-event",
+      "category": "Development",
+      "tags": [
+        "process",
+        "plan",
+        "planning",
+        "diagram",
+        "chart",
+        "roadmap",
+        "timeline",
+        "event",
+        "programming",
+        "software"
+      ],
+      "styles": {
+        "outline": "outline/timeline-event.svg",
+        "filled": "filled/timeline-event.svg"
+      }
+    },
+    "tool": {
+      "icon_id": "tool",
+      "category": "System",
+      "tags": [
+        "preferences",
+        "edit",
+        "settings",
+        "tool",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/tool.svg"
+      }
+    },
+    "tools": {
+      "icon_id": "tools",
+      "category": "Design",
+      "tags": [
+        "preferences",
+        "edit",
+        "settings",
+        "tools",
+        "creative",
+        "artistic",
+        "visual",
+        "aesthetic",
+        "style"
+      ],
+      "styles": {
+        "outline": "outline/tools.svg"
+      }
+    },
+    "trending-down": {
+      "icon_id": "trending-down",
+      "category": "Arrows",
+      "tags": [
+        "arrow",
+        "decrease",
+        "fall",
+        "progress",
+        "trending",
+        "down",
+        "bottom",
+        "navigation",
+        "flow",
+        "downward"
+      ],
+      "styles": {
+        "outline": "outline/trending-down.svg"
+      }
+    },
+    "trending-up": {
+      "icon_id": "trending-up",
+      "category": "Arrows",
+      "tags": [
+        "arrow",
+        "grow",
+        "increase",
+        "progress",
+        "trending",
+        "top",
+        "navigation",
+        "flow",
+        "rise",
+        "upward"
+      ],
+      "styles": {
+        "outline": "outline/trending-up.svg"
+      }
+    },
+    "trophy": {
+      "icon_id": "trophy",
+      "category": "Sport",
+      "tags": [
+        "success",
+        "win",
+        "prize",
+        "winner",
+        "trophy"
+      ],
+      "styles": {
+        "outline": "outline/trophy.svg",
+        "filled": "filled/trophy.svg"
+      }
+    },
+    "truck-delivery": {
+      "icon_id": "truck-delivery",
+      "category": "E-commerce",
+      "tags": [
+        "order",
+        "purchase",
+        "online",
+        "shop",
+        "store",
+        "e-commerce",
+        "lorry",
+        "truck",
+        "delivery",
+        "shopping"
+      ],
+      "styles": {
+        "outline": "outline/truck-delivery.svg"
+      }
+    },
+    "upload": {
+      "icon_id": "upload",
+      "category": "Arrows",
+      "tags": [
+        "file",
+        "arrow",
+        "upload",
+        "import",
+        "transfer",
+        "navigation",
+        "flow",
+        "send",
+        "publish",
+        "movement"
+      ],
+      "styles": {
+        "outline": "outline/upload.svg"
+      }
+    },
+    "user": {
+      "icon_id": "user",
+      "category": "System",
+      "tags": [
+        "person",
+        "account",
+        "user",
+        "control",
+        "operation",
+        "profile",
+        "member",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/user.svg",
+        "filled": "filled/user.svg"
+      }
+    },
+    "user-check": {
+      "icon_id": "user-check",
+      "category": "System",
+      "tags": [
+        "tick",
+        "person",
+        "account",
+        "role",
+        "user",
+        "check",
+        "control",
+        "operation",
+        "confirm",
+        "approve"
+      ],
+      "styles": {
+        "outline": "outline/user-check.svg"
+      }
+    },
+    "user-circle": {
+      "icon_id": "user-circle",
+      "category": "System",
+      "tags": [
+        "account",
+        "avatar",
+        "profile",
+        "role",
+        "user",
+        "circle",
+        "person",
+        "control",
+        "operation",
+        "round"
+      ],
+      "styles": {
+        "outline": "outline/user-circle.svg"
+      }
+    },
+    "user-cog": {
+      "icon_id": "user-cog",
+      "category": "System",
+      "tags": [
+        "settings",
+        "preferences",
+        "configure",
+        "gear",
+        "tool",
+        "customize",
+        "options",
+        "adjust",
+        "control",
+        "manage"
+      ],
+      "styles": {
+        "outline": "outline/user-cog.svg"
+      }
+    },
+    "user-heart": {
+      "icon_id": "user-heart",
+      "category": "System",
+      "tags": [
+        "love",
+        "affection",
+        "emotion",
+        "romance",
+        "caring",
+        "kindness",
+        "passion",
+        "devotion",
+        "feeling",
+        "compassion"
+      ],
+      "styles": {
+        "outline": "outline/user-heart.svg"
+      }
+    },
+    "user-minus": {
+      "icon_id": "user-minus",
+      "category": "System",
+      "tags": [
+        "remove",
+        "cancel",
+        "person",
+        "account",
+        "unsubscribe",
+        "role",
+        "user",
+        "minus",
+        "control",
+        "operation"
+      ],
+      "styles": {
+        "outline": "outline/user-minus.svg"
+      }
+    },
+    "user-plus": {
+      "icon_id": "user-plus",
+      "category": "System",
+      "tags": [
+        "add",
+        "create",
+        "new",
+        "person",
+        "people",
+        "follow",
+        "subscribe",
+        "role",
+        "user",
+        "plus"
+      ],
+      "styles": {
+        "outline": "outline/user-plus.svg"
+      }
+    },
+    "user-scan": {
+      "icon_id": "user-scan",
+      "category": "System",
+      "tags": [
+        "identity",
+        "biometric",
+        "authentication",
+        "recognition",
+        "profile",
+        "verification",
+        "user-data",
+        "user-profile",
+        "scan-identity",
+        "identity-verification"
+      ],
+      "styles": {
+        "outline": "outline/user-scan.svg"
+      }
+    },
+    "user-search": {
+      "icon_id": "user-search",
+      "category": "System",
+      "tags": [
+        "find",
+        "account",
+        "profile",
+        "magnifier",
+        "user",
+        "search",
+        "person",
+        "look",
+        "seek",
+        "control"
+      ],
+      "styles": {
+        "outline": "outline/user-search.svg"
+      }
+    },
+    "user-shield": {
+      "icon_id": "user-shield",
+      "category": "System",
+      "tags": [
+        "protection",
+        "security",
+        "defend",
+        "safeguard",
+        "guard",
+        "armor",
+        "cover",
+        "shield",
+        "safety",
+        "fortify"
+      ],
+      "styles": {
+        "outline": "outline/user-shield.svg"
+      }
+    },
+    "user-star": {
+      "icon_id": "user-star",
+      "category": "System",
+      "tags": [
+        "favorite",
+        "highlight",
+        "shine",
+        "glow",
+        "stellar",
+        "bright",
+        "famous",
+        "prominent",
+        "recognize",
+        "feature"
+      ],
+      "styles": {
+        "outline": "outline/user-star.svg"
+      }
+    },
+    "user-up": {
+      "icon_id": "user-up",
+      "category": "System",
+      "tags": [
+        "elevate",
+        "ascend",
+        "rise",
+        "promote",
+        "advance",
+        "uplift",
+        "boost",
+        "levelup",
+        "upward",
+        "enhance"
+      ],
+      "styles": {
+        "outline": "outline/user-up.svg"
+      }
+    },
+    "users": {
+      "icon_id": "users",
+      "category": "System",
+      "tags": [
+        "people",
+        "persons",
+        "accounts",
+        "users",
+        "control",
+        "operation",
+        "function",
+        "interface",
+        "management"
+      ],
+      "styles": {
+        "outline": "outline/users.svg"
+      }
+    },
+    "users-group": {
+      "icon_id": "users-group",
+      "category": "System",
+      "tags": [
+        "community",
+        "team",
+        "cluster",
+        "society",
+        "gathering",
+        "crowd",
+        "network",
+        "collective",
+        "assembly",
+        "fellowship"
+      ],
+      "styles": {
+        "outline": "outline/users-group.svg"
+      }
+    },
+    "wallet": {
+      "icon_id": "wallet",
+      "category": "E-commerce",
+      "tags": [
+        "money",
+        "pay",
+        "banknote",
+        "coin",
+        "payment",
+        "bank",
+        "wallet"
+      ],
+      "styles": {
+        "outline": "outline/wallet.svg"
+      }
+    },
+    "world": {
+      "icon_id": "world",
+      "category": "Map",
+      "tags": [
+        "earth",
+        "globe",
+        "global",
+        "language",
+        "union",
+        "world",
+        "location",
+        "navigation",
+        "geography",
+        "place"
+      ],
+      "styles": {
+        "outline": "outline/world.svg",
+        "filled": "filled/world.svg"
+      }
+    },
+    "world-search": {
+      "icon_id": "world-search",
+      "category": "Map",
+      "tags": [
+        "explore",
+        "find",
+        "seek",
+        "lookup",
+        "inspect",
+        "scan",
+        "global",
+        "hunt",
+        "pursue",
+        "discover"
+      ],
+      "styles": {
+        "outline": "outline/world-search.svg"
+      }
+    },
+    "writing": {
+      "icon_id": "writing",
+      "category": "Text",
+      "tags": [
+        "name",
+        "certficate",
+        "sign",
+        "edit",
+        "write",
+        "document",
+        "pen",
+        "drawing",
+        "contract",
+        "signature"
+      ],
+      "styles": {
+        "outline": "outline/writing.svg",
+        "filled": "filled/writing.svg"
+      }
+    },
+    "zoom": {
+      "icon_id": "zoom",
+      "category": "Map",
+      "tags": [
+        "find",
+        "magnifier",
+        "magnifying glass",
+        "zoom",
+        "location",
+        "navigation",
+        "magnify",
+        "enlarge",
+        "scale",
+        "focus"
+      ],
+      "styles": {
+        "outline": "outline/zoom.svg",
+        "filled": "filled/zoom.svg"
+      }
+    }
+  }
+}

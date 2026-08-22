@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "module_id": "summary-page",
+  "theme": "light",
+  "deck_context": { "current_slide": 2, "total_slides": 20, "chapter_id": "opening", "previous_page_job": "提出成长主题", "next_page_job": "进入目录", "callback_to": null },
+  "page_contract": {
+    "page_type": "summary",
+    "page_job": "让候选讲师先理解成长路径的核心判断",
+    "audience_shift": { "before": "只知道主题", "after": "理解核心判断" },
+    "central_message": "独立交付来自专业判断、分阶段成长和真实结果",
+    "source_ids": ["S01-C001"],
+    "visible_components": [
+      { "id": "title", "role": "page_title", "text": "成为独立讲师，要先学会判断，再证明结果", "required": true },
+      { "id": "orientation", "role": "summary_orientation", "text": "候选讲师正在进入课程体系，需要理解从参与学习到独立交付的专业成长路径。", "required": true, "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "背景与方向", "selection_reason": "帮助识别背景段落", "component_id": "orientation" } },
+      { "id": "tension", "role": "summary_tension", "text": "复述课件可以快速扩大授课参与，但它只能复制已有表达，无法证明讲师面对不同企业场景时能识别真实问题、选择有效证据、保持统一质量并产生学员结果。", "required": true, "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "风险与张力", "selection_reason": "帮助识别张力段落", "component_id": "tension" } },
+      { "id": "response", "role": "summary_response", "text": "成为独立讲师，要先在真实问题中学会专业判断，再按三个阶段逐步扩大交付责任，最后用学员结果、统一质量标准和市场反馈共同证明能够独立交付。", "required": true, "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "核心回应", "selection_reason": "帮助识别核心回应", "component_id": "response" } },
+      { "id": "support_units", "role": "summary_support_units", "required": true, "items": [
+        { "id": "support_1", "text": "专业能力来自对真实问题和有效证据的判断。", "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "关键支撑", "selection_reason": "帮助定位支撑依据", "component_id": "support_1" } },
+        { "id": "support_2", "text": "成长依次经过观察证据、聚焦成熟模块和复制专业标准。", "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "关键支撑", "selection_reason": "帮助定位支撑依据", "component_id": "support_2" } }
+      ] },
+      { "id": "decision_or_implication", "role": "summary_decision", "text": "按阶段完成从观察证据到独立交付的成长，不把拿到课件或完成试讲当作终点。", "required": true, "paragraph_leading_icon": { "enabled": true, "role": "summary_paragraph_marker", "concept": "决策落点", "selection_reason": "帮助识别行动落点", "component_id": "decision_or_implication" } }
+    ],
+    "forbidden_components": ["logo", "decorative_icon", "data_encoding_icon"],
+    "peer_groups": [],
+    "layout_intent": { "paragraph_icon_position": "leading_left", "paragraph_icon_height_ratio": 1.5, "paragraph_icon_height_ratio_range": [1.4, 1.6], "paragraph_icon_align": "optical_center_with_first_line" },
+    "theme_preference": "inherit_or_neutral",
+    "speaker_notes": "只预告，不展开每个阶段的条件",
+    "completion_checks": ["图标位于段落左侧", "叙事链完整"],
+    "summary_narrative": {
+      "summary_type": "strategy",
+      "orientation": "候选讲师正在进入课程体系，需要理解从参与学习到独立交付的专业成长路径。",
+      "tension": "复述课件可以快速扩大授课参与，但它只能复制已有表达，无法证明讲师面对不同企业场景时能识别真实问题、选择有效证据、保持统一质量并产生学员结果。",
+      "response": "成为独立讲师，要先在真实问题中学会专业判断，再按三个阶段逐步扩大交付责任，最后用学员结果、统一质量标准和市场反馈共同证明能够独立交付。",
+      "support_units": [{ "text": "专业能力来自对真实问题和有效证据的判断。" }, { "text": "成长依次经过观察证据、聚焦成熟模块和复制专业标准。" }],
+      "decision_or_implication": "按阶段完成从观察证据到独立交付的成长，不把拿到课件或完成试讲当作终点。",
+      "narrative_relation": "背景到张力再到回应与行动",
+      "source_ids": ["S01-C001"],
+      "proof_page_ids": ["P05", "P10", "P18"]
+    }
+  }
+}

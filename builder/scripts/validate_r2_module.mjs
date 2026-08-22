@@ -9,8 +9,11 @@ import {
 } from "./source_fidelity.mjs";
 
 const R2_MODULES = new Set([
+  "route-tradeoff",
+  "scqa-roadmap",
   "bubble-heatmap",
   "chart-insight",
+  "scenario-planning",
 ]);
 
 function collector(data) {
@@ -160,8 +163,11 @@ export function validateR2Module(data) {
   const c = collector(data);
   if (data.subtitle) c.text(data.subtitle, "Subtitle");
   const handlers = {
+    "route-tradeoff": validateRouteTradeoff,
+    "scqa-roadmap": validateScqaRoadmap,
     "bubble-heatmap": validateBubbleHeatmap,
     "chart-insight": validateChartInsight,
+    "scenario-planning": validateScenarioPlanning,
   };
   handlers[data.module_id](data, c);
   return { ok: true, module_id: data.module_id, ...validateAllAnchorsMapped(data.source_anchors, c.mapped) };

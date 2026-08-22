@@ -1,21 +1,9 @@
 {
   "version": "1.0",
   "module_id": "part-to-whole",
-  "source_anchors": [
-    {
-      "id": "S01",
-      "text": "2026年预算；收入主要来自企业客户，个人客户占比有限；收入结构；100；%；企业客户；72；个人客户；18；其他；10；企业客户；72%；企业客户是绝对主导构成；优先围绕企业客户优化产品与销售资源；合成示例数据，非真实客户数据"
-    }
-  ],
-  "title": {
-    "text": "收入主要来自企业客户，个人客户占比有限",
-    "origin": "source",
-    "source_ids": ["S01"]
-  },
-  "subtitle": {
-    "text": "合成示例数据，非真实客户数据",
-    "source_ids": ["S01"]
-  },
+  "source_anchors": [{ "id": "S01", "text": "2026年预算；收入主要来自企业客户，个人客户占比有限；收入结构；100；%；企业客户；72；个人客户；18；其他；10；企业客户；72%；企业客户是绝对主导构成；优先围绕企业客户优化产品与销售资源；合成示例数据，非真实客户数据" }],
+  "title": { "text": "收入主要来自企业客户，个人客户占比有限", "origin": "source", "source_ids": ["S01"] },
+  "subtitle": { "text": "合成示例数据，非真实客户数据", "source_ids": ["S01"] },
   "diagram": {
     "type": "part-to-whole",
     "chart_type": "doughnut",
@@ -27,32 +15,11 @@
     "center_label": { "text": "企业客户", "source_ids": ["S01"] },
     "center_value": { "text": "72%", "source_ids": ["S01"] },
     "parts": [
-      {
-        "id": "p1",
-        "label": { "text": "企业客户", "source_ids": ["S01"] },
-        "value": 72,
-        "source_ids": ["S01"],
-        "priority": true
-      },
-      {
-        "id": "p2",
-        "label": { "text": "个人客户", "source_ids": ["S01"] },
-        "value": 18,
-        "source_ids": ["S01"]
-      },
-      {
-        "id": "p3",
-        "label": { "text": "其他", "source_ids": ["S01"] },
-        "value": 10,
-        "source_ids": ["S01"]
-      }
+      { "id": "p1", "label": { "text": "企业客户", "source_ids": ["S01"] }, "value": 72, "source_ids": ["S01"], "priority": true },
+      { "id": "p2", "label": { "text": "个人客户", "source_ids": ["S01"] }, "value": 18, "source_ids": ["S01"] },
+      { "id": "p3", "label": { "text": "其他", "source_ids": ["S01"] }, "value": 10, "source_ids": ["S01"] }
     ],
-    "insights": [
-      { "text": "企业客户是绝对主导构成", "source_ids": ["S01"] }
-    ],
-    "conclusion": {
-      "text": "优先围绕企业客户优化产品与销售资源",
-      "source_ids": ["S01"]
-    }
+    "insights": [{ "text": "企业客户是绝对主导构成", "source_ids": ["S01"] }],
+    "conclusion": { "text": "优先围绕企业客户优化产品与销售资源", "source_ids": ["S01"] }
   }
 }

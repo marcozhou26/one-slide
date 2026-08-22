@@ -76,10 +76,10 @@ export async function renderStageProcess(data, output) {
       },
       fontSize: emphasized ? 18 : 16,
       bold: emphasized,
-      color: emphasized ? COLORS.orange : COLORS.text,
+      color: COLORS.text,
       alignment: "center",
       fill: emphasized ? COLORS.orangeLight : COLORS.white,
-      line: { style: "solid", fill: emphasized ? COLORS.orange : COLORS.border, width: emphasized ? 1.8 : 1.2 },
+      line: { style: "solid", fill: COLORS.border, width: 1.2 },
     });
     detailBox.bringToFront();
   });
@@ -124,7 +124,7 @@ export async function renderStageProcess(data, output) {
           height: plan.bottomStrip.height - 24,
         },
         fontSize: 16,
-        bold: index === 0,
+        bold: false,
       });
     });
   }

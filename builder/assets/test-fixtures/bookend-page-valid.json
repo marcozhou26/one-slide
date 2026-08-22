@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "module_id": "bookend-page",
+  "theme": "light",
+  "deck_context": {
+    "audience": "准备加入课程体系的候选讲师",
+    "presentation_task": "理解专业标准，以及从观察、跟课到独立交付的成长路径",
+    "narrative_route": "教学培训",
+    "total_slides": 20,
+    "source_baseline": "`HR专业培训品牌_三阶段远景规划.md`，SHA-256 `17a7cc39468a449a4a7007c8e465cdd581516b4de9e829a82cc9b8ac70f32cfb`",
+    "current_slide": 1,
+    "chapter_id": "开场",
+    "previous_page_job": "不适用",
+    "next_page_job": "下一页先给出整场培训最重要的三项判断",
+    "callback_to": null
+  },
+  "page_contract": {
+    "page_type": "cover",
+    "page_job": "让候选讲师明确本次培训讨论的是专业成长路径，不是排课安排或课件领取",
+    "audience_shift": {
+      "before": "不知道本次培训解决什么",
+      "after": "知道将理解一条从候选到独立交付的成长路径"
+    },
+    "central_message": "候选讲师需要理解并走完从观察、跟课到独立交付的专业成长路径",
+    "source_ids": [],
+    "visible_components": [
+      {
+        "id": "component_1",
+        "role": "structural_rule",
+        "text": "原版绿色竖线装饰条",
+        "required": true,
+        "source_description": "原版绿色竖线装饰条"
+      },
+      {
+        "id": "component_2",
+        "role": "eyebrow",
+        "text": "候选讲师培训",
+        "required": true,
+        "source_description": "顶部eyebrow“候选讲师培训”"
+      },
+      {
+        "id": "component_3",
+        "role": "page_title",
+        "text": "从创始人主讲到讲师独立交付",
+        "required": true,
+        "source_description": "主标题“从创始人主讲到讲师独立交付”"
+      },
+      {
+        "id": "component_4",
+        "role": "subtitle",
+        "text": "候选讲师的三阶段专业成长路径",
+        "required": true,
+        "source_description": "副标题“候选讲师的三阶段专业成长路径”"
+      },
+      {
+        "id": "component_5",
+        "role": "structural_rule",
+        "text": "原版浅灰分隔线",
+        "required": true,
+        "source_description": "原版浅灰分隔线"
+      },
+      {
+        "id": "component_6",
+        "role": "visible_text",
+        "text": "作者：示例作者",
+        "required": true,
+        "source_description": "“作者：示例作者”"
+      },
+      {
+        "id": "component_7",
+        "role": "visible_text",
+        "text": "时间：2026年8月",
+        "required": true,
+        "source_description": "“时间：2026年8月”"
+      },
+      {
+        "id": "component_8",
+        "role": "visible_text",
+        "text": "地点：待定",
+        "required": true,
+        "source_description": "“地点：待定”"
+      }
+    ],
+    "forbidden_components": [
+      "Logo、品牌署名、主标题下方“专业判断、成熟模块、独立交付”等关键词或口号、右下角footnote或信息块、页码、页眉、页脚、图标及白名单未列出的任何文字或装饰"
+    ],
+    "peer_groups": [],
+    "layout_intent": {
+      "raw": "保持最初版本的标题组合、绿色竖线、浅灰分隔线和整体位置关系；主内容整体仅允许向上微移，不得改成新的封面构图。作者、时间、地点在原关键词区域分三行左对齐呈现",
+      "body_alignment": "left",
+      "group_translation": "none",
+      "preserve_internal_spacing": true,
+      "must_not_center": false
+    },
+    "theme_preference": "inherit_or_neutral",
+    "speaker_notes": "开场说明本次不讨论薪酬、排课和认证分数",
+    "completion_checks": [
+      "原版绿色竖线仍在",
+      "作者、时间、地点分三行",
+      "无Logo、关键词、右下角footnote和附加品牌部件",
+      "整体未出现大幅重排"
+    ]
+  }
+}

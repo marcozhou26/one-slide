@@ -43,7 +43,6 @@
 | 信息关系 | 首选视觉语法 |
 | --- | --- |
 | 同字段横向比较 | 真实列、表格、哑铃、分组条形 |
-| 横向规模与内部绝对构成同时变化 | `marimekko`；`layout_mode=absolute` 表达不等宽不等高，`normalized` 只用于 100% 高度构成 |
 | 单一期间、单一总量的构成 | `part-to-whole`；3–6 个互斥项对平到总量，原生饼图或单环环图 |
 | 两期或多期排名迁移 | `bump-ranking`；两期可呈现 slope-style，三期及以上呈现 Bump Chart |
 | 多期构成占比变化 | `composition-shift`；固定分母、稳定构成项、每期对平到 100% |

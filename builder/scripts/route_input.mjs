@@ -19,23 +19,42 @@ const pageModelMethodMap = new Map([
   ["correlation_analysis", "correlation-matrix"],
   ["bivariate_linear_relationship", "scatter-regression"],
   ["estimate_interval_band", "confidence-band"],
+  ["reference_list", "reference-list"],
   ["causal_chain", "causal-chain"],
   ["issue_tree", "issue-tree"],
   ["stage_process", "stage-process"],
   ["waterfall_attribution", "waterfall-attribution"],
-  ["operating_diagnostic_matrix", "hr-operating-diagnostic-matrix"],
+  ["route_tradeoff", "route-tradeoff"],
+  ["matrix", "hr-level-function-matrix"],
   ["flow", "sankey-flow"],
   ["time_trend", "chart-insight"],
 ]);
 
+const structurePageTypeMap = new Map([
+  ["cover", "bookend-page"],
+  ["ending", "bookend-page"],
+  ["summary", "summary-page"],
+  ["agenda", "navigation-page"],
+  ["numbered_overview", "navigation-page"],
+  ["numbered_recap", "navigation-page"],
+  ["section_transition", "section-transition"],
+]);
+
 const definitions = {
+  "bookend-page": { aliases: ["封面页", "结束页", "bookend page", "cover page", "ending page"], cues: [["主标题", "副标题", "演示身份", "回扣", "邀请"]] },
+  "summary-page": { aliases: ["摘要页", "executive summary", "summary page"], cues: [["背景", "张力", "回应", "关键支撑", "决策落点"]] },
+  "navigation-page": { aliases: ["目录页", "编号总览", "编号收口", "agenda", "numbered overview", "numbered recap"], cues: [["章节地图", "同级", "编号", "总览", "收口", "回扣"]] },
+  "section-transition": { aliases: ["章节过渡页", "章节页", "section transition"], cues: [["章节编号", "章节名", "引导语", "进入新章节"]] },
   "complex-org-chart": { aliases: ["组织架构", "组织结构图", "org chart", "organization chart"], cues: [["汇报", "上级", "下级", "部门", "虚线", "项目组", "大区"]] },
   "causal-chain": { aliases: ["因果链", "驱动因素", "causal chain", "driver tree"], cues: [["导致", "影响", "驱动", "传导", "继而", "最终", "改善", "结果"]] },
   "issue-tree": { aliases: ["议题树", "问题树", "issue tree", "logic tree"], cues: [["拆解", "分支", "子议题", "根因", "mece"]] },
   "stage-process": { aliases: ["五步流程", "阶段流程", "chevron", "step process"], cues: [["步骤", "阶段", "流程", "里程碑", "阶段门"]] },
   "waterfall-attribution": { aliases: ["瀑布图", "waterfall"], cues: [["起点", "终点", "预算利润", "实际利润", "增减", "差额", "逐项解释", "归因", "对平"]] },
+  "route-tradeoff": { aliases: ["路线对比", "两种路线", "tradeoff", "路线 a", "路线 b"], cues: [["取舍", "对比", "争议点", "推荐路线", "两条路线"]] },
+  "scqa-roadmap": { aliases: ["scqa", "情境冲突问题答案"], cues: [["情境", "冲突", "问题", "答案", "落地路径"]] },
   "bubble-heatmap": { aliases: ["气泡矩阵", "2×2", "2x2", "bubble matrix"], cues: [["价值", "难度", "气泡", "热力", "优先级"]] },
   "chart-insight": { aliases: ["图表加洞察", "图表＋洞察", "柱状图洞察", "chart insight"], cues: [["柱状图", "折线", "洞察栏", "引线", "数据结论"]] },
+  "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
   marimekko: { aliases: ["marimekko", "mekko", "马赛克图"], cues: [["列宽", "横向宽度", "市场规模占比", "内部构成", "份额构成", "块面积"]] },
   "part-to-whole": { aliases: ["饼图", "环图", "甜甜圈图", "pie chart", "donut chart", "doughnut chart"], cues: [["单一总量", "总量", "构成项", "构成", "占比", "份额", "合计", "整体"]] },
   "tornado-sensitivity": { aliases: ["龙卷风图", "敏感性分析", "tornado", "一次只变一个变量"], cues: [["悲观值", "乐观值", "低值", "高值", "基准情形", "基准结果", "参数", "变量", "单变量"]] },
@@ -43,32 +62,27 @@ const definitions = {
   "dumbbell-gap": { aliases: ["哑铃图", "哑铃点图", "dumbbell"], cues: [["现状", "目标", "标杆", "差距", "指标"]] },
   "bump-ranking": { aliases: ["排名迁移图", "坡度图", "bump chart", "slope chart", "slope-ranking"], cues: [["排名", "时点", "上升", "下降", "榜单", "多期"]] },
   "composition-shift": { aliases: ["构成变化图", "百分比堆积柱状图", "100%堆积柱状图", "composition shift"], cues: [["占比", "构成", "时期", "合计100%", "结构变化"]] },
-  "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃"], ["第0周", "后面的周数", "空白", "早期流失"]] },
+  "cohort-retention": { aliases: ["cohort retention", "分群留存", "批次留存", "新人留存", "入职批次"], cues: [["批次", "相对周期", "初始基数", "未成熟", "仍活跃", "仍在职"], ["第0周", "第0个月", "入职后", "后续月份", "尚未观察", "空白", "早期流失"]] },
   "box-plot": { aliases: ["箱线图", "盒须图", "box plot", "boxplot"], cues: [["中位数", "四分位", "中间50%", "离散", "异常值", "须线", "分布"]] },
   histogram: { aliases: ["直方图", "histogram"], cues: [["连续数值", "分箱", "区间", "集中", "偏态", "长尾", "多峰", "缺失值", "样本"]] },
   "box-plot-jitter": { aliases: ["箱线图加散点", "箱线图＋抖动散点", "box plot jitter"], cues: [["组别", "原始观测", "中位数", "四分位", "异常值", "样本量", "分布", "每位"]] },
   "correlation-matrix": { aliases: ["相关矩阵", "相关性矩阵", "correlation matrix"], cues: [["一起变化", "方向相反", "关系较弱", "最强正", "最强负", "系数", "pearson", "spearman"]] },
   "scatter-regression": { aliases: ["散点回归", "线性回归", "scatter regression"], cues: [["两个连续指标", "关系方向", "关系强度", "偏离趋势", "离群", "可解释范围", "样本内关联"]] },
   "confidence-band": { aliases: ["置信带", "置信区间带", "confidence band"], cues: [["中心估计", "上下界", "区间宽度", "不确定性", "阈值", "重抽样"], ["estimate", "lower", "upper", "interval"]] },
-  "small-multiples": { aliases: ["小倍数", "small multiples", "3×3 微型图"], cues: [["多个对象", "统一刻度", "迷你折线", "矩阵", "基准"]] },
+  "reference-list": { aliases: ["引用资料清单", "参考资料清单", "references"], cues: [["实际用过", "去重", "编号", "作者", "机构", "标题", "日期", "链接", "正文页"], ["来源", "核验", "支持", "页码"]] },
+  "small-multiples": { aliases: ["小倍数", "small multiples", "重复微型图", "多对象同尺度比较"], cues: [["多个对象", "统一刻度", "重复图", "同期比较"], ["业务线", "区域", "产品", "趋势", "同一指标", "共同基准"]] },
   "sankey-flow": { aliases: ["桑基图", "sankey"], cues: [["流带", "分流", "损耗", "转化率", "四层节点"]] },
   "chord-dependency": { aliases: ["弦图", "依赖轮", "chord"], cues: [["双向依赖", "交互强度", "圆周", "部门协作"]] },
   "market-funnel": { aliases: ["tam sam som", "市场漏斗", "市场空间漏斗"], cues: [["tam", "sam", "som", "渗透率", "客单价"]] },
+  "industry-value-chain": { aliases: ["产业价值链", "价值链图", "value chain"], cues: [["上游", "中游", "下游", "参与者", "利润率"]] },
   "gantt-dependency": { aliases: ["甘特图", "gantt"], cues: [["任务", "月份", "依赖", "关键路径", "里程碑"]] },
   "hr-age-gender-pyramid": { aliases: ["年龄性别金字塔", "人口金字塔", "人员金字塔"], cues: [["年龄段", "男性", "女性", "人数", "人员结构"]] },
   "hr-workforce-reconciliation": { aliases: ["人员对账", "编制对账", "人头对账"], cues: [["期初", "入职", "离职", "转出", "转入", "期末"]] },
-  "hr-new-hire-survival": { aliases: ["新人留存生存曲线", "留存生存曲线", "cohort survival"], cues: [["入职后", "留存率", "批次", "司龄", "存活"]] },
   "hr-supply-demand-gap": { aliases: ["人力供需缺口", "编制供需", "人才供需"], cues: [["需求预测", "内部供给", "自然流失", "退休", "外部补充"]] },
+  "hr-level-function-matrix": { aliases: ["职级职能矩阵", "岗位体系矩阵"], cues: [["职级", "职能序列", "管理跨度", "人数倒挂", "层级"]] },
   "hr-from-to-mobility": { aliases: ["from-to 人才流动", "from-to 方阵", "人才流动方阵", "内部流动矩阵"], cues: [["流出部门", "流入部门", "跨部门转岗", "转岗后质量", "转岗率", "留任人数", "人才孤岛"]] },
-  "hr-operating-diagnostic-matrix": { aliases: ["hr 运营诊断矩阵", "服务运营矩阵", "operating diagnostic matrix", "职级职能矩阵", "岗位体系矩阵", "hr 服务目录", "人力资源服务目录", "service catalog", "hr 工单受理", "工单入口", "ticket intake"], cues: [["行", "列", "指标", "诊断"], ["职级", "职能序列", "管理跨度", "人数"], ["服务目录", "需求量", "成功率", "自动化"], ["受理渠道", "工单量", "一次解决率", "积压"]] },
-};
-
-const directCompositionPatterns = {
-  "route-tradeoff": { aliases: ["路线对比", "两种路线", "tradeoff", "路线 a", "路线 b"], cues: [["取舍", "对比", "争议点", "推荐路线", "两条路线"]] },
-  "scqa-roadmap": { aliases: ["scqa", "情境冲突问题答案"], cues: [["情境", "冲突", "问题", "答案", "落地路径"]] },
-  "scenario-planning": { aliases: ["情景规划", "悲观基准乐观", "scenario planning"], cues: [["悲观", "基准", "乐观", "发生概率", "无悔举措"]] },
-  "industry-value-chain": { aliases: ["产业价值链", "价值链图", "value chain"], cues: [["上游", "中游", "下游", "参与者", "利润率"]] },
-  "spiral-maturity": { aliases: ["螺旋成熟度", "螺旋线", "spiral maturity"], cues: [["多轮迭代", "四圈", "设计", "执行", "度量", "沉淀"]] },
+  "hr-service-catalog": { aliases: ["hr 服务目录", "人力资源服务目录", "service catalog"], cues: [["服务目录", "服务层级", "渠道", "时效承诺", "自动化"]] },
+  "hr-ticket-intake": { aliases: ["hr 工单受理", "工单入口", "ticket intake"], cues: [["受理渠道", "工单量", "一次解决率", "积压", "受理"]] },
 };
 
 function normalizeText(value) {
@@ -253,6 +267,14 @@ function inferConfidenceBand(data, text) {
   return ["inferred:ordered_estimate_bounds", "inferred:interval_definition", "cue:uncertainty_relationship"];
 }
 
+function inferReferenceList(data, text) {
+  const references = Array.isArray(data?.references) ? data.references : [];
+  const structured = references.length >= 2 && references.length <= 8 && references.every((item) => item && typeof item === "object" && (item.title || item.citation) && (item.url || item.doi || item.locator || item.file_name));
+  const relationshipCue = ["引用", "参考资料", "实际用过", "去重", "编号", "作者", "机构", "标题", "链接", "正文页", "核验"].filter((cue) => text.includes(cue));
+  if (!structured && relationshipCue.length < 3) return null;
+  return structured ? ["inferred:citable_source_records", "inferred:single_ordered_reference_list", ...relationshipCue.map((cue) => `cue:${cue}`)] : ["inferred:reference-list-request", ...relationshipCue.map((cue) => `cue:${cue}`)];
+}
+
 export async function routeInput(input) {
   if (!input || typeof input !== "object") throw Object.assign(new Error("Input must be an object"), { code: "INPUT_CONTRACT_FAIL" });
   if (input.page_model) {
@@ -264,27 +286,18 @@ export async function routeInput(input) {
   if (![input.text, input.title, input.page_claim].some((value) => normalizeText(value)) && input.data == null && !input.requested_module && !input.page_model) {
     throw Object.assign(new Error("Text or data is required"), { code: "SOURCE_BASELINE_FAIL" });
   }
+  const requestedModule = normalizeText(input.requested_module);
+  const policyText = normalizeText([input.text, input.title, input.page_claim, JSON.stringify(input.data ?? {})].filter(Boolean).join(" "));
+  const geographicMapRequest = /区域地图|分布地图|地图明细|行政区|省市地图|全国地图|地理地图|choropleth|geojson|geographic map/iu.test(policyText);
+  if (requestedModule === "region-map-table" || geographicMapRequest) {
+    throw Object.assign(new Error("Geographic map output is retired because political and boundary-expression risk is outside the OneSlide product boundary"), { code: "MAP_POLITICAL_RISK_BLOCKED" });
+  }
+  if (["spiral-maturity", "hr-new-hire-survival"].includes(requestedModule)) {
+    throw Object.assign(new Error(`${requestedModule} is retired; use a supported relationship-first module`), { code: "MODULE_RETIRED" });
+  }
   if (input.requested_module) {
-    if (input.requested_module === "region-map-table") {
-      throw Object.assign(new Error("Map modules are retired"), { code: "SENSITIVE_MAP_MODULE_RETIRED" });
-    }
-    if (Object.hasOwn(directCompositionPatterns, input.requested_module)) {
-      return {
-        decision: "direct_composition",
-        preferred_pattern: input.requested_module,
-        reference: "references/direct-composition-patterns.md",
-        input_mode: mode,
-        confidence: "explicit_pattern",
-        evidence: ["requested_retired_pattern"],
-      };
-    }
-    const mergedModuleAliases = new Set(["hr-level-function-matrix", "hr-service-catalog", "hr-ticket-intake"]);
     const { routeModule } = await import("./route_module.mjs");
-    const routed = await routeModule({
-      requested_module: mergedModuleAliases.has(input.requested_module)
-        ? "hr-operating-diagnostic-matrix"
-        : input.requested_module,
-    });
+    const routed = await routeModule({ requested_module: input.requested_module });
     return { ...routed, input_mode: mode, confidence: "explicit", evidence: ["requested_module"] };
   }
   const compiledModule = pageModelMethodMap.get(input.page_model?.expression_method);
@@ -293,16 +306,14 @@ export async function routeInput(input) {
     const routed = await routeModule({ requested_module: compiledModule });
     return { ...routed, input_mode: mode, confidence: "compiled_structure", evidence: ["page_model.expression_method"] };
   }
+  const structureModule = structurePageTypeMap.get(input.data?.page_contract?.page_type ?? input.page_contract?.page_type);
+  if (structureModule) {
+    const { routeModule } = await import("./route_module.mjs");
+    const routed = await routeModule({ requested_module: structureModule });
+    return { ...routed, input_mode: mode, confidence: "compiled_structure", evidence: ["page_contract.page_type"] };
+  }
   const text = normalizeText([input.text, input.title, input.page_claim, input.page_model?.subject?.text, input.page_model?.story?.text, input.page_model?.expression_method, JSON.stringify(input.data ?? {})].filter(Boolean).join(" "));
   if (!text) throw Object.assign(new Error("Text or data is required"), { code: "SOURCE_BASELINE_FAIL" });
-  const geographicMapCue = ["地图", "gis", "行政区", "地理边界"].some((cue) => text.includes(cue)) ||
-    (/\bmap\b/.test(text) && ["region", "city", "geographic", "location"].some((cue) => text.includes(cue)));
-  if (geographicMapCue) {
-    throw Object.assign(
-      new Error("Map modules are retired; use a source-backed regional table or non-geographic comparison"),
-      { code: "SENSITIVE_MAP_MODULE_RETIRED" },
-    );
-  }
   const tokens = dataTokens(input.data ?? {});
   const distributionScopeConflict = conflictingDistributionScope(input.data);
   if (distributionScopeConflict) throw Object.assign(new Error(`Group distribution ${distributionScopeConflict} values conflict`), { code: "SOURCE_BASELINE_FAIL" });
@@ -322,6 +333,7 @@ export async function routeInput(input) {
   const inferredCorrelation = inferCorrelationMatrix(input.data, text);
   const inferredScatter = inferScatterRegression(input.data, text);
   const inferredConfidenceBand = inferConfidenceBand(input.data, text);
+  const inferredReferenceList = inferReferenceList(input.data, text);
   const ranked = Object.entries(definitions)
     .map(([moduleId, definition]) => ({ moduleId, ...scoreDefinition(definition, text, tokens) }))
     .map((item) => inferredComposition && item.moduleId === "composition-shift"
@@ -331,7 +343,7 @@ export async function routeInput(input) {
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredPartToWhole] }
       : item)
     .map((item) => item.moduleId === "part-to-whole" && partToWholeScopeConflict
-      ? { ...item, score: 0, evidence: [...item.evidence, "scope:multi_period"] }
+      ? { ...item, score: 0, evidence: [...item.evidence, "scope:multi_period_or_multi_object"] }
       : item)
     .map((item) => inferredCohort && item.moduleId === "cohort-retention"
       ? { ...item, score: Math.max(item.score, 70), evidence: [...item.evidence, ...inferredCohort] }
@@ -360,22 +372,11 @@ export async function routeInput(input) {
     .map((item) => inferredConfidenceBand && item.moduleId === "confidence-band"
       ? { ...item, score: Math.max(item.score, 80), evidence: [...item.evidence, ...inferredConfidenceBand] }
       : item)
+    .map((item) => inferredReferenceList && item.moduleId === "reference-list"
+      ? { ...item, score: Math.max(item.score, 90), evidence: [...item.evidence, ...inferredReferenceList] }
+      : item)
     .filter((item) => item.score > 0 && productized.has(item.moduleId))
     .sort((a, b) => b.score - a.score || a.moduleId.localeCompare(b.moduleId));
-  const patternRanked = Object.entries(directCompositionPatterns)
-    .map(([patternId, definition]) => ({ patternId, ...scoreDefinition(definition, text, tokens) }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score || a.patternId.localeCompare(b.patternId));
-  if (patternRanked.length && (!ranked.length || patternRanked[0].score > ranked[0].score)) {
-    return {
-      decision: "direct_composition",
-      preferred_pattern: patternRanked[0].patternId,
-      reference: "references/direct-composition-patterns.md",
-      input_mode: mode,
-      confidence: patternRanked[0].score >= 100 ? "explicit_pattern" : "supported_pattern",
-      evidence: patternRanked[0].evidence,
-    };
-  }
   if (!ranked.length) throw Object.assign(new Error("No productized module has enough explicit evidence"), { code: "ROUTE_EVIDENCE_INSUFFICIENT" });
   const explicitTop = ranked[0].score >= 100;
   const threshold = explicitTop ? ranked[0].score : Math.max(20, ranked[0].score - 10);

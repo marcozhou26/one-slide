@@ -21,7 +21,7 @@ PROHIBITED_GITHUB_ATTRIBUTION = (
     "nan" + "hai academy",
     "nan" + "hai.pro",
 )
-SUITE_VERSION = "1.5.2"
+SUITE_VERSION = "1.9.2"
 REQUIRED = [
     "SKILL.md",
     "README.md",
@@ -45,20 +45,30 @@ REQUIRED = [
     "builder/references/module-registry.json",
     "builder/scripts/route_v3.mjs",
     "builder/scripts/pptx_core.mjs",
-    "editorial/PRD.md",
-    "editorial/ENGINE.md",
-    "editorial/references/input-contract.md",
-    "editorial/references/editorial-contract.md",
-    "editorial/references/review-rubric.md",
-    "editorial/references/output-contract.md",
-    "editorial/references/walkthrough.md",
-    "editorial/scripts/plan_editorial_run.py",
-    "editorial/scripts/inspect_editorial_slide.mjs",
-    "editorial/scripts/validate_editorial_qa.py",
-    "builder/scripts/apply_editorial_revision.mjs",
-    "editorial/scripts/verify_editorial_roundtrip.py",
-    "editorial/scripts/audit_editorial_contrast.py",
+    "builder/scripts/canvas_profiles.mjs",
+    "builder/scripts/render_portrait_one_point.mjs",
+    "builder/references/semantic-icon-library.md",
+    "builder/scripts/resolve_semantic_icon.mjs",
+    "builder/scripts/build_semantic_icon_library.mjs",
+    "builder/assets/icons/tabler/aliases.zh-CN.json",
+    "builder/assets/icons/tabler/registry.json",
+    "builder/assets/icons/tabler/LICENSE-TABLER.txt",
+    "builder/tests/semantic_icon_library.test.mjs",
+    "builder/tests/canvas_profiles.test.mjs",
+    "builder/scripts/ensure_auto_slide_number.mjs",
+    "builder/scripts/normalize_powerpoint_text_editability.mjs",
+    "builder/scripts/audit_public_readability.mjs",
+    "builder/tests/public_readability_mvp.test.mjs",
+    "scripts/register_workspace_packages.mjs",
+    "builder/tests/slide_number_contracts.test.mjs",
+    "builder/tests/native_text_editability_contracts.test.mjs",
+    "builder/tests/structure_page_contracts.test.mjs",
+    "producer/scripts/compile_outline_handoff.mjs",
+    "builder/scripts/validate_bookend_page.mjs",
+    "builder/scripts/validate_navigation_page.mjs",
+    "builder/scripts/validate_section_transition.mjs",
     "scripts/check_environment.py",
+    "scripts/export_powerpoint_png.py",
     "scripts/validate_suite.py",
     "tests/test_suite_contract.py",
     "tests/test_producer_package.py",
@@ -89,8 +99,8 @@ def validate(root: Path) -> dict:
             errors.append("SKILL.md name must be one-slide")
         if not re.search(r"(?m)^license:\s*Apache-2\.0\s*$", skill_text):
             errors.append("SKILL.md license must be Apache-2.0")
-        if not re.search(r'(?m)^\s*author:\s*["\']周俊东 Marco["\']\s*$', skill_text):
-            errors.append("SKILL.md author must be 周俊东 Marco")
+        if "zhou" + "139223" in skill_text or "周俊东 " + "Marco" in skill_text:
+            errors.append("SKILL.md must not expose personal contact or identity text in the public package")
         if not re.search(rf'(?m)^\s*version:\s*["\']{re.escape(SUITE_VERSION)}["\']\s*$', skill_text):
             errors.append(f"SKILL.md version must be {SUITE_VERSION}")
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
@@ -101,6 +111,8 @@ def validate(root: Path) -> dict:
 
     for path in root.rglob("*"):
         relative = path.relative_to(root).as_posix()
+        if relative == "runs" or relative.startswith("runs/") or relative == ".codex" or relative.startswith(".codex/"):
+            continue
         if path.name in FORBIDDEN_NAMES or path.suffix == ".pyc":
             errors.append(f"cache or local artifact in package: {relative}")
         if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES:

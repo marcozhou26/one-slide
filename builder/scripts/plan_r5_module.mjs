@@ -12,9 +12,8 @@ export function planR5Module(data) {
   if (
     [
       "hr-age-gender-pyramid",
-      "hr-new-hire-survival",
       "hr-supply-demand-gap",
-      "hr-operating-diagnostic-matrix",
+      "hr-level-function-matrix",
     ].includes(data.module_id)
   ) {
     return {

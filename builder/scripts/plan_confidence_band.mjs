@@ -10,6 +10,6 @@ export function planConfidenceBand(data) {
     subtitle: normalized.subtitle ? { ...normalized.subtitle, left: 54, top: 84, width: 1172, height: 26 } : null,
     chart: { left: 54, top: 126, width: 864, height: 458 },
     rail: { left: 944, top: 126, width: 282, height: 458 },
-    footer: { left: 54, top: 610, width: 1172, height: 66 },
+    footer: { left: 54, top: 652, width: 1088, height: 20 },
   };
 }

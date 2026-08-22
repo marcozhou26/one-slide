@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Clone editable shapes into an existing PowerPoint template slide.
 
-The template package, slide master, layout, theme, and background remain intact.
-Visible template shapes must pass the information-contribution gate before
-generated slide shapes are inserted.
+The template package, slide master, layout, theme, background, and its own
+decorative shapes remain intact. Only generated slide shapes are inserted.
 Relationship-bearing generated content is blocked to avoid a partially broken deck.
 """
 
@@ -14,7 +13,7 @@ import copy
 import hashlib
 import json
 import os
-import re
+import subprocess
 import tempfile
 import zipfile
 from pathlib import Path
@@ -27,11 +26,6 @@ NS = {"p": P, "a": A, "r": R}
 ET.register_namespace("a", A)
 ET.register_namespace("p", P)
 ET.register_namespace("r", R)
-
-EYEBROW_NAME = re.compile(r"(?:eyebrow|kicker|overline|super[-_ ]?title)", re.IGNORECASE)
-TITLE_DECORATION_NAME = re.compile(r"(?:heading[-_ ]?rule|title[-_ ]?accent)", re.IGNORECASE)
-GENERIC_DECORATION_NAME = re.compile(r"(?:decorative|decoration|ornament|flourish|filler|spacer)", re.IGNORECASE)
-BAND_NAME = re.compile(r"(?:top|header|brand|bottom|footer)[-_ ]?(?:band|strip|rule)", re.IGNORECASE)
 
 
 class TemplateError(RuntimeError):
@@ -76,63 +70,13 @@ def shape_children(slide_root: ET.Element) -> list[ET.Element]:
     return list(tree)[2:]
 
 
+def is_slide_number_placeholder(element: ET.Element) -> bool:
+    placeholder = element.find("p:nvSpPr/p:nvPr/p:ph", NS)
+    return placeholder is not None and placeholder.attrib.get("type") == "sldNum"
+
+
 def relationship_attributes(element: ET.Element) -> list[str]:
     return [key for node in element.iter() for key in node.attrib if key.startswith(f"{{{R}}}")]
-
-
-def shape_name(element: ET.Element) -> str:
-    node = element.find(".//p:cNvPr", NS)
-    return "" if node is None else node.attrib.get("name", "")
-
-
-def shape_text(element: ET.Element) -> str:
-    return "".join(node.text or "" for node in element.findall(".//a:t", NS)).strip()
-
-
-def shape_bbox(element: ET.Element) -> tuple[int, int, int, int] | None:
-    transform = element.find(".//p:spPr/a:xfrm", NS)
-    if transform is None:
-        return None
-    offset = transform.find("a:off", NS)
-    extent = transform.find("a:ext", NS)
-    if offset is None or extent is None:
-        return None
-    return (
-        int(offset.attrib.get("x", 0)),
-        int(offset.attrib.get("y", 0)),
-        int(extent.attrib.get("cx", 0)),
-        int(extent.attrib.get("cy", 0)),
-    )
-
-
-def audit_template_decorations(slide_root: ET.Element, size: tuple[int, int]) -> None:
-    slide_width, slide_height = size
-    elements = list(slide_root.iter(f"{{{P}}}sp"))
-    details = [(element, shape_name(element), shape_text(element), shape_bbox(element)) for element in elements]
-    for element, name, text, bbox in details:
-        informative_children = [] if bbox is None else [
-            candidate
-            for candidate, _, candidate_text, candidate_bbox in details
-            if candidate is not element
-            and candidate_text
-            and candidate_bbox is not None
-            and candidate_bbox[0] >= bbox[0]
-            and candidate_bbox[1] >= bbox[1]
-            and candidate_bbox[0] + candidate_bbox[2] <= bbox[0] + bbox[2]
-            and candidate_bbox[1] + candidate_bbox[3] <= bbox[1] + bbox[3]
-        ]
-        if EYEBROW_NAME.search(name):
-            raise TemplateError("TEMPLATE_DECORATION_BLOCKED", f"Template eyebrow is not allowed: {name}")
-        if TITLE_DECORATION_NAME.search(name) or GENERIC_DECORATION_NAME.search(name):
-            raise TemplateError("TEMPLATE_DECORATION_BLOCKED", f"Template decorative shape is not allowed: {name}")
-        if BAND_NAME.search(name) and not text and not informative_children:
-            raise TemplateError("TEMPLATE_DECORATION_BLOCKED", f"Template empty band, strip, or rule is not allowed: {name}")
-        if bbox is not None and not text:
-            left, top, width, height = bbox
-            wide = left <= slide_width * 0.1 and width >= slide_width * 0.8
-            edge_rule = height <= slide_height * 0.14 and (top <= slide_height * 0.07 or top + height >= slide_height * 0.93)
-            if wide and edge_rule and not informative_children:
-                raise TemplateError("TEMPLATE_DECORATION_BLOCKED", f"Template decorative edge band is not allowed: {name}")
 
 
 def remap_ids(elements: list[ET.Element], next_id: int) -> tuple[dict[str, str], int]:
@@ -182,10 +126,13 @@ def apply_template(template: Path, generated: Path, output: Path, target_slide: 
         generated_slide_name = "ppt/slides/slide1.xml"
         template_root = read_xml(template_zip, template_slide_name)
         generated_root = read_xml(generated_zip, generated_slide_name)
-        audit_template_decorations(template_root, template_size)
         template_tree = template_root.find("p:cSld/p:spTree", NS)
         assert template_tree is not None
-        generated_shapes = [copy.deepcopy(item) for item in shape_children(generated_root)]
+        generated_shapes = [
+            copy.deepcopy(item)
+            for item in shape_children(generated_root)
+            if not is_slide_number_placeholder(item)
+        ]
         if not generated_shapes:
             raise TemplateError("TEMPLATE_COMPATIBILITY_FAIL", "Generated page has no editable shapes")
         if any(relationship_attributes(item) for item in generated_shapes):
@@ -209,6 +156,18 @@ def apply_template(template: Path, generated: Path, output: Path, target_slide: 
                 for info in template_zip.infolist():
                     data = slide_xml if info.filename == template_slide_name else template_zip.read(info.filename)
                     out_zip.writestr(info, data)
+            numbering_script = Path(__file__).with_name("ensure_auto_slide_number.mjs")
+            numbering = subprocess.run(
+                ["node", str(numbering_script), str(temp_path)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            if numbering.returncode != 0:
+                raise TemplateError(
+                    "AUTO_SLIDE_NUMBER_FAIL",
+                    numbering.stderr.strip() or numbering.stdout.strip() or "Automatic slide numbering failed",
+                )
             os.replace(temp_path, output)
         finally:
             if temp_path.exists():
@@ -225,6 +184,7 @@ def apply_template(template: Path, generated: Path, output: Path, target_slide: 
         "slide_size_emu": list(template_size),
         "template_master_preserved": True,
         "template_layout_preserved": True,
+        "automatic_slide_number_ready": True,
     }
 
 

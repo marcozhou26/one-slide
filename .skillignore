@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 .DS_Store
 .git/
+.codex/
 internal/
 producer/examples/*/internal/
 producer/examples/*/review/
@@ -9,6 +10,7 @@ verify/
 qa_runs/
 qa/
 release/
+runs/
 *.log
 *.tmp
 *.pdf

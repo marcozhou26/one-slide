@@ -94,10 +94,10 @@ function rail(slide, pos, items, title = "管理洞察") {
         height: 100,
       },
       fill: COLORS.white,
-      border: i === 0 ? COLORS.orange : COLORS.border,
-      borderWidth: i === 0 ? 1.5 : 1,
+      border: COLORS.border,
+      borderWidth: 1,
       fontSize: 16,
-      bold: i === 0,
+      bold: false,
       color: COLORS.text,
       alignment: "left",
     })
@@ -118,10 +118,8 @@ function bottom(slide, pos, item) {
     });
   }
 }
-function metricHeader(slide, pos, metrics, dynamic = false) {
-  const gap = 12;
-  const count = dynamic ? Math.max(metrics.length, 1) : 3;
-  const w = (pos.width - gap * (count - 1)) / count;
+function metricHeader(slide, pos, metrics) {
+  const gap = 12, w = (pos.width - gap * 2) / 3;
   metrics.forEach((m, i) =>
     addTextBox(slide, {
       name: `metric-${i + 1}`,
@@ -132,14 +130,14 @@ function metricHeader(slide, pos, metrics, dynamic = false) {
         width: w,
         height: 84,
       },
-      fontSize: i === 0 ? 18 : 16,
+      fontSize: 16,
       bold: true,
-      color: i === 0 ? COLORS.orange : COLORS.navy,
+      color: COLORS.navy,
       alignment: "center",
-      fill: i === 0 ? PALE_ORANGE : COLORS.soft,
+      fill: COLORS.soft,
       line: {
         style: "solid",
-        fill: i === 0 ? COLORS.orange : COLORS.border,
+        fill: COLORS.border,
         width: 1,
       },
     })
@@ -559,165 +557,6 @@ function chartPoint(plot, index, count, value, min = 0, max = 100) {
     y: plot.top + plot.height - (value - min) / (max - min) * plot.height,
   };
 }
-function renderSurvival(slide, data, p) {
-  panel(slide, "survival-frame", p.main);
-  const plot = {
-    left: p.main.left + 56,
-    top: p.main.top + 38,
-    width: p.main.width - 90,
-    height: 255,
-  };
-  [0, 25, 50, 75, 100].forEach((v) => {
-    const y = chartPoint(plot, 0, 25, v).y;
-    line(
-      slide,
-      `survival-grid-${v}`,
-      plot.left,
-      y,
-      plot.left + plot.width,
-      y,
-      "dashed",
-      COLORS.border,
-      .6,
-    );
-    addTextBox(slide, {
-      name: `survival-axis-${v}`,
-      text: `${v}%`,
-      position: { left: plot.left - 76, top: y - 12, width: 70, height: 24 },
-      fontSize: 16,
-      color: COLORS.muted,
-      alignment: "right",
-    });
-  });
-  [3, 13].forEach((m, i) =>
-    addTextBox(slide, {
-      name: `risk-band-${i + 1}`,
-      text: "",
-      position: {
-        left: chartPoint(plot, m, 25, 0).x - 8,
-        top: plot.top,
-        width: 16,
-        height: plot.height,
-      },
-      fontSize: 16,
-      fill: PALE_ORANGE,
-      line: { style: "solid", fill: PALE_ORANGE, width: 0 },
-    })
-  );
-  const series = [...data.diagram.cohorts, {
-      ...data.diagram.benchmark,
-      isBenchmark: true,
-    }],
-    colors = [COLORS.navy, COLORS.orange, COLORS.blue, "#7397BD", COLORS.muted];
-  series.forEach((s, si) => {
-    for (let i = 1; i < s.values.length; i++) {
-      const a = chartPoint(plot, i - 1, 25, s.values[i - 1]),
-        b = chartPoint(plot, i, 25, s.values[i - 1]),
-        c = chartPoint(plot, i, 25, s.values[i]);
-      line(
-        slide,
-        `survival-h-${si}-${i}`,
-        a.x,
-        a.y,
-        b.x,
-        b.y,
-        s.isBenchmark ? "dashed" : "solid",
-        colors[si],
-        s.isBenchmark ? 1.2 : 1.8,
-      );
-      line(
-        slide,
-        `survival-v-${si}-${i}`,
-        b.x,
-        b.y,
-        c.x,
-        c.y,
-        s.isBenchmark ? "dashed" : "solid",
-        colors[si],
-        s.isBenchmark ? 1.2 : 1.8,
-      );
-    }
-  });
-  data.diagram.cohorts.forEach((s, i) =>
-    addTextBox(slide, {
-      name: `cohort-legend-${i + 1}`,
-      text: `● ${s.label.text}\n12月 ${Math.round(s.values[12])}%  24月 ${
-        Math.round(s.values[24])
-      }%`,
-      position: {
-        left: plot.left + i * (plot.width / 4),
-        top: plot.top + plot.height + 5,
-        width: plot.width / 4 - 4,
-        height: 28,
-      },
-      fontSize: 16,
-      bold: true,
-      color: colors[i],
-      alignment: "center",
-    })
-  );
-  addTextBox(slide, {
-    name: "benchmark-legend",
-    text: "灰虚线：行业基准",
-    position: { left: plot.left, top: plot.top - 28, width: 160, height: 24 },
-    fontSize: 16,
-    bold: true,
-    color: COLORS.muted,
-  });
-  addTextBox(slide, {
-    name: "survival-notes",
-    text: "3 个月：融入与岗位匹配问题        13 个月：晋升与调薪预期落空",
-    position: {
-      left: plot.left + 170,
-      top: plot.top - 28,
-      width: 600,
-      height: 24,
-    },
-    fontSize: 16,
-    bold: true,
-    color: COLORS.orange,
-    alignment: "center",
-  });
-  const riskTop = p.main.top + 338,
-    labelW = 170,
-    colW = (p.main.width - labelW - 28) / 5;
-  data.diagram.risk_rows.forEach((r, ri) => {
-    addTextBox(slide, {
-      name: `risk-label-${ri + 1}`,
-      text: r.label.text,
-      position: {
-        left: p.main.left + 14,
-        top: riskTop + ri * 30,
-        width: labelW,
-        height: 28,
-      },
-      fontSize: 16,
-      bold: true,
-      color: COLORS.navy,
-    });
-    r.scores.forEach((v, ci) =>
-      addTextBox(slide, {
-        name: `risk-${ri + 1}-${ci + 1}`,
-        text: ["低", "中", "高"][v - 1],
-        position: {
-          left: p.main.left + 14 + labelW + ci * colW,
-          top: riskTop + ri * 30,
-          width: colW - 2,
-          height: 28,
-        },
-        fontSize: 16,
-        bold: v === 3,
-        color: v === 3 ? COLORS.white : COLORS.text,
-        alignment: "center",
-        fill: v === 3 ? COLORS.orange : v === 2 ? PALE_ORANGE : COLORS.soft,
-        line: { style: "solid", fill: COLORS.white, width: .5 },
-      })
-    );
-  });
-  rail(slide, p.rail, data.diagram.insights);
-  bottom(slide, p.bottom, data.diagram.conclusion);
-}
-
 function renderSupply(slide, data, p) {
   panel(slide, "supply-frame", p.main);
   const rows = data.diagram.periods,
@@ -874,10 +713,10 @@ function renderSupply(slide, data, p) {
         height: 100,
       },
       fill: COLORS.white,
-      border: i === 0 ? COLORS.orange : COLORS.border,
-      borderWidth: i === 0 ? 1.5 : 1,
+      border: COLORS.border,
+      borderWidth: 1,
       fontSize: 16,
-      bold: i === 0,
+      bold: false,
       color: COLORS.text,
       alignment: "left",
     })
@@ -1145,8 +984,8 @@ function renderMobility(slide, data, p) {
         height: 40,
       },
       fontSize: 16,
-      bold: i === 0,
-      color: i === 0 ? COLORS.orange : COLORS.text,
+      bold: false,
+      color: COLORS.text,
       fill: COLORS.white,
       line: { style: "solid", fill: COLORS.border, width: .7 },
     })
@@ -1384,116 +1223,6 @@ function renderIntake(slide, data, p) {
   rail(slide, p.rail, data.diagram.insights, "发现／根因／动作");
   bottom(slide, p.bottom, data.diagram.conclusion);
 }
-function matrixValueText(value, spec) {
-  if (spec.kind === "text") return String(value);
-  const numeric = Number(value);
-  const formatted = Number.isInteger(numeric) ? numeric.toLocaleString("en-US") : String(numeric);
-  return `${formatted}${spec.unit ?? ""}`;
-}
-function renderOperatingMatrix(slide, data, p) {
-  const d = data.diagram;
-  const metricOffset = d.metrics?.length ? 102 : 0;
-  if (d.metrics?.length) metricHeader(slide, {
-    left: p.main.left,
-    top: p.main.top,
-    width: p.main.width,
-  }, d.metrics, true);
-  const tableTop = p.main.top + metricOffset;
-  panel(slide, "operating-diagnostic-table", {
-    left: p.main.left,
-    top: tableTop,
-    width: p.main.width,
-    height: p.main.height - metricOffset,
-  });
-  const labelW = 128;
-  const innerX = p.main.left + 10;
-  const colW = (p.main.width - labelW - 20) / d.columns.length;
-  const headerTop = tableTop + 10;
-  const headerH = 38;
-  const bodyTop = headerTop + headerH + 4;
-  const rowH = (p.main.height - metricOffset - headerH - 24) / d.rows.length;
-  d.columns.forEach((column, index) => addTextBox(slide, {
-    name: `operating-column-${index + 1}`,
-    text: column.label.text,
-    position: {
-      left: innerX + labelW + index * colW,
-      top: headerTop,
-      width: colW - 2,
-      height: headerH,
-    },
-    fontSize: 16,
-    bold: true,
-    color: COLORS.navy,
-    alignment: "center",
-    fill: COLORS.soft,
-    line: { style: "solid", fill: COLORS.border, width: .7 },
-  }));
-  const ranges = d.columns.map((column, columnIndex) => {
-    if (column.primary.kind === "text") return null;
-    const values = d.matrix.map((row) => Number(row[columnIndex].primary));
-    return { min: Math.min(...values), max: Math.max(...values) };
-  });
-  d.rows.forEach((row, rowIndex) => {
-    const rowLabel = row.note ? `${row.label.text}\n${row.note.text}` : row.label.text;
-    addTextBox(slide, {
-      name: `operating-row-${rowIndex + 1}`,
-      text: rowLabel,
-      position: { left: innerX, top: bodyTop + rowIndex * rowH, width: labelW - 8, height: rowH - 2 },
-      fontSize: row.note ? 14 : 16,
-      bold: true,
-      color: COLORS.navy,
-      alignment: "left",
-    });
-    d.columns.forEach((column, columnIndex) => {
-      const cell = d.matrix[rowIndex][columnIndex];
-      const range = ranges[columnIndex];
-      const span = range ? Math.max(range.max - range.min, 1e-9) : 1;
-      const normalized = range ? (Number(cell.primary) - range.min) / span : 0;
-      const risk = column.primary.direction === "lower_is_better"
-        ? normalized
-        : column.primary.direction === "higher_is_better"
-        ? 1 - normalized
-        : 0;
-      const magnitude = column.primary.encoding === "heatmap" ? normalized : 0;
-      const fill = risk > .67
-        ? PALE_ORANGE
-        : magnitude > .67
-        ? PALE_BLUE
-        : magnitude > .33
-        ? COLORS.soft
-        : COLORS.white;
-      const secondary = column.secondary
-        ? `\n${column.secondary.label?.text ? `${column.secondary.label.text} ` : ""}${matrixValueText(cell.secondary, column.secondary)}`
-        : "";
-      addTextBox(slide, {
-        name: `operating-cell-${rowIndex + 1}-${columnIndex + 1}`,
-        text: `${matrixValueText(cell.primary, column.primary)}${secondary}`,
-        position: {
-          left: innerX + labelW + columnIndex * colW,
-          top: bodyTop + rowIndex * rowH,
-          width: colW - 2,
-          height: rowH - 2,
-        },
-        fontSize: column.secondary ? 14 : 16,
-        bold: risk > .67 || magnitude > .67,
-        color: risk > .67 ? COLORS.orange : COLORS.text,
-        alignment: "center",
-        fill,
-        line: { style: "solid", fill: COLORS.border, width: .6 },
-      });
-    });
-  });
-  rail(slide, p.rail, d.insights, "发现／原因／动作");
-  bottom(slide, p.bottom, d.conclusion);
-  if (d.disclosure) addTextBox(slide, {
-    name: "operating-disclosure",
-    text: d.disclosure.text,
-    position: { left: p.bottom.left, top: p.bottom.top + p.bottom.height + 6, width: p.bottom.width, height: 18 },
-    fontSize: 12,
-    color: COLORS.muted,
-    alignment: "right",
-  });
-}
 function renderClassification(slide, data, p) {
   metricHeader(slide, {
     left: p.main.left,
@@ -1538,10 +1267,10 @@ function renderClassification(slide, data, p) {
       text: `${c.predicted}\n改判 ${c.reclassified}`,
       position: { left: p.main.left + 340, top: y, width: 170, height: 48 },
       fill: i === 4 ? PALE_ORANGE : PALE_BLUE,
-      border: i === 4 ? COLORS.orange : COLORS.blue,
+      border: COLORS.border,
       fontSize: 16,
       bold: true,
-      color: i === 4 ? COLORS.orange : COLORS.navy,
+      color: COLORS.navy,
     });
     const d = addNode(slide, {
       name: `class-final-${i + 1}`,
@@ -1595,10 +1324,11 @@ export async function renderR5Module(data, output) {
   ({
     "hr-age-gender-pyramid": renderAge,
     "hr-workforce-reconciliation": renderWorkforce,
-    "hr-new-hire-survival": renderSurvival,
     "hr-supply-demand-gap": renderSupply,
+    "hr-level-function-matrix": renderLevel,
     "hr-from-to-mobility": renderMobility,
-    "hr-operating-diagnostic-matrix": renderOperatingMatrix,
+    "hr-service-catalog": renderService,
+    "hr-ticket-intake": renderIntake,
   })[data.module_id](slide, data, p);
   await exportPresentation(presentation, output);
   return p;

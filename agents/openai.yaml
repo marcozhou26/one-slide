@@ -1,4 +1,4 @@
 interface:
   display_name: "OneSlide"
-  short_description: "把完整或零散材料做成一页来源可追溯、原生可编辑的PowerPoint"
-  default_prompt: "Use $one-slide to turn my material into exactly one source-traceable, presentation-ready slide prompt or one editable PowerPoint page. Complete only necessary gaps and label every synthetic element."
+  short_description: "把材料做成一页16:9汇报、9:16视频B-roll或竖版3:4可编辑PowerPoint"
+  default_prompt: "Use $one-slide to turn my material into exactly one source-traceable editable PowerPoint page on the native canvas implied by my use: 16:9 presentation, 9:16 short-video B-roll, or portrait 3:4 knowledge graphic. Never crop or stretch a landscape slide."
