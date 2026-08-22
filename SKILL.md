@@ -3,7 +3,7 @@ name: one-slide
 description: "把完整或零散的用户材料整理成恰好一页、来源可追溯、可直接用于制作演示文稿的提示词，并可选生成一页原生可编辑的 PowerPoint。支持演示汇报 16:9、短视频 B-roll 9:16 和知识图文竖版 3:4。适用于用户需要专业单页、竖屏口播配图或知识图文，材料可能不完整，并要求明确标识合成或推导内容的场景。"
 license: Apache-2.0
 metadata:
-  author: "OneSlide contributors"
+  author: "周俊东 Marco"
   version: "1.9.2"
 ---
 

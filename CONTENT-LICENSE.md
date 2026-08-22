@@ -1,6 +1,6 @@
 # Content license
 
-Copyright 2026 OneSlide contributors
+Copyright 2026 周俊东 Marco
 
 Unless a file states otherwise, the following original content is licensed under the Creative Commons Attribution 4.0 International license（CC BY 4.0）：
 
@@ -19,7 +19,7 @@ License deed and legal code:
 When redistributing or adapting the covered content, provide reasonable credit:
 
 ```text
-OneSlide content, licensed under CC BY 4.0.
+OneSlide content by 周俊东 Marco, licensed under CC BY 4.0.
 ```
 
 Also indicate if changes were made and include a link or copy of the license where practical.
@@ -31,7 +31,7 @@ The following are not licensed under CC BY 4.0:
 - Skill instructions, engines, scripts, configuration, schemas, and tests covered by Apache License 2.0;
 - third-party software, data, fonts, images, logos, names, or other materials;
 - `builder/assets/icons/tabler/**`, which contains a curated subset of Tabler Icons under the bundled MIT license;
-- the “OneSlide” name, project marks, profile images, logos, and social-account branding;
+- “OneSlide”“周俊东 Marco”的姓名、头像、Logo、公众号及视频号标识；
 - user inputs and user-generated PowerPoint files that are not part of the bundled examples.
 
-Using OneSlide to create an ordinary PowerPoint does not require adding OneSlide or contributor contact information to that PowerPoint.
+Using OneSlide to create an ordinary PowerPoint does not require adding OneSlide or the author's contact information to that PowerPoint.

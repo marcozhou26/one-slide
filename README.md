@@ -104,11 +104,16 @@ python3 -m unittest discover -s tests -v
 - If PowerPoint-generation dependencies are unavailable, OneSlide delivers only the prompt and structured handoff package.
 - Do not submit customer data, employee personal information, or other sensitive material through public issues.
 
+## Author
+
+- Author and maintainer: 周俊东 Marco
+- WeChat public account and Channels account: 周俊东 Marco
+
 ## Licensing
 
 - `SKILL.md`, execution engines, scripts, configuration, and test code: Apache License 2.0.
 - Original instructions, tutorials, sample inputs, sample outputs, and original reference presentations: CC BY 4.0.
-- The name “OneSlide,” project marks, profile images, logos, and social-account branding are not included in the open licenses.
+- The names “OneSlide” and “周俊东 Marco,” profile images, logos, and WeChat public account or Channels branding are not included in the open licenses.
 - See `LICENSE_STATUS.md`, `CONTENT-LICENSE.md`, `TRADEMARKS.md`, and `NOTICE` for the exact scope.
 
 Slides created through ordinary use of OneSlide do not need a watermark or signature. Redistribution or modification of OneSlide itself, its documentation, or its examples remains subject to the applicable license.

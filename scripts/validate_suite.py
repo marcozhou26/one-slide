@@ -99,8 +99,8 @@ def validate(root: Path) -> dict:
             errors.append("SKILL.md name must be one-slide")
         if not re.search(r"(?m)^license:\s*Apache-2\.0\s*$", skill_text):
             errors.append("SKILL.md license must be Apache-2.0")
-        if "zhou" + "139223" in skill_text or "周俊东 " + "Marco" in skill_text:
-            errors.append("SKILL.md must not expose personal contact or identity text in the public package")
+        if not re.search(r'(?m)^\s*author:\s*["\']周俊东 Marco["\']\s*$', skill_text):
+            errors.append("SKILL.md author must be 周俊东 Marco")
         if not re.search(rf'(?m)^\s*version:\s*["\']{re.escape(SUITE_VERSION)}["\']\s*$', skill_text):
             errors.append(f"SKILL.md version must be {SUITE_VERSION}")
         for term in ("PROMPT_ONLY", "PPT_DRAFT", "SYNTHETIC_AUGMENTATION", "EVIDENCE_BLOCKED"):
